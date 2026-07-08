@@ -1,0 +1,6 @@
+pandas
+ollama
+playwright
+requests
+beautifulsoup4
+lxml

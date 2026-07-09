@@ -45,13 +45,16 @@ class AgenteQwen:
         self.bot_dir = BOT_DIR
     
     def analizar_resultados(self):
+        """Lee el CSV y devuelve métricas (con conversión a int para JSON)"""
         try:
             csv_path = os.path.join(self.bot_dir, 'data/events_consolidated_v5.csv')
             df = pd.read_csv(csv_path)
-            eventos = len(df)
-            fuentes = df['fuente'].nunique() if 'fuente' in df.columns else 0
-            organizadores = df['organizador'].notna().sum() if 'organizador' in df.columns else 0
-            emails = df['email'].notna().sum() if 'email' in df.columns else 0
+            
+            # Convertir TODO a int para evitar errores JSON
+            eventos = int(len(df))
+            fuentes = int(df['fuente'].nunique()) if 'fuente' in df.columns else 0
+            organizadores = int(df['organizador'].notna().sum()) if 'organizador' in df.columns else 0
+            emails = int(df['email'].notna().sum()) if 'email' in df.columns else 0
             
             return {
                 'eventos': eventos,
@@ -65,6 +68,8 @@ class AgenteQwen:
             return None
     
     def generar_mejora(self, metricas):
+        """Usa Qwen para generar una mejora específica"""
+        
         prompt = f"""
         Eres un agente experto en scraping de Facebook y optimización de bots.
         
@@ -77,23 +82,47 @@ class AgenteQwen:
         
         Objetivo: llegar a 200 eventos y 40 organizadores.
         
+        Si el número de eventos no aumenta aunque aumentes las búsquedas, 
+        sugiere cambiar la ESTRATEGIA: buscar en GRUPOS de Facebook en lugar de eventos.
+        
         Responde SOLO en formato JSON con:
         {{
-            "accion": "AUMENTAR_BUSQUEDAS | ACTIVAR_CONTACTOS | AGREGAR_PAISES | CAMBIAR_QUERIES",
+            "accion": "AUMENTAR_BUSQUEDAS | ACTIVAR_CONTACTOS | AGREGAR_PAISES | CAMBIAR_ESTRATEGIA | BUSCAR_EN_GRUPOS",
             "parametro": "nombre_del_parametro",
             "valor": "nuevo_valor",
             "razon": "explicación breve"
+        }}
+        
+        Ejemplo:
+        {{
+            "accion": "BUSCAR_EN_GRUPOS",
+            "parametro": "grupos_facebook",
+            "valor": "true",
+            "razon": "Los eventos no aparecen en búsqueda general, probar en grupos"
         }}
         """
         
         try:
             respuesta = consultar_ollama(prompt, tarea="coder")
+            # Limpiar la respuesta para asegurar JSON válido
+            respuesta = respuesta.strip()
+            # Intentar extraer JSON
+            json_match = re.search(r'\{.*\}', respuesta, re.DOTALL)
+            if json_match:
+                return json.loads(json_match.group(0))
             return json.loads(respuesta)
         except Exception as e:
             print(f"❌ Qwen falló: {e}")
-            return None
+            # Fallback: sugerencia por defecto
+            return {
+                "accion": "AUMENTAR_BUSQUEDAS",
+                "parametro": "busquedas_facebook",
+                "valor": 120,
+                "razon": "Aumentar búsquedas por defecto"
+            }
     
     def aplicar_mejora(self, mejora, config_actual):
+        """Aplica la mejora generada por Qwen"""
         if not mejora:
             return config_actual
         
@@ -106,8 +135,11 @@ class AgenteQwen:
         print(f"   Parametro: {parametro} -> {valor}")
         
         if accion == "AUMENTAR_BUSQUEDAS" and parametro == "busquedas_facebook":
-            config_actual["busquedas_facebook"] = int(valor) if str(valor).isdigit() else 100
-            print(f"✅ Actualizado busquedas_facebook a {config_actual['busquedas_facebook']}")
+            try:
+                config_actual["busquedas_facebook"] = int(valor)
+                print(f"✅ Actualizado busquedas_facebook a {config_actual['busquedas_facebook']}")
+            except:
+                config_actual["busquedas_facebook"] = 120
         
         elif accion == "ACTIVAR_CONTACTOS":
             config_actual["extraer_contactos"] = True
@@ -125,12 +157,19 @@ class AgenteQwen:
                 config_actual["priorizar_paises"] = ["España", "Portugal", "Alemania", "Francia", "Italia", "Holanda", "Bélgica", "Suiza"]
                 print("✅ Países agregados (lista por defecto)")
         
+        elif accion == "CAMBIAR_ESTRATEGIA" or accion == "BUSCAR_EN_GRUPOS":
+            print("🔄 Qwen sugiere cambiar estrategia: buscar en GRUPOS de Facebook")
+            config_actual["buscar_en_grupos"] = True
+            config_actual["busquedas_facebook"] = 30  # Menos búsquedas, más grupos
+        
         elif accion == "CAMBIAR_QUERIES":
             print(f"🔄 Qwen sugiere cambiar queries: {valor}")
         
         return config_actual
     
     def loop(self, max_iteraciones=10):
+        """Loop de mejora con Qwen"""
+        
         print("="*60)
         print("🌀 AGENTE QWEN - MEJORA DEL BOT")
         print("="*60)
@@ -139,6 +178,7 @@ class AgenteQwen:
         print(f"📌 MODELO GENERAL: {MODELO_GENERAL}")
         print("="*60)
         
+        # Configuración inicial
         config_actual = {
             "max_eventos": 100,
             "busquedas_facebook": 50,
@@ -146,9 +186,11 @@ class AgenteQwen:
             "priorizar_paises": [],
             "extraer_contactos": False,
             "agregar_fuentes": [],
-            "profundidad_busqueda": 3
+            "profundidad_busqueda": 3,
+            "buscar_en_grupos": False
         }
         
+        # Guardar configuración inicial para el bot
         with open(os.path.join(self.bot_dir, 'config_temp.json'), 'w') as f:
             json.dump(config_actual, f)
         
@@ -156,6 +198,7 @@ class AgenteQwen:
             print(f"\n📌 ITERACIÓN {i+1}/{max_iteraciones}")
             print("-"*40)
             
+            # 1. Ejecutar bot con configuración actual
             print("🚀 Ejecutando bot...")
             try:
                 resultado = subprocess.run(
@@ -165,12 +208,16 @@ class AgenteQwen:
                     text=True,
                     timeout=120
                 )
-                print(f"✅ Bot ejecutado (código: {resultado.returncode})")
+                if resultado.returncode == 0:
+                    print("✅ Bot ejecutado correctamente")
+                else:
+                    print(f"⚠️ Bot terminó con código {resultado.returncode}")
             except subprocess.TimeoutExpired:
                 print("⚠️ Bot tardó mucho, continuando...")
             except Exception as e:
                 print(f"❌ Error ejecutando bot: {e}")
             
+            # 2. Analizar resultados
             metricas = self.analizar_resultados()
             if not metricas:
                 print("❌ No se pudieron analizar los resultados")
@@ -183,21 +230,41 @@ class AgenteQwen:
             print(f"   Fuentes: {metricas['fuentes']}")
             print(f"   Score: {metricas['score']}")
             
+            # 3. Guardar historial
             self.historial.append({
                 'iteracion': i+1,
                 'config': config_actual.copy(),
                 'metricas': metricas
             })
             
+            # 4. Verificar mejor score
             if metricas['score'] > self.mejor_score:
                 self.mejor_score = metricas['score']
                 self.mejor_config = config_actual.copy()
                 print(f"⭐ NUEVO MEJOR SCORE: {self.mejor_score}")
             
+            # 5. Verificar objetivo
             if metricas['eventos'] >= 200 and metricas['organizadores'] >= 40:
                 print(f"\n🎉 ¡OBJETIVO ALCANZADO!")
                 break
             
+            # 6. Si el score no mejora en 3 iteraciones, Qwen sugiere cambio de estrategia
+            if i >= 3:
+                ultimos_scores = [h['metricas']['score'] for h in self.historial[-3:] if 'metricas' in h]
+                if len(ultimos_scores) >= 3 and len(set(ultimos_scores)) == 1:
+                    print("⚠️ Sin mejora en 3 iteraciones → Qwen sugiere cambio de estrategia")
+                    mejora = {
+                        "accion": "CAMBIAR_ESTRATEGIA",
+                        "parametro": "buscar_en_grupos",
+                        "valor": True,
+                        "razon": "Sin mejora tras varias iteraciones, probar búsqueda en grupos"
+                    }
+                    config_actual = self.aplicar_mejora(mejora, config_actual)
+                    with open(os.path.join(self.bot_dir, 'config_temp.json'), 'w') as f:
+                        json.dump(config_actual, f)
+                    continue
+            
+            # 7. Qwen genera mejora
             print("\n🤖 Qwen pensando...")
             mejora = self.generar_mejora(metricas)
             
@@ -207,24 +274,30 @@ class AgenteQwen:
                 print("⚠️ Qwen no propuso mejora, aumentando búsquedas por defecto")
                 config_actual["busquedas_facebook"] = min(config_actual.get("busquedas_facebook", 50) + 30, 300)
             
+            # 8. Guardar configuración para el bot
             with open(os.path.join(self.bot_dir, 'config_temp.json'), 'w') as f:
                 json.dump(config_actual, f)
             
             print(f"\n⏳ Esperando 5s...")
             time.sleep(5)
         
+        # Resultado final
         print("\n" + "="*60)
         print("🏆 LOOP FINALIZADO")
         print("="*60)
         print(f"Mejor score: {self.mejor_score}")
         print(f"Mejor config: {self.mejor_config}")
         
-        with open('historial_qwen.json', 'w') as f:
-            json.dump(self.historial, f, indent=2)
-        print("📁 Historial guardado en historial_qwen.json")
+        # Guardar historial (asegurando que sea JSON válido)
+        try:
+            with open('historial_qwen.json', 'w') as f:
+                json.dump(self.historial, f, indent=2, default=str)
+            print("📁 Historial guardado en historial_qwen.json")
+        except Exception as e:
+            print(f"⚠️ Error guardando historial: {e}")
         
         return self.mejor_config
 
 if __name__ == '__main__':
     agente = AgenteQwen()
-    mejor_config = agente.loop(max_iteraciones=10)
+    mejor_config = agente.loop(max_iteraciones=15)

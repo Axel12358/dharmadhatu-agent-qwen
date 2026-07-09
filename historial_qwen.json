@@ -1,0 +1,302 @@
+[
+  {
+    "iteracion": 1,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 50,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": false
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 6,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 7,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 8,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 9,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 10,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 11,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 12,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 13,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 14,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  },
+  {
+    "iteracion": 15,
+    "config": {
+      "max_eventos": 100,
+      "busquedas_facebook": 30,
+      "timeout": 20,
+      "priorizar_paises": [],
+      "extraer_contactos": false,
+      "agregar_fuentes": [],
+      "profundidad_busqueda": 3,
+      "buscar_en_grupos": true
+    },
+    "metricas": {
+      "eventos": 56,
+      "fuentes": 4,
+      "organizadores": 18,
+      "emails": 0,
+      "score": 132
+    }
+  }
+]

@@ -14,7 +14,7 @@ BOT_DIR = os.path.expanduser("~/dharmadhatu_bot")
 MODELO_GENERAL = "dharmadhatu-fast"
 MODELO_CODER = "qwen2.5-coder:7b"
 
-# Agregar el directorio del bot al path para importar utils
+# Agregar el directorio del bot al path para importar utils y enriquecimiento
 sys.path.insert(0, BOT_DIR)
 
 try:
@@ -37,12 +37,21 @@ except:
             print(f"❌ Error: {e}")
             return "{}"
 
+# Importar enriquecimiento de eventos
+try:
+    from scrapers.enriquecer_eventos import enriquecer_eventos_con_qwen
+    ENRIQUECIMIENTO_DISPONIBLE = True
+except ImportError:
+    ENRIQUECIMIENTO_DISPONIBLE = False
+    print("⚠️ scrapers.enriquecer_eventos no encontrado. Crea el archivo.")
+
 class AgenteQwen:
     def __init__(self):
         self.historial = []
         self.mejor_score = 0
         self.mejor_config = None
         self.bot_dir = BOT_DIR
+        self.ultimo_csv = None
     
     def analizar_resultados(self):
         """Lee el CSV y devuelve métricas (con conversión a int para JSON)"""
@@ -50,7 +59,6 @@ class AgenteQwen:
             csv_path = os.path.join(self.bot_dir, 'data/events_consolidated_v5.csv')
             df = pd.read_csv(csv_path)
             
-            # Convertir TODO a int para evitar errores JSON
             eventos = int(len(df))
             fuentes = int(df['fuente'].nunique()) if 'fuente' in df.columns else 0
             organizadores = int(df['organizador'].notna().sum()) if 'organizador' in df.columns else 0
@@ -68,45 +76,45 @@ class AgenteQwen:
             return None
     
     def generar_mejora(self, metricas):
-        """Usa Qwen para generar una mejora específica"""
+        """Usa Qwen para generar una mejora específica basada en datos"""
         
         prompt = f"""
-        Eres un agente experto en scraping de Facebook y optimización de bots.
+        Eres un agente experto en scraping y optimización de bots.
         
-        Estos son los resultados actuales del bot:
-        - Eventos encontrados: {metricas['eventos']}
+        Estos son los resultados ACTUALES del bot:
+        - Eventos totales: {metricas['eventos']}
         - Fuentes activas: {metricas['fuentes']}
         - Organizadores extraídos: {metricas['organizadores']}
         - Emails extraídos: {metricas['emails']}
-        - Score actual: {metricas['score']}
+        - Score: {metricas['score']}
         
-        Objetivo: llegar a 200 eventos y 40 organizadores.
+        Analiza estos datos y propón UNA mejora CONCRETA.
         
-        Si el número de eventos no aumenta aunque aumentes las búsquedas, 
-        sugiere cambiar la ESTRATEGIA: buscar en GRUPOS de Facebook en lugar de eventos.
+        Tu objetivo es SUBIR el score.
         
-        Responde SOLO en formato JSON con:
+        Si ves que hay pocos organizadores (<20) pero muchos eventos (>50), sugiere enriquecer eventos.
+        Si ves que hay pocas fuentes (<5), sugiere agregar más fuentes.
+        Si ves que el score es bajo, sugiere aumentar max_eventos o busquedas_facebook.
+        
+        Responde SOLO en formato JSON:
         {{
-            "accion": "AUMENTAR_BUSQUEDAS | ACTIVAR_CONTACTOS | AGREGAR_PAISES | CAMBIAR_ESTRATEGIA | BUSCAR_EN_GRUPOS",
+            "accion": "ENRIQUECER_EVENTOS | AUMENTAR_BUSQUEDAS | AUMENTAR_MAX_EVENTOS | AUMENTAR_TIMEOUT | AGREGAR_PAISES",
             "parametro": "nombre_del_parametro",
             "valor": "nuevo_valor",
-            "razon": "explicación breve"
+            "razon": "explicación basada en los datos"
         }}
         
         Ejemplo:
         {{
-            "accion": "BUSCAR_EN_GRUPOS",
-            "parametro": "grupos_facebook",
+            "accion": "ENRIQUECER_EVENTOS",
+            "parametro": "organizadores",
             "valor": "true",
-            "razon": "Los eventos no aparecen en búsqueda general, probar en grupos"
+            "razon": "Hay 80 eventos pero solo 0 organizadores, es necesario enriquecer"
         }}
         """
         
         try:
             respuesta = consultar_ollama(prompt, tarea="coder")
-            # Limpiar la respuesta para asegurar JSON válido
-            respuesta = respuesta.strip()
-            # Intentar extraer JSON
             json_match = re.search(r'\{.*\}', respuesta, re.DOTALL)
             if json_match:
                 return json.loads(json_match.group(0))
@@ -115,35 +123,69 @@ class AgenteQwen:
             print(f"❌ Qwen falló: {e}")
             # Fallback: sugerencia por defecto
             return {
-                "accion": "AUMENTAR_BUSQUEDAS",
-                "parametro": "busquedas_facebook",
-                "valor": 120,
-                "razon": "Aumentar búsquedas por defecto"
+                "accion": "ENRIQUECER_EVENTOS" if metricas['organizadores'] < 20 and metricas['eventos'] > 50 else "AUMENTAR_BUSQUEDAS",
+                "parametro": "organizadores" if metricas['organizadores'] < 20 else "busquedas_facebook",
+                "valor": "true" if metricas['organizadores'] < 20 else "80",
+                "razon": "Basado en análisis de datos"
             }
     
     def aplicar_mejora(self, mejora, config_actual):
         """Aplica la mejora generada por Qwen"""
         if not mejora:
+            print("⚠️ No hay mejora, aumentando búsquedas por defecto")
+            config_actual["busquedas_facebook"] = min(config_actual.get("busquedas_facebook", 50) + 30, 300)
             return config_actual
         
         accion = mejora.get('accion', '')
         parametro = mejora.get('parametro', '')
         valor = mejora.get('valor', '')
+        razon = mejora.get('razon', 'Sin razón')
         
-        print(f"\n🤖 Qwen propone: {mejora.get('razon', 'Sin razón')}")
-        print(f"   Acción: {accion}")
-        print(f"   Parametro: {parametro} -> {valor}")
+        print(f"\n🤖 Qwen propone: {razon}")
+        print(f"   Acción: {accion} | {parametro} -> {valor}")
         
+        # ============================================================
+        # ACCIÓN: ENRIQUECER EVENTOS (NUEVO)
+        # ============================================================
+        if accion == "ENRIQUECER_EVENTOS" and ENRIQUECIMIENTO_DISPONIBLE:
+            print("🔍 Enriqueciendo eventos con Qwen...")
+            try:
+                csv_path = os.path.join(self.bot_dir, 'data/events_consolidated_v5.csv')
+                df = pd.read_csv(csv_path)
+                eventos = df.to_dict('records')
+                
+                eventos_enriquecidos = enriquecer_eventos_con_qwen(eventos)
+                
+                df_nuevo = pd.DataFrame(eventos_enriquecidos)
+                df_nuevo.to_csv(csv_path, index=False)
+                print("✅ Eventos enriquecidos guardados")
+            except Exception as e:
+                print(f"⚠️ Error en enriquecimiento: {e}")
+            return config_actual
+        
+        # ============================================================
+        # ACCIONES EXISTENTES
+        # ============================================================
         if accion == "AUMENTAR_BUSQUEDAS" and parametro == "busquedas_facebook":
             try:
                 config_actual["busquedas_facebook"] = int(valor)
-                print(f"✅ Actualizado busquedas_facebook a {config_actual['busquedas_facebook']}")
+                print(f"✅ busquedas_facebook: {config_actual['busquedas_facebook']}")
             except:
-                config_actual["busquedas_facebook"] = 120
+                config_actual["busquedas_facebook"] = min(config_actual.get("busquedas_facebook", 50) + 30, 300)
         
-        elif accion == "ACTIVAR_CONTACTOS":
-            config_actual["extraer_contactos"] = True
-            print("✅ Activada extracción de contactos")
+        elif accion == "AUMENTAR_MAX_EVENTOS" and parametro == "max_eventos":
+            try:
+                config_actual["max_eventos"] = int(valor)
+                print(f"✅ max_eventos: {config_actual['max_eventos']}")
+            except:
+                config_actual["max_eventos"] = min(config_actual.get("max_eventos", 100) + 50, 300)
+        
+        elif accion == "AUMENTAR_TIMEOUT" and parametro == "timeout":
+            try:
+                config_actual["timeout"] = int(valor)
+                print(f"✅ timeout: {config_actual['timeout']}")
+            except:
+                config_actual["timeout"] = min(config_actual.get("timeout", 20) + 5, 60)
         
         elif accion == "AGREGAR_PAISES":
             if isinstance(valor, list):
@@ -154,20 +196,16 @@ class AgenteQwen:
                         config_actual["priorizar_paises"].append(pais)
                 print(f"✅ Países agregados: {config_actual['priorizar_paises']}")
             else:
-                config_actual["priorizar_paises"] = ["España", "Portugal", "Alemania", "Francia", "Italia", "Holanda", "Bélgica", "Suiza"]
-                print("✅ Países agregados (lista por defecto)")
+                config_actual["priorizar_paises"] = ["España", "Portugal", "Alemania", "Francia", "Italia", "Holanda"]
+                print(f"✅ Países por defecto: {config_actual['priorizar_paises']}")
         
-        elif accion == "CAMBIAR_ESTRATEGIA" or accion == "BUSCAR_EN_GRUPOS":
-            print("🔄 Qwen sugiere cambiar estrategia: buscar en GRUPOS de Facebook")
-            config_actual["buscar_en_grupos"] = True
-            config_actual["busquedas_facebook"] = 30  # Menos búsquedas, más grupos
-        
-        elif accion == "CAMBIAR_QUERIES":
-            print(f"🔄 Qwen sugiere cambiar queries: {valor}")
+        else:
+            print(f"⚠️ Acción desconocida: {accion}")
+            config_actual["busquedas_facebook"] = min(config_actual.get("busquedas_facebook", 50) + 30, 300)
         
         return config_actual
     
-    def loop(self, max_iteraciones=10):
+    def loop(self, max_iteraciones=15):
         """Loop de mejora con Qwen"""
         
         print("="*60)
@@ -176,6 +214,7 @@ class AgenteQwen:
         print(f"📌 BOT DIR: {self.bot_dir}")
         print(f"📌 MODELO CODER: {MODELO_CODER}")
         print(f"📌 MODELO GENERAL: {MODELO_GENERAL}")
+        print(f"📌 ENRIQUECIMIENTO: {'✅' if ENRIQUECIMIENTO_DISPONIBLE else '❌'}")
         print("="*60)
         
         # Configuración inicial
@@ -190,7 +229,6 @@ class AgenteQwen:
             "buscar_en_grupos": False
         }
         
-        # Guardar configuración inicial para el bot
         with open(os.path.join(self.bot_dir, 'config_temp.json'), 'w') as f:
             json.dump(config_actual, f)
         
@@ -198,7 +236,7 @@ class AgenteQwen:
             print(f"\n📌 ITERACIÓN {i+1}/{max_iteraciones}")
             print("-"*40)
             
-            # 1. Ejecutar bot con configuración actual
+            # 1. Ejecutar bot
             print("🚀 Ejecutando bot...")
             try:
                 resultado = subprocess.run(
@@ -206,21 +244,21 @@ class AgenteQwen:
                     cwd=self.bot_dir,
                     capture_output=True,
                     text=True,
-                    timeout=120
+                    timeout=180
                 )
                 if resultado.returncode == 0:
-                    print("✅ Bot ejecutado correctamente")
+                    print("✅ Bot ejecutado")
                 else:
                     print(f"⚠️ Bot terminó con código {resultado.returncode}")
             except subprocess.TimeoutExpired:
-                print("⚠️ Bot tardó mucho, continuando...")
+                print("⚠️ Bot tardó mucho")
             except Exception as e:
-                print(f"❌ Error ejecutando bot: {e}")
+                print(f"❌ Error: {e}")
             
             # 2. Analizar resultados
             metricas = self.analizar_resultados()
             if not metricas:
-                print("❌ No se pudieron analizar los resultados")
+                print("❌ No se pudo analizar el CSV")
                 break
             
             print(f"\n📊 RESULTADOS:")
@@ -229,6 +267,32 @@ class AgenteQwen:
             print(f"   Emails: {metricas['emails']}")
             print(f"   Fuentes: {metricas['fuentes']}")
             print(f"   Score: {metricas['score']}")
+            
+            # ============================================================
+            # ENRIQUECIMIENTO AUTOMÁTICO (si hay pocos organizadores)
+            # ============================================================
+            if metricas['organizadores'] < 20 and metricas['eventos'] > 50 and ENRIQUECIMIENTO_DISPONIBLE:
+                print("\n🔍 Pocos organizadores detectados. Enriqueciendo eventos con Qwen...")
+                try:
+                    csv_path = os.path.join(self.bot_dir, 'data/events_consolidated_v5.csv')
+                    df = pd.read_csv(csv_path)
+                    eventos = df.to_dict('records')
+                    
+                    eventos_enriquecidos = enriquecer_eventos_con_qwen(eventos)
+                    
+                    df_nuevo = pd.DataFrame(eventos_enriquecidos)
+                    df_nuevo.to_csv(csv_path, index=False)
+                    print("✅ Eventos enriquecidos guardados")
+                    
+                    # Volver a analizar para ver si mejoró
+                    metricas = self.analizar_resultados()
+                    print(f"\n📊 RESULTADOS DESPUÉS DE ENRIQUECER:")
+                    print(f"   Eventos: {metricas['eventos']}")
+                    print(f"   Organizadores: {metricas['organizadores']}")
+                    print(f"   Emails: {metricas['emails']}")
+                    print(f"   Score: {metricas['score']}")
+                except Exception as e:
+                    print(f"⚠️ Error en enriquecimiento: {e}")
             
             # 3. Guardar historial
             self.historial.append({
@@ -248,24 +312,8 @@ class AgenteQwen:
                 print(f"\n🎉 ¡OBJETIVO ALCANZADO!")
                 break
             
-            # 6. Si el score no mejora en 3 iteraciones, Qwen sugiere cambio de estrategia
-            if i >= 3:
-                ultimos_scores = [h['metricas']['score'] for h in self.historial[-3:] if 'metricas' in h]
-                if len(ultimos_scores) >= 3 and len(set(ultimos_scores)) == 1:
-                    print("⚠️ Sin mejora en 3 iteraciones → Qwen sugiere cambio de estrategia")
-                    mejora = {
-                        "accion": "CAMBIAR_ESTRATEGIA",
-                        "parametro": "buscar_en_grupos",
-                        "valor": True,
-                        "razon": "Sin mejora tras varias iteraciones, probar búsqueda en grupos"
-                    }
-                    config_actual = self.aplicar_mejora(mejora, config_actual)
-                    with open(os.path.join(self.bot_dir, 'config_temp.json'), 'w') as f:
-                        json.dump(config_actual, f)
-                    continue
-            
-            # 7. Qwen genera mejora
-            print("\n🤖 Qwen pensando...")
+            # 6. Qwen genera mejora
+            print("\n🤖 Qwen analizando...")
             mejora = self.generar_mejora(metricas)
             
             if mejora:
@@ -274,7 +322,7 @@ class AgenteQwen:
                 print("⚠️ Qwen no propuso mejora, aumentando búsquedas por defecto")
                 config_actual["busquedas_facebook"] = min(config_actual.get("busquedas_facebook", 50) + 30, 300)
             
-            # 8. Guardar configuración para el bot
+            # 7. Guardar configuración
             with open(os.path.join(self.bot_dir, 'config_temp.json'), 'w') as f:
                 json.dump(config_actual, f)
             
@@ -288,13 +336,9 @@ class AgenteQwen:
         print(f"Mejor score: {self.mejor_score}")
         print(f"Mejor config: {self.mejor_config}")
         
-        # Guardar historial (asegurando que sea JSON válido)
-        try:
-            with open('historial_qwen.json', 'w') as f:
-                json.dump(self.historial, f, indent=2, default=str)
-            print("📁 Historial guardado en historial_qwen.json")
-        except Exception as e:
-            print(f"⚠️ Error guardando historial: {e}")
+        with open('historial_qwen.json', 'w') as f:
+            json.dump(self.historial, f, indent=2, default=str)
+        print("📁 Historial guardado en historial_qwen.json")
         
         return self.mejor_config
 

@@ -1,0 +1,1 @@
+from .scraper_publico import scrape_instagram_publico

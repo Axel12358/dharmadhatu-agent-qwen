@@ -2,378 +2,201 @@
   {
     "iteracion": 1,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
       "priorizar_paises": [],
-      "extraer_contactos": false,
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 71,
+      "fuentes": 5,
+      "organizadores": 32,
       "emails": 0,
-      "score": 177
+      "score": 185
     }
   },
   {
     "iteracion": 2,
     "config": {
       "max_eventos": 120,
-      "busquedas_facebook": 50,
-      "timeout": 20,
+      "busquedas_facebook": 100,
+      "timeout": 30,
       "priorizar_paises": [],
-      "extraer_contactos": false,
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 71,
+      "fuentes": 5,
+      "organizadores": 21,
       "emails": 0,
-      "score": 177
+      "score": 163
     }
   },
   {
     "iteracion": 3,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
       "priorizar_paises": [],
-      "extraer_contactos": false,
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 80,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 72,
+      "fuentes": 5,
+      "organizadores": 24,
       "emails": 0,
-      "score": 176
+      "score": 170
     }
   },
   {
     "iteracion": 4,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
       "priorizar_paises": [],
-      "extraer_contactos": false,
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 72,
+      "fuentes": 5,
+      "organizadores": 34,
       "emails": 0,
-      "score": 177
+      "score": 190
     }
   },
   {
     "iteracion": 5,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
+      "priorizar_paises": [],
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 72,
+      "fuentes": 5,
+      "organizadores": 20,
       "emails": 0,
-      "score": 177
+      "score": 162
     }
   },
   {
     "iteracion": 6,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
+      "priorizar_paises": [],
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 72,
+      "fuentes": 5,
+      "organizadores": 30,
       "emails": 0,
-      "score": 177
+      "score": 182
     }
   },
   {
     "iteracion": 7,
     "config": {
       "max_eventos": 120,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
+      "busquedas_facebook": 100,
+      "timeout": 30,
+      "priorizar_paises": [],
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 72,
+      "fuentes": 5,
+      "organizadores": 26,
       "emails": 0,
-      "score": 177
+      "score": 174
     }
   },
   {
     "iteracion": 8,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
+      "priorizar_paises": [],
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 19,
+      "eventos": 71,
+      "fuentes": 5,
+      "organizadores": 26,
       "emails": 0,
-      "score": 179
+      "score": 173
     }
   },
   {
     "iteracion": 9,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
+      "max_eventos": 120,
+      "busquedas_facebook": 100,
+      "timeout": 30,
+      "priorizar_paises": [],
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 72,
+      "fuentes": 5,
+      "organizadores": 30,
       "emails": 0,
-      "score": 177
+      "score": 182
     }
   },
   {
     "iteracion": 10,
     "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
-      "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
-    },
-    "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
-      "emails": 0,
-      "score": 177
-    }
-  },
-  {
-    "iteracion": 11,
-    "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
-      "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
-    },
-    "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
-      "emails": 0,
-      "score": 177
-    }
-  },
-  {
-    "iteracion": 12,
-    "config": {
-      "max_eventos": 100,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
-      "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
-    },
-    "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
-      "emails": 0,
-      "score": 177
-    }
-  },
-  {
-    "iteracion": 13,
-    "config": {
       "max_eventos": 120,
-      "busquedas_facebook": 50,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
+      "busquedas_facebook": 100,
+      "timeout": 30,
+      "priorizar_paises": [],
+      "extraer_contactos": true,
       "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
+      "profundidad_busqueda": 5,
+      "buscar_en_grupos": true
     },
     "metricas": {
-      "eventos": 80,
-      "fuentes": 6,
-      "organizadores": 18,
+      "eventos": 71,
+      "fuentes": 5,
+      "organizadores": 26,
       "emails": 0,
-      "score": 176
-    }
-  },
-  {
-    "iteracion": 14,
-    "config": {
-      "max_eventos": 120,
-      "busquedas_facebook": 80,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
-      "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
-    },
-    "metricas": {
-      "eventos": 80,
-      "fuentes": 6,
-      "organizadores": 18,
-      "emails": 0,
-      "score": 176
-    }
-  },
-  {
-    "iteracion": 15,
-    "config": {
-      "max_eventos": 120,
-      "busquedas_facebook": 80,
-      "timeout": 20,
-      "priorizar_paises": [
-        "Espa\u00f1a",
-        "Portugal",
-        "Alemania",
-        "Francia",
-        "Italia",
-        "Holanda"
-      ],
-      "extraer_contactos": false,
-      "agregar_fuentes": [],
-      "profundidad_busqueda": 3,
-      "buscar_en_grupos": false
-    },
-    "metricas": {
-      "eventos": 81,
-      "fuentes": 6,
-      "organizadores": 18,
-      "emails": 0,
-      "score": 177
+      "score": 173
     }
   }
 ]

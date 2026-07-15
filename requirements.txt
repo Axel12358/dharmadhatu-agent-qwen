@@ -1,6 +1,8 @@
-pandas
-ollama
-playwright
-requests
+playwright>=1.40.0
+pandas>=2.0.0
+ollama>=0.1.0
+aiohttp
 beautifulsoup4
 lxml
+requests
+python-dotenv

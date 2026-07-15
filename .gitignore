@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Logs y archivos generados
+*.log
+*.csv
+*.json
+!config_optima.json    # mantener la configuración óptima
+!historial_qwen.json   # mantener el historial
+*.tmp
+*.temp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ollama / modelos
+ollama_models/
+
+# Playwright
+playwright-report/
+test-results/

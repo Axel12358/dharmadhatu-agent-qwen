@@ -1,0 +1,245 @@
+import asyncio
+import random
+import re
+import logging
+from playwright.async_api import async_playwright
+from bs4 import BeautifulSoup
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# ============================================================
+# 1. GENERACIÓN DE QUERIES PARA BUSCAR GRUPOS (CORRECTO)
+# ============================================================
+def generar_queries_grupos(config):
+    """
+    Genera queries para buscar GRUPOS en Facebook.
+    SOLO combina: subgéneros + países + ciudades (SIN tipos de evento).
+    Esto es lo que estaba mal antes.
+    """
+    queries = []
+    subgeneros = config.get("subgeneros", [])
+    paises = config.get("priorizar_paises", [])
+    ciudades = config.get("ciudades", [])
+
+    # Si no hay datos, usar valores por defecto (de CONFIG)
+    if not subgeneros:
+        subgeneros = [
+            "darkpsy", "forest", "psytrance", "goa", "hitech", 
+            "fullon", "progressive", "suomi", "twilight"
+        ]
+    if not paises:
+        paises = [
+            "Germany", "France", "Spain", "Italy", "Portugal",
+            "Netherlands", "Belgium", "UK", "Switzerland"
+        ]
+    if not ciudades:
+        ciudades = [
+            "Berlin", "Madrid", "Barcelona", "London", "Paris", 
+            "Rome", "Amsterdam", "Lisbon", "Prague"
+        ]
+
+    # Combinaciones: subgénero + país + ciudad
+    for sub in subgeneros:
+        for pais in paises:
+            queries.append(f"{sub} {pais}")
+            for ciudad in ciudades:
+                queries.append(f"{sub} {ciudad} {pais}")
+                queries.append(f"{sub} {pais} {ciudad}")
+    
+    # Si no hay queries, usar la genérica
+    if not queries:
+        queries.append("psytrance")
+
+    # Mezclar y limitar
+    random.shuffle(queries)
+    max_queries = config.get("busquedas_facebook", 50)
+    queries = queries[:max_queries]
+    logger.info(f"🔍 Generadas {len(queries)} queries para buscar GRUPOS")
+    return queries
+
+# ============================================================
+# 2. TIPOS DE EVENTO PARA FILTRAR DENTRO DE LOS GRUPOS
+# ============================================================
+TIPOS_EVENTO = [
+    "festival", "party", "gathering", "rave",
+    "outdoor", "indoor", "camp", "retreat",
+    "open air", "warehouse", "club", "ritual",
+    "weekender", "burner"
+]
+
+def contiene_tipo_evento(texto: str) -> bool:
+    """Verifica si el texto contiene algún tipo de evento relevante."""
+    texto_lower = texto.lower()
+    for tipo in TIPOS_EVENTO:
+        if tipo in texto_lower:
+            return True
+    return False
+
+# ============================================================
+# 3. BÚSQUEDA DE GRUPOS Y EXTRACCIÓN DE EVENTOS
+# ============================================================
+async def buscar_grupos_y_eventos(query, page, timeout, config):
+    """
+    Busca grupos con la query, entra en ellos y extrae eventos.
+    Filtra por tipos de evento dentro de los posts.
+    """
+    eventos = []
+    try:
+        url_grupos = f"https://www.facebook.com/search/groups/?q={query.replace(' ', '%20')}"
+        await page.goto(url_grupos, timeout=timeout * 1000, wait_until='networkidle')
+        await asyncio.sleep(random.uniform(2, 4))
+
+        # Obtener enlaces de grupos
+        grupo_links = await page.query_selector_all('a[href*="/groups/"]')
+        logger.debug(f"🔍 Encontrados {len(grupo_links)} grupos para query: '{query}'")
+
+        for link in grupo_links[:5]:  # Tomar primeros 5 grupos
+            try:
+                href = await link.get_attribute('href')
+                if not href or 'search' in href:
+                    continue
+                grupo_url = f"https://www.facebook.com{href}" if href.startswith('/') else href
+                await page.goto(grupo_url, timeout=timeout * 1000, wait_until='networkidle')
+                await asyncio.sleep(random.uniform(2, 4))
+
+                # Ir a la pestaña de eventos del grupo
+                try:
+                    await page.click('span[dir="auto"]:has-text("Eventos")')
+                    await asyncio.sleep(2)
+                except:
+                    pass
+
+                # Scroll para cargar eventos
+                for _ in range(3):
+                    await page.evaluate('window.scrollBy(0, window.innerHeight)')
+                    await asyncio.sleep(random.uniform(1, 2))
+
+                # Extraer eventos del grupo usando selectores flexibles
+                html = await page.content()
+                soup = BeautifulSoup(html, 'html.parser')
+
+                # Selectores para eventos (intentar varios)
+                eventos_elem = soup.select('div[role="article"]')
+                if not eventos_elem:
+                    eventos_elem = soup.select('div[data-testid="event-card"]')
+                if not eventos_elem:
+                    eventos_elem = soup.select('div[class*="event"]')
+
+                for elem in eventos_elem[:10]:
+                    texto_evento = elem.get_text(separator=" ", strip=True)
+                    if not texto_evento or len(texto_evento) < 20:
+                        continue
+
+                    # FILTRO: tipos de evento
+                    if not contiene_tipo_evento(texto_evento):
+                        continue
+
+                    # Extraer nombre
+                    nombre = "Sin nombre"
+                    nombre_elem = elem.find('span', {'dir': 'auto'})
+                    if nombre_elem:
+                        nombre = nombre_elem.get_text(strip=True)
+                    else:
+                        titulo_elem = elem.find('h2') or elem.find('h3')
+                        if titulo_elem:
+                            nombre = titulo_elem.get_text(strip=True)
+
+                    # Extraer organizador (Hosted by)
+                    organizador = "No disponible"
+                    org_elem = elem.find('span', {'data-testid': 'event-card-host'})
+                    if org_elem:
+                        organizador = org_elem.get_text(strip=True).replace('Hosted by', '').replace('Organizado por', '').strip()
+                    else:
+                        match = re.search(r'Hosted by\s*([^\n]+)', texto_evento, re.IGNORECASE)
+                        if match:
+                            organizador = match.group(1).strip()
+                        else:
+                            match = re.search(r'Organizado por\s*([^\n]+)', texto_evento, re.IGNORECASE)
+                            if match:
+                                organizador = match.group(1).strip()
+
+                    # Enlace
+                    enlace = ""
+                    enlace_elem = elem.find('a', href=re.compile(r'/events/'))
+                    if enlace_elem:
+                        enlace = enlace_elem.get('href')
+                        if enlace and not enlace.startswith('http'):
+                            enlace = f"https://www.facebook.com{enlace}"
+
+                    if nombre and nombre != "Sin nombre":
+                        evento = {
+                            "nombre": nombre.strip(),
+                            "fecha": "Fecha no disponible",
+                            "lugar": "Lugar no disponible",
+                            "organizador": organizador,
+                            "enlace": enlace,
+                            "fuente": "Facebook (grupo)"
+                        }
+                        eventos.append(evento)
+                        logger.info(f"   ✅ Evento: {nombre[:40]}... (Organizador: {organizador[:30]})")
+            except Exception as e:
+                logger.warning(f"   ⚠️ Error en grupo: {e}")
+                continue
+    except Exception as e:
+        logger.error(f"Error en búsqueda de grupos: {e}")
+
+    return eventos
+
+# ============================================================
+# 4. FUNCIÓN PRINCIPAL (async)
+# ============================================================
+async def scrape_facebook_public(config):
+    """
+    Función principal que ejecuta la búsqueda en grupos con la lógica corregida.
+    """
+    queries = generar_queries_grupos(config)
+    max_eventos = config.get("max_eventos", 150)
+    timeout = config.get("timeout", 30)
+    semaphore = asyncio.Semaphore(5)
+
+    logger.info(f"🔍 Ejecutando {len(queries)} búsquedas de grupos...")
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+            headless=True,
+            args=['--no-sandbox', '--disable-setuid-sandbox']
+        )
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            viewport={'width': 1280, 'height': 800}
+        )
+
+        async def trabajar_con_query(query):
+            async with semaphore:
+                page = await context.new_page()
+                try:
+                    eventos = await buscar_grupos_y_eventos(query, page, timeout, config)
+                    return eventos
+                finally:
+                    await page.close()
+
+        tareas = [trabajar_con_query(query) for query in queries]
+        resultados = await asyncio.gather(*tareas, return_exceptions=True)
+        await browser.close()
+
+    # Consolidar y filtrar duplicados
+    todos_eventos = []
+    for res in resultados:
+        if isinstance(res, list):
+            todos_eventos.extend(res)
+        elif isinstance(res, Exception):
+            logger.warning(f"Error en una tarea: {res}")
+
+    eventos_unicos = []
+    seen = set()
+    for e in todos_eventos:
+        key = (e["nombre"], e["organizador"])
+        if key not in seen and e["nombre"] != "Sin nombre":
+            seen.add(key)
+            eventos_unicos.append(e)
+            if len(eventos_unicos) >= max_eventos:
+                break
+
+    logger.info(f"✅ Facebook (grupos): {len(eventos_unicos)} eventos reales")
+    return eventos_unicos

@@ -1,0 +1,94 @@
+### RESUMEN EJECUTIVO
+
+El proyecto Dharmadhatu Bot v5 actualmente está configurado para buscar eve[3D[K
+eventos Psytrance en varios países y ciudades, utilizando múltiples platafo[7D[K
+plataformas de scraping. Sin embargo, hay lugar para mejorar la eficiencia [K
+y el rendimiento del bot mediante optimizaciones específicas en la configur[8D[K
+configuración de parámetros, el diseño del loop de ejecución, las mejoras e[1D[K
+en los scrapers y la integración de nuevos subagentes.
+
+### ANÁLISIS DE PARÁMETROS (valores recomendados)
+
+- **Países**: La lista actual es bastante amplia. Para maximizar eventos re[2D[K
+reales, podríamos priorizar países con una mayor comunidad Psytrance como A[1D[K
+Alemania, España, Francia, Reino Unido y Estados Unidos.
+  
+- **Subgéneros**: Los subgéneros actuales son adecuados. Sin embargo, podrí[5D[K
+podríamos considerar agregar "deeppsy" para incluir eventos más específicos[11D[K
+específicos.
+
+- **Tipos de Evento**: La lista actual es completa. No necesitamos cambiar [K
+nada aquí.
+
+- **Ciudades**: La lista actual es extensa. Para maximizar eventos reales, [K
+podríamos limitarnos a ciudades clave como Madrid, Barcelona, Berlin, Londr[5D[K
+Londres y Nueva York.
+
+### ESTRATEGIA DE LOOP (iteraciones, combinaciones)
+
+Recomendaría 3 iteraciones con las siguientes combinaciones:
+
+1. **Iteración 1**: Países prioritarios, subgéneros actuales, tipos de even[4D[K
+evento completos, ciudades clave.
+2. **Iteración 2**: Países adicionales a los priorizados, subgénero "deepps[7D[K
+"deeppsy", tipos de evento completos, ciudades clave.
+3. **Iteración 3**: Países prioritarios, subgéneros actuales, tipos de even[4D[K
+evento completos, ciudades adicionales.
+
+**Métrica de Éxito (Score)**: El score podría basarse en la cantidad total [K
+de eventos únicos encontrados y la calidad de los mismos (por ejemplo, veri[4D[K
+verificación de detalles relevantes).
+
+### MEJORAS EN SCRAPERS
+
+1. **Facebook Mejorado**: 
+   - Añadir parámetros adicionales para buscar eventos específicos dentro d[1D[K
+de grupos.
+   - Implementar una lógica para distinguir entre eventos reales y contenid[8D[K
+contenido promocional.
+
+2. **Manejo de Excepciones y Rate Limiting**:
+   - Usar la función `with_retry` para manejar errores temporales en las so[2D[K
+solicitudes HTTP.
+   - Implementar el middleware `limit_rate` para limitar el número de petic[5D[K
+peticiones a Facebook por minuto.
+
+3. **Proxies Rotativos**:
+   - Añadir la funcionalidad para rotar proxies localmente, garantizando pr[2D[K
+privacidad y evitando restricciones geográficas.
+   
+### PLAN DE IMPLEMENTACIÓN (pasos concretos)
+
+1. **Iteración 1**:
+   - Modificar `config_temp.json` para incluir solo los países priorizados,[12D[K
+priorizados, ciudades clave y subgéneros actuales.
+   - Implementar la mejora en `facebook_mejorado.py` para buscar eventos es[2D[K
+específicos dentro de grupos.
+
+2. **Iteración 2**:
+   - Añadir "deeppsy" a la lista de subgéneros en `config_temp.json`.
+   - Aplicar las mejoras implementadas en el paso anterior.
+
+3. **Iteración 3**:
+   - Modificar `config_temp.json` para incluir más ciudades clave.
+   - Añadir nuevas combinaciones de países, subgéneros y ciudades a los arc[3D[K
+archivos de configuración (`scraper_asincrono.py`).
+
+4. **Integración de Subagentes**:
+   - Integramos `resident_advisor.py`, `eventbrite.py` y `instagram_public.[18D[K
+`instagram_public.py`.
+   - Implementar un sistema de manejo de excepciones para evitar que el pro[3D[K
+proceso se detenga si uno de los scrapers falla.
+
+5. **Optimización Final**:
+   - Realizar pruebas exhaustivas.
+   - Ajustar parámetros según los resultados obtenidos.
+
+### PREGUNTAS ABIERTAS
+
+1. ¿Cómo medimos la "calidad" de un evento en los resultados?
+2. ¿Existe algún método para verificar automáticamente si un evento es real[4D[K
+real o promocional?
+3. ¿Qué criterios deberíamos usar para determinar cuándo añadir nuevos país[4D[K
+países o ciudades a la lista?
+

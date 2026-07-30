@@ -1,0 +1,44 @@
+### ANÁLISIS DE LA SITUACIÓN ACTUAL
+
+La situación actual del scraper es que está generando combinaciones básicas[7D[K
+básicas y no encontrando eventos reales, lo que ha llevado al score de 34. [K
+El problema puede estar en la forma en que se están generando las queries o[1D[K
+o en cómo se está buscando información en Facebook.
+
+### CÓDIGO CORREGIDO (código COMPLETO de facebook_public.py)
+
+```python
+import asyncio
+import random
+import logging
+from playwright.async_api import async_playwright
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def generar_queries_facebook(config):
+    """Genera combinaciones de países, subgéneros, tipos y ciudades."""
+    queries = []
+    paises = config.get("priorizar_paises", [])
+    subgeneros = config.get("subgeneros", ["psytrance"])
+    tipos = config.get("tipos_evento", ["festival"])
+    ciudades = config.get("ciudades", [])
+
+    for pais in paises:
+        for sub in subgeneros:
+            for tipo in tipos:
+                queries.append(f"{sub} {tipo} {pais}")
+            if ciudades:
+                for ciudad in ciudades:
+                    queries.append(f"{sub} {tipo} {ciudad} {pais}")
+
+    if not queries:
+        queries.append("psytrance festival")
+
+    max_queries = config.get("busquedas_facebook", 150)
+    random.shuffle(queries)
+    return queries[:max_queries]
+
+async def scrape_una_query(query, page, timeout):
+    """Scrapea una query de Facebook y devuelve eventos."""
+   

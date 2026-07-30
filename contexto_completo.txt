@@ -1,0 +1,139 @@
+=== CONFIGURACIÓN ACTUAL (config_temp.json) ===
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 50,
+  "timeout": 30,
+  "priorizar_paises": [
+    "Germany / de",
+    "Espa\u00f1a",
+    "Portugal",
+    "Reino Unido",
+    "Japan / jp",
+    "Slovakia / sk",
+    "Bolivia / bo",
+    "Switzerland / ch",
+    "Spain / es",
+    "Italia",
+    "Portugal / pt",
+    "Francia",
+    "Holanda",
+    "Alemania"
+  ],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": [
+    "fullon",
+    "psytrance",
+    "hitech",
+    "darkpsy",
+    "progressive",
+    "goa"
+  ],
+  "tipos_evento": [
+    "festival",
+    "outdoor",
+    "rave",
+    "party",
+    "gathering",
+    "indoor"
+  ],
+  "ciudades": [
+    "Berl\u00edn",
+    "Madrid",
+    "Barcelona",
+    "Londres",
+    "Lisboa",
+    "Roma",
+    "Par\u00eds",
+    "\u00c1msterdam"
+  ]
+}
+=== CÓDIGO ACTUAL DE facebook_public.py (función generar_queries) ===
+def generar_queries_facebook(config):
+    queries = []
+    paises = config.get("priorizar_paises", [])
+    subgeneros = config.get("subgeneros", [])
+    tipos = config.get("tipos_evento", [])
+    ciudades = config.get("ciudades", [])
+
+    # Si no hay datos, usar valores por defecto
+    if not subgeneros:
+        subgeneros = ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"]
+    if not tipos:
+        tipos = ["festival", "party", "gathering", "rave", "outdoor", "indoor", "camp"]
+
+    # 1. Combinaciones con países
+    if paises:
+        for pais in paises:
+            for sub in subgeneros:
+                for tipo in tipos:
+                    queries.append(f"{sub} {tipo} {pais}")
+            for tipo in tipos:
+                queries.append(f"{tipo} {pais}")
+            for sub in subgeneros:
+                queries.append(f"{sub} {pais}")
+            if ciudades:
+                for ciudad in ciudades:
+                    for tipo in tipos:
+                        queries.append(f"{tipo} {ciudad} {pais}")
+                    for sub in subgeneros:
+                        queries.append(f"{sub} {ciudad} {pais}")
+    else:
+        for sub in subgeneros:
+
+=== CÓDIGO ACTUAL DE main_v5.py (sección de priorizar_paises) ===
+        logger.warning(f"⚠️ {ruta} no encontrado, usando valores por defecto")
+        return {
+            "max_eventos": 150,
+            "busquedas_facebook": 150,
+            "timeout": 30,
+            "priorizar_paises": [],
+            "extraer_contactos": True,
+            "buscar_en_grupos": True,
+            "subgeneros": ["psytrance"],
+            "tipos_evento": ["festival"],
+            "ciudades": []
+--
+    print("🌀 DHARMADHATU BOT v5 (CON SCRAPERS SUMADOS)")
+    print("=" * 60)
+    print(f"📊 max_eventos: {max_eventos}")
+    print(f"📊 busquedas_facebook: {config.get('busquedas_facebook', 150)}")
+    print(f"📊 extraer_contactos: {config.get('extraer_contactos', True)}")
+    print(f"📊 priorizar_paises: {config.get('priorizar_paises', [])}")
+    print(f"📊 buscar_en_grupos: {config.get('buscar_en_grupos', True)}")
+    print("=" * 60)
+
+    inicio = time.time()
+    todos_eventos = []
+
+=== LOG DE LA ÚLTIMA EJECUCIÓN (ERRORES) ===
+  "busquedas_facebook": 50,
+  "priorizar_paises": [
+
+=== ESTRUCTURA DEL REPOSITORIO (primer commit) ===
+4ed81c0 Portafolio profesional: documentación completa y estructura final
+ebd6f7d Portafolio profesional: documentación completa y estructura final
+bc29925 Mejora: agente Qwen con enriquecimiento de eventos y score 179
+4e69b96 Agente Qwen: score 132 con 56 eventos y 18 organizadores
+fd146e1 Agente Qwen para mejorar el loop de Dharmadhatu Bot
+
+=== LISTA DE SCRAPERS DISPONIBLES ===
+-rw-r--r--  1 angelgarcia  staff  1749 Jul 15 15:00 scrapers/busquedas_combinadas_facebook.py
+-rw-r--r--  1 angelgarcia  staff  3346 Jul 16 14:40 scrapers/enriquecer_eventos.py
+-rw-r--r--  1 angelgarcia  staff  2334 Jul 16 15:02 scrapers/eventbrite.py
+-rw-r--r--  1 angelgarcia  staff  4337 Jul 14 15:40 scrapers/facebook_mejorado.py
+-rw-r--r--  1 angelgarcia  staff  9057 Jul 27 12:23 scrapers/facebook_public.py
+-rw-r--r--  1 angelgarcia  staff  3049 Jul 15 17:15 scrapers/facebook_wrapper.py
+-rw-r--r--  1 angelgarcia  staff  1978 Jul 14 15:40 scrapers/goabase.py
+-rw-r--r--  1 angelgarcia  staff   605 Jul 15 12:48 scrapers/grupos_fijos.py
+-rw-r--r--  1 angelgarcia  staff  1038 Jul 14 15:40 scrapers/instagram.py
+-rw-r--r--  1 angelgarcia  staff  3078 Jul 14 15:40 scrapers/instagram_public.py
+-rw-r--r--  1 angelgarcia  staff  1140 Jul 15 15:00 scrapers/manejo_excepciones_robusto.py
+-rw-r--r--  1 angelgarcia  staff   951 Jul 15 15:00 scrapers/proxies_rotativos.py
+-rw-r--r--  1 angelgarcia  staff  1097 Jul 14 15:40 scrapers/psynews.py
+-rw-r--r--  1 angelgarcia  staff  1776 Jul 14 15:40 scrapers/qwen_enricher.py
+-rw-r--r--  1 angelgarcia  staff  1259 Jul 15 15:00 scrapers/rate_limiting.py
+-rw-r--r--  1 angelgarcia  staff  2359 Jul 16 15:02 scrapers/resident_advisor.py
+-rw-r--r--  1 angelgarcia  staff  1897 Jul 16 15:59 scrapers/scrapegraph_facebook.py
+-rw-r--r--  1 angelgarcia  staff  9511 Jul 14 15:40 scrapers/scraper_asincrono.py
+-rw-r--r--  1 angelgarcia  staff  1294 Jul 14 15:40 scrapers/songkick.py

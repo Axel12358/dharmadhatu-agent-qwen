@@ -1,0 +1,131 @@
+--- CONFIGURACIÓN (config_temp.json) ---
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 200,
+  "timeout": 30,
+  "priorizar_paises": [
+    "Alemania", "Austria", "Bélgica", "Bulgaria", "Chipre", "Croacia", "Dinamarca",
+    "Eslovaquia", "Eslovenia", "España", "Estonia", "Finlandia", "Francia", "Grecia",
+    "Hungría", "Irlanda", "Italia", "Letonia", "Lituania", "Luxemburgo", "Malta",
+    "Países Bajos", "Polonia", "Portugal", "Reino Unido", "República Checa", "Rumanía",
+    "Suecia", "Suiza", "Noruega", "Islandia", "Liechtenstein", "Andorra", "Mónaco"
+  ],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"],
+  "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor", "indoor", "evento"],
+  "ciudades": [
+    "Madrid", "Barcelona", "Valencia", "Sevilla", "Lisboa", "Oporto", "Berlín", "Hamburgo",
+    "Múnich", "Colonia", "París", "Lyon", "Marsella", "Roma", "Milán", "Nápoles",
+    "Ámsterdam", "Róterdam", "Londres", "Mánchester", "Birmingham", "Zúrich", "Ginebra",
+    "Viena", "Praga", "Budapest", "Varsovia", "Cracovia", "Bratislava", "Estocolmo",
+    "Oslo", "Copenhague", "Helsinki", "Dublín", "Bruselas", "Atenas", "Lisboa", "Oporto"
+  ]
+}
+
+--- ÚLTIMOS ERRORES ---
+No se encontraron logs de error.
+
+--- ESTADO DE GIT ---
+On branch feature/instagram-v2
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   main_v5.py
+	modified:   scrapers/enriquecer_eventos.py
+	modified:   scrapers/facebook_public.py
+	modified:   scrapers/grupos_fijos.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	diagnostico_20260715_144154/
+	diagnostico_completo.txt
+	fix_bot_with_qwen.sh
+	loop_optimizer.py
+	loop_optimizer.py.bak
+	main_v5.py.bak
+	prompt_para_qwen.txt
+	qwen_advisor.sh
+	scrapers/enriquecer_eventos.py.bak
+	scrapers/facebook_public.py.bak
+	solucion_qwen.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+--- ARCHIVOS PRINCIPALES ---
+-rw-r--r--  1 angelgarcia  staff  17125 Jul 13 21:26 ../agente_qwen.py
+-rw-r--r--  1 angelgarcia  staff   2788 Jul 14 15:40 ../config.py
+-rw-r--r--  1 angelgarcia  staff   1251 Jul 15 11:04 ../config_optima.json
+-rw-r--r--  1 angelgarcia  staff   1251 Jul 15 11:16 ../config_temp.json
+-rw-r--r--  1 angelgarcia  staff   3842 Jul 14 15:40 ../evaluator.py
+-rw-r--r--  1 angelgarcia  staff   2649 Jul 14 15:40 ../extraer_contactos.py
+-rw-r--r--  1 angelgarcia  staff   4183 Jul 14 15:22 ../historial_qwen.json
+-rw-r--r--  1 angelgarcia  staff   2659 Jul 15 13:46 ../loop_optimizer.py
+-rw-r--r--  1 angelgarcia  staff   5918 Jul 15 14:26 ../main_v5.py
+-rw-r--r--  1 angelgarcia  staff   3912 Jul 14 15:40 ../pipeline_hibrido.py
+-rw-r--r--  1 angelgarcia  staff   2691 Jul 15 14:26 ../scrapers/enriquecer_eventos.py
+-rw-r--r--  1 angelgarcia  staff   1315 Jul 14 15:40 ../scrapers/eventbrite.py
+-rw-r--r--  1 angelgarcia  staff   4337 Jul 14 15:40 ../scrapers/facebook_mejorado.py
+-rw-r--r--  1 angelgarcia  staff   5253 Jul 15 14:26 ../scrapers/facebook_public.py
+-rw-r--r--  1 angelgarcia  staff   1978 Jul 14 15:40 ../scrapers/goabase.py
+-rw-r--r--  1 angelgarcia  staff    605 Jul 15 12:48 ../scrapers/grupos_fijos.py
+-rw-r--r--  1 angelgarcia  staff   1038 Jul 14 15:40 ../scrapers/instagram.py
+-rw-r--r--  1 angelgarcia  staff   3078 Jul 14 15:40 ../scrapers/instagram_public.py
+-rw-r--r--  1 angelgarcia  staff   1097 Jul 14 15:40 ../scrapers/psynews.py
+-rw-r--r--  1 angelgarcia  staff   1776 Jul 14 15:40 ../scrapers/qwen_enricher.py
+-rw-r--r--  1 angelgarcia  staff   1475 Jul 14 15:40 ../scrapers/resident_advisor.py
+-rw-r--r--  1 angelgarcia  staff   9511 Jul 14 15:40 ../scrapers/scraper_asincrono.py
+-rw-r--r--  1 angelgarcia  staff   1294 Jul 14 15:40 ../scrapers/songkick.py
+-rw-r--r--  1 angelgarcia  staff   1266 Jul 14 15:40 ../utils.py
+
+--- FUNCIONES EN SCRAPERS ---
+👉 enriquecer_eventos.py:
+def generar_descripcion_evento(nombre_evento):
+def extraer_organizador_email(texto):
+async def enriquecer_un_evento(evento):
+async def enriquecer_eventos_con_qwen(eventos):
+
+👉 eventbrite.py:
+def scrape_eventbrite(limit=100):
+
+👉 facebook_mejorado.py:
+def scrape_facebook_mejorado(query="psytrance festival", max_posts=30):
+
+👉 facebook_public.py:
+def generar_queries_facebook(config):
+async def scrape_una_query(query, page, timeout):
+async def scrape_facebook_public(config):
+
+👉 goabase.py:
+def scrape_goabase(limit=100):
+
+👉 grupos_fijos.py:
+async def scrape_grupos_fijos(config):
+
+👉 instagram.py:
+def scrape_instagram(limit=100):
+
+👉 instagram_public.py:
+def scrape_instagram_public(perfil="psytrance", max_posts=15):
+def generar_eventos_prueba(fuente, max_posts=10):
+
+👉 psynews.py:
+def scrape_psynews(limit=100):
+
+👉 qwen_enricher.py:
+def enriquecer_eventos(eventos, delay=0.5):
+def enriquecer_evento_qwen(evento):
+
+👉 resident_advisor.py:
+def scrape_resident_advisor(limit=100):
+
+👉 scraper_asincrono.py:
+async def scrape_goabase_async(limit=100):
+async def scrape_facebook_async(query="psytrance festival", max_posts=50):
+def cargar_cache():
+def guardar_cache(cache):
+async def ejecutar_scrapers_async(config):
+
+👉 songkick.py:
+def scrape_songkick(limit=100):
+

@@ -1,0 +1,17 @@
+📧 Extrayendo contactos con Qwen (solo eventos reales)...
+✅ Eventos enriquecidos guardados en 'eventos_enriquecidos.csv'
+ • Eventos totales: 13
+ • Facebook: 10
+📊 max_eventos: 150
+📊 busquedas_facebook: 50
+📊 buscar_en_grupos: True
+✅ Goabase: 23 eventos encontrados
+📘 Ejecutando Facebook...
+✅ Songkick: 11 eventos
+📧 Extrayendo contactos con Qwen (solo eventos reales)...
+✅ Eventos enriquecidos guardados en 'eventos_enriquecidos.csv'
+ • Eventos totales: 24
+ • Facebook: 21
+  "max_eventos": 150,
+  "busquedas_facebook": 50,
+  "buscar_en_grupos": true,

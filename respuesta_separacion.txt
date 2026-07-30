@@ -1,0 +1,97 @@
+```json
+{
+  "arquitectura_propuesta": {
+    "grupos_buscador.py": "Funciones específicas para la búsqueda de grupos[6D[K
+grupos en Facebook",
+    "eventos_directos.py": "Funciones específicas para la búsqueda de event[5D[K
+eventos directos en Facebook",
+    "facebook_public.py": "Orquestador que integra las funciones de búsqued[7D[K
+búsqueda y consolidación"
+  },
+  "estructura_de_archivos_y_configuraciones": {
+    "config_grupos.json": {
+      "descripcion": "Configuración para la búsqueda de grupos",
+      "ejemplo_contenido": [
+        {
+          "subgenero": "psytrance",
+          "pais": "espana",
+          "ciudades": ["madrid", "barcelona"]
+        },
+        {
+          "subgenero": "goa",
+          "pais": "alemania",
+          "ciudades": ["berlin"]
+        }
+      ]
+    },
+    "config_eventos.json": {
+      "descripcion": "Configuración para la búsqueda de eventos directos",
+      "ejemplo_contenido": [
+        {
+          "subgenero": "psytrance",
+          "pais": "espana",
+          "ciudades": ["madrid", "barcelona"],
+          "tipos_evento": ["festival"]
+        },
+        {
+          "subgenero": "goa",
+          "pais": "alemania",
+          "ciudades": ["berlin"],
+          "tipos_evento": ["outdoor"]
+        }
+      ]
+    }
+  },
+  "codigo_completo": {
+    "config_grupos.json": "[{\"subgenero\": \"psytrance\", \"pais\": \"espa[6D[K
+\"espana\", \"ciudades\": [\"madrid\", \"barcelona\"]}, {\"subgenero\": \"g[3D[K
+\"goa\", \"pais\": \"alemania\", \"ciudades\": [\"berlin\"]}]",
+    "config_eventos.json": "[{\"subgenero\": \"psytrance\", \"pais\": \"esp[5D[K
+\"espana\", \"ciudades\": [\"madrid\", \"barcelona\"], \"tipos_evento\": [\[2D[K
+[\"festival\"]}, {\"subgenero\": \"goa\", \"pais\": \"alemania\", \"ciudade[9D[K
+\"ciudades\": [\"berlin\"], \"tipos_evento\": [\"outdoor\"]}]",
+    "grupos_buscador.py": "// Código específico para la búsqueda de grupos [K
+en Facebook\n// Sin tipos de evento en las queries\n// Filtrar publicacione[12D[K
+publicaciones que contengan tipos de evento (festival, outdoor, gathering, [K
+etc.)\nasync def buscar_grupos(config):\n    pass",
+    "eventos_directos.py": "// Código específico para la búsqueda de evento[6D[K
+eventos directos en Facebook\n// Subgéneros + países + ciudades + tipos de [K
+evento\nasync def buscar_eventos_directos(config):\n    pass",
+    "facebook_public.py": "// Orquestador que integra las funciones de búsq[4D[K
+búsqueda y consolidación\ndef orquestar_busqueda():\n    # Cargar configura[9D[K
+configuraciones\n    grupos_config = cargar_config('config_grupos.json')\n [K
+   eventos_config = cargar_config('config_eventos.json')\n\n    # Buscar gr[2D[K
+grupos\n    grupos = await buscar_grupos(grupos_config)\n\n    # Buscar eve[3D[K
+eventos directos\n    eventos_directos = await buscar_eventos_directos(even[28D[K
+buscar_eventos_directos(eventos_config)\n\n    # Consolidar resultados\n   [K
+ consolidar_resultados(grupos, eventos_directos)"
+  },
+  "pasos_para_implementar": [
+    {
+      "paso": 1,
+      "accion": "Crear archivos de configuración `config_grupos.json` y `co[3D[K
+`config_eventos.json` con los contenidos adecuados."
+    },
+    {
+      "paso": 2,
+      "accion": "Escribir las funciones específicas en `grupos_buscador.py`[20D[K
+`grupos_buscador.py` para la búsqueda de grupos en Facebook, sin tipos de e[1D[K
+evento en las queries y filtrando publicaciones que contengan tipos de even[4D[K
+evento."
+    },
+    {
+      "paso": 3,
+      "accion": "Escribir las funciones específicas en `eventos_directos.py[20D[K
+`eventos_directos.py` para la búsqueda de eventos directos en Facebook con [K
+subgéneros + países + ciudades + tipos de evento."
+    },
+    {
+      "paso": 4,
+      "accion": "Implementar el orquestador en `facebook_public.py` que car[3D[K
+cargue las configuraciones, busque grupos y eventos directos, y consolidate[11D[K
+consolidate los resultados."
+    }
+  ]
+}
+```
+

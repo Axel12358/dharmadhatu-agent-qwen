@@ -1,0 +1,110 @@
+Eres un experto en scraping con Python 3.9, Playwright asíncrono, asyncio y BeautifulSoup.
+
+## CONTEXTO DEL PROYECTO
+Dharmadhatu Bot v5 scrapea eventos psytrance.
+- Goabase: ✅ Funciona (23 eventos).
+- Songkick: ✅ Funciona (11 eventos).
+- **Facebook**: ❌ NO funciona (0 eventos).
+
+## EL PROBLEMA REAL (importante)
+**La lógica actual de búsqueda de grupos es incorrecta.**
+
+### LO QUE ESTÁ MAL:
+- Estoy usando tipos de evento (festival, outdoor, gathering) en las queries para buscar GRUPOS.
+- Los grupos de Facebook NO se llaman así. Se llaman por el subgénero y ubicación.
+- Ejemplo correcto: "Psytrance España", "Goa Berlin", "Darkpsy Portugal".
+
+### LO QUE DEBE HACER (lógica correcta):
+1. **Buscar GRUPOS** con combinaciones de: subgénero + país + ciudad (SIN tipos de evento).
+2. **Dentro de cada grupo**, extraer publicaciones y filtrar por tipos de evento (festival, outdoor, gathering, rave, indoor, camp, etc.).
+3. **Extraer organizador** del texto del post (buscar "Hosted by" o "Organizado por").
+4. **Extraer ciudades** del texto del post (opcional, para geolocalización).
+
+## EVIDENCIA
+
+=== CONFIGURACIÓN (config_temp.json) ===
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 50,
+  "timeout": 30,
+  "priorizar_paises": [],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": [
+    "darkpsy", "dark psy", "forest psy", "forest", "ritual",
+    "psytrance", "psy trance", "goa trance", "goa",
+    "hitech", "hi-tech", "psycore", "suomi", "suomisaundi",
+    "twilight", "night full-on", "psytech",
+    "progressive psy", "prog psy", "zenonesque", "minimal psy",
+    "psychill", "psy-chill", "psydub", "psybient", "psybreaks"
+  ],
+  "tipos_evento": [
+    "festival", "open air", "outdoor", "indoor", "club",
+    "party", "rave", "gathering", "weekender", "retreat",
+    "burner", "camp", "warehouse", "ritual"
+  ],
+  "ciudades": [
+    "Berlin", "Hamburg", "Munich", "Frankfurt", "Cologne",
+    "London", "Manchester", "Bristol",
+    "Paris", "Lyon", "Marseille",
+    "Madrid", "Barcelona", "Valencia", "Ibiza",
+    "Rome", "Milan", "Turin",
+    "Amsterdam", "Rotterdam", "Utrecht",
+    "Brussels", "Antwerp",
+    "Vienna", "Salzburg",
+    "Prague", "Brno",
+    "Budapest",
+    "Warsaw", "Krakow",
+    "Lisbon", "Porto",
+    "Stockholm", "Gothenburg",
+    "Copenhagen",
+    "Athens",
+    "Dublin",
+    "Zurich", "Geneva"
+  ],
+  "paises": [
+    "Germany", "France", "Spain", "Italy", "Portugal",
+    "Netherlands", "Belgium", "Switzerland", "Austria",
+    "Czech", "Poland", "Hungary", "Romania", "Bulgaria",
+    "Greece", "Croatia", "Serbia", "Slovenia", "Slovakia",
+    "UK", "England", "Scotland", "Ireland",
+    "Sweden", "Norway", "Finland", "Denmark",
+    "Lithuania", "Latvia", "Estonia", "United Kingdom"
+  ]
+}
+
+=== ÚLTIMOS ERRORES (loop_rapido.log) ===
+  "busquedas_facebook": 50,
+
+## LO QUE NECESITO (código concreto)
+Genera un nuevo `facebook_public.py` que:
+
+### 1. Función `generar_queries_grupos(config)`:
+- Combina: subgéneros + países + ciudades (SIN tipos de evento).
+- Ejemplo: ["Psytrance España", "Goa Berlin", "Darkpsy Portugal", "Fullon Amsterdam"].
+
+### 2. Función `buscar_eventos_en_grupo(page, grupo_url, config)`:
+- Entra al grupo.
+- Va a la pestaña "Eventos".
+- Extrae publicaciones y filtra por tipos de evento (lista de TIPOS_EVENTO).
+- Extrae organizador con regex "Hosted by" o "Organizado por".
+
+### 3. Función `scrape_facebook_public(config)`:
+- Genera queries de grupos.
+- Usa Playwright con stealth y user-agents rotativos.
+- Ejecuta en paralelo con semáforo.
+- Consolida y filtra duplicados.
+
+### 4. Mantener principios:
+- **No tocar** Goabase, Songkick ni enriquecimiento.
+- **Siempre sumar, nunca restar**.
+- **Todo local y gratuito**.
+- **Compatible con Python 3.9**.
+
+## FORMATO DE RESPUESTA
+### ANÁLISIS DEL PROBLEMA
+### CÓDIGO CORREGIDO
+- ### ARCHIVO: scrapers/facebook_public.py (código completo con la nueva lógica)
+### PASOS PARA APLICAR EL CAMBIO
+
+Devuelve SOLO el informe estructurado.

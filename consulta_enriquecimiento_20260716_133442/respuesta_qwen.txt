@@ -1,0 +1,139 @@
+### ANÁLISIS DEL PROBLEMA
+
+1. **Extracción de Organizador:**
+   - El script actual intenta extraer el organizador del texto general pero[4D[K
+pero no distingue entre el evento y el organizador.
+   - No hay patrones específicos para identificar el organizador en el text[4D[K
+texto.
+
+2. **Extracción de Email:**
+   - La búsqueda de emails solo se realiza en la descripción generada, lo q[1D[K
+que puede no capturar emails del evento o en los comentarios de las redes s[1D[K
+sociales.
+
+3. **Filtro de Eventos Reales:**
+   - El filtro actual es muy restrictivo, omitiendo eventos con nombres gen[3D[K
+genéricos o indicando pruebas.
+   - No considera eventos de Songkick, que tienen nombre y fecha pero no pa[2D[K
+pasan el filtro.
+
+4. **Mejora del Enriquecimiento:**
+   - El enriquecimiento actual está paralelizado hasta 5 tareas simultáneas[11D[K
+simultáneas, lo cual es suficiente para la mayoría de los casos.
+   - La extracción de organizador y email se realiza secuencialmente dentro[6D[K
+dentro del mismo bucle.
+
+### CÓDIGO CORREGIDO (para `enriquecer_eventos.py`)
+
+```python
+import asyncio
+import re
+import logging
+import ollama
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def generar_descripcion_evento(nombre_evento):
+    prompt = f"Genera una descripción atractiva para el evento '{nombre_eve[12D[K
+'{nombre_evento}' de música psytrance. Incluye estilo musical, ambiente y r[1D[K
+recomendaciones. Máximo 150 palabras. En español."
+    try:
+        response = ollama.chat(model='qwen2.5-coder:7b', messages=[{'role':[18D[K
+messages=[{'role': 'user', 'content': prompt}])
+        return response['message']['content'].strip()
+    except Exception as e:
+        logger.error(f"Error en descripción: {e}")
+        return "Evento de música psytrance"
+
+def extraer_organizador_email(texto):
+    patterns = [
+        r'\borganizado por\s*(.*?)\s*',
+        r'\bby\s*(.*?)\s*',
+        r'\bpresenta\s*(.*?)\s*'
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, texto)
+        if match:
+            organizador = match.group(1).strip()
+            email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,[47D[K
+r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+            emails = re.findall(email_pattern, texto)
+            email = emails[0] if emails else "No disponible"
+            return organizador, email
+    
+    organizador = "No disponible"
+    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    emails = re.findall(email_pattern, texto)
+    email = emails[0] if emails else "No disponible"
+    
+    return organizador, email
+
+async def enriquecer_un_evento(evento):
+    nombre = evento.get('nombre', 'Sin nombre')
+    lugar = evento.get('lugar', '')
+    loop = asyncio.get_running_loop()
+    descripcion = await loop.run_in_executor(None, generar_descripcion_even[24D[K
+generar_descripcion_evento, nombre)
+    organizador, email = await loop.run_in_executor(None, extraer_organizad[17D[K
+extraer_organizador_email, lugar + " " + evento.get('descripcion', ''))
+    
+    evento['descripcion'] = descripcion
+    evento['organizador'] = organizador
+    evento['email'] = email
+    
+    return evento
+
+async def enriquecer_eventos_con_qwen(eventos):
+    if not eventos:
+        return eventos
+
+    semaphore = asyncio.Semaphore(5)
+    logger.info(f"🤖 Enriqueciendo {len(eventos)} eventos con Qwen...")
+
+    async def trabajar_con_sem(evento, idx):
+        async with semaphore:
+            try:
+                logger.info(f"   {idx}/{len(eventos)}: {evento.get('nombre'[20D[K
+{evento.get('nombre', 'Sin nombre')[:30]}...")
+                return await enriquecer_un_evento(evento)
+            except Exception as e:
+                logger.error(f"❌ Error en evento {idx}: {e}")
+                evento['descripcion'] = "Descripción no disponible"
+                evento['organizador'] = "No disponible"
+                evento['email'] = "No disponible"
+                return evento
+
+    tareas = [trabajar_con_sem(evento, i+1) for i, evento in enumerate(even[14D[K
+enumerate(eventos)]
+    resultados = await asyncio.gather(*tareas)
+    logger.info(f"✅ {len(resultados)} eventos enriquecidos")
+    return resultados
+```
+
+### PLAN DE IMPLEMENTACIÓN (pasos concretos)
+
+1. **Implementar el filtro de eventos reales:**
+   - Modificar el criterio para incluir eventos sin nombre genérico y no ma[2D[K
+marcados como pruebas.
+   - Considerar eventos de Songkick que tienen nombre y fecha.
+
+2. **Incluir la extracción de emails en la descripción generada:**
+   - Buscar patrones adicionales de emails en la descripción generada.
+   - Utilizar expresiones regulares más flexibles para capturar emails.
+
+3. **Paralelizar la extracción de organizador y email:**
+   - Crear una nueva función que lance la extracción de organizador y email[5D[K
+email en paralelo.
+   - Integrar esta nueva función dentro del bucle de enriquecimiento.
+
+4. **Optimizar el enriquecimiento:**
+   - Mantener el semáforo de 5 tareas para mantener un equilibrio entre vel[3D[K
+velocidad y eficiencia.
+   - Considerar usar una cola para gestionar las tareas asincrónicas y mejo[4D[K
+mejorar la gestión del tiempo de espera.
+
+Estos cambios deberían mejorar significativamente la calidad y el rendimien[9D[K
+rendimiento del enriquecimiento de eventos.
+

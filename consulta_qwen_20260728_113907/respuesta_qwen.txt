@@ -1,0 +1,111 @@
+### RESUMEN EJECUTIVO
+
+El objetivo es mejorar la robustez y adaptabilidad del scraper de Facebook [K
+en DHARMADHATU v5 mediante la implementación de un patrón de estrategias mú[2D[K
+múltiples, anti-detección robusta, fallback con memoria, y orquestación con[3D[K
+con Apify. El objetivo final es superar las limitaciones actuales y mantene[7D[K
+mantener el bot funcional sin perder funcionalidades existentes.
+
+### ANÁLISIS DE LA SITUACIÓN ACTUAL
+
+El scraper de Facebook no funciona debido a la actualización reciente de la[2D[K
+la estructura HTML/CSS, lo que ha invalidado los selectores previamente uti[3D[K
+utilizados. Esto ha causado una pérdida de eventos y ha afectado el score g[1D[K
+general del bot.
+
+### PROPUESTA DE ARQUITECTURA (código si es necesario, con ### ARCHIVO:)
+
+#### 1. Estrategia Múltiple
+Implementaremos varias estrategias en orden de prioridad para extraer event[5D[K
+eventos de Facebook:
+
+- **Estrategia 1**: `baberibrar/facebook-events-scraper` (Playwright, sin l[1D[K
+login).
+- **Estrategia 2**: `mrkkr/fb-events-scraper` (alternativa, con interfaz we[2D[K
+web).
+- **Estrategia 3**: Extracción por texto (expresiones regulares sobre el HT[2D[K
+HTML).
+- **Estrategia 4**: Extracción con Qwen (interpreta el HTML y extrae evento[6D[K
+eventos como JSON).
+- **Estrategia 5**: Uso de la API GraphQL de Facebook (con `@mmankos/fes` e[1D[K
+en Node.js).
+
+#### 2. Anti-Detección Robusta
+Utilizaremos `playwright-stealth` para evitar detección, rotación de user-a[6D[K
+user-agents y proxies locales gratuitos, y simulación de comportamiento hum[3D[K
+humano.
+
+#### 3. Fallback con Memoria
+Implementaremos un sistema que guardará configuraciones exitosas en markdow[7D[K
+markdowns y cargue estas configuraciones en el loop de optimización.
+
+### PLAN DE IMPLEMENTACIÓN (pasos concretos, sin romper nada)
+
+1. **Evaluación y Selección de Estrategias**:
+   - Evaluar la eficacia de cada estrategia utilizando `baberibrar/facebook[20D[K
+`baberibrar/facebook-events-scraper` como punto de partida.
+   - Probar alternativas como `mrkkr/fb-events-scraper`.
+
+2. **Implementación de Anti-Detección**:
+   - Integrar `playwright-stealth`.
+   - Implementar rotación de user-agents y proxies locales gratuitos.
+
+3. **Implementación del Fallback con Memoria**:
+   - Crear archivos markdown para guardar configuraciones exitosas.
+   - Desarrollar lógica para cargar configuraciones previas en el loop de o[1D[K
+optimización.
+
+4. **Integración y Pruebas**:
+   - Integrar todas las estrategias en `facebook_public.py`.
+   - Probar la funcionalidad integrada sin eliminar funcionalidades existen[7D[K
+existentes.
+   - Realizar pruebas exhaustivas para verificar que el bot sigue funcionan[9D[K
+funcionando correctamente.
+
+### SKILLS, AGENTES Y SUBAGENTES (qué nuevos módulos crear y cómo integrarl[9D[K
+integrarlos)
+
+1. **Modulo de Estrategias**:
+   - Crear un módulo separado `strategies.py` con funciones para cada estra[5D[K
+estrategia.
+   - Implementar una función principal que seleccione y ejecuta la primera [K
+estrategia exitosa.
+
+2. **Modulo de Anti-Detección**:
+   - Crear un módulo `anti_detection.py` con funciones para rotación de use[3D[K
+user-agents, proxies y simulación de comportamiento humano.
+   - Integrar estas funciones en el scraper principal.
+
+3. **Modulo de Fallback**:
+   - Crear un módulo `fallback.py` con funciones para guardar y cargar conf[4D[K
+configuraciones en markdowns.
+   - Implementar lógica para manejar los fallos de estrategias y cargar con[3D[K
+configuraciones previas.
+
+4. **Agentes/Subagentes Adicionales**:
+   - Continuar usando Goabase, Songkick y el enriquecedor Qwen sin modifica[8D[K
+modificar su funcionalidad existente.
+   - Crear un módulo `optimization.py` para monitorear métricas de éxito y [K
+ajustar configuraciones automáticamente.
+
+### MÉTRICAS DE ÉXITO (cómo saber si funciona)
+
+1. **Incremento del Score**: El objetivo es superar el score actual (>100) [K
+mediante la mejora en la funcionalidad del scraper de Facebook.
+2. **Número de Eventos Extraídos**: Evaluar el número de eventos extraídos [K
+por día para verificar que el bot sigue funcionando correctamente y está ad[2D[K
+adaptándose a los cambios.
+3. **Tiempo de Ejecución**: Monitorear el tiempo de ejecución del bot para [K
+asegurar que la implementación no afecta negativamente al rendimiento.
+
+### PREGUNTAS ABIERTAS (si necesitas más información)
+
+1. ¿Es necesario utilizar Apify para manejar el scraping manual en caso de [K
+que las estrategias locales sigan fallando?
+2. ¿Cómo podemos optimizar aún más la rotación de proxies y evitar bloqueos[8D[K
+bloqueos adicionales?
+3. ¿Es viable usar Qwen para extraer eventos del HTML directamente? Si es a[1D[K
+así, qué prompt sería efectivo para este propósito?
+4. ¿Cómo manejar los errores de Facebook sin detener el bot (circuit breake[6D[K
+breaker)?
+

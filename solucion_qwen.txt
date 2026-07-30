@@ -1,0 +1,198 @@
+### ARCHIVO: scrapers/facebook_public.py
+
+```python
+import asyncio
+from playwright.async_api import async_playwright
+from concurrent.futures import ThreadPoolExecutor
+
+async def generar_queries_facebook(config):
+    subgeneros = config.get('subgeneros', [])
+    tipos_evento = config.get('tipos_evento', [])
+    ciudades = config.get('ciudades', [])
+    queries = []
+    for evento in tipos_evento:
+        for subg in subgeneros:
+            for ciudad in ciudades:
+                query = f"{evento} {subg} {ciudad}"
+                queries.append(query)
+    return queries
+
+async def scrape_una_query(query, page, timeout):
+    try:
+        await page.goto(f"https://www.facebook.com/search/events?q={query}"[61D[K
+page.goto(f"https://www.facebook.com/search/events?q={query}", wait_until='[12D[K
+wait_until='networkidle', timeout=timeout * 1000)
+        events = await page.query_selector_all('div[data-testid="event_card[52D[K
+page.query_selector_all('div[data-testid="event_card"]')
+        return [event.get_attribute('data-hovercard-data') for event in eve[3D[K
+events if event.get_attribute('data-hovercard-data')]
+    except Exception as e:
+        print(f"Error scraping query {query}: {e}")
+        return []
+
+async def scrape_facebook_public(config):
+    queries = await generar_queries_facebook(config)
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        tasks = [scrape_una_query(query, page, config['timeout']) for query[5D[K
+query in queries]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        await browser.close()
+    return [item for sublist in results if isinstance(item, list) for item [K
+in sublist]
+
+### FIN
+```
+
+### ARCHIVO: scrapers/enriquecer_eventos.py
+
+```python
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
+async def enriquecer_un_evento(evento):
+    # Placeholder for actual enrichment logic
+    print(f"Enriqueciendo evento: {evento}")
+    return evento
+
+async def enriquecer_eventos_con_qwen(eventos, semaphore):
+    async with semaphore:
+        tasks = [enriquecer_un_evento(evento) for evento in eventos]
+        results = await asyncio.gather(*tasks)
+    return results
+
+async def enriquecer_eventos(eventos, config):
+    max_workers = 5
+    semaphore = asyncio.Semaphore(max_workers)
+    enriched_events = await enriquecer_eventos_con_qwen(eventos, semaphore)[10D[K
+semaphore)
+    return enriched_events
+
+### FIN
+```
+
+### ARCHIVO: main_v5.py
+
+```python
+import asyncio
+from scrapers.facebook_public import scrape_facebook_public
+from scrapers.enriquecer_eventos import enriquecer_eventos
+
+async def orquestador(config):
+    eventos = await scrape_facebook_public(config)
+    enriched_events = await enriquecer_eventos(eventos, config)
+    return enriched_events
+
+async def main():
+    config = {
+        "max_eventos": 150,
+        "busquedas_facebook": 200,
+        "timeout": 30,
+        "priorizar_paises": [
+            "Alemania", "Austria", "Bélgica", "Bulgaria", "Chipre", "Croaci[7D[K
+"Croacia", "Dinamarca",
+            "Eslovaquia", "Eslovenia", "España", "Estonia", "Finlandia", "F[2D[K
+"Francia", "Grecia",
+            "Hungría", "Irlanda", "Italia", "Letonia", "Lituania", "Luxembu[8D[K
+"Luxemburgo", "Malta",
+            "Países Bajos", "Polonia", "Portugal", "Reino Unido", "Repúblic[9D[K
+"República Checa", "Rumanía",
+            "Suecia", "Suiza", "Noruega", "Islandia", "Liechtenstein", "And[4D[K
+"Andorra", "Mónaco"
+        ],
+        "extraer_contactos": True,
+        "buscar_en_grupos": True,
+        "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkps[7D[K
+"darkpsy", "hitech", "suomi", "forest"],
+        "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor[8D[K
+"outdoor", "indoor", "evento"],
+        "ciudades": [
+            "Madrid", "Barcelona", "Valencia", "Sevilla", "Lisboa", "Oporto[7D[K
+"Oporto", "Berlín", "Hamburgo",
+            "Múnich", "Colonia", "París", "Lyon", "Marsella", "Roma", "Milá[5D[K
+"Milán", "Nápoles",
+            "Ámsterdam", "Róterdam", "Londres", "Mánchester", "Birmingham",[13D[K
+"Birmingham", "Zúrich", "Ginebra",
+            "Viena", "Praga", "Budapest", "Varsovia", "Cracovia", "Bratisla[9D[K
+"Bratislava", "Estocolmo",
+            "Oslo", "Copenhague", "Helsinki", "Dublín", "Bruselas", "Atenas[7D[K
+"Atenas", "Lisboa", "Oporto"
+        ]
+    }
+    result = await orquestador(config)
+    print(result)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### FIN
+```
+
+### ARCHIVO: loop_optimizer.py
+
+```python
+import asyncio
+from scrapers.facebook_public import scrape_facebook_public
+from scrapers.enriquecer_eventos import enriquecer_eventos
+
+async def optimize_loop(config):
+    best_results = []
+    best_config = None
+    for i in range(1, 6):
+        config['timeout'] = i * 10
+        eventos = await scrape_facebook_public(config)
+        enriched_events = await enriquecer_eventos(eventos, config)
+        if len(enriched_events) > len(best_results):
+            best_results = enriched_events
+            best_config = config.copy()
+    return best_config, best_results
+
+async def main():
+    initial_config = {
+        "max_eventos": 150,
+        "busquedas_facebook": 200,
+        "timeout": 30,
+        "priorizar_paises": [
+            "Alemania", "Austria", "Bélgica", "Bulgaria", "Chipre", "Croaci[7D[K
+"Croacia", "Dinamarca",
+            "Eslovaquia", "Eslovenia", "España", "Estonia", "Finlandia", "F[2D[K
+"Francia", "Grecia",
+            "Hungría", "Irlanda", "Italia", "Letonia", "Lituania", "Luxembu[8D[K
+"Luxemburgo", "Malta",
+            "Países Bajos", "Polonia", "Portugal", "Reino Unido", "Repúblic[9D[K
+"República Checa", "Rumanía",
+            "Suecia", "Suiza", "Noruega", "Islandia", "Liechtenstein", "And[4D[K
+"Andorra", "Mónaco"
+        ],
+        "extraer_contactos": True,
+        "buscar_en_grupos": True,
+        "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkps[7D[K
+"darkpsy", "hitech", "suomi", "forest"],
+        "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor[8D[K
+"outdoor", "indoor", "evento"],
+        "ciudades": [
+            "Madrid", "Barcelona", "Valencia", "Sevilla", "Lisboa", "Oporto[7D[K
+"Oporto", "Berlín", "Hamburgo",
+            "Múnich", "Colonia", "París", "Lyon", "Marsella", "Roma", "Milá[5D[K
+"Milán", "Nápoles",
+            "Ámsterdam", "Róterdam", "Londres", "Mánchester", "Birmingham",[13D[K
+"Birmingham", "Zúrich", "Ginebra",
+            "Viena", "Praga", "Budapest", "Varsovia", "Cracovia", "Bratisla[9D[K
+"Bratislava", "Estocolmo",
+            "Oslo", "Copenhague", "Helsinki", "Dublín", "Bruselas", "Atenas[7D[K
+"Atenas", "Lisboa", "Oporto"
+        ]
+    }
+    best_config, best_results = await optimize_loop(initial_config)
+    print("Best Configuration:", best_config)
+    print("Best Results:", best_results)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+### FIN
+```
+

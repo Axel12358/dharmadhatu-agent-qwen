@@ -1,0 +1,224 @@
+## ANÁLISIS DEL PROBLEMA
+
+1. **Facebook**: No encuentra eventos en grupos debido a selectores no func[4D[K
+funcionales.
+2. **Generación de Queries**: No usa combinaciones aleatorias y fija, lo qu[2D[K
+que limita la diversidad de búsquedas.
+3. **Clasificación de Goabase**: Datos valiosos (subgéneros, tipos, países,[7D[K
+países, ciudades) no se están utilizando.
+4. **Loop de Optimización**: Falta un loop automático para probar diferente[9D[K
+diferentes configuraciones y mejorar el score.
+
+## CÓDIGO CORREGIDO
+
+### `scrapers/facebook_public.py`
+
+```python
+import json
+from playwright.sync_api import sync_playwright
+import random
+import time
+
+def generar_queries_facebook(config):
+    """
+    Genera combinaciones aleatorias de países, subgéneros, tipos y ciudades[8D[K
+ciudades.
+    Evita priorizar países fijos.
+    """
+    queries = []
+    paises = config.get("priorizar_paises", [])
+    subgeneros = config.get("subgeneros", ["psytrance", "goa", "fullon", "p[2D[K
+"progressive", "darkpsy", "hitech", "suomi", "forest"])
+    tipos = config.get("tipos_evento", ["festival", "party", "gathering", "[1D[K
+"rave", "outdoor", "indoor", "camp"])
+    ciudades = config.get("ciudades", ["Berlin", "Madrid", "Barcelona", "Lo[3D[K
+"London", "Lisboa", "Rome", "Paris", "Amsterdam"])
+
+    # Valores por defecto si no hay datos
+    if not subgeneros:
+        subgeneros = ["psytrance", "goa", "fullon", "progressive", "darkpsy[8D[K
+"darkpsy", "hitech", "suomi", "forest"]
+    if not tipos:
+        tipos = ["festival", "party", "gathering", "rave", "outdoor", "indo[5D[K
+"indoor", "camp"]
+
+    # 1. Combinaciones con países (si hay)
+    if paises:
+        for pais in paises:
+            for sub in subgeneros:
+                for tipo in tipos:
+                    queries.append(f"{sub} {tipo} {pais}")
+    
+    # 2. Combinaciones sin país (usando ciudades)
+    if ciudades:
+        for sub in subgeneros:
+            for tipo in tipos:
+                for ciudad in ciudades:
+                    queries.append(f"{sub} {tipo} {ciudad}")
+
+    # 3. Combinaciones aleatorias de todos los elementos
+    all_elements = paises + subgeneros + tipos + ciudades
+    if all_elements:
+        random.shuffle(all_elements)
+        max_queries = config.get("busquedas_facebook", 150)
+        while len(queries) < max_queries:
+            k = random.randint(2, min(4, len(all_elements)))
+            query_parts = random.sample(all_elements, k)
+            queries.append(' '.join(query_parts))
+
+    # Si no hay queries, usar la genérica
+    if not queries:
+        queries.append("psytrance festival")
+
+    # Limitar a busquedas_facebook y mezclar
+    max_queries = config.get("busquedas_facebook", 150)
+    random.shuffle(queries)
+    queries = queries[:max_queries]
+    logger.info(f"🔍 Generadas {len(queries)} queries (combinaciones aleato[6D[K
+aleatorias)")
+    return queries
+
+def buscar_en_grupos(query, timeout):
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, headless=False)
+        page = browser.new_page()
+        page.set_default_timeout(timeout * 1000)
+
+        # Navegar a la página de grupos
+        page.goto("https://www.facebook.com/search/groups/")
+        
+        # Ingresar la búsqueda
+        search_box = page.query_selector('input[name="q"]')
+        if search_box:
+            search_box.fill(query)
+            search_box.press('Enter')
+
+        # Esperar a que los resultados carguen
+        time.sleep(2)
+
+        # Extraer información de los grupos
+        grupos = page.query_selector_all('.x1lliihq.xzsf0wi.x1gq7azu.x6s0dn[58D[K
+page.query_selector_all('.x1lliihq.xzsf0wi.x1gq7azu.x6s0dn4')
+        results = []
+        for grupo in grupos:
+            title = grupo.query_selector('.x9f619.xjbqb8w.xuoat2v.x1axkfl3.[55D[K
+grupo.query_selector('.x9f619.xjbqb8w.xuoat2v.x1axkfl3.x1t2ptk7.x1c4kkj5.x7grupo.query_selector('.x9f619.xjbqb8w.xuoat2v.x1axkfl3.1t2ptk7.x1c4kkj5.x78zwi2.xdt5ytf.xdl7drr')
+            if title:
+                results.append(title.text_content())
+        
+        browser.close()
+        return results
+
+def main(config):
+    queries = generar_queries_facebook(config)
+    for query in queries:
+        grupos = buscar_en_grupos(query, config.get("timeout", 30))
+        # Procesar los resultados de los grupos
+        print(f"Grupos encontrados para '{query}': {grupos}")
+
+if __name__ == "__main__":
+    with open('config_temp.json', 'r') as file:
+        config = json.load(file)
+    main(config)
+```
+
+### `loop_optimizer.py`
+
+```python
+import os
+import time
+import json
+from scrapers.facebook_public import generar_queries_facebook, buscar_en_gr[12D[K
+buscar_en_grupos
+
+def optimizar_configuracion(config):
+    mejor_score = 0
+    mejor_config = None
+
+    for _ in range(10):  # Número de iteraciones del loop
+        queries = generar_queries_facebook(config)
+        total_grupos = 0
+        for query in queries:
+            grupos = buscar_en_grupos(query, config.get("timeout", 30))
+            total_grupos += len(grupos)
+
+        score = total_grupos
+        if score > mejor_score:
+            mejor_score = score
+            mejor_config = config.copy()
+
+        # Modificar configuración aleatoriamente para la próxima iteración
+        if "priorizar_paises" in mejor_config:
+            mejor_config["priorizar_paises"] = random.sample(mejor_config["[28D[K
+random.sample(mejor_config["paises"], len(mejor_config["priorizar_paises"])[37D[K
+len(mejor_config["priorizar_paises"]))
+        mejor_config["busquedas_facebook"] += random.randint(5, 20)
+        if mejor_config["busquedas_facebook"] > 150:
+            mejor_config["busquedas_facebook"] = 150
+
+    return mejor_score, mejor_config
+
+if __name__ == "__main__":
+    with open('config_temp.json', 'r') as file:
+        config = json.load(file)
+    
+    mejor_score, mejor_config = optimizar_configuracion(config)
+    print(f"Mejor Score: {mejor_score}")
+    with open('mejor_config.json', 'w') as file:
+        json.dump(mejor_config, file, indent=4)
+```
+
+### `main_v5.py`
+
+```python
+import os
+import time
+import json
+from scrapers.facebook_public import generar_queries_facebook, buscar_en_gr[12D[K
+buscar_en_grupos
+from loop_optimizer import optimizar_configuracion
+
+def main(config):
+    queries = generar_queries_facebook(config)
+    for query in queries:
+        grupos = buscar_en_grupos(query, config.get("timeout", 30))
+        # Procesar los resultados de los grupos
+        print(f"Grupos encontrados para '{query}': {grupos}")
+
+if __name__ == "__main__":
+    with open('mejor_config.json', 'r') as file:
+        config = json.load(file)
+    
+    main(config)
+```
+
+## PLAN DE IMPLEMENTACIÓN
+
+1. **Integrar el loop de optimización en `main_v5.py`**: Usar la configurac[10D[K
+configuración mejorada obtenida del archivo `mejor_config.json`.
+2. **Modificar el script `facebook_public.py`**: Asegurarse de que las comb[4D[K
+combinaciones de búsqueda sean aleatorias y no fijas.
+3. **Incorporar la generación de queries en el loop de optimización**: Prob[4D[K
+Probar diferentes configuraciones automáticamente y seleccionar la mejor.
+4. **Implementar la búsqueda en grupos para Facebook**: Utilizar Playwright[10D[K
+Playwright para navegar a las páginas de grupos y extraer información relev[5D[K
+relevante.
+
+### Pasos Concretos:
+
+1. **Actualiza `mejor_config.json`** con una configuración inicial (puede s[1D[K
+ser la misma que `config_temp.json`).
+2. **Ejecuta `loop_optimizer.py`**: Para obtener la mejor configuración.
+3. **Actualiza `main_v5.py`** para usar la configuración mejorada desde `me[3D[K
+`mejor_config.json`.
+4. **Ejecuta el bot principal (`main_v5.py`)**: Comprueba si los cambios es[2D[K
+están funcionando correctamente.
+
+### Notas:
+
+- Asegúrate de que todos los archivos estén en la misma carpeta o ajusta la[2D[K
+las rutas según sea necesario.
+- El script `loop_optimizer.py` realiza modificaciones aleatorias a la conf[4D[K
+configuración, por lo que puede no siempre encontrar la mejor configuración[13D[K
+configuración, pero debería mejorar con el tiempo.
+

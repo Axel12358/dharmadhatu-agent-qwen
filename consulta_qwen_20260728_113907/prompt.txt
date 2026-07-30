@@ -1,0 +1,86 @@
+Eres un experto en scraping, arquitectura de software y optimización de sistemas con Python 3.9, Playwright, asyncio, y Ollama.
+
+## CONTEXTO DEL PROYECTO (DHARMADHATU BOT v5)
+
+### Estado actual
+- **Goabase**: ✅ Funciona (23 eventos por ejecución).
+- **Songkick**: ✅ Funciona (11 eventos).
+- **Facebook**: ❌ NO funciona (0 eventos reales, selectores obsoletos).
+- **Enriquecimiento**: ✅ Funciona (genera descripciones, extrae organizadores/emails con Qwen).
+- **Score actual**: 34 (estancado, debería ser > 100).
+
+### Principios del proyecto (NO ROMPER)
+- **Siempre sumar, nunca restar**: No eliminar funcionalidades existentes.
+- **Dejar lo que sirve**: Mantener los scrapers que dan resultados (Goabase, Songkick).
+- **Siempre es una implementación de mejora**: Cada cambio debe optimizar algo.
+- **Todo local y gratuito**: Sin dependencias de pago o APIs externas.
+
+### Herramientas y skills disponibles
+- **Scrapers**: Playwright, requests, BeautifulSoup.
+- **IA local**: Ollama + Qwen (qwen2.5-coder:7b) para enriquecimiento y toma de decisiones.
+- **Agentes/Subagentes**: Orquestador principal (`main_v5.py`), scrapers específicos, enriquecedor.
+- **Markdowns**: Guardamos configuraciones exitosas en archivos `.md` para futuras referencias.
+- **Estructura**: Módulos separados, asíncronos, con manejo de errores.
+
+## PROBLEMA CRÍTICO A RESOLVER
+
+### Facebook ha cambiado su estructura HTML/CSS
+- Los selectores actuales (como `span[data-testid="event-card-host"]`) ya no funcionan.
+- El scraper devuelve 0 eventos, aunque el resto del bot sigue operando.
+- Facebook actualiza su interfaz constantemente, lo que rompe los selectores fijos.
+
+### ¿Cómo construir una arquitectura resiliente?
+Necesitamos un sistema que pueda adaptarse a los cambios de Facebook sin que tengamos que reescribir el scraper cada semana.
+
+## ARQUITECTURA PROPUESTA (PARA EVALUAR)
+
+### 1. Patrón de Estrategias (Extracción Múltiple)
+En lugar de un solo scraper, usaremos varias estrategias en orden de prioridad:
+- **Estrategia 1**: `baberibrar/facebook-events-scraper` (Playwright, sin login, anti-detección).
+- **Estrategia 2**: `mrkkr/fb-events-scraper` (alternativa, con interfaz web).
+- **Estrategia 3**: Extracción por texto (expresiones regulares sobre el HTML).
+- **Estrategia 4**: Extracción con Qwen (interpreta el HTML y extrae eventos como JSON).
+- **Estrategia 5**: Uso de la API GraphQL de Facebook (con `@mmankos/fes` en Node.js).
+
+### 2. Anti-Detección Robusta
+- `playwright-stealth` para evitar detección.
+- Rotación de user-agents y proxies (locales, gratuitos).
+- Simulación de comportamiento humano (movimientos de mouse, scroll aleatorio).
+
+### 3. Fallback y Memoria
+- Si una estrategia falla, pasar a la siguiente.
+- Guardar configuraciones exitosas en markdowns (países, subgéneros, tipos, ciudades, timeout, etc.).
+- Cargar configuraciones previas en el loop de optimización.
+
+### 4. Orquestación con Apify (Evaluación)
+Si el scraping manual sigue siendo problemático, evaluar el uso de Apify (scrapers mantenidos por la comunidad).
+
+## PREGUNTAS ESPECÍFICAS PARA QWEN
+
+1. **¿Qué cambios concretos recomiendas en `facebook_public.py` para implementar el patrón de estrategias sin romper el código existente?**
+2. **¿Cómo podemos integrar `playwright-stealth` y rotación de proxies sin afectar a otros scrapers?**
+3. **¿Es viable usar Qwen para extraer eventos del HTML directamente? ¿Qué prompt sería efectivo?**
+4. **¿Cómo estructurarías los markdowns para guardar configuraciones exitosas y cargarlas en el loop de optimización?**
+5. **¿Qué skills o subagentes adicionales deberíamos crear para mantener la arquitectura limpia y modular?**
+6. **¿Qué métricas de éxito (más allá del score) deberíamos monitorear para saber si la nueva arquitectura funciona?**
+7. **¿Cómo manejar los errores de Facebook sin detener el bot (circuit breaker)?**
+
+## RESTRICCIONES Y REQUISITOS
+- **NO eliminar** Goabase, Songkick, ni el enriquecimiento.
+- **TODO local**, sin APIs externas de pago.
+- **Compatibilidad con Python 3.9**.
+- **Open-source**, con licencia MIT o similar.
+- **Instalación local**: todos los paquetes deben instalarse con `pip` o `playwright install`.
+
+## FORMATO DE RESPUESTA
+Genera un informe estructurado con:
+
+### RESUMEN EJECUTIVO
+### ANÁLISIS DE LA SITUACIÓN ACTUAL
+### PROPUESTA DE ARQUITECTURA (código si es necesario, con ### ARCHIVO:)
+### PLAN DE IMPLEMENTACIÓN (pasos concretos, sin romper nada)
+### SKILLS, AGENTES Y SUBAGENTES (qué nuevos módulos crear y cómo integrarlos)
+### MÉTRICAS DE ÉXITO (cómo saber si funciona)
+### PREGUNTAS ABIERTAS (si necesitas más información)
+
+Devuelve SOLO el informe, sin explicaciones adicionales.

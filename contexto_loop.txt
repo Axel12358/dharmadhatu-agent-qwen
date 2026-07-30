@@ -1,0 +1,90 @@
+=== CONFIGURACIÓN ACTUAL (config_temp.json) ===
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 50,
+  "timeout": 30,
+  "priorizar_paises": [],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"],
+  "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor", "indoor", "camp"],
+  "ciudades": ["Berlin", "Madrid", "Barcelona", "London", "Lisboa", "Rome", "Paris", "Amsterdam"]
+}
+
+=== CÓDIGO ACTUAL DE facebook_public.py (solo generación de queries) ===
+def generar_queries_facebook(config):
+    """
+    Genera combinaciones aleatorias de países, subgéneros, tipos y ciudades.
+    Evita priorizar países fijos.
+    """
+    queries = []
+    paises = config.get("priorizar_paises", [])
+    subgeneros = config.get("subgeneros", [])
+    tipos = config.get("tipos_evento", [])
+    ciudades = config.get("ciudades", [])
+
+    # Valores por defecto si no hay datos
+    if not subgeneros:
+        subgeneros = ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"]
+    if not tipos:
+        tipos = ["festival", "party", "gathering", "rave", "outdoor", "indoor", "camp"]
+
+    # 1. Combinaciones con países (si hay)
+    if paises:
+        for pais in paises:
+            for sub in subgeneros:
+                for tipo in tipos:
+                    queries.append(f"{sub} {tipo} {pais}")
+    
+    # 2. Combinaciones sin país (usando ciudades)
+    if ciudades:
+        for sub in subgeneros:
+            for tipo in tipos:
+                for ciudad in ciudades:
+                    queries.append(f"{sub} {tipo} {ciudad}")
+
+    # 3. Combinaciones aleatorias de todos los elementos
+    all_elements = paises + subgeneros + tipos + ciudades
+    if all_elements:
+        random.shuffle(all_elements)
+        max_queries = config.get("busquedas_facebook", 150)
+        while len(queries) < max_queries:
+            k = random.randint(2, min(4, len(all_elements)))
+            query_parts = random.sample(all_elements, k)
+            queries.append(' '.join(query_parts))
+
+    # Si no hay queries, usar la genérica
+    if not queries:
+        queries.append("psytrance festival")
+
+    # Limitar a busquedas_facebook y mezclar
+    max_queries = config.get("busquedas_facebook", 150)
+    random.shuffle(queries)
+    queries = queries[:max_queries]
+    logger.info(f"🔍 Generadas {len(queries)} queries (combinaciones aleatorias)")
+    return queries
+
+=== ESTRUCTURA DE GOABASE (clasificación de eventos) ===
+{
+  "subgeneros": [],
+  "tipos_evento": [],
+  "paises": [
+    "Bolivia / bo",
+    "Germany / de",
+    "Japan / jp",
+    "Portugal / pt",
+    "Slovakia / sk",
+    "Spain / es",
+    "Switzerland / ch"
+  ],
+  "ciudades": []
+}
+=== ÚLTIMOS RESULTADOS DEL BOT ===
+Score obtenido: 59
+  "max_eventos": 150,
+
+=== PRINCIPIOS DEL PROYECTO ===
+- Siempre sumar, nunca restar
+- Dejar lo que sirve
+- Todo local y gratuito
+- Python 3.9 compatible

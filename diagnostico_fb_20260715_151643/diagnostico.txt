@@ -1,0 +1,570 @@
+📄 CÓDIGO ACTUAL DE FACEBOOK
+-----------------------------
+import asyncio
+import random
+import logging
+from playwright.async_api import async_playwright
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+async def scrape_facebook_public(config):
+    query = "psytrance festival"
+    max_eventos = config.get('max_eventos', 150)
+    timeout = config.get('timeout', 30)
+
+    logger.info(f"🔍 Buscando en Facebook con query: '{query}'")
+    eventos = []
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+            headless=True,
+            args=['--no-sandbox', '--disable-setuid-sandbox']
+        )
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            viewport={'width': 1280, 'height': 800}
+        )
+        page = await context.new_page()
+
+        try:
+            url = f"https://www.facebook.com/search/events/?q={query.replace(' ', '%20')}"
+            await page.goto(url, timeout=timeout * 1000, wait_until='networkidle')
+            await asyncio.sleep(random.uniform(2, 4))
+
+            # Scroll para cargar más eventos
+            for _ in range(3):
+                await page.evaluate('window.scrollBy(0, window.innerHeight)')
+                await asyncio.sleep(random.uniform(1, 2))
+
+            # Selectores alternativos
+            selectores = [
+                'div[role="article"]',
+                'div[data-testid="event-card"]',
+                'div[class*="event"]',
+                'div[class*="searchResult"]'
+            ]
+
+            elementos = []
+            for selector in selectores:
+                try:
+                    elementos = await page.query_selector_all(selector)
+                    if elementos:
+                        logger.info(f"✅ Encontrados {len(elementos)} elementos con selector: {selector}")
+                        break
+                except:
+                    continue
+
+            if not elementos:
+                logger.warning("No se encontraron eventos en Facebook")
+                await browser.close()
+                return []
+
+            for elem in elementos[:max_eventos]:
+                try:
+                    # Intentar múltiples formas de extraer nombre
+                    nombre = "Sin nombre"
+                    for n_sel in ['span[dir="auto"]', 'span[class*="title"]', 'h2', 'h3']:
+                        nombre_elem = await elem.query_selector(n_sel)
+                        if nombre_elem:
+                            nombre = await nombre_elem.inner_text()
+                            if nombre and nombre.strip() and nombre != "Sin nombre":
+                                break
+
+                    # Fecha
+                    fecha = "Fecha no disponible"
+                    for f_sel in ['span[data-testid="event-card-date"]', 'span[class*="date"]', 'span[class*="time"]']:
+                        fecha_elem = await elem.query_selector(f_sel)
+                        if fecha_elem:
+                            fecha = await fecha_elem.inner_text()
+                            if fecha and fecha.strip():
+                                break
+
+                    # Lugar
+                    lugar = "Lugar no disponible"
+                    for l_sel in ['span[data-testid="event-card-location"]', 'span[class*="location"]', 'span[class*="place"]']:
+                        lugar_elem = await elem.query_selector(l_sel)
+                        if lugar_elem:
+                            lugar = await lugar_elem.inner_text()
+                            if lugar and lugar.strip():
+                                break
+
+                    # Enlace
+                    enlace = ""
+                    enlace_elem = await elem.query_selector('a[href*="/events/"]')
+                    if enlace_elem:
+                        enlace = await enlace_elem.get_attribute('href')
+                        if enlace and not enlace.startswith('http'):
+                            enlace = f"https://www.facebook.com{enlace}"
+
+                    if nombre and nombre != "Sin nombre":
+                        evento = {
+                            "nombre": nombre.strip(),
+                            "fecha": fecha.strip(),
+                            "lugar": lugar.strip(),
+                            "enlace": enlace,
+                            "fuente": "Facebook"
+                        }
+                        eventos.append(evento)
+                        logger.info(f"✅ Evento: {nombre[:30]}...")
+                except Exception as e:
+                    logger.warning(f"Error extrayendo evento: {e}")
+                    continue
+
+        except Exception as e:
+            logger.error(f"Error en Facebook: {e}")
+
+        await browser.close()
+
+    logger.info(f"✅ Facebook: {len(eventos)} eventos reales")
+    return eventos
+
+
+📄 CÓDIGO DE main_v5.py
+-------------------------
+import asyncio
+import json
+import random
+import time
+import pandas as pd
+import inspect
+from scrapers.goabase import scrape_goabase
+from scrapers.facebook_public import scrape_facebook_public
+from scrapers.songkick import scrape_songkick
+from scrapers.enriquecer_eventos import enriquecer_eventos_con_qwen
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+def cargar_config(ruta='config_temp.json'):
+    try:
+        with open(ruta, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logger.warning(f"⚠️ {ruta} no encontrado, usando valores por defecto")
+        return {
+            "max_eventos": 150,
+            "busquedas_facebook": 150,
+            "timeout": 30,
+            "priorizar_paises": [],
+            "extraer_contactos": True,
+            "buscar_en_grupos": True,
+            "subgeneros": ["psytrance"],
+            "tipos_evento": ["festival"],
+            "ciudades": []
+        }
+
+async def ejecutar_scraper_seguro(func, *args, **kwargs):
+    """Ejecuta un scraper async o sync usando run_in_executor si es necesario."""
+    if inspect.iscoroutinefunction(func):
+        return await func(*args, **kwargs)
+    else:
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, func, *args, **kwargs)
+
+async def ejecutar_bot(config=None):
+    if config is None:
+        config = cargar_config()
+    max_eventos = config.get('max_eventos', 150)
+
+    print("=" * 60)
+    print("🌀 DHARMADHATU BOT v5 (MODO FUNCIONAL)")
+    print("=" * 60)
+    print(f"📊 max_eventos: {max_eventos}")
+    print(f"📊 busquedas_facebook: {config.get('busquedas_facebook', 150)}")
+    print(f"📊 extraer_contactos: {config.get('extraer_contactos', True)}")
+    print(f"📊 priorizar_paises: {config.get('priorizar_paises', [])}")
+    print(f"📊 buscar_en_grupos: {config.get('buscar_en_grupos', True)}")
+    print("=" * 60)
+
+    inicio = time.time()
+    todos_eventos = []
+
+    # 1. Goabase (async)
+    try:
+        print("🌐 Ejecutando Goabase...")
+        goabase = await ejecutar_scraper_seguro(scrape_goabase, max_eventos)
+        todos_eventos.extend(goabase)
+        logger.info(f"✅ Goabase: {len(goabase)} eventos")
+    except Exception as e:
+        logger.error(f"❌ Error en Goabase: {e}")
+
+    # 2. Facebook (async)
+    try:
+        print("📘 Ejecutando Facebook...")
+        facebook = await ejecutar_scraper_seguro(scrape_facebook_public, config)
+        todos_eventos.extend(facebook)
+        logger.info(f"✅ Facebook: {len(facebook)} eventos")
+    except Exception as e:
+        logger.error(f"❌ Error en Facebook: {e}")
+
+    # 3. Songkick (async)
+    try:
+        print("🎵 Ejecutando Songkick...")
+        songkick = await ejecutar_scraper_seguro(scrape_songkick, max_eventos)
+        todos_eventos.extend(songkick)
+        logger.info(f"✅ Songkick: {len(songkick)} eventos")
+    except Exception as e:
+        logger.error(f"❌ Error en Songkick: {e}")
+
+    # Si no hay eventos, generar prueba
+    if not todos_eventos:
+        logger.warning("⚠️ No se obtuvieron eventos. Generando prueba...")
+        for i in range(10):
+            todos_eventos.append({
+                "nombre": f"Evento prueba {i+1}",
+                "fecha": f"2026-{random.randint(1,12):02d}-{random.randint(1,28):02d}",
+                "lugar": f"Ciudad {i+1}",
+                "fuente": "Prueba"
+            })
+
+    logger.info(f"✅ Total eventos crudos: {len(todos_eventos)}")
+
+    # Consolidación
+    df = pd.DataFrame(todos_eventos)
+    if not df.empty:
+        df = df.drop_duplicates(subset=['nombre', 'fecha'], keep='first')
+        eventos_consolidados = df.to_dict('records')
+    else:
+        eventos_consolidados = []
+
+    # FILTRO RELAJADO: solo requiere nombre, sin importar si tiene fecha
+    eventos_reales = []
+    for e in eventos_consolidados:
+        if e.get('nombre') and e.get('nombre') != 'Sin nombre' and 'prueba' not in e.get('fuente', '').lower():
+            eventos_reales.append(e)
+
+    logger.info(f"🔍 Eventos reales a enriquecer: {len(eventos_reales)}")
+
+    if eventos_reales and config.get('extraer_contactos', True):
+        print("📧 Extrayendo contactos con Qwen (solo eventos reales)...")
+        try:
+            eventos_enriquecidos = await enriquecer_eventos_con_qwen(eventos_reales)
+            df_enriquecido = pd.DataFrame(eventos_enriquecidos)
+            df_enriquecido.to_csv('eventos_enriquecidos.csv', index=False)
+            print("✅ Eventos enriquecidos guardados en 'eventos_enriquecidos.csv'")
+        except Exception as e:
+            logger.error(f"❌ Error en enriquecimiento: {e}")
+
+    # Estadísticas
+    print("\n📈 ESTADÍSTICAS:")
+    print(f" • Eventos totales: {len(eventos_consolidados)}")
+    
+    organizadores_reales = sum(1 for e in eventos_consolidados if e.get('organizador') and e['organizador'] != 'No disponible')
+    emails_reales = sum(1 for e in eventos_consolidados if e.get('email') and e['email'] != 'No disponible')
+    print(f" • Organizadores reales: {organizadores_reales}")
+    print(f" • Emails reales: {emails_reales}")
+
+    fuentes = {}
+    for e in eventos_consolidados:
+        fuente = e.get('fuente', 'Desconocida')
+        fuentes[fuente] = fuentes.get(fuente, 0) + 1
+    print("\n📊 Distribución por fuente:")
+    for fuente, count in sorted(fuentes.items(), key=lambda x: x[1], reverse=True):
+        print(f" • {fuente}: {count}")
+
+    fin = time.time()
+    tiempo_min = (fin - inicio) / 60
+    print(f"\n⏱️ Tiempo: {tiempo_min:.2f} min")
+
+    score = len(eventos_consolidados) + (organizadores_reales * 2) + (emails_reales * 3) + (len(fuentes) * 10)
+    print(f"🏆 SCORE: {score}")
+
+    return eventos_consolidados, score
+
+if __name__ == "__main__":
+    asyncio.run(ejecutar_bot())
+
+
+📄 CONFIGURACIÓN (config_temp.json)
+-----------------------------------
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 200,
+  "timeout": 30,
+  "priorizar_paises": [
+    "Alemania", "Austria", "Bélgica", "Bulgaria", "Chipre", "Croacia", "Dinamarca",
+    "Eslovaquia", "Eslovenia", "España", "Estonia", "Finlandia", "Francia", "Grecia",
+    "Hungría", "Irlanda", "Italia", "Letonia", "Lituania", "Luxemburgo", "Malta",
+    "Países Bajos", "Polonia", "Portugal", "Reino Unido", "República Checa", "Rumanía",
+    "Suecia", "Suiza", "Noruega", "Islandia", "Liechtenstein", "Andorra", "Mónaco"
+  ],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"],
+  "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor", "indoor", "evento"],
+  "ciudades": [
+    "Madrid", "Barcelona", "Valencia", "Sevilla", "Lisboa", "Oporto", "Berlín", "Hamburgo",
+    "Múnich", "Colonia", "París", "Lyon", "Marsella", "Roma", "Milán", "Nápoles",
+    "Ámsterdam", "Róterdam", "Londres", "Mánchester", "Birmingham", "Zúrich", "Ginebra",
+    "Viena", "Praga", "Budapest", "Varsovia", "Cracovia", "Bratislava", "Estocolmo",
+    "Oslo", "Copenhague", "Helsinki", "Dublín", "Bruselas", "Atenas", "Lisboa", "Oporto"
+  ]
+}
+
+
+📄 VERSIÓN DE PLAYWRIGHT
+-------------------------
+Name: playwright
+Version: 1.60.0
+Summary: A high-level API to automate web browsers
+Home-page: 
+Author: Microsoft Corporation
+Author-email: 
+License: 
+Location: /Users/angelgarcia/dharmadhatu_agent_qwen/venv/lib/python3.9/site-packages
+Requires: pyee, greenlet
+Required-by: 
+
+
+📄 ÚLTIMOS ERRORES
+-------------------
+No hay loop_completo.log
+
+
+📄 HISTORIAL DE CAMBIOS
+-----------------------
+✅ Existe backup de facebook_public.py
+🔍 Diferencias con el backup:
+4c4
+< from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
+---
+> from playwright.async_api import async_playwright
+9,15c9,12
+< def generar_queries_facebook(config):
+<     """Genera hasta 200 queries combinando países, subgéneros, tipos y ciudades."""
+<     queries = []
+<     paises = config.get("priorizar_paises", [])
+<     subgeneros = config.get("subgeneros", ["psytrance"])
+<     tipos = config.get("tipos_evento", ["festival"])
+<     ciudades = config.get("ciudades", [])
+---
+> async def scrape_facebook_public(config):
+>     query = "psytrance festival"
+>     max_eventos = config.get('max_eventos', 150)
+>     timeout = config.get('timeout', 30)
+17,40c14
+<     if paises:
+<         for pais in paises:
+<             for sub in subgeneros:
+<                 for tipo in tipos:
+<                     queries.append(f"{sub} {tipo} {pais}")
+<             if ciudades:
+<                 for ciudad in ciudades:
+<                     queries.append(f"psytrance festival {ciudad} {pais}")
+<     else:
+<         for sub in subgeneros:
+<             for tipo in tipos:
+<                 queries.append(f"{sub} {tipo}")
+<         if ciudades:
+<             for ciudad in ciudades:
+<                 queries.append(f"psytrance festival {ciudad}")
+< 
+<     if not queries:
+<         queries.append("psytrance festival")
+< 
+<     max_queries = config.get("busquedas_facebook", 150)
+<     random.shuffle(queries)
+<     return queries[:max_queries]
+< 
+< async def scrape_una_query(query, page, timeout):
+---
+>     logger.info(f"🔍 Buscando en Facebook con query: '{query}'")
+42,45d15
+<     try:
+<         url = f"https://www.facebook.com/search/events/?q={query.replace(' ', '%20')}"
+<         await page.goto(url, timeout=timeout * 1000)
+<         await asyncio.sleep(random.uniform(1, 3))
+46a17,27
+>     async with async_playwright() as p:
+>         browser = await p.chromium.launch(
+>             headless=True,
+>             args=['--no-sandbox', '--disable-setuid-sandbox']
+>         )
+>         context = await browser.new_context(
+>             user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+>             viewport={'width': 1280, 'height': 800}
+>         )
+>         page = await context.new_page()
+> 
+48,50c29,31
+<             await page.wait_for_selector('div[role="article"]', timeout=5000)
+<         except:
+<             return eventos
+---
+>             url = f"https://www.facebook.com/search/events/?q={query.replace(' ', '%20')}"
+>             await page.goto(url, timeout=timeout * 1000, wait_until='networkidle')
+>             await asyncio.sleep(random.uniform(2, 4))
+52,56c33,36
+<         elementos = await page.query_selector_all('div[role="article"]')
+<         for elem in elementos:
+<             try:
+<                 nombre_elem = await elem.query_selector('span[dir="auto"]')
+<                 nombre = await nombre_elem.inner_text() if nombre_elem else "Sin nombre"
+---
+>             # Scroll para cargar más eventos
+>             for _ in range(3):
+>                 await page.evaluate('window.scrollBy(0, window.innerHeight)')
+>                 await asyncio.sleep(random.uniform(1, 2))
+58,61c38,44
+<                 fecha_elem = await elem.query_selector('span[data-testid="event-card-date"]')
+<                 if not fecha_elem:
+<                     fecha_elem = await elem.query_selector('span[class*="date"]')
+<                 fecha = await fecha_elem.inner_text() if fecha_elem else "Fecha no disponible"
+---
+>             # Selectores alternativos
+>             selectores = [
+>                 'div[role="article"]',
+>                 'div[data-testid="event-card"]',
+>                 'div[class*="event"]',
+>                 'div[class*="searchResult"]'
+>             ]
+63,66c46,54
+<                 lugar_elem = await elem.query_selector('span[data-testid="event-card-location"]')
+<                 if not lugar_elem:
+<                     lugar_elem = await elem.query_selector('span[class*="location"]')
+<                 lugar = await lugar_elem.inner_text() if lugar_elem else "Lugar no disponible"
+---
+>             elementos = []
+>             for selector in selectores:
+>                 try:
+>                     elementos = await page.query_selector_all(selector)
+>                     if elementos:
+>                         logger.info(f"✅ Encontrados {len(elementos)} elementos con selector: {selector}")
+>                         break
+>                 except:
+>                     continue
+68,71c56,59
+<                 enlace_elem = await elem.query_selector('a[href*="/events/"]')
+<                 enlace = await enlace_elem.get_attribute('href') if enlace_elem else ""
+<                 if enlace and not enlace.startswith('http'):
+<                     enlace = f"https://www.facebook.com{enlace}"
+---
+>             if not elementos:
+>                 logger.warning("No se encontraron eventos en Facebook")
+>                 await browser.close()
+>                 return []
+73,86c61,70
+<                 evento = {
+<                     "nombre": nombre.strip(),
+<                     "fecha": fecha.strip(),
+<                     "lugar": lugar.strip(),
+<                     "enlace": enlace,
+<                     "fuente": "Facebook"
+<                 }
+<                 eventos.append(evento)
+<             except Exception as e:
+<                 logger.warning(f"Error extrayendo evento: {e}")
+<                 continue
+<     except Exception as e:
+<         logger.warning(f"Error en query '{query}': {e}")
+<     return eventos
+---
+>             for elem in elementos[:max_eventos]:
+>                 try:
+>                     # Intentar múltiples formas de extraer nombre
+>                     nombre = "Sin nombre"
+>                     for n_sel in ['span[dir="auto"]', 'span[class*="title"]', 'h2', 'h3']:
+>                         nombre_elem = await elem.query_selector(n_sel)
+>                         if nombre_elem:
+>                             nombre = await nombre_elem.inner_text()
+>                             if nombre and nombre.strip() and nombre != "Sin nombre":
+>                                 break
+88,92c72,79
+< async def scrape_facebook_public(config):
+<     queries = generar_queries_facebook(config)
+<     max_eventos = config.get("max_eventos", 150)
+<     timeout = config.get("timeout", 30)
+<     semaphore = asyncio.Semaphore(10)
+---
+>                     # Fecha
+>                     fecha = "Fecha no disponible"
+>                     for f_sel in ['span[data-testid="event-card-date"]', 'span[class*="date"]', 'span[class*="time"]']:
+>                         fecha_elem = await elem.query_selector(f_sel)
+>                         if fecha_elem:
+>                             fecha = await fecha_elem.inner_text()
+>                             if fecha and fecha.strip():
+>                                 break
+94c81,88
+<     logger.info(f"🔍 Generadas {len(queries)} queries para Facebook")
+---
+>                     # Lugar
+>                     lugar = "Lugar no disponible"
+>                     for l_sel in ['span[data-testid="event-card-location"]', 'span[class*="location"]', 'span[class*="place"]']:
+>                         lugar_elem = await elem.query_selector(l_sel)
+>                         if lugar_elem:
+>                             lugar = await lugar_elem.inner_text()
+>                             if lugar and lugar.strip():
+>                                 break
+96,100c90,96
+<     async with async_playwright() as p:
+<         browser = await p.chromium.launch(headless=True, args=['--no-sandbox'])
+<         context = await browser.new_context(
+<             user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+<         )
+---
+>                     # Enlace
+>                     enlace = ""
+>                     enlace_elem = await elem.query_selector('a[href*="/events/"]')
+>                     if enlace_elem:
+>                         enlace = await enlace_elem.get_attribute('href')
+>                         if enlace and not enlace.startswith('http'):
+>                             enlace = f"https://www.facebook.com{enlace}"
+102,109c98,110
+<         async def trabajar_con_query(query):
+<             async with semaphore:
+<                 page = await context.new_page()
+<                 try:
+<                     eventos = await scrape_una_query(query, page, timeout)
+<                     return eventos
+<                 finally:
+<                     await page.close()
+---
+>                     if nombre and nombre != "Sin nombre":
+>                         evento = {
+>                             "nombre": nombre.strip(),
+>                             "fecha": fecha.strip(),
+>                             "lugar": lugar.strip(),
+>                             "enlace": enlace,
+>                             "fuente": "Facebook"
+>                         }
+>                         eventos.append(evento)
+>                         logger.info(f"✅ Evento: {nombre[:30]}...")
+>                 except Exception as e:
+>                     logger.warning(f"Error extrayendo evento: {e}")
+>                     continue
+111,112c112,113
+<         tareas = [trabajar_con_query(query) for query in queries]
+<         resultados = await asyncio.gather(*tareas, return_exceptions=True)
+---
+>         except Exception as e:
+>             logger.error(f"Error en Facebook: {e}")
+114,120d114
+<         todos_eventos = []
+<         for res in resultados:
+<             if isinstance(res, list):
+<                 todos_eventos.extend(res)
+<             elif isinstance(res, Exception):
+<                 logger.warning(f"Error en una tarea: {res}")
+< 
+123,134c117,118
+<     eventos_filtrados = []
+<     seen = set()
+<     for e in todos_eventos:
+<         key = (e["nombre"], e["fecha"])
+<         if key not in seen and e["nombre"] != "Sin nombre" and e["nombre"].strip():
+<             seen.add(key)
+<             eventos_filtrados.append(e)
+<             if len(eventos_filtrados) >= max_eventos:
+<                 break
+< 
+<     logger.info(f"✅ Facebook: {len(eventos_filtrados)} eventos reales")
+<     return eventos_filtrados
+---
+>     logger.info(f"✅ Facebook: {len(eventos)} eventos reales")
+>     return eventos
+
+
+📄 ERRORES DE SINTAXIS
+----------------------

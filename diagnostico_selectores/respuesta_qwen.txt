@@ -1,0 +1,124 @@
+## ANÁLISIS DEL PROBLEMA
+El problema se debe a que Facebook cambió su estructura HTML/CSS, lo cual h[1D[K
+ha causado que los selectores antiguos ya no funcionen correctamente para e[1D[K
+extraer información de los eventos y el organizador.
+
+## CÓDIGO CORREGIDO
+- ### ARCHIVO: scrapers/facebook_public.py
+
+```python
+import asyncio
+from playwright.async_api import async_playwright
+from bs4 import BeautifulSoup
+import re
+
+async def extract_events(url):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        await page.goto(url, timeout=30 * 1000)  # Aumentamos el tiempo de [K
+espera a 30 segundos
+        await page.wait_for_selector(".x1lkfr7t")  # Esperamos a que la pág[3D[K
+página cargue completamente
+
+        # Obtener todos los eventos
+        events = []
+        while True:
+            html_content = await page.content()
+            soup = BeautifulSoup(html_content, 'html.parser')
+
+            event_items = soup.select('.x3jane.xa425dw.x1s688fe.x1lqespi.x9[49D[K
+soup.select('.x3jane.xa425dw.x1s688fe.x1lqespi.x9fny7w.x1jaq5fi.x1qjcudd.x2soup.select('.x3jane.xa425dw.x1s688fe.x1lqespi.x9ny7w.x1jaq5fi.x1qjcudd.x2hbiel')
+            for item in event_items:
+                event_url = "https://www.facebook.com" + item['href']
+                events.append(event_url)
+
+            # Buscar el botón de 'Cargar más'
+            load_more_button = soup.select('.x6s0dn4.xjz9t2n.x1fcty3u')
+            if not load_more_button:
+                break
+
+            await page.click(load_more_button[0])
+            await asyncio.sleep(5)  # Esperamos a que la página cargue más [K
+eventos
+
+        await browser.close()
+
+        return events
+
+async def extract_event_details(url):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        await page.goto(url, timeout=30 * 1000)  # Aumentamos el tiempo de [K
+espera a 30 segundos
+        await page.wait_for_selector(".x1lkfr7t")  # Esperamos a que la pág[3D[K
+página cargue completamente
+
+        html_content = await page.content()
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        title = soup.select_one('.x1lkfr7t.xh8yej3.xw28xxk.x1i10hfl.x193wmn[59D[K
+soup.select_one('.x1lkfr7t.xh8yej3.xw28xxk.x1i10hfl.x193wmn4')
+        if not title:
+            print(f"No se pudo extraer el título del evento en {url}")
+            return None
+
+        host = soup.select_one('.x1lkfr7t.xh8yej3.xw28xxk.x1i10hfl.xe1xjs5'[60D[K
+soup.select_one('.x1lkfr7t.xh8yej3.xw28xxk.x1i10hfl.xe1xjs5')
+        if not host:
+            print(f"No se pudo extraer el organizador del evento en {url}")[7D[K
+{url}")
+            return None
+
+        event_details = {
+            'title': title.text.strip(),
+            'host': host.text.strip()
+        }
+
+        await browser.close()
+
+        return event_details
+
+async def main():
+    url = "https://www.facebook.com/events/search/?event_type=all&category=[65D[K
+"https://www.facebook.com/events/search/?event_type=all&category=music&dist"https://www.facebook.com/events/search/?event_type=all&category=usic&distance=100mi"
+    events = await extract_events(url)
+    
+    for event_url in events:
+        event_details = await extract_event_details(event_url)
+        if event_details:
+            print(f"Evento: {event_details['title']}")
+            print(f"Organizador: {event_details['host']}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
+## PASOS PARA APLICAR EL CAMBIO
+1. Reemplaza el contenido del archivo `scrapers/facebook_public.py` con el [K
+código proporcionado arriba.
+2. Ejecuta el script para probar la extracción de eventos y organizadores d[1D[K
+de Facebook.
+
+Este código utiliza Playwright para navegar por Facebook y extraer eventos,[8D[K
+eventos, similar a cómo lo hace el código original pero adaptado a la nueva[5D[K
+nueva estructura HTML/CSS de Facebook. Asegúrate de tener instaladas las de[2D[K
+dependencias necesarias (`playwright` y `beautifulsoup4`) antes de ejecutar[8D[K
+ejecutar el script.
+
+Puedes instalar las dependencias ejecutando:
+
+```sh
+pip install playwright beautifulsoup4
+```
+
+Después, instala los navegadores de Playwright con:
+
+```sh
+playwright install
+```
+
+Luego ejecuta el script principal desde tu terminal o editor de código favo[4D[K
+favorito.
+

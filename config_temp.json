@@ -1,0 +1,49 @@
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 50,
+  "timeout": 30,
+  "priorizar_paises": [],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": [
+    "darkpsy", "dark psy", "forest psy", "forest", "ritual",
+    "psytrance", "psy trance", "goa trance", "goa",
+    "hitech", "hi-tech", "psycore", "suomi", "suomisaundi",
+    "twilight", "night full-on", "psytech",
+    "progressive psy", "prog psy", "zenonesque", "minimal psy",
+    "psychill", "psy-chill", "psydub", "psybient", "psybreaks"
+  ],
+  "tipos_evento": [
+    "festival", "open air", "outdoor", "indoor", "club",
+    "party", "rave", "gathering", "weekender", "retreat",
+    "burner", "camp", "warehouse", "ritual"
+  ],
+  "ciudades": [
+    "Berlin", "Hamburg", "Munich", "Frankfurt", "Cologne",
+    "London", "Manchester", "Bristol",
+    "Paris", "Lyon", "Marseille",
+    "Madrid", "Barcelona", "Valencia", "Ibiza",
+    "Rome", "Milan", "Turin",
+    "Amsterdam", "Rotterdam", "Utrecht",
+    "Brussels", "Antwerp",
+    "Vienna", "Salzburg",
+    "Prague", "Brno",
+    "Budapest",
+    "Warsaw", "Krakow",
+    "Lisbon", "Porto",
+    "Stockholm", "Gothenburg",
+    "Copenhagen",
+    "Athens",
+    "Dublin",
+    "Zurich", "Geneva"
+  ],
+  "paises": [
+    "Germany", "France", "Spain", "Italy", "Portugal",
+    "Netherlands", "Belgium", "Switzerland", "Austria",
+    "Czech", "Poland", "Hungary", "Romania", "Bulgaria",
+    "Greece", "Croatia", "Serbia", "Slovenia", "Slovakia",
+    "UK", "England", "Scotland", "Ireland",
+    "Sweden", "Norway", "Finland", "Denmark",
+    "Lithuania", "Latvia", "Estonia", "United Kingdom"
+  ]
+}

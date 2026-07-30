@@ -1,0 +1,42 @@
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 50,
+  "timeout": 30,
+  "priorizar_paises": [
+    "Alemania",
+    "Francia",
+    "Italia",
+    "Espa\u00f1a",
+    "Portugal",
+    "Reino Unido",
+    "Holanda"
+  ],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": [
+    "psytrance",
+    "goa",
+    "fullon",
+    "progressive",
+    "darkpsy",
+    "hitech"
+  ],
+  "tipos_evento": [
+    "festival",
+    "party",
+    "gathering",
+    "rave",
+    "outdoor",
+    "indoor"
+  ],
+  "ciudades": [
+    "Madrid",
+    "Barcelona",
+    "Lisboa",
+    "Berl\u00edn",
+    "Par\u00eds",
+    "Roma",
+    "Londres",
+    "\u00c1msterdam"
+  ]
+}

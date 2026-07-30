@@ -1,0 +1,160 @@
+### ANÁLISIS DEL PROBLEMA
+
+La lógica actual de búsqueda de grupos en Facebook está incorrecta porque s[1D[K
+se están utilizando tipos de evento como parte de las queries, lo cual no e[1D[K
+es apropiado para buscar grupos. Los grupos en Facebook generalmente son no[2D[K
+nombrados por el subgénero, país y ciudad, no por los tipos de eventos.
+
+### CÓDIGO CORREGIDO
+
+```python
+# scrapers/facebook_public.py
+
+import asyncio
+from playwright.async_api import async_playwright, async_timeout
+from bs4 import BeautifulSoup
+import re
+import time
+
+CONFIG = {
+    "max_eventos": 150,
+    "busquedas_facebook": 50,
+    "timeout": 30,
+    "priorizar_paises": [],
+    "extraer_contactos": True,
+    "buscar_en_grupos": True,
+    "subgeneros": [
+        "darkpsy", "dark psy", "forest psy", "forest", "ritual",
+        "psytrance", "psy trance", "goa trance", "goa",
+        "hitech", "hi-tech", "psycore", "suomi", "suomisaundi",
+        "twilight", "night full-on", "psytech",
+        "progressive psy", "prog psy", "zenonesque", "minimal psy",
+        "psychill", "psy-chill", "psydub", "psybient", "psybreaks"
+    ],
+    "tipos_evento": [
+        "festival", "open air", "outdoor", "indoor", "club",
+        "party", "rave", "gathering", "weekender", "retreat",
+        "burner", "camp", "warehouse", "ritual"
+    ],
+    "ciudades": [
+        "Berlin", "Hamburg", "Munich", "Frankfurt", "Cologne",
+        "London", "Manchester", "Bristol",
+        "Paris", "Lyon", "Marseille",
+        "Madrid", "Barcelona", "Valencia", "Ibiza",
+        "Rome", "Milan", "Turin",
+        "Amsterdam", "Rotterdam", "Utrecht",
+        "Brussels", "Antwerp",
+        "Vienna", "Salzburg",
+        "Prague", "Brno",
+        "Budapest",
+        "Warsaw", "Krakow",
+        "Lisbon", "Porto",
+        "Stockholm", "Gothenburg",
+        "Copenhagen",
+        "Athens",
+        "Dublin",
+        "Zurich", "Geneva"
+    ],
+    "paises": [
+        "Germany", "France", "Spain", "Italy", "Portugal",
+        "Netherlands", "Belgium", "Switzerland", "Austria",
+        "Czech", "Poland", "Hungary", "Romania", "Bulgaria",
+        "Greece", "Croatia", "Serbia", "Slovenia", "Slovakia",
+        "UK", "England", "Scotland", "Ireland",
+        "Sweden", "Norway", "Finland", "Denmark",
+        "Lithuania", "Latvia", "Estonia", "United Kingdom"
+    ]
+}
+
+async def generar_queries_grupos(config):
+    subgeneros = config["subgeneros"]
+    ciudades = config["ciudades"]
+    paises = config["paises"]
+
+    queries = []
+    for subgenero in subgeneros:
+        for pais in paises:
+            for ciudad in ciudades:
+                query = f"{subgenero} {pais} {ciudad}"
+                queries.append(query)
+    return queries
+
+async def buscar_eventos_en_grupo(page, grupo_url, config):
+    eventos = []
+    await page.goto(grupo_url + "/events")
+    with async_timeout(timeout=30):
+        while True:
+            try:
+                posts = await page.query_selector_all('.UserContentWrapper'[45D[K
+page.query_selector_all('.UserContentWrapper')
+                for post in posts:
+                    content = await post.inner_text()
+                    soup = BeautifulSoup(content, 'html.parser')
+
+                    if any(evento in soup.get_text() for evento in config["[8D[K
+config["tipos_evento"]):
+                        eventos.append({
+                            "post": soup.get_text(),
+                            "organizador": re.search(r'(Hosted by|Organizad[12D[K
+by|Organizado por): (.+)', content)
+                        })
+
+                next_page = await page.query_selector('.uiMorePagerPrimary'[41D[K
+page.query_selector('.uiMorePagerPrimary')
+                if not next_page:
+                    break
+                await next_page.click()
+                await page.wait_for_timeout(5000)
+            except Exception as e:
+                print(f"Error: {e}")
+                break
+    return eventos
+
+async def scrape_facebook_public(config):
+    queries = await generar_queries_grupos(config)
+    eventos_totales = []
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True, args=['--disable-n[18D[K
+args=['--disable-notifications'])
+        context = await browser.new_context(user_agent=random.choice(CONFIG[51D[K
+browser.new_context(user_agent=random.choice(CONFIG["user_agents"]))
+        page = await context.new_page()
+
+        semaphore = asyncio.Semaphore(5)
+
+        tasks = []
+        for query in queries[:config["busquedas_facebook"]]:
+            async with semaphore:
+                task = asyncio.create_task(buscar_eventos_en_grupo(page, f"[2D[K
+f"https://www.facebook.com/search/groups?q={query}", config))
+                tasks.append(task)
+        
+        results = await asyncio.gather(*tasks)
+
+        for result in results:
+            eventos_totales.extend(result)
+
+        eventos_totales = list(set(eventos_totales))  # Eliminar duplicados[10D[K
+duplicados
+
+        await browser.close()
+
+    return eventos_totales
+```
+
+### PASOS PARA APLICAR EL CAMBIO
+
+1. **Crea el archivo `scrapers/facebook_public.py`** y pega el código propo[5D[K
+proporcionado.
+2. **Asegúrate de que tienes instaladas las dependencias** requeridas:
+   ```sh
+   pip install playwright beautifulsoup4 regex
+   ```
+3. **Corre el scraper** utilizando tu configuración en `config_temp.json`.
+
+Este código corregido realiza una búsqueda correcta de grupos en Facebook u[1D[K
+usando combinaciones de subgénero, país y ciudad. Luego, dentro de cada gru[3D[K
+grupo, extrae publicaciones que coincidan con los tipos de evento especific[9D[K
+especificados y filtra por organizador y ubicación (opcional).
+

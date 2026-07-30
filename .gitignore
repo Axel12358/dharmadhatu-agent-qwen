@@ -1,37 +1,51 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
 venv/
+venv_*/
+.venv/
 ENV/
 env.bak/
 venv.bak/
 
-# Logs y archivos generados
+# Entorno virtual
+venv/
+
+# Archivos de logs
+logs/*.log
 *.log
-*.csv
-*.json
-!config_optima.json    # mantener la configuración óptima
-!historial_qwen.json   # mantener el historial
+
+# Archivos temporales
 *.tmp
-*.temp
+*.bak
+*.swp
+*~
+*.csv
+*.png
+*.json_*
+
+# Archivos de prueba
+test_*.py
+respuesta_*.json
+respuesta_*.md
+debug_*.png
+
+# Configuraciones locales
+.env
+config_local.json
 
 # IDE
 .vscode/
 .idea/
-*.swp
-*.swo
+*.sublime-workspace
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Ollama / modelos
-ollama_models/
-
-# Playwright
-playwright-report/
-test-results/
+# MCP
+mcp_*.json

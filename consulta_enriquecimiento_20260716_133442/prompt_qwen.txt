@@ -1,0 +1,183 @@
+Eres un experto en scraping, enriquecimiento de datos y extracción de información con Python y Ollama.
+
+## CONTEXTO DEL PROYECTO
+El Dharmadhatu Bot v5 enriquece eventos con Qwen para extraer:
+- Descripciones (funciona bien).
+- Organizador (falla: extrae el nombre del evento en lugar del organizador).
+- Email (falla: siempre "No disponible").
+
+Además, el filtro de "eventos reales" es demasiado restrictivo:
+- Solo pasan 8 de 41 eventos.
+- Songkick da 11 eventos pero no pasan el filtro.
+
+## EVIDENCIA
+
+## DIAGNÓSTICO COMPLETO
+```
+--- CÓDIGO ACTUAL DE enriquecer_eventos.py ---
+import asyncio
+import re
+import logging
+import ollama
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def generar_descripcion_evento(nombre_evento):
+    prompt = f"Genera una descripción atractiva para el evento '{nombre_evento}' de música psytrance. Incluye estilo musical, ambiente y recomendaciones. Máximo 150 palabras. En español."
+    try:
+        response = ollama.chat(model='qwen2.5-coder:7b', messages=[{'role': 'user', 'content': prompt}])
+        return response['message']['content'].strip()
+    except Exception as e:
+        logger.error(f"Error en descripción: {e}")
+        return "Evento de música psytrance"
+
+def extraer_organizador_email(texto):
+    prompt_org = f"Extrae el nombre del organizador principal de este texto: '{texto}'. Devuelve solo el nombre."
+    try:
+        response = ollama.chat(model='qwen2.5-coder:7b', messages=[{'role': 'user', 'content': prompt_org}])
+        organizador = response['message']['content'].strip()
+    except:
+        organizador = "No disponible"
+
+    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    emails = re.findall(email_pattern, texto)
+    email = emails[0] if emails else "No disponible"
+    return organizador, email
+
+async def enriquecer_un_evento(evento):
+    nombre = evento.get('nombre', 'Sin nombre')
+    loop = asyncio.get_running_loop()
+    descripcion = await loop.run_in_executor(None, generar_descripcion_evento, nombre)
+    organizador, email = await loop.run_in_executor(None, extraer_organizador_email, descripcion + " " + evento.get('lugar', ''))
+    evento['descripcion'] = descripcion
+    evento['organizador'] = organizador
+    evento['email'] = email
+    return evento
+
+async def enriquecer_eventos_con_qwen(eventos):
+    if not eventos:
+        return eventos
+
+    semaphore = asyncio.Semaphore(5)
+    logger.info(f"🤖 Enriqueciendo {len(eventos)} eventos con Qwen...")
+
+    async def trabajar_con_sem(evento, idx):
+        async with semaphore:
+            try:
+                logger.info(f"   {idx}/{len(eventos)}: {evento.get('nombre', 'Sin nombre')[:30]}...")
+                return await enriquecer_un_evento(evento)
+            except Exception as e:
+                logger.error(f"❌ Error en evento {idx}: {e}")
+                evento['descripcion'] = "Descripción no disponible"
+                evento['organizador'] = "No disponible"
+                evento['email'] = "No disponible"
+                return evento
+
+    tareas = [trabajar_con_sem(evento, i+1) for i, evento in enumerate(eventos)]
+    resultados = await asyncio.gather(*tareas)
+    logger.info(f"✅ {len(resultados)} eventos enriquecidos")
+    return resultados
+
+
+--- EJEMPLO DE RESULTADOS (CSV) ---
+nombre,fecha,lugar,pais,fuente,organizador,email,enlace,descripcion
+Jul 2026,N/A,N/A,N/A,Goabase,N/A,No disponible,,"¡Descubre la pura magia del psicodelia en 'Julio 2026'! Esta explosión auditiva de sonidos psicodelico te espera el próximo julio. Viaja a través de universos musicales surrealistas con DJs de renombre que te sumergirán en las ondas de la música psytrance. El ambiente será un laberinto de luces, colores y misterios, invitándote a explorar tus sueños más oscuros. No te pierdas esta oportunidad única para experimentar una experiencia musical inolvidable que fusionará el real con lo sobrenatural. ¡Prepare tu mente y emociones para un viaje sin igual hasta 'Julio 2026'!"
+"Sáb, 26 de sep. a las 2:00 p. m. AEST",Fecha no disponible,Lugar no disponible,,Facebook,Triton Dreams Psytrance,No disponible,,"Bienvenidos a ""Triton Dreams Psytrance"", una experiencia vibrante que invita a los amantes del ritmo psicodélico a sumergirse en una noche de música electrónica inolvidable. Este evento, celebrado el Sábado 26 de septiembre a las 14:00 hrs AEST, promete un ambiente único donde la música electrónica y el espíritu psicodélico se entrelazan para crear una atmósfera envolvente. Participarán reconocidos DJs que te transportarán por universos de sonido innovadores y frenéticos. Te esperamos en un evento que fusiona música, danza y introspección, donde el ritmo es la clave de una noche inolvidable. ¡No te pierdas esta oportunidad de vibrar con Triton Dreams Psytrance!"
+"Vie, 4 de sep. - 6 de sep.",Fecha no disponible,Lugar no disponible,,Facebook,Sonic Dreams,No disponible,,"Disfruta la magia del Psytrance en 'Sonic Dreams', un festival inolvidable que se extiende por tres intensos días. Ofrece una sinfonía de ritmos electrónicos, sonidos futuristas y visuals impactantes. Descubre nuevas bandas emergentes y experimenta el desconcierto total. Immerse en nuestro oscuro y vibrante ambiente underground para sentir la pulsación del universo. No te pierdas esta experiencia única que promete desatar tus sensaciones más profundos."
+"Jue, 22 jul. 2027 - 25 jul. 2027",Fecha no disponible,Lugar no disponible,,Facebook,Festival Psytrance 2027,No disponible,,"""Sumérgete en un viaje sonoro intenso con el Festival Psytrance de 2027. Desde jueves 22 hasta domingo 25 de julio, descubre una rica gama de música electrónica que mezcla ritmos psicodélicos y vibrantes sonidos futuristas. Experimenta un ambiente inolvidable de luz fusa, efectos visuales y vibrante energía atmosférica que te transportará a los límites del concierto. ¡No perdas esta oportunidad única para perder la realidad y sumergirte en el universo del psytrance! Recomendado: traer auriculares inalámbricos, un mantis (lámpara de led) y una manta térmica."""
+En este momento,Fecha no disponible,Lugar no disponible,,Facebook,En este momento,No disponible,,"""Descubre el misterio del psytrance en 'En este momento', un festival inolvidable donde la música te transportará a mundos oscuras y vibrantes. Experiencia ritmos intensos, luces pulsantes y una atmósfera surrealista que te hundirá en las profundidades de la realidad alterada. No puedes perderte esta noche única de magia sonora y experiencias sensoriales excepcionales. Prepárate para un viaje musical sin igual."""
+"Sáb, 18 de jul. - 19 de jul.",Fecha no disponible,Lugar no disponible,,Facebook,Psytrance: Último Salto,No disponible,,"🌟 Sáb, 18 de jul. - 19 de jul.: Un viaje sensorial intenso en el mundo de la Psytrance 🌟
+
+¿Quieres sumergirte en una sinfonía de sonidos electrónicos que te transportará a un mundo fantástico? ¡Esta es tu oportunidad! Nuestro festival 'Psytrance: Último Salto' promete ser una experiencia única.
+
+Desde el pulsante ritmo del techno hasta las melodías psicodélicas de la ambient, esta edición incluirá hitos como Deep Tech House, Progressive Psytrance y uplifting Trance. El ambiente será envolvente, con luces neon y proyectoras que crearán un escenario iluminado por colores brillantes.
+
+No te pierdas el talento local y nacional invadiendo los escenarios; cada noche trae sorpresas de actos increíbles. También ofreceremos talleres interactivos donde puedes aprender a DJear y mezclar tu propio set.
+
+Aquí está la lista de recomendaciones:
+- Asegúrate de llevar auriculares con bujías para la subida de volumen
+- Bebe agua regularmente, ya que los bailes intensos pueden hacer que se te seque la boca
+- Prueba las comidas saludables y energéticas disponibles durante el festival
+- Recuerda tu mochila con suficiente espacio para tu equipo electrónico
+
+
+
+--- FUNCIONES DE EXTRACCIÓN DE CONTACTOS ---
+def extraer_organizador_email(texto):
+    prompt_org = f"Extrae el nombre del organizador principal de este texto: '{texto}'. Devuelve solo el nombre."
+    try:
+        response = ollama.chat(model='qwen2.5-coder:7b', messages=[{'role': 'user', 'content': prompt_org}])
+        organizador = response['message']['content'].strip()
+    except:
+        organizador = "No disponible"
+
+    email_pattern = r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
+    emails = re.findall(email_pattern, texto)
+    email = emails[0] if emails else "No disponible"
+--
+    organizador, email = await loop.run_in_executor(None, extraer_organizador_email, descripcion + " " + evento.get('lugar', ''))
+    evento['descripcion'] = descripcion
+    evento['organizador'] = organizador
+    evento['email'] = email
+    return evento
+
+async def enriquecer_eventos_con_qwen(eventos):
+    if not eventos:
+        return eventos
+
+    semaphore = asyncio.Semaphore(5)
+
+
+--- FILTRO DE EVENTOS REALES EN main_v5.py ---
+    eventos_reales = []
+    for e in eventos_consolidados:
+        if e.get('nombre') and e.get('nombre') != 'Sin nombre' and 'prueba' not in e.get('fuente', '').lower():
+            eventos_reales.append(e)
+
+    logger.info(f"🔍 Eventos reales a enriquecer: {len(eventos_reales)}")
+
+    if eventos_reales and config.get('extraer_contactos', True):
+        print("📧 Extrayendo contactos con Qwen (solo eventos reales)...")
+        try:
+            eventos_enriquecidos = await enriquecer_eventos_con_qwen(eventos_reales)
+            df_enriquecido = pd.DataFrame(eventos_enriquecidos)
+            df_enriquecido.to_csv('eventos_enriquecidos.csv', index=False)
+            print("✅ Eventos enriquecidos guardados en 'eventos_enriquecidos.csv'")
+        except Exception as e:
+            logger.error(f"❌ Error en enriquecimiento: {e}")
+
+    print("\n📈 ESTADÍSTICAS:")
+    print(f" • Eventos totales: {len(eventos_consolidados)}")
+    
+    organizadores_reales = sum(1 for e in eventos_consolidados if e.get('organizador') and e['organizador'] != 'No disponible')
+```
+
+## PREGUNTAS ESPECÍFICAS
+
+### 1. EXTRACCIÓN DE ORGANIZADOR
+- ¿Cómo puedo modificar `extraer_organizador_email()` para que extraiga el **organizador real** (no el nombre del evento)?
+- ¿Qué patrones de texto debería buscar para identificar organizadores (ej: "organizado por", "by", "presenta")?
+- ¿Cómo puedo usar el contexto del evento (nombre, lugar, descripción) para inferir el organizador?
+
+### 2. EXTRACCIÓN DE EMAIL
+- ¿Cómo puedo extraer emails de contacto de manera más efectiva?
+- ¿Qué patrones de regex debería usar además del email estándar?
+- ¿Cómo puedo buscar emails en la descripción generada o en el texto del evento?
+
+### 3. MEJORA DEL FILTRO DE EVENTOS REALES
+- ¿Qué criterios debería usar para filtrar eventos reales sin ser demasiado restrictivo?
+- ¿Cómo puedo hacer que los eventos de Songkick pasen el filtro (tienen nombre y fecha)?
+- ¿Cómo manejar eventos con "fecha no disponible" pero con nombre válido?
+
+### 4. MEJORA DEL ENRIQUECIMIENTO
+- ¿Cómo puedo hacer que el enriquecimiento sea más rápido (ya tiene semáforo de 5)?
+- ¿Cómo puedo paralelizar la extracción de organizador y email con la generación de descripción?
+
+## FORMATO DE RESPUESTA
+Genera un informe estructurado con:
+### ANÁLISIS DEL PROBLEMA
+### CÓDIGO CORREGIDO (para `enriquecer_eventos.py` y `main_v5.py`)
+### PLAN DE IMPLEMENTACIÓN (pasos concretos)
+
+Devuelve SOLO el informe, sin explicaciones adicionales.

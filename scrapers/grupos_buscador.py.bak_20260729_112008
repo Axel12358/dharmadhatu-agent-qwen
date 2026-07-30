@@ -1,0 +1,191 @@
+import asyncio
+import random
+import logging
+import re
+from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
+from bs4 import BeautifulSoup
+
+# Intentar importar playwright-stealth
+try:
+    from playwright_stealth import stealth_async
+    STEALTH_AVAILABLE = True
+    logging.info("✅ playwright-stealth disponible")
+except ImportError:
+    STEALTH_AVAILABLE = False
+    logging.warning("⚠️ playwright-stealth no instalado. Instala con: pip install playwright-stealth")
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def generar_queries_grupos(config):
+    """Genera queries para buscar grupos en Facebook (versión mejorada)."""
+    queries = []
+    subgeneros = config.get("subgeneros", [])
+    paises = config.get("paises", [])
+    ciudades = config.get("ciudades", [])
+
+    # 1. Queries más generales: solo subgénero
+    for sub in subgeneros:
+        queries.append(sub)
+
+    # 2. Subgénero + país (primeros 5 países para no saturar)
+    for sub in subgeneros:
+        for pais in paises[:5]:
+            queries.append(f"{sub} {pais}")
+
+    # 3. Subgénero + ciudad (primeras 5 ciudades)
+    for sub in subgeneros:
+        for ciudad in ciudades[:5]:
+            queries.append(f"{sub} {ciudad}")
+
+    # Mezclar y limitar a 20 queries
+    random.shuffle(queries)
+    queries = queries[:20]
+    logger.info(f"🔍 Queries generadas para grupos: {queries}")
+    return queries
+
+async def buscar_grupos_facebook(query, page, timeout):
+    """Busca grupos en Facebook con una query específica."""
+    grupos = []
+    try:
+        url = f"https://www.facebook.com/search/groups/?q={query.replace(' ', '%20')}"
+        logger.info(f"🌐 Navegando a: {url}")
+
+        # Navegar y esperar carga completa
+        await page.goto(url, timeout=timeout * 1000, wait_until='networkidle')
+        await asyncio.sleep(random.uniform(3, 5))
+
+        # Screenshot para depuración
+        await page.screenshot(path=f"debug_grupos_{query[:10].replace(' ', '_')}.png")
+
+        # Scroll para cargar más resultados
+        for _ in range(3):
+            await page.evaluate('window.scrollBy(0, window.innerHeight)')
+            await asyncio.sleep(random.uniform(1, 2))
+
+        # Obtener HTML y parsear
+        html = await page.content()
+        soup = BeautifulSoup(html, 'html.parser')
+
+        # Buscar grupos con selectores flexibles
+        elementos = soup.select('div[data-testid="group-card"]')
+        if not elementos:
+            elementos = soup.select('div[role="article"]')
+        if not elementos:
+            # Si no hay selectores específicos, buscar enlaces a grupos
+            enlaces = soup.find_all('a', href=re.compile(r'/groups/'))
+            if enlaces:
+                logger.info(f"🔗 Encontrados {len(enlaces)} enlaces a grupos (sin selector)")
+                for enlace in enlaces[:10]:
+                    href = enlace.get('href')
+                    if href and 'search' not in href:
+                        grupo_url = f"https://www.facebook.com{href}" if href.startswith('/') else href
+                        nombre = enlace.get_text(strip=True) or "Grupo sin nombre"
+                        if nombre and grupo_url:
+                            grupos.append({
+                                "nombre": nombre,
+                                "enlace": grupo_url,
+                                "fuente": "Facebook (grupos)"
+                            })
+                            logger.info(f"✅ Grupo extraído: {nombre[:40]}...")
+                return grupos
+            else:
+                logger.warning(f"⚠️ No se encontraron grupos para query '{query}'")
+                return grupos
+
+        logger.info(f"🔎 Elementos encontrados: {len(elementos)}")
+
+        for elem in elementos[:10]:
+            try:
+                texto = elem.get_text(separator=" ", strip=True)
+                if not texto or len(texto) < 20:
+                    continue
+
+                # Extraer nombre
+                nombre = "Sin nombre"
+                nombre_elem = elem.find('span', {'dir': 'auto'})
+                if nombre_elem:
+                    nombre = nombre_elem.get_text(strip=True)
+                else:
+                    titulo = elem.find('h2') or elem.find('h3')
+                    if titulo:
+                        nombre = titulo.get_text(strip=True)
+
+                # Extraer enlace
+                enlace = ""
+                enlace_elem = elem.find('a', href=True)
+                if enlace_elem:
+                    href = enlace_elem.get('href')
+                    if href and '/groups/' in href and 'search' not in href:
+                        enlace = f"https://www.facebook.com{href}" if href.startswith('/') else href
+
+                if nombre and nombre != "Sin nombre" and enlace:
+                    grupos.append({
+                        "nombre": nombre.strip(),
+                        "enlace": enlace,
+                        "fuente": "Facebook (grupos)"
+                    })
+                    logger.info(f"✅ Grupo extraído: {nombre[:40]}...")
+            except Exception as e:
+                logger.warning(f"Error extrayendo grupo: {e}")
+
+    except PlaywrightTimeoutError:
+        logger.error(f"⏱️ Timeout al cargar {url}")
+    except Exception as e:
+        logger.error(f"❌ Error en búsqueda de grupos: {e}")
+
+    return grupos
+
+async def buscar_grupos_y_eventos(config):
+    """Orquesta la búsqueda de grupos y extracción de eventos (solo grupos por ahora)."""
+    queries = generar_queries_grupos(config)
+    timeout = 30
+    grupos_encontrados = []
+    grupos_unicos = []
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+            headless=False,  # Para depuración visual
+            args=['--no-sandbox', '--disable-setuid-sandbox']
+        )
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        )
+        page = await context.new_page()
+
+        # Aplicar stealth si está disponible
+        if STEALTH_AVAILABLE:
+            await stealth_async(page)
+            logger.info("✅ Stealth aplicado")
+
+        # Ejecutar búsquedas en paralelo
+        semaphore = asyncio.Semaphore(3)
+
+        async def buscar_grupos(query):
+            async with semaphore:
+                try:
+                    return await buscar_grupos_facebook(query, page, timeout)
+                except Exception as e:
+                    logger.error(f"❌ Error en búsqueda de grupos para '{query}': {e}")
+                    return []
+
+        tareas = [buscar_grupos(q) for q in queries]
+        resultados = await asyncio.gather(*tareas, return_exceptions=True)
+
+        for res in resultados:
+            if isinstance(res, list):
+                grupos_encontrados.extend(res)
+            elif isinstance(res, Exception):
+                logger.error(f"Error en tarea: {res}")
+
+        # Eliminar duplicados por enlace
+        seen = set()
+        for g in grupos_encontrados:
+            if g["enlace"] not in seen:
+                seen.add(g["enlace"])
+                grupos_unicos.append(g)
+
+        await browser.close()
+
+    logger.info(f"✅ Total grupos encontrados: {len(grupos_unicos)}")
+    return grupos_unicos

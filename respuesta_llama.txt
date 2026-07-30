@@ -1,0 +1,157 @@
+**Informe**
+
+**ANÁLISIS DEL PROBLEMA**
+El problema principal radica en las queries específicas utilizadas para bus[3D[K
+buscar grupos en Facebook. Las queries como "fullon Noruega" o "psytrance M[1D[K
+Macedonia del Norte" pueden ser demasiado específicas y no captar suficient[9D[K
+suficientes resultados. Además, el uso de términos específicos puede llevar[6D[K
+llevar a bloqueos o rechazos por parte de Facebook.
+
+**CÓDIGO CORREGIDO**
+
+```python
+import asyncio
+import random
+import logging
+import re
+from playwright.async_api import async_playwright, TimeoutError as Playwrig[8D[K
+PlaywrightTimeoutError
+from bs4 import BeautifulSoup
+from playwright_stealth import detect_browser_support
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def generar_queries_grupos(config):
+    queries = []
+    for sub in config.get("subgeneros", []):
+        queries.append(f"{sub} en {config.get('paises', [None])[0] if 'pais[5D[K
+'paises' in config else ''}")
+        for pais in config.get("paises", []):
+            queries.append(f"{sub} {pais}")
+        for ciudad in config.get("ciudades", []):
+            queries.append(f"{sub} {ciudad}")
+    random.shuffle(queries)
+    queries = queries[:20]
+    logger.info(f"🔍 Queries generadas para grupos: {queries}")
+    return queries
+
+async def buscar_grupos_facebook(query, page, timeout):
+    grupos = []
+    try:
+        url = f"https://www.facebook.com/search/groups/?q={query.replace(' [K
+', '%20')}"
+        logger.info(f"🌐 Navegando a: {url}")
+        await page.goto(url, timeout=timeout * 1000, wait_until='networkidl[22D[K
+wait_until='networkidle')
+        await asyncio.sleep(random.uniform(3, 5))
+        await page.screenshot(path=f"debug_grupos_{query[:10]}.png")
+        for _ in range(3):
+            await page.evaluate('window.scrollBy(0, window.innerHeight)')
+            await asyncio.sleep(random.uniform(1, 2))
+        html = await page.content()
+        soup = BeautifulSoup(html, 'html.parser')
+        elementos = soup.select('div[data-testid="group-card"]')
+        if not elementos:
+            logger.warning(f"⚠️ No se encontraron elementos de grupos para [K
+query '{query}'")
+            return grupos
+        logger.info(f"🔎 Elementos encontrados: {len(elementos)}")
+        for elem in elementos[:10]:
+            texto = elem.get_text(separator=" ", strip=True)
+            if not texto or len(texto) < 20:
+                continue
+            nombre = "Sin nombre"
+            nombre_elem = elem.find('span', {'dir': 'auto'})
+            if nombre_elem:
+                nombre = nombre_elem.get_text(strip=True)
+            enlace = ""
+            enlace_elem = elem.find('a', href=True)
+            if enlace_elem and '/groups/' in enlace_elem.get('href', ''):
+                enlace = enlace_elem.get('href')
+                if enlace and not enlace.startswith('http'):
+                    enlace = f"https://www.facebook.com{enlace}"
+            if nombre and nombre != "Sin nombre":
+                grupos.append({
+                    "nombre": nombre.strip(),
+                    "enlace": enlace,
+                    "fuente": "Facebook (grupos)"
+                })
+                logger.info(f"✅ Grupo extraído: {nombre[:40]}...")
+    except PlaywrightTimeoutError:
+        logger.error(f"⏱️ Timeout al cargar {url}")
+    except Exception as e:
+        logger.error(f"❌ Error en búsqueda de grupos: {e}")
+    return grupos
+
+async def buscar_grupos_y_eventos(config):
+    queries = generar_queries_grupos(config)
+    timeout = 30
+    browser_support = detect_browser_support()
+    user_agent = f"Mozila/{browser_support['version']}"
+    playwright_stealth = {
+        "userAgent": [user_agent],
+        "deviceMetrics": [[1920, 1080], [1366, 768]],
+        'acceptOrientation': ['portrait'],
+        'acceptLanguage': ['es-ES, es', 'en-US, en'],
+        'acceptEncoding': ['gzip'],
+    }
+    
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=False, args=['--no-sandb[17D[K
+args=['--no-sandbox'])
+        context = await browser.new_context(
+            user_agent=user_agent,
+            playwright_stealth=playwright_stealth
+        )
+        async def buscar_grupos(query):
+            try:
+                page = await context.new_page()
+                try:
+                    return await buscar_grupos_facebook(query, page, timeou[6D[K
+timeout)
+                finally:
+                    await page.close()
+            except Exception as e:
+                logger.error(f"❌ Error en búsqueda de grupos: {e}")
+        tareas_grupos = [buscar_grupos(q) for q in queries]
+        resultados_grupos = await asyncio.gather(*tareas_grupos, return_exc[10D[K
+return_exceptions=True)
+        for res in resultados_grupos:
+            if isinstance(res, list):
+                grupos_encontrados.extend(res)
+        grupos_unicos = list(set(grupos_encontrados))
+        logger.info(f"✅ Total grupos encontrados: {len(grupos_unicos)}")
+        
+        async def extraer_eventos(grupo_url):
+            try:
+                page = await context.new_page()
+                try:
+                    return []
+                finally:
+                    await page.close()
+            except Exception as e:
+                logger.error(f"❌ Error en búsqueda de eventos: {e}")
+                
+        tareas_eventos = [extraer_eventos(g["enlace"]) for g in grupos_unic[11D[K
+grupos_unicos[:10]]
+        resultados_eventos = await asyncio.gather(*tareas_eventos, return_e[8D[K
+return_exceptions=True)
+        for res in resultados_eventos:
+            if isinstance(res, list):
+                eventos.extend(res)
+        await browser.close()
+    return eventos
+
+```
+
+**PASOS PARA APLICAR EL CAMBIO**
+
+1. Actualiza el archivo `grupos_buscador.py` con el código corregido.
+2. Ejecuta el script para verificar que funcione correctamente.
+3. Verifica que los resultados sean precisos y completos.
+
+Nota: Se recomienda agregar la función de manejo de bloqueos a la búsqueda [K
+de grupos en Facebook, ya que el sitio web puede mostrar un mensaje de erro[4D[K
+error si se detecta una actividad sospechosa.
+

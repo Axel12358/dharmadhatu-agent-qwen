@@ -1,0 +1,23 @@
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 200,
+  "timeout": 30,
+  "priorizar_paises": [
+    "Alemania", "Austria", "Bélgica", "Bulgaria", "Chipre", "Croacia", "Dinamarca",
+    "Eslovaquia", "Eslovenia", "España", "Estonia", "Finlandia", "Francia", "Grecia",
+    "Hungría", "Irlanda", "Italia", "Letonia", "Lituania", "Luxemburgo", "Malta",
+    "Países Bajos", "Polonia", "Portugal", "Reino Unido", "República Checa", "Rumanía",
+    "Suecia", "Suiza", "Noruega", "Islandia", "Liechtenstein", "Andorra", "Mónaco"
+  ],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"],
+  "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor", "indoor", "evento"],
+  "ciudades": [
+    "Madrid", "Barcelona", "Valencia", "Sevilla", "Lisboa", "Oporto", "Berlín", "Hamburgo",
+    "Múnich", "Colonia", "París", "Lyon", "Marsella", "Roma", "Milán", "Nápoles",
+    "Ámsterdam", "Róterdam", "Londres", "Mánchester", "Birmingham", "Zúrich", "Ginebra",
+    "Viena", "Praga", "Budapest", "Varsovia", "Cracovia", "Bratislava", "Estocolmo",
+    "Oslo", "Copenhague", "Helsinki", "Dublín", "Bruselas", "Atenas", "Lisboa", "Oporto"
+  ]
+}

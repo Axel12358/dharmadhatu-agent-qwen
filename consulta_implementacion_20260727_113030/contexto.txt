@@ -1,0 +1,24 @@
+=== ESTRUCTURA ACTUAL DEL PROYECTO ===
+Orquestador: main_v5.py
+Scrapers: facebook_public.py, instagram_public.py, goabase.py, songkick.py
+Enriquecedor: enriquecer_eventos.py
+Loop: loop_optimizer.py
+
+=== PROBLEMAS ACTUALES ===
+1. Facebook: organizador siempre 'No disponible' (selectores fallan)
+2. Instagram: no extrae perfil del publicador
+3. Búsquedas: solo usa query fija 'psytrance festival' (no combinaciones)
+4. Score estancado en 45
+
+=== HERRAMIENTAS OPEN SOURCE DISPONIBLES (SIN LOGIN) ===
+- baberibrar/facebook-events-scraper (Playwright, 100+ eventos sin auth)
+- mrkkr/fb-events-scraper (Playwright + Flask para visualización)
+- Async Instagram scraper (Playwright, extrae perfiles sin login)
+- Crawlee para Python (orquestación robusta)
+- komutan234/Proxy-List-Free (proxies gratuitos)
+
+=== PRINCIPIOS DEL PROYECTO ===
+- Siempre sumar, nunca restar (no eliminar funcionalidades)
+- Dejar lo que sirve (mantener scrapers que dan resultados)
+- Todo local y gratuito (sin APIs de pago)
+- SIN AUTENTICACIÓN NI LOGUEO DE PERFILES PERSONALES

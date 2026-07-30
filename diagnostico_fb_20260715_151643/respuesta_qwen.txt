@@ -1,0 +1,176 @@
+### ANÁLISIS DEL PROBLEMA
+
+El scraper de Facebook ha dejado de funcionar correctamente y ahora devuelv[7D[K
+devuelve 0 eventos. Al revisar el código, se encuentran varios problemas qu[2D[K
+que pueden estar causando este error:
+
+1. **Excepciones silenciosas**: El código utiliza `except:` sin especificar[11D[K
+especificar la excepción, lo que captura cualquier tipo de excepción, ocult[5D[K
+ocultándola del flujo normal del programa.
+2. **Selección de elementos inadecuada**: La lógica para seleccionar los el[2D[K
+elementos y extraer información está fallando o no está adaptada a las actu[4D[K
+actualizaciones en el diseño de Facebook.
+3. **Manejo de eventos asincrónicos**: No se están manejando adecuadamente [K
+las excepciones en las tareas asincrónicas, lo que puede llevar a errores s[1D[K
+silenciosos.
+
+### CÓDIGO CORREGIDO (código COMPLETO de facebook_public.py que funciona)
+
+```python
+import asyncio
+import random
+from playwright.async_api import async_playwright
+from logger import logger
+
+async def scrape_una_query(query, page, timeout):
+    eventos = []
+    url = f"https://www.facebook.com/search/events/?q={query.replace(' ', '[1D[K
+'%20')}"
+    try:
+        await page.goto(url, timeout=timeout * 1000, wait_until='networkidl[22D[K
+wait_until='networkidle')
+        await asyncio.sleep(random.uniform(2, 4))
+
+        # Scroll para cargar más eventos
+        for _ in range(3):
+            await page.evaluate('window.scrollBy(0, window.innerHeight)')
+            await asyncio.sleep(random.uniform(1, 2))
+
+        selectores = [
+            'div[role="article"]',
+            'div[data-testid="event-card"]',
+            'div[class*="event"]',
+            'div[class*="searchResult"]'
+        ]
+        
+        for selector in selectores:
+            try:
+                elementos = await page.query_selector_all(selector)
+                if elementos:
+                    logger.info(f"✅ Encontrados {len(elementos)} elementos[9D[K
+elementos con selector: {selector}")
+                    break
+            except Exception as e:
+                continue
+
+        max_eventos = 150  # Configuración de eventos máximos por consulta
+        for elem in elementos[:max_eventos]:
+            try:
+                nombre = "Sin nombre"
+                for n_sel in ['span[dir="auto"]', 'span[class*="title"]', '[1D[K
+'h2', 'h3']:
+                    nombre_elem = await elem.query_selector(n_sel)
+                    if nombre_elem:
+                        nombre = await nombre_elem.inner_text()
+                        if nombre and nombre.strip() and nombre != "Sin nom[3D[K
+nombre":
+                            break
+
+                fecha = "Fecha no disponible"
+                for f_sel in ['span[data-testid="event-card-date"]', 'span[[6D[K
+'span[class*="date"]', 'span[class*="time"]']:
+                    fecha_elem = await elem.query_selector(f_sel)
+                    if fecha_elem:
+                        fecha = await fecha_elem.inner_text()
+                        if fecha and fecha.strip():
+                            break
+
+                lugar = "Lugar no disponible"
+                for l_sel in ['span[data-testid="event-card-location"]', 's[2D[K
+'span[class*="location"]', 'span[class*="place"]']:
+                    lugar_elem = await elem.query_selector(l_sel)
+                    if lugar_elem:
+                        lugar = await lugar_elem.inner_text()
+                        if lugar and lugar.strip():
+                            break
+
+                enlace = ""
+                enlace_elem = await elem.query_selector('a[href*="/events/"[39D[K
+elem.query_selector('a[href*="/events/"]')
+                if enlace_elem:
+                    enlace = await enlace_elem.get_attribute('href')
+                    if enlace and not enlace.startswith('http'):
+                        enlace = f"https://www.facebook.com{enlace}"
+
+                evento = {
+                    "nombre": nombre.strip(),
+                    "fecha": fecha.strip(),
+                    "lugar": lugar.strip(),
+                    "enlace": enlace,
+                    "fuente": "Facebook"
+                }
+                eventos.append(evento)
+            except Exception as e:
+                logger.warning(f"Error extrayendo evento: {e}")
+                continue
+    except Exception as e:
+        logger.error(f"Error en la consulta '{query}': {e}")
+    return eventos
+
+async def scrape_facebook_public(config):
+    queries = generar_queries_facebook(config)
+    max_eventos = config.get("max_eventos", 150)
+    timeout = config.get("timeout", 30)
+    semaphore = asyncio.Semaphore(10)
+
+    logger.info(f"🔍 Generadas {len(queries)} queries para Facebook")
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True, args=['--no-sandbo[18D[K
+args=['--no-sandbox'])
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebK[9D[K
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',[15D[K
+Safari/537.36',
+            viewport={'width': 1280, 'height': 800}
+        )
+        
+        async def trabajar_con_query(query):
+            async with semaphore:
+                page = await context.new_page()
+                try:
+                    eventos = await scrape_una_query(query, page, timeout)
+                    return eventos
+                finally:
+                    await page.close()
+
+        tareas = [trabajar_con_query(query) for query in queries]
+        resultados = await asyncio.gather(*tareas, return_exceptions=True)
+
+    todos_eventos = []
+    seen = set()
+    for res in resultados:
+        if isinstance(res, list):
+            todos_eventos.extend(res)
+        elif isinstance(res, Exception):
+            logger.warning(f"Error en una tarea: {res}")
+
+    eventos_filtrados = []
+    for e in todos_eventos:
+        key = (e["nombre"], e["fecha"])
+        if key not in seen and e["nombre"] != "Sin nombre" and e["nombre"].[12D[K
+e["nombre"].strip():
+            seen.add(key)
+            eventos_filtrados.append(e)
+            if len(eventos_filtrados) >= max_eventos:
+                break
+
+    logger.info(f"✅ Facebook: {len(eventos_filtrados)} eventos reales")
+    return eventos_filtrados
+```
+
+### PASOS PARA APLICAR LA SOLUCIÓN
+
+1. **Reemplaza el código existente en `facebook_public.py` con el código co[2D[K
+corregido proporcionado**.
+2. **Asegúrate de que la función `generar_queries_facebook(config)` esté de[2D[K
+definida y funcione correctamente**.
+3. **Configura los parámetros `max_eventos` y `timeout` en la configuración[13D[K
+configuración del scraper según tus necesidades**.
+4. **Ejecuta el scraper para verificar si está funcionando correctamente**.[16D[K
+correctamente**.
+
+Este código debería solucionar los problemas de selecciona elementos, manej[5D[K
+manejo de excepciones y lógica de extracción, permitiendo que el scraper fu[2D[K
+funcione nuevamente en Facebook.
+

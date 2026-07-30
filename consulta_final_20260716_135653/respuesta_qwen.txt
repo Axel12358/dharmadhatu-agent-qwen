@@ -1,0 +1,284 @@
+## ANÁLISIS DEL PROBLEMA
+
+1. **Extracción de organizador en Facebook**:
+   - El selector actual para encontrar el organizador falla porque no está [K
+utilizando los selectores correctos para buscar elementos como "Hosted by" [K
+o similares.
+   
+2. **Busca emails en el contenido del evento**:
+   - La búsqueda de emails debe realizarse directamente en el contenido del[3D[K
+del evento antes de generar la descripción, utilizando patrones regulares o[1D[K
+o expresiones regulares específicas.
+
+3. **Incluir eventos de Songkick**:
+   - Para incluir eventos de Songkick, se necesitará implementar una nueva [K
+función que acceda a la API de Songkick y extraiga los datos deseados (nomb[5D[K
+(nombre, enlace, etc.) para agregarlos a la lista de eventos.
+
+## CÓDIGO CORREGIDO
+
+### ARCHIVO: enriquecer_eventos.py
+
+```python
+import asyncio
+from playwright.async_api import async_playwright
+import re
+
+async def generar_descripcion_evento(nombre):
+    # Lógica para generar una descripción basada en el nombre del evento.
+    return f"Detalles del evento {nombre}."
+
+async def extraer_organizador_email(texto):
+    organizador = "No disponible"
+    email = "No disponible"
+
+    # Buscar organizador
+    if "Hosted by" in texto:
+        organizador = re.search(r'Hosted by\s*([^\s,]+)', texto)
+        if organizador:
+            organizador = organizador.group(1)
+
+    # Buscar email
+    email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    emails = re.findall(email_pattern, texto)
+    if emails:
+        email = emails[0]
+
+    return organizador.strip(), email.strip()
+
+async def enriquecer_un_evento(evento):
+    loop = asyncio.get_running_loop()
+    
+    # Buscar lugar y evento
+    lugar = evento['lugar']
+    
+    # Generar descripción
+    nombre = evento['nombre']
+    texto_busqueda = lugar + " " + nombre
+    evento['descripcion'] = await loop.run_in_executor(None, generar_descri[14D[K
+generar_descripcion_evento, nombre)
+    
+    # Combinar texto para buscar organizador/email
+    texto_completo = lugar + " " + evento['descripcion']
+    organizador, email = await loop.run_in_executor(None, extraer_organizad[17D[K
+extraer_organizador_email, texto_completo)
+    
+    evento['organizador'] = organizador
+    evento['email'] = email
+    
+    return evento
+
+async def enriquecer_eventos_con_qwen(eventos):
+    if not eventos:
+        return eventos
+
+    semaphore = asyncio.Semaphore(5)
+    logger.info(f"🤖 Enriqueciendo {len(eventos)} eventos con Qwen...")
+
+    async def trabajar_con_sem(evento, idx):
+        async with semaphore:
+            try:
+                logger.info(f"   {idx}/{len(eventos)}: {evento.get('nombre'[20D[K
+{evento.get('nombre', 'Sin nombre')[:30]}...")
+                return await enriquecer_un_evento(evento)
+            except Exception as e:
+                logger.error(f"❌ Error en evento {idx}: {e}")
+                evento['descripcion'] = "Descripción no disponible"
+                evento['organizador'] = "No disponible"
+                evento['email'] = "No disponible"
+                return evento
+
+    tareas = [trabajar_con_sem(evento, i+1) for i, evento in enumerate(even[14D[K
+enumerate(eventos)]
+    resultados = await asyncio.gather(*tareas)
+    logger.info(f"✅ {len(resultados)} eventos enriquecidos")
+    return resultados
+```
+
+### ARCHIVO: facebook_public.py
+
+```python
+import asyncio
+import random
+import logging
+from playwright.async_api import async_playwright
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+async def scrape_facebook_public(config):
+    query = "psytrance festival"
+    max_eventos = config.get('max_eventos', 150)
+    timeout = config.get('timeout', 30)
+
+    logger.info(f"🔍 Buscando en Facebook con query: '{query}'")
+    eventos = []
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+            headless=True,
+            args=['--no-sandbox', '--disable-setuid-sandbox']
+        )
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebK[9D[K
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',[15D[K
+Safari/537.36',
+            viewport={'width': 1280, 'height': 800}
+        )
+        page = await context.new_page()
+
+        try:
+            url = f"https://www.facebook.com/events/search/?q={query.replac[57D[K
+f"https://www.facebook.com/events/search/?q={query.replace(' ', '+')}"
+            logger.info(f"🌐 Navegando a: {url}")
+            await page.goto(url, timeout=timeout * 1000, wait_until='networ[18D[K
+wait_until='networkidle')
+            await asyncio.sleep(random.uniform(3, 5))
+
+            try:
+                await page.wait_for_selector('div[role="article"]', timeout[7D[K
+timeout=15000)
+            except:
+                logger.warning("No se encontraron eventos en Facebook")
+                await browser.close()
+                return []
+
+            for _ in range(4):
+                await page.evaluate('window.scrollBy(0, window.innerHeight)[19D[K
+window.innerHeight)')
+                await asyncio.sleep(random.uniform(1.5, 3))
+
+            selectores = [
+                'div[role="article"]',
+                'div[data-testid="event-card"]',
+                'div[class*="event"]',
+                'div[class*="searchResult"]'
+            ]
+
+            elementos = []
+            for selector in selectores:
+                try:
+                    elementos = await page.query_selector_all(selector)
+                    if elementos and len(elementos) > 0:
+                        logger.info(f"✅ Encontrados {len(elementos)} eleme[5D[K
+elementos con selector: {selector}")
+                        break
+                except Exception:
+                    continue
+
+            if not elementos:
+                logger.warning("No se encontraron elementos de eventos en l[1D[K
+la página")
+                await browser.close()
+                return []
+
+            for elem in elementos[:max_eventos]:
+                try:
+                    nombre = "Sin nombre"
+                    lugar = "Lugar no disponible"
+                    organizador = "No disponible"
+                    email = "No disponible"
+
+                    # Extraer nombre
+                    for n_sel in ['span[dir="auto"]', 'span[class*="title"][21D[K
+'span[class*="title"]', 'h2', 'h3', 'span[class*="name"]']:
+                        nombre_elem = await elem.query_selector(n_sel)
+                        if nombre_elem:
+                            nombre = await nombre_elem.inner_text()
+                            if nombre and nombre.strip() and nombre != "Sin[4D[K
+"Sin nombre":
+                                break
+
+                    # Extraer lugar
+                    for l_sel in ['span[data-testid="event-card-location"]'[42D[K
+['span[data-testid="event-card-location"]', 'span[class*="location"]', 'spa[4D[K
+'span[class*="place"]', 'span[class*="address"]']:
+                        lugar_elem = await elem.query_selector(l_sel)
+                        if lugar_elem:
+                            lugar = await lugar_elem.inner_text()
+                            if lugar and lugar.strip():
+                                break
+
+                    # Extraer organizador
+                    for o_sel in ['span[data-testid="event-card-host"]', 's[2D[K
+'span[class*="hostedBy"]']:
+                        organizador_elem = await elem.query_selector(o_sel)[26D[K
+elem.query_selector(o_sel)
+                        if organizador_elem:
+                            organizador = await organizador_elem.inner_text[27D[K
+organizador_elem.inner_text()
+                            if organizador and organizador.strip():
+                                break
+
+                    # Extraer email
+                    for e_sel in ['div[data-testid="event-card-email"]', 's[2D[K
+'span[class*="contactInfo"]']:
+                        email_elem = await elem.query_selector(e_sel)
+                        if email_elem:
+                            texto_email = await email_elem.inner_text()
+                            emails = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za[38D[K
+re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', texto_em[8D[K
+texto_email)
+                            if emails:
+                                email = emails[0]
+
+                    enlace = ""
+                    enlace_elem = await elem.query_selector('a[href*="/even[35D[K
+elem.query_selector('a[href*="/events/"]')
+                    if enlace_elem:
+                        enlace = await enlace_elem.get_attribute('href')
+                        if enlace and not enlace.startswith('http'):
+                            enlace = f"https://www.facebook.com{enlace}"
+
+                    if nombre and nombre != "Sin nombre":
+                        evento = {
+                            "nombre": nombre.strip(),
+                            "fecha": fecha.strip() if hasattr(fecha, 'strip[6D[K
+'strip') else "Fecha no disponible",
+                            "lugar": lugar.strip(),
+                            "organizador": organizador.strip(),
+                            "email": email.strip(),
+                            "enlace": enlace,
+                            "fuente": "Facebook"
+                        }
+                        eventos.append(evento)
+                        logger.info(f"✅ Evento {len(eventos)}: {nombre[:40[11D[K
+{nombre[:40]}...")
+                except Exception as e:
+                    logger.warning(f"Error extrayendo evento: {e}")
+                    continue
+
+        except Exception as e:
+            logger.error(f"Error en Facebook: {e}")
+
+        await browser.close()
+
+    logger.info(f"✅ Facebook: {len(eventos)} eventos reales")
+    return eventos
+```
+
+## PLAN DE IMPLEMENTACIÓN
+
+1. **Implementar la extracción de organizador y email**:
+   - Actualizar las funciones `extraer_organizador_email` y `enriquecer_un_[15D[K
+`enriquecer_un_evento` en `enriquecer_eventos.py`.
+
+2. **Modificar el filtro en `main_v5.py` para incluir eventos de Songkick**[10D[K
+Songkick**:
+   - Implementar una nueva función que acceda a la API de Songkick y extrai[6D[K
+extraiga los datos necesarios.
+   - Integrar esta función con el resto del código para buscar e incluir ev[2D[K
+eventos de Songkick.
+
+3. **Probar las modificaciones**:
+   - Realizar pruebas exhaustivas para asegurarse de que todas las funcione[8D[K
+funciones estén funcionando correctamente.
+   - Verificar que la extracción de organizador y email sea precisa.
+   - Confirmar que los eventos de Songkick se incluyan sin problemas.
+
+4. **Documentación y mantenimiento**:
+   - Documentar las modificaciones realizadas y cualquier cambio en la lógi[4D[K
+lógica del código.
+   - Mantener el código limpio y bien organizado para facilitar futuras act[3D[K
+actualizaciones o mejoras.
+

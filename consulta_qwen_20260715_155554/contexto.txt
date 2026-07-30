@@ -1,0 +1,116 @@
+--- CONFIGURACIÓN ACTUAL (config_temp.json) ---
+{
+  "max_eventos": 150,
+  "busquedas_facebook": 200,
+  "timeout": 30,
+  "priorizar_paises": [
+    "Alemania", "Austria", "Bélgica", "Bulgaria", "Chipre", "Croacia", "Dinamarca",
+    "Eslovaquia", "Eslovenia", "España", "Estonia", "Finlandia", "Francia", "Grecia",
+    "Hungría", "Irlanda", "Italia", "Letonia", "Lituania", "Luxemburgo", "Malta",
+    "Países Bajos", "Polonia", "Portugal", "Reino Unido", "República Checa", "Rumanía",
+    "Suecia", "Suiza", "Noruega", "Islandia", "Liechtenstein", "Andorra", "Mónaco"
+  ],
+  "extraer_contactos": true,
+  "buscar_en_grupos": true,
+  "subgeneros": ["psytrance", "goa", "fullon", "progressive", "darkpsy", "hitech", "suomi", "forest"],
+  "tipos_evento": ["festival", "party", "gathering", "rave", "outdoor", "indoor", "evento"],
+  "ciudades": [
+    "Madrid", "Barcelona", "Valencia", "Sevilla", "Lisboa", "Oporto", "Berlín", "Hamburgo",
+    "Múnich", "Colonia", "París", "Lyon", "Marsella", "Roma", "Milán", "Nápoles",
+    "Ámsterdam", "Róterdam", "Londres", "Mánchester", "Birmingham", "Zúrich", "Ginebra",
+    "Viena", "Praga", "Budapest", "Varsovia", "Cracovia", "Bratislava", "Estocolmo",
+    "Oslo", "Copenhague", "Helsinki", "Dublín", "Bruselas", "Atenas", "Lisboa", "Oporto"
+  ]
+}
+
+
+--- ESTRUCTURA DE SCRAPERS ---
+-rw-r--r--  1 angelgarcia  staff  1749 Jul 15 15:00 ../scrapers/busquedas_combinadas_facebook.py
+-rw-r--r--  1 angelgarcia  staff  2691 Jul 15 14:26 ../scrapers/enriquecer_eventos.py
+-rw-r--r--  1 angelgarcia  staff  1315 Jul 14 15:40 ../scrapers/eventbrite.py
+-rw-r--r--  1 angelgarcia  staff  4337 Jul 14 15:40 ../scrapers/facebook_mejorado.py
+-rw-r--r--  1 angelgarcia  staff  6418 Jul 15 15:35 ../scrapers/facebook_public.py
+-rw-r--r--  1 angelgarcia  staff  1978 Jul 14 15:40 ../scrapers/goabase.py
+-rw-r--r--  1 angelgarcia  staff   605 Jul 15 12:48 ../scrapers/grupos_fijos.py
+-rw-r--r--  1 angelgarcia  staff  1038 Jul 14 15:40 ../scrapers/instagram.py
+-rw-r--r--  1 angelgarcia  staff  3078 Jul 14 15:40 ../scrapers/instagram_public.py
+-rw-r--r--  1 angelgarcia  staff  1140 Jul 15 15:00 ../scrapers/manejo_excepciones_robusto.py
+-rw-r--r--  1 angelgarcia  staff   951 Jul 15 15:00 ../scrapers/proxies_rotativos.py
+-rw-r--r--  1 angelgarcia  staff  1097 Jul 14 15:40 ../scrapers/psynews.py
+-rw-r--r--  1 angelgarcia  staff  1776 Jul 14 15:40 ../scrapers/qwen_enricher.py
+-rw-r--r--  1 angelgarcia  staff  1259 Jul 15 15:00 ../scrapers/rate_limiting.py
+-rw-r--r--  1 angelgarcia  staff  1475 Jul 14 15:40 ../scrapers/resident_advisor.py
+-rw-r--r--  1 angelgarcia  staff  9511 Jul 14 15:40 ../scrapers/scraper_asincrono.py
+-rw-r--r--  1 angelgarcia  staff  1294 Jul 14 15:40 ../scrapers/songkick.py
+
+
+--- FUNCIONES PRINCIPALES DE SCRAPERS ---
+👉 busquedas_combinadas_facebook.py:
+async def search_facebook_combinations(config):
+
+👉 enriquecer_eventos.py:
+def generar_descripcion_evento(nombre_evento):
+def extraer_organizador_email(texto):
+async def enriquecer_un_evento(evento):
+
+👉 eventbrite.py:
+def scrape_eventbrite(limit=100):
+
+👉 facebook_mejorado.py:
+def scrape_facebook_mejorado(query="psytrance festival", max_posts=30):
+
+👉 facebook_public.py:
+async def scrape_facebook_public(config):
+
+👉 goabase.py:
+def scrape_goabase(limit=100):
+
+👉 grupos_fijos.py:
+async def scrape_grupos_fijos(config):
+
+👉 instagram.py:
+def scrape_instagram(limit=100):
+
+👉 instagram_public.py:
+def scrape_instagram_public(perfil="psytrance", max_posts=15):
+def generar_eventos_prueba(fuente, max_posts=10):
+
+👉 manejo_excepciones_robusto.py:
+def with_retry(max_attempts=3, delay=2):
+
+👉 proxies_rotativos.py:
+async def get_proxies():
+async def rotate_proxy(page):
+
+👉 psynews.py:
+def scrape_psynews(limit=100):
+
+👉 qwen_enricher.py:
+def enriquecer_eventos(eventos, delay=0.5):
+def enriquecer_evento_qwen(evento):
+
+👉 rate_limiting.py:
+def limit_rate(max_calls=10, period=60):
+
+👉 resident_advisor.py:
+def scrape_resident_advisor(limit=100):
+
+👉 scraper_asincrono.py:
+async def scrape_goabase_async(limit=100):
+async def scrape_facebook_async(query="psytrance festival", max_posts=50):
+def cargar_cache():
+
+👉 songkick.py:
+def scrape_songkick(limit=100):
+
+
+
+--- ÚLTIMOS RESULTADOS DEL BOT ---
+No hay loop_completo.log
+
+
+--- PRINCIPIOS DEL PROYECTO ---
+- Siempre sumar, nunca restar (no eliminar funcionalidades)
+- Dejar lo que sirve (mantener código que funciona)
+- Siempre es una implementación de mejora
+- Todo local, gratuito y compatible con Python 3.9

@@ -1,0 +1,118 @@
+import asyncio
+import random
+import logging
+from playwright.async_api import async_playwright
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+async def scrape_facebook_public(config):
+    query = "psytrance festival"
+    max_eventos = config.get('max_eventos', 150)
+    timeout = config.get('timeout', 30)
+
+    logger.info(f"🔍 Buscando en Facebook con query: '{query}'")
+    eventos = []
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+            headless=True,
+            args=['--no-sandbox', '--disable-setuid-sandbox']
+        )
+        context = await browser.new_context(
+            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            viewport={'width': 1280, 'height': 800}
+        )
+        page = await context.new_page()
+
+        try:
+            url = f"https://www.facebook.com/search/events/?q={query.replace(' ', '%20')}"
+            await page.goto(url, timeout=timeout * 1000, wait_until='networkidle')
+            await asyncio.sleep(random.uniform(2, 4))
+
+            # Scroll para cargar más eventos
+            for _ in range(3):
+                await page.evaluate('window.scrollBy(0, window.innerHeight)')
+                await asyncio.sleep(random.uniform(1, 2))
+
+            # Selectores alternativos
+            selectores = [
+                'div[role="article"]',
+                'div[data-testid="event-card"]',
+                'div[class*="event"]',
+                'div[class*="searchResult"]'
+            ]
+
+            elementos = []
+            for selector in selectores:
+                try:
+                    elementos = await page.query_selector_all(selector)
+                    if elementos:
+                        logger.info(f"✅ Encontrados {len(elementos)} elementos con selector: {selector}")
+                        break
+                except:
+                    continue
+
+            if not elementos:
+                logger.warning("No se encontraron eventos en Facebook")
+                await browser.close()
+                return []
+
+            for elem in elementos[:max_eventos]:
+                try:
+                    # Intentar múltiples formas de extraer nombre
+                    nombre = "Sin nombre"
+                    for n_sel in ['span[dir="auto"]', 'span[class*="title"]', 'h2', 'h3']:
+                        nombre_elem = await elem.query_selector(n_sel)
+                        if nombre_elem:
+                            nombre = await nombre_elem.inner_text()
+                            if nombre and nombre.strip() and nombre != "Sin nombre":
+                                break
+
+                    # Fecha
+                    fecha = "Fecha no disponible"
+                    for f_sel in ['span[data-testid="event-card-date"]', 'span[class*="date"]', 'span[class*="time"]']:
+                        fecha_elem = await elem.query_selector(f_sel)
+                        if fecha_elem:
+                            fecha = await fecha_elem.inner_text()
+                            if fecha and fecha.strip():
+                                break
+
+                    # Lugar
+                    lugar = "Lugar no disponible"
+                    for l_sel in ['span[data-testid="event-card-location"]', 'span[class*="location"]', 'span[class*="place"]']:
+                        lugar_elem = await elem.query_selector(l_sel)
+                        if lugar_elem:
+                            lugar = await lugar_elem.inner_text()
+                            if lugar and lugar.strip():
+                                break
+
+                    # Enlace
+                    enlace = ""
+                    enlace_elem = await elem.query_selector('a[href*="/events/"]')
+                    if enlace_elem:
+                        enlace = await enlace_elem.get_attribute('href')
+                        if enlace and not enlace.startswith('http'):
+                            enlace = f"https://www.facebook.com{enlace}"
+
+                    if nombre and nombre != "Sin nombre":
+                        evento = {
+                            "nombre": nombre.strip(),
+                            "fecha": fecha.strip(),
+                            "lugar": lugar.strip(),
+                            "enlace": enlace,
+                            "fuente": "Facebook"
+                        }
+                        eventos.append(evento)
+                        logger.info(f"✅ Evento: {nombre[:30]}...")
+                except Exception as e:
+                    logger.warning(f"Error extrayendo evento: {e}")
+                    continue
+
+        except Exception as e:
+            logger.error(f"Error en Facebook: {e}")
+
+        await browser.close()
+
+    logger.info(f"✅ Facebook: {len(eventos)} eventos reales")
+    return eventos

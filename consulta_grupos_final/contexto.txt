@@ -1,0 +1,14 @@
+=== CÓDIGO ACTUAL (scrapers/facebook_public.py) ===
+$(cat ../scrapers/facebook_public.py 2>/dev/null | head -200)
+
+=== CONFIGURACIÓN ACTUAL (config_temp.json) ===
+$(cat ../config_temp.json 2>/dev/null)
+
+=== ÚLTIMOS ERRORES (loop_rapido.log) ===
+$(tail -50 ../loop_rapido.log 2>/dev/null | grep -i "facebook\|error\|organizador")
+
+=== PRINCIPIOS DEL PROYECTO ===
+1. Siempre sumar, nunca restar (no eliminar funcionalidades existentes)
+2. Dejar lo que sirve (Goabase y Songkick se mantienen)
+3. Todo local y gratuito (sin APIs externas)
+4. Compatible con Python 3.9

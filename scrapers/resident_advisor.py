@@ -1,54 +1,246 @@
-import asyncio
-import random
-import logging
-from playwright.async_api import async_playwright
+#!/usr/bin/env python3
+"""
+Scraper de Resident Advisor (ra.co) SIN LOGIN usando la API GraphQL pública.
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+La web ra.co bloquea peticiones HTTP (DataDome), pero su API GraphQL
+(https://ra.co/graphql) es pública y no requiere autenticación.
 
-async def scrape_resident_advisor(max_eventos=50):
-    url = "https://www.residentadvisor.net/events"
-    logger.info(f"🌐 Buscando en Resident Advisor: {url}")
+Estrategia:
+1. Resuelve el id de área de cada ciudad clave vía `areas(searchTerm:)`.
+2. Consulta `facetedSearch` por área con fecha >= hoy, ordenada ascendente.
+3. Filtra client-side eventos de psytrance/techno/trance/house por género
+   o por palabras clave en el título.
+4. Devuelve eventos en el formato estándar del proyecto.
+
+Requiere: requests + bs4 (opcional). Sin cookies. A prueba de bloqueos.
+"""
+
+import json
+import re
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import List, Dict, Optional
+
+import socket
+import requests
+
+socket.setdefaulttimeout(15)
+
+_PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
+OUTPUT_FILE = str(Path(_PROJECT_ROOT) / "eventos_resident_advisor.json")
+
+from scrapers.event_extractor import EventExtractor
+
+GRAPHQL_URL = "https://ra.co/graphql"
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json",
+    "Accept-Language": "en,es;q=0.9",
+}
+
+# Ciudades europeas clave (las que RA soporta). Se resuelve el id por búsqueda.
+CIUDADES_RA = [
+    "Berlin", "Barcelona", "Madrid", "Amsterdam", "Paris", "London",
+    "Lisbon", "Vienna", "Milan", "Budapest", "Prague", "Tel Aviv",
+    "Athens", "Zurich", "Copenhagen", "Stockholm",
+]
+
+# Géneros que interesan para el proyecto (psytrance/techno/scene)
+GENEROS_INTERES = {
+    "psytrance", "trance", "techno", "tech house", "minimal techno",
+    "dub techno", "progressive house", "house", "ambient", "goa",
+    "hard techno", "acid techno", "schranz", "breaks", "dark psy",
+}
+
+# Palabras clave extra en el título/lineup por si el género no está etiquetado
+KEYWORDS_TITULO = [
+    "psytrance", "psy trance", "goa", "darkpsy", "dark psy", "forest psy",
+    "hitech", "hi-tech", "full on", "fullon", "twilight", "psycore",
+    "suomisaundi", "zenon", "psychill", "psybient", "psychedelic",
+    "techno", "trance", "rave", "acid",
+]
+
+MAX_PAGINAS_POR_CIUDAD = 3
+PAGE_SIZE = 50
+MAX_EVENTOS = 60
+
+_extractor = EventExtractor()
+
+
+def _gql(query: str) -> dict:
+    r = requests.post(GRAPHQL_URL, json={"query": query}, headers=HEADERS, timeout=20)
+    r.raise_for_status()
+    return r.json()
+
+
+def _resolver_area(ciudad: str) -> Optional[dict]:
+    """Devuelve {id, name, urlName} del área RA o None si no existe."""
+    try:
+        q = (
+            'query { areas(searchTerm: "' + ciudad.replace('"', "") +
+            '", limit: 1) { id name urlName isCountry } }'
+        )
+        d = _gql(q)
+        areas = (d.get("data") or {}).get("areas") or []
+        for a in areas:
+            if not a.get("isCountry"):
+                return a
+        if areas:
+            return areas[0]
+    except Exception:
+        pass
+    return None
+
+
+def _eventos_area(area_id, area_nombre) -> List[Dict]:
+    """Página eventos futuros de un área, filtrando por género/título."""
+    hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     eventos = []
+    eventos_area_totales = 0
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True, args=['--no-sandbox'])
-        page = await browser.new_page()
+    for page in range(1, MAX_PAGINAS_POR_CIUDAD + 1):
+        q = (
+            "query { facetedSearch(types: EVENT, "
+            f"filters: {{ areas: {{eq: {area_id}}}, date: {{gte: \"{hoy}T00:00:00\"}} }}, "
+            "sort: { date: { order: ASCENDING } }, "
+            f"page: {page}, pageSize: {PAGE_SIZE}) "
+            "{ totalResults results { id data { __typename "
+            "... on Event { id title date venue { name } area { name } "
+            "genres { name } lineup content } } } } }"
+        )
         try:
-            await page.goto(url, wait_until='networkidle')
-            await asyncio.sleep(random.uniform(2, 4))
-
-            # Buscar eventos (ajustar selectores)
-            elementos = await page.query_selector_all('li[data-type="event"]')
-            for elem in elementos[:max_eventos]:
-                try:
-                    nombre_elem = await elem.query_selector('span[class*="event-title"]')
-                    nombre = await nombre_elem.inner_text() if nombre_elem else "Sin nombre"
-
-                    fecha_elem = await elem.query_selector('span[class*="date"]')
-                    fecha = await fecha_elem.inner_text() if fecha_elem else "Fecha no disponible"
-
-                    lugar_elem = await elem.query_selector('span[class*="location"]')
-                    lugar = await lugar_elem.inner_text() if lugar_elem else "Lugar no disponible"
-
-                    enlace_elem = await elem.query_selector('a[href*="/events/"]')
-                    enlace = await enlace_elem.get_attribute('href') if enlace_elem else ""
-                    if enlace and not enlace.startswith('http'):
-                        enlace = f"https://www.residentadvisor.net{enlace}"
-
-                    evento = {
-                        "nombre": nombre.strip(),
-                        "fecha": fecha.strip(),
-                        "lugar": lugar.strip(),
-                        "enlace": enlace,
-                        "fuente": "Resident Advisor"
-                    }
-                    eventos.append(evento)
-                except Exception as e:
-                    logger.warning(f"Error extrayendo evento: {e}")
+            d = _gql(q)
         except Exception as e:
-            logger.error(f"Error en Resident Advisor: {e}")
-        await browser.close()
+            print(f"    ⚠️ RA {area_nombre} pág {page}: {e}")
+            break
 
-    logger.info(f"✅ Resident Advisor: {len(eventos)} eventos")
+        fs = (d.get("data") or {}).get("facetedSearch") or {}
+        resultados = fs.get("results") or []
+        if not resultados:
+            break
+        eventos_area_totales += len(resultados)
+
+        for r in resultados:
+            ev = r.get("data")
+            if not isinstance(ev, dict):
+                continue
+            if not _es_evento_interes(ev):
+                continue
+            norm = _normalizar_evento(ev, area_nombre)
+            if norm:
+                eventos.append(norm)
+
+        if eventos_area_totales >= (fs.get("totalResults") or 0) and page > 1:
+            break
+
     return eventos
+
+
+def _es_evento_interes(ev: dict) -> bool:
+    titulo = (ev.get("title") or "").lower()
+    generos = {g.get("name", "").lower() for g in (ev.get("genres") or [])}
+    lineup = (ev.get("lineup") or "").lower()
+
+    if generos & GENEROS_INTERES:
+        return True
+    texto = titulo + " " + lineup
+    if any(kw in texto for kw in KEYWORDS_TITULO):
+        return True
+    return False
+
+
+def _normalizar_evento(ev: dict, area_nombre: str) -> Optional[Dict]:
+    titulo = (ev.get("title") or "").strip() or "N/A"
+    if titulo.lower() in ("tba", "tbd", "sin nombre"):
+        return None
+
+    fecha_raw = ev.get("date") or ""
+    fecha = fecha_raw[:10] if len(fecha_raw) >= 10 else "N/A"
+
+    venue = (ev.get("venue") or {}).get("name") or "N/A"
+    area = (ev.get("area") or {}).get("name") or area_nombre
+
+    generos = ", ".join(g.get("name", "") for g in (ev.get("genres") or [])) or "N/A"
+    lineup = (ev.get("lineup") or "").strip() or "N/A"
+    contenido = (ev.get("content") or "").strip()
+
+    descripcion = "; ".join(p for p in [lineup, generos, contenido[:300]] if p and p != "N/A")
+
+    tipo_lugar = _extractor._extract_venue_type(f"{titulo} {venue} {area} {descripcion}") or "N/A"
+
+    # Organizador: usar venue como organizador (venues suelen organizar eventos)
+    organizador = venue if venue != "N/A" else "N/A"
+    
+    # Email/Contacto: usar URL del evento como referencia
+    evento_url = f"https://ra.co/events/{ev.get('id', '')}"
+
+    evento = {
+        "nombre": titulo,
+        "fecha": fecha,
+        "lugar": venue,
+        "ciudad": area,
+        "pais": "N/A",
+        "tipo_lugar": tipo_lugar,
+        "fuente": "Resident Advisor",
+        "organizador": organizador,
+        "email": evento_url,
+        "url": evento_url,
+        "link": evento_url,
+        "descripcion": descripcion[:500],
+        "generos": generos,
+    }
+
+    # País desde el extractor si el área coincide con ciudad conocida
+    cc = _extractor._extract_city_country(descripcion + " " + area, area)
+    if isinstance(cc, tuple) and len(cc) == 2:
+        evento["ciudad"] = cc[0] if cc[0] != "N/A" else area
+        evento["pais"] = cc[1] if cc[1] != "N/A" else "N/A"
+
+    return evento
+
+
+def scrape_ra() -> List[Dict]:
+    print("🌐 Scraping Resident Advisor (GraphQL, sin login)...")
+    todos = []
+
+    for ciudad in CIUDADES_RA:
+        area = _resolver_area(ciudad)
+        if not area:
+            print(f"  ⚠️ {ciudad}: área no encontrada")
+            continue
+        evs = _eventos_area(area["id"], area["name"])
+        print(f"  ✅ {area['name']}: {len(evs)} eventos de interés")
+        todos.extend(evs)
+        time.sleep(0.5)
+
+    # Deduplicar por nombre+fecha+lugar
+    vistos = set()
+    unicos = []
+    for ev in todos:
+        k = (ev.get("nombre", ""), ev.get("fecha", ""), ev.get("lugar", ""))
+        if k not in vistos:
+            vistos.add(k)
+            unicos.append(ev)
+
+    unicos = unicos[:MAX_EVENTOS]
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(unicos, f, indent=2, ensure_ascii=False)
+    print(f"✅ {len(unicos)} eventos de RA guardados en {OUTPUT_FILE}")
+    return unicos
+
+
+if __name__ == "__main__":
+    eventos = scrape_ra()
+    print(f"\nTotal eventos RA: {len(eventos)}")
+    for ev in eventos[:10]:
+        print(f"  - {ev.get('nombre', '?')[:55]} | {ev.get('fecha', '?')} | {ev.get('lugar', '?')}")

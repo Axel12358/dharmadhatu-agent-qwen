@@ -1,0 +1,26 @@
+{
+  "facebook_scraper": {
+    "intentos": 0,
+    "aciertos": 0,
+    "total_eventos": 0,
+    "tiempo_total": 0.0
+  },
+  "playwright": {
+    "intentos": 0,
+    "aciertos": 0,
+    "total_eventos": 0,
+    "tiempo_total": 0.0
+  },
+  "requests_direct": {
+    "intentos": 4,
+    "aciertos": 0,
+    "total_eventos": 0,
+    "tiempo_total": 33.96
+  },
+  "grupos_conocidos": {
+    "intentos": 20,
+    "aciertos": 19,
+    "total_eventos": 470,
+    "tiempo_total": 0.06
+  }
+}

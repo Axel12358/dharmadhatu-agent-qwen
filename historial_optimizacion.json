@@ -1,0 +1,51 @@
+[
+  {
+    "timestamp": "2026-07-31T16:01:43.069942",
+    "metricas": {
+      "total_eventos": 0,
+      "tiempo_total": 119.4,
+      "hashtags_procesados": 26,
+      "hashtags_productivos": 0,
+      "tiene_sesion": false,
+      "tor_activo": true
+    },
+    "config": {
+      "max_hashtags": 26,
+      "max_posts_por_hashtag": 15,
+      "timeout_total": 180,
+      "priorizar_requests": true,
+      "priorizar_playwright": true,
+      "usar_tor": true
+    },
+    "estrategias": {
+      "facebook_scraper": {
+        "intentos": 0,
+        "aciertos": 0,
+        "total_eventos": 0,
+        "tiempo_total": 0.0,
+        "score": 0.0
+      },
+      "playwright": {
+        "intentos": 0,
+        "aciertos": 0,
+        "total_eventos": 0,
+        "tiempo_total": 0.0,
+        "score": 0.0
+      },
+      "requests_direct": {
+        "intentos": 4,
+        "aciertos": 0,
+        "total_eventos": 0,
+        "tiempo_total": 33.96,
+        "score": -3.4
+      },
+      "grupos_conocidos": {
+        "intentos": 19,
+        "aciertos": 19,
+        "total_eventos": 470,
+        "tiempo_total": 0.06,
+        "score": 1034.99
+      }
+    }
+  }
+]

@@ -1,0 +1,2556 @@
+{
+  "groups": [
+    {
+      "id": "goapsytrance",
+      "nombre": "Psytrance & Goa Trance",
+      "url": "https://facebook.com/groups/goapsytrance",
+      "tipo_grupo": [
+        "goa",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "darkpsytrancefamily",
+      "nombre": "Dark Psytrance Family",
+      "url": "https://facebook.com/groups/darkpsytrancefamily",
+      "tipo_grupo": [
+        "dark",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "forestpsytrance",
+      "nombre": "Forest Psytrance Worldwide",
+      "url": "https://facebook.com/groups/forestpsytrance",
+      "tipo_grupo": [
+        "forest",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "fullonpsytrance",
+      "nombre": "Full-On Psytrance",
+      "url": "https://facebook.com/groups/fullonpsytrance",
+      "tipo_grupo": [
+        "fullon",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "goatrancefamily",
+      "nombre": "Goa Trance Family",
+      "url": "https://facebook.com/groups/goatrancefamily",
+      "tipo_grupo": [
+        "goa"
+      ]
+    },
+    {
+      "id": "darkpsyfamily",
+      "nombre": "Darkpsy Family",
+      "url": "https://facebook.com/groups/darkpsyfamily",
+      "tipo_grupo": [
+        "dark",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "progressivepsytrance",
+      "nombre": "Progressive Psytrance",
+      "url": "https://facebook.com/groups/progressivepsytrance",
+      "tipo_grupo": [
+        "progressive",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "hitechpsytrance",
+      "nombre": "Hi-Tech Psytrance",
+      "url": "https://facebook.com/groups/hitechpsytrance",
+      "tipo_grupo": [
+        "hitech",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "forestfamily",
+      "nombre": "Forest Family",
+      "url": "https://facebook.com/groups/forestfamily",
+      "tipo_grupo": [
+        "forest"
+      ]
+    },
+    {
+      "id": "nightfullon",
+      "nombre": "Night Full-On",
+      "url": "https://facebook.com/groups/nightfullon",
+      "tipo_grupo": [
+        "fullon"
+      ]
+    },
+    {
+      "id": "morningfullon",
+      "nombre": "Morning Full-On",
+      "url": "https://facebook.com/groups/morningfullon",
+      "tipo_grupo": [
+        "fullon"
+      ]
+    },
+    {
+      "id": "twilightpsytrance",
+      "nombre": "Twilight Psytrance",
+      "url": "https://facebook.com/groups/twilightpsytrance",
+      "tipo_grupo": [
+        "twilight",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancefamily",
+      "nombre": "Psytrance Family",
+      "url": "https://facebook.com/groups/psytrancefamily",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psychedelicmindz",
+      "nombre": "Psychedelic Mindz",
+      "url": "https://facebook.com/groups/psychedelicmindz",
+      "tipo_grupo": [
+        "psychedelic",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceeventsworldwide",
+      "nombre": "Psytrance Events Worldwide",
+      "url": "https://facebook.com/groups/psytranceeventsworldwide",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceespania",
+      "nombre": "Psytrance España",
+      "url": "https://facebook.com/groups/psytranceespania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancegermany",
+      "nombre": "Psytrance Germany",
+      "url": "https://facebook.com/groups/psytrancegermany",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancebrasil",
+      "nombre": "Psytrance Brasil",
+      "url": "https://facebook.com/groups/psytrancebrasil",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecommunity",
+      "nombre": "Psytrance Community",
+      "url": "https://facebook.com/groups/psytrancecommunity",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psychedelicfestivals",
+      "nombre": "Psychedelic Festivals Worldwide",
+      "url": "https://facebook.com/groups/psychedelicfestivals",
+      "tipo_grupo": [
+        "psychedelic",
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancepartypeople",
+      "nombre": "Psytrance Party People",
+      "url": "https://facebook.com/groups/psytrancepartypeople",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrance",
+      "nombre": "Psytrance",
+      "url": "https://facebook.com/groups/psytrance",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceculture",
+      "nombre": "Psytrance Culture",
+      "url": "https://facebook.com/groups/psytranceculture",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceuniverse",
+      "nombre": "Psytrance Universe",
+      "url": "https://facebook.com/groups/psytranceuniverse",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceworld",
+      "nombre": "Psytrance World",
+      "url": "https://facebook.com/groups/psytranceworld",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceaddicts",
+      "nombre": "Psytrance Addicts",
+      "url": "https://facebook.com/groups/psytranceaddicts",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancemovement",
+      "nombre": "Psytrance Movement",
+      "url": "https://facebook.com/groups/psytrancemovement",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "suomipsy",
+      "nombre": "Suomi Psytrance",
+      "url": "https://facebook.com/groups/suomipsy",
+      "tipo_grupo": [
+        "suomi",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceargentina",
+      "nombre": "Psytrance Argentina",
+      "url": "https://facebook.com/groups/psytranceargentina",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancemexico",
+      "nombre": "Psytrance México",
+      "url": "https://facebook.com/groups/psytrancemexico",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancechile",
+      "nombre": "Psytrance Chile",
+      "url": "https://facebook.com/groups/psytrancechile",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecolombia",
+      "nombre": "Psytrance Colombia",
+      "url": "https://facebook.com/groups/psytrancecolombia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceportugal",
+      "nombre": "Psytrance Portugal",
+      "url": "https://facebook.com/groups/psytranceportugal",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceitalia",
+      "nombre": "Psytrance Italia",
+      "url": "https://facebook.com/groups/psytranceitalia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceuk",
+      "nombre": "Psytrance UK",
+      "url": "https://facebook.com/groups/psytranceuk",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancejapan",
+      "nombre": "Psytrance Japan",
+      "url": "https://facebook.com/groups/psytrancejapan",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceaustralia",
+      "nombre": "Psytrance Australia",
+      "url": "https://facebook.com/groups/psytranceaustralia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceindia",
+      "nombre": "Psytrance India",
+      "url": "https://facebook.com/groups/psytranceindia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceisrael",
+      "nombre": "Psytrance Israel",
+      "url": "https://facebook.com/groups/psytranceisrael",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceusa",
+      "nombre": "Psytrance USA",
+      "url": "https://facebook.com/groups/psytranceusa",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecostarica",
+      "nombre": "Psytrance Costa Rica",
+      "url": "https://facebook.com/groups/psytrancecostarica",
+      "tipo_grupo": [
+        "psytrance",
+        "beach"
+      ]
+    },
+    {
+      "id": "psytranceperu",
+      "nombre": "Psytrance Perú",
+      "url": "https://facebook.com/groups/psytranceperu",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceecuador",
+      "nombre": "Psytrance Ecuador",
+      "url": "https://facebook.com/groups/psytranceecuador",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancevenezuela",
+      "nombre": "Psytrance Venezuela",
+      "url": "https://facebook.com/groups/psytrancevenezuela",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancebolivia",
+      "nombre": "Psytrance Bolivia",
+      "url": "https://facebook.com/groups/psytrancebolivia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceuruguay",
+      "nombre": "Psytrance Uruguay",
+      "url": "https://facebook.com/groups/psytranceuruguay",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceparaguay",
+      "nombre": "Psytrance Paraguay",
+      "url": "https://facebook.com/groups/psytranceparaguay",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceguatemala",
+      "nombre": "Psytrance Guatemala",
+      "url": "https://facebook.com/groups/psytranceguatemala",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancehonduras",
+      "nombre": "Psytrance Honduras",
+      "url": "https://facebook.com/groups/psytrancehonduras",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceelsalvador",
+      "nombre": "Psytrance El Salvador",
+      "url": "https://facebook.com/groups/psytranceelsalvador",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancepanama",
+      "nombre": "Psytrance Panamá",
+      "url": "https://facebook.com/groups/psytrancepanama",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecuba",
+      "nombre": "Psytrance Cuba",
+      "url": "https://facebook.com/groups/psytrancecuba",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancepuertorico",
+      "nombre": "Psytrance Puerto Rico",
+      "url": "https://facebook.com/groups/psytrancepuertorico",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancerepublicadominicana",
+      "nombre": "Psytrance República Dominicana",
+      "url": "https://facebook.com/groups/psytrancerepublicadominicana",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancefrancia",
+      "nombre": "Psytrance Francia",
+      "url": "https://facebook.com/groups/psytrancefrancia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancebelgica",
+      "nombre": "Psytrance Bélgica",
+      "url": "https://facebook.com/groups/psytrancebelgica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancepaisesbajos",
+      "nombre": "Psytrance Países Bajos",
+      "url": "https://facebook.com/groups/psytrancepaisesbajos",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceaustria",
+      "nombre": "Psytrance Austria",
+      "url": "https://facebook.com/groups/psytranceaustria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancepolonia",
+      "nombre": "Psytrance Polonia",
+      "url": "https://facebook.com/groups/psytrancepolonia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancegrecia",
+      "nombre": "Psytrance Grecia",
+      "url": "https://facebook.com/groups/psytrancegrecia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancehungria",
+      "nombre": "Psytrance Hungría",
+      "url": "https://facebook.com/groups/psytrancehungria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecroacia",
+      "nombre": "Psytrance Croacia",
+      "url": "https://facebook.com/groups/psytrancecroacia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceucrania",
+      "nombre": "Psytrance Ucrania",
+      "url": "https://facebook.com/groups/psytranceucrania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancerumania",
+      "nombre": "Psytrance Rumania",
+      "url": "https://facebook.com/groups/psytrancerumania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancebulgaria",
+      "nombre": "Psytrance Bulgaria",
+      "url": "https://facebook.com/groups/psytrancebulgaria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceserbia",
+      "nombre": "Psytrance Serbia",
+      "url": "https://facebook.com/groups/psytranceserbia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancemacedonia",
+      "nombre": "Psytrance Macedonia",
+      "url": "https://facebook.com/groups/psytrancemacedonia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceeslovenia",
+      "nombre": "Psytrance Eslovenia",
+      "url": "https://facebook.com/groups/psytranceeslovenia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceeslovaquia",
+      "nombre": "Psytrance Eslovaquia",
+      "url": "https://facebook.com/groups/psytranceeslovaquia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancechequia",
+      "nombre": "Psytrance Chequia",
+      "url": "https://facebook.com/groups/psytrancechequia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancefinlandia",
+      "nombre": "Psytrance Finlandia",
+      "url": "https://facebook.com/groups/psytrancefinlandia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecostaricafest",
+      "nombre": "Psytrance Costa Rica Festival",
+      "url": "https://facebook.com/groups/psytrancecostaricafest",
+      "tipo_grupo": [
+        "psytrance",
+        "beach",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancemexicofest",
+      "nombre": "Psytrance Mexico Festival",
+      "url": "https://facebook.com/groups/psytrancemexicofest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancecolombiafest",
+      "nombre": "Psytrance Colombia Festival",
+      "url": "https://facebook.com/groups/psytrancecolombiafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceperufest",
+      "nombre": "Psytrance Perú Festival",
+      "url": "https://facebook.com/groups/psytranceperufest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancechilefest",
+      "nombre": "Psytrance Chile Festival",
+      "url": "https://facebook.com/groups/psytrancechilefest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceargentinafest",
+      "nombre": "Psytrance Argentina Festival",
+      "url": "https://facebook.com/groups/psytranceargentinafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancebrasilfest",
+      "nombre": "Psytrance Brasil Festival",
+      "url": "https://facebook.com/groups/psytrancebrasilfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceportugalfest",
+      "nombre": "Psytrance Portugal Festival",
+      "url": "https://facebook.com/groups/psytranceportugalfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceitaliafest",
+      "nombre": "Psytrance Italia Festival",
+      "url": "https://facebook.com/groups/psytranceitaliafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceukfest",
+      "nombre": "Psytrance UK Festival",
+      "url": "https://facebook.com/groups/psytranceukfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancegermanyfest",
+      "nombre": "Psytrance Germany Festival",
+      "url": "https://facebook.com/groups/psytrancegermanyfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancepoloniafest",
+      "nombre": "Psytrance Poland Festival",
+      "url": "https://facebook.com/groups/psytrancepoloniafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceaustriafest",
+      "nombre": "Psytrance Austria Festival",
+      "url": "https://facebook.com/groups/psytranceaustriafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancehungaryfest",
+      "nombre": "Psytrance Hungary Festival",
+      "url": "https://facebook.com/groups/psytrancehungaryfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancecroatiafest",
+      "nombre": "Psytrance Croatia Festival",
+      "url": "https://facebook.com/groups/psytrancecroatiafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceukrainefest",
+      "nombre": "Psytrance Ukraine Festival",
+      "url": "https://facebook.com/groups/psytranceukrainefest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceromaniafest",
+      "nombre": "Psytrance Romania Festival",
+      "url": "https://facebook.com/groups/psytranceromaniafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancebulgariafest",
+      "nombre": "Psytrance Bulgaria Festival",
+      "url": "https://facebook.com/groups/psytrancebulgariafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancemorocco",
+      "nombre": "Psytrance Marruecos",
+      "url": "https://facebook.com/groups/psytrancemorocco",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceegypt",
+      "nombre": "Psytrance Egypt",
+      "url": "https://facebook.com/groups/psytranceegypt",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancejapanfest",
+      "nombre": "Psytrance Japan Festival",
+      "url": "https://facebook.com/groups/psytrancejapanfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceaustraliafest",
+      "nombre": "Psytrance Australia Festival",
+      "url": "https://facebook.com/groups/psytranceaustraliafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceindiafest",
+      "nombre": "Psytrance India Festival",
+      "url": "https://facebook.com/groups/psytranceindiafest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceisraelfest",
+      "nombre": "Psytrance Israel Festival",
+      "url": "https://facebook.com/groups/psytranceisraelfest",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytrancecanada",
+      "nombre": "Psytrance Canada",
+      "url": "https://facebook.com/groups/psytrancecanada",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancethailand",
+      "nombre": "Psytrance Thailand",
+      "url": "https://facebook.com/groups/psytrancethailand",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceindonesia",
+      "nombre": "Psytrance Indonesia",
+      "url": "https://facebook.com/groups/psytranceindonesia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancephilippines",
+      "nombre": "Psytrance Philippines",
+      "url": "https://facebook.com/groups/psytrancephilippines",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancechina",
+      "nombre": "Psytrance China",
+      "url": "https://facebook.com/groups/psytrancechina",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancekorea",
+      "nombre": "Psytrance Korea",
+      "url": "https://facebook.com/groups/psytrancekorea",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceafrica",
+      "nombre": "Psytrance Africa",
+      "url": "https://facebook.com/groups/psytranceafrica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceethiopia",
+      "nombre": "Psytrance Ethiopia",
+      "url": "https://facebook.com/groups/psytranceethiopia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancekenya",
+      "nombre": "Psytrance Kenya",
+      "url": "https://facebook.com/groups/psytrancekenya",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancemadagascar",
+      "nombre": "Psytrance Madagascar",
+      "url": "https://facebook.com/groups/psytrancemadagascar",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancenewzealand",
+      "nombre": "Psytrance New Zealand",
+      "url": "https://facebook.com/groups/psytrancenewzealand",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "noruega",
+      "nombre": "Psytrance Noruega",
+      "url": "https://facebook.com/groups/noruega",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "oslo",
+      "nombre": "Psytrance Oslo",
+      "url": "https://facebook.com/groups/oslo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bergen",
+      "nombre": "Psytrance Bergen",
+      "url": "https://facebook.com/groups/bergen",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "trondheim",
+      "nombre": "Psytrance Trondheim",
+      "url": "https://facebook.com/groups/trondheim",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "eslovenia",
+      "nombre": "Psytrance Eslovenia",
+      "url": "https://facebook.com/groups/eslovenia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "liubliana",
+      "nombre": "Psytrance Liubliana",
+      "url": "https://facebook.com/groups/liubliana",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "maribor",
+      "nombre": "Psytrance Maribor",
+      "url": "https://facebook.com/groups/maribor",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "celje",
+      "nombre": "Psytrance Celje",
+      "url": "https://facebook.com/groups/celje",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "montenegro",
+      "nombre": "Psytrance Montenegro",
+      "url": "https://facebook.com/groups/montenegro",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "podgorica",
+      "nombre": "Psytrance Podgorica",
+      "url": "https://facebook.com/groups/podgorica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "nikšić",
+      "nombre": "Psytrance Nikšić",
+      "url": "https://facebook.com/groups/nikšić",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "hercegnovi",
+      "nombre": "Psytrance Herceg Novi",
+      "url": "https://facebook.com/groups/hercegnovi",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "turquia",
+      "nombre": "Psytrance Turquía",
+      "url": "https://facebook.com/groups/turquia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "estambul",
+      "nombre": "Psytrance Estambul",
+      "url": "https://facebook.com/groups/estambul",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "ankara",
+      "nombre": "Psytrance Ankara",
+      "url": "https://facebook.com/groups/ankara",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "esmirna",
+      "nombre": "Psytrance Esmirna",
+      "url": "https://facebook.com/groups/esmirna",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "croacia",
+      "nombre": "Psytrance Croacia",
+      "url": "https://facebook.com/groups/croacia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "zagreb",
+      "nombre": "Psytrance Zagreb",
+      "url": "https://facebook.com/groups/zagreb",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "split",
+      "nombre": "Psytrance Split",
+      "url": "https://facebook.com/groups/split",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "rijeka",
+      "nombre": "Psytrance Rijeka",
+      "url": "https://facebook.com/groups/rijeka",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "macedoniadelnorte",
+      "nombre": "Psytrance Macedonia del Norte",
+      "url": "https://facebook.com/groups/macedoniadelnorte",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "skopie",
+      "nombre": "Psytrance Skopie",
+      "url": "https://facebook.com/groups/skopie",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bitola",
+      "nombre": "Psytrance Bitola",
+      "url": "https://facebook.com/groups/bitola",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kumanovo",
+      "nombre": "Psytrance Kumanovo",
+      "url": "https://facebook.com/groups/kumanovo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "alemania",
+      "nombre": "Psytrance Alemania",
+      "url": "https://facebook.com/groups/alemania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "berlin",
+      "nombre": "Psytrance Berlín",
+      "url": "https://facebook.com/groups/berlin",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "munich",
+      "nombre": "Psytrance Múnich",
+      "url": "https://facebook.com/groups/munich",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "hamburgo",
+      "nombre": "Psytrance Hamburgo",
+      "url": "https://facebook.com/groups/hamburgo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "lituania",
+      "nombre": "Psytrance Lituania",
+      "url": "https://facebook.com/groups/lituania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "vilna",
+      "nombre": "Psytrance Vilna",
+      "url": "https://facebook.com/groups/vilna",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kaunas",
+      "nombre": "Psytrance Kaunas",
+      "url": "https://facebook.com/groups/kaunas",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "klaipeda",
+      "nombre": "Psytrance Klaipeda",
+      "url": "https://facebook.com/groups/klaipeda",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "francia",
+      "nombre": "Psytrance Francia",
+      "url": "https://facebook.com/groups/francia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "paris",
+      "nombre": "Psytrance París",
+      "url": "https://facebook.com/groups/paris",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "lyon",
+      "nombre": "Psytrance Lyon",
+      "url": "https://facebook.com/groups/lyon",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "marsella",
+      "nombre": "Psytrance Marsella",
+      "url": "https://facebook.com/groups/marsella",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "monaco",
+      "nombre": "Psytrance Mónaco",
+      "url": "https://facebook.com/groups/monaco",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "irlanda",
+      "nombre": "Psytrance Irlanda",
+      "url": "https://facebook.com/groups/irlanda",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "dublin",
+      "nombre": "Psytrance Dublín",
+      "url": "https://facebook.com/groups/dublin",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "cork",
+      "nombre": "Psytrance Cork",
+      "url": "https://facebook.com/groups/cork",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "galway",
+      "nombre": "Psytrance Galway",
+      "url": "https://facebook.com/groups/galway",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "moldavia",
+      "nombre": "Psytrance Moldavia",
+      "url": "https://facebook.com/groups/moldavia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "chisinau",
+      "nombre": "Psytrance Chisináu",
+      "url": "https://facebook.com/groups/chisinau",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tiraspol",
+      "nombre": "Psytrance Tiraspol",
+      "url": "https://facebook.com/groups/tiraspol",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "reinounido",
+      "nombre": "Psytrance Reino Unido",
+      "url": "https://facebook.com/groups/reinounido",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "londres",
+      "nombre": "Psytrance Londres",
+      "url": "https://facebook.com/groups/londres",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "manchester",
+      "nombre": "Psytrance Mánchester",
+      "url": "https://facebook.com/groups/manchester",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "birmingham",
+      "nombre": "Psytrance Birmingham",
+      "url": "https://facebook.com/groups/birmingham",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "chile",
+      "nombre": "Psytrance Chile",
+      "url": "https://facebook.com/groups/chile",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "santiago",
+      "nombre": "Psytrance Santiago",
+      "url": "https://facebook.com/groups/santiago",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "valparaiso",
+      "nombre": "Psytrance Valparaíso",
+      "url": "https://facebook.com/groups/valparaiso",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "concepcion",
+      "nombre": "Psytrance Concepción",
+      "url": "https://facebook.com/groups/concepcion",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sanmarino",
+      "nombre": "Psytrance San Marino",
+      "url": "https://facebook.com/groups/sanmarino",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "suecia",
+      "nombre": "Psytrance Suecia",
+      "url": "https://facebook.com/groups/suecia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "estocolmo",
+      "nombre": "Psytrance Estocolmo",
+      "url": "https://facebook.com/groups/estocolmo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "gotemburgo",
+      "nombre": "Psytrance Gotemburgo",
+      "url": "https://facebook.com/groups/gotemburgo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "malmo",
+      "nombre": "Psytrance Malmö",
+      "url": "https://facebook.com/groups/malmo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "portugal",
+      "nombre": "Psytrance Portugal",
+      "url": "https://facebook.com/groups/portugal",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "lisboa",
+      "nombre": "Psytrance Lisboa",
+      "url": "https://facebook.com/groups/lisboa",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "oporto",
+      "nombre": "Psytrance Oporto",
+      "url": "https://facebook.com/groups/oporto",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "coimbra",
+      "nombre": "Psytrance Coímbra",
+      "url": "https://facebook.com/groups/coimbra",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "polonia",
+      "nombre": "Psytrance Polonia",
+      "url": "https://facebook.com/groups/polonia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "varsovia",
+      "nombre": "Psytrance Varsovia",
+      "url": "https://facebook.com/groups/varsovia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "cracovia",
+      "nombre": "Psytrance Cracovia",
+      "url": "https://facebook.com/groups/cracovia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "odz",
+      "nombre": "Psytrance Łódź",
+      "url": "https://facebook.com/groups/odz",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "rusia",
+      "nombre": "Psytrance Rusia",
+      "url": "https://facebook.com/groups/rusia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "moscu",
+      "nombre": "Psytrance Moscú",
+      "url": "https://facebook.com/groups/moscu",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sanpetersburgo",
+      "nombre": "Psytrance San Petersburgo",
+      "url": "https://facebook.com/groups/sanpetersburgo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "novosibirsk",
+      "nombre": "Psytrance Novosibirsk",
+      "url": "https://facebook.com/groups/novosibirsk",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "australia",
+      "nombre": "Psytrance Australia",
+      "url": "https://facebook.com/groups/australia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sidney",
+      "nombre": "Psytrance Sídney",
+      "url": "https://facebook.com/groups/sidney",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "melbourne",
+      "nombre": "Psytrance Melbourne",
+      "url": "https://facebook.com/groups/melbourne",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "brisbane",
+      "nombre": "Psytrance Brisbane",
+      "url": "https://facebook.com/groups/brisbane",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "grecia",
+      "nombre": "Psytrance Grecia",
+      "url": "https://facebook.com/groups/grecia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "atenas",
+      "nombre": "Psytrance Atenas",
+      "url": "https://facebook.com/groups/atenas",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "salonica",
+      "nombre": "Psytrance Salónica",
+      "url": "https://facebook.com/groups/salonica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "patras",
+      "nombre": "Psytrance Patras",
+      "url": "https://facebook.com/groups/patras",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "malta",
+      "nombre": "Psytrance Malta",
+      "url": "https://facebook.com/groups/malta",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "lavaleta",
+      "nombre": "Psytrance La Valeta",
+      "url": "https://facebook.com/groups/lavaleta",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "birkirkara",
+      "nombre": "Psytrance Birkirkara",
+      "url": "https://facebook.com/groups/birkirkara",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sliema",
+      "nombre": "Psytrance Sliema",
+      "url": "https://facebook.com/groups/sliema",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bielorrusia",
+      "nombre": "Psytrance Bielorrusia",
+      "url": "https://facebook.com/groups/bielorrusia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "minsk",
+      "nombre": "Psytrance Minsk",
+      "url": "https://facebook.com/groups/minsk",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "gomel",
+      "nombre": "Psytrance Gómel",
+      "url": "https://facebook.com/groups/gomel",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "mogiliov",
+      "nombre": "Psytrance Mogiliov",
+      "url": "https://facebook.com/groups/mogiliov",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "albania",
+      "nombre": "Psytrance Albania",
+      "url": "https://facebook.com/groups/albania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tirana",
+      "nombre": "Psytrance Tirana",
+      "url": "https://facebook.com/groups/tirana",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "durres",
+      "nombre": "Psytrance Durrës",
+      "url": "https://facebook.com/groups/durres",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "vlore",
+      "nombre": "Psytrance Vlorë",
+      "url": "https://facebook.com/groups/vlore",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "peru",
+      "nombre": "Psytrance Perú",
+      "url": "https://facebook.com/groups/peru",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "lima",
+      "nombre": "Psytrance Lima",
+      "url": "https://facebook.com/groups/lima",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "arequipa",
+      "nombre": "Psytrance Arequipa",
+      "url": "https://facebook.com/groups/arequipa",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "trujillo",
+      "nombre": "Psytrance Trujillo",
+      "url": "https://facebook.com/groups/trujillo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "islandia",
+      "nombre": "Psytrance Islandia",
+      "url": "https://facebook.com/groups/islandia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "reikiavik",
+      "nombre": "Psytrance Reikiavik",
+      "url": "https://facebook.com/groups/reikiavik",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "akureyri",
+      "nombre": "Psytrance Akureyri",
+      "url": "https://facebook.com/groups/akureyri",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "paisesbajos",
+      "nombre": "Psytrance Países Bajos",
+      "url": "https://facebook.com/groups/paisesbajos",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "amsterdam",
+      "nombre": "Psytrance Ámsterdam",
+      "url": "https://facebook.com/groups/amsterdam",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "roterdam",
+      "nombre": "Psytrance Róterdam",
+      "url": "https://facebook.com/groups/roterdam",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "utrecht",
+      "nombre": "Psytrance Utrecht",
+      "url": "https://facebook.com/groups/utrecht",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "estonia",
+      "nombre": "Psytrance Estonia",
+      "url": "https://facebook.com/groups/estonia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tallin",
+      "nombre": "Psytrance Tallin",
+      "url": "https://facebook.com/groups/tallin",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tartu",
+      "nombre": "Psytrance Tartu",
+      "url": "https://facebook.com/groups/tartu",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "narva",
+      "nombre": "Psytrance Narva",
+      "url": "https://facebook.com/groups/narva",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "ucrania",
+      "nombre": "Psytrance Ucrania",
+      "url": "https://facebook.com/groups/ucrania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kiev",
+      "nombre": "Psytrance Kiev",
+      "url": "https://facebook.com/groups/kiev",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "odesa",
+      "nombre": "Psytrance Odesa",
+      "url": "https://facebook.com/groups/odesa",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "jarkov",
+      "nombre": "Psytrance Jarkov",
+      "url": "https://facebook.com/groups/jarkov",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "hungria",
+      "nombre": "Psytrance Hungría",
+      "url": "https://facebook.com/groups/hungria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "budapest",
+      "nombre": "Psytrance Budapest",
+      "url": "https://facebook.com/groups/budapest",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "debrecen",
+      "nombre": "Psytrance Debrecen",
+      "url": "https://facebook.com/groups/debrecen",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "szeged",
+      "nombre": "Psytrance Szeged",
+      "url": "https://facebook.com/groups/szeged",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "finlandia",
+      "nombre": "Psytrance Finlandia",
+      "url": "https://facebook.com/groups/finlandia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "helsinki",
+      "nombre": "Psytrance Helsinki",
+      "url": "https://facebook.com/groups/helsinki",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tampere",
+      "nombre": "Psytrance Tampere",
+      "url": "https://facebook.com/groups/tampere",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "turku",
+      "nombre": "Psytrance Turku",
+      "url": "https://facebook.com/groups/turku",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "italia",
+      "nombre": "Psytrance Italia",
+      "url": "https://facebook.com/groups/italia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "roma",
+      "nombre": "Psytrance Roma",
+      "url": "https://facebook.com/groups/roma",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "milan",
+      "nombre": "Psytrance Milán",
+      "url": "https://facebook.com/groups/milan",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "napoles",
+      "nombre": "Psytrance Nápoles",
+      "url": "https://facebook.com/groups/napoles",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "republicacheca",
+      "nombre": "Psytrance República Checa",
+      "url": "https://facebook.com/groups/republicacheca",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "praga",
+      "nombre": "Psytrance Praga",
+      "url": "https://facebook.com/groups/praga",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "brno",
+      "nombre": "Psytrance Brno",
+      "url": "https://facebook.com/groups/brno",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "ostrava",
+      "nombre": "Psytrance Ostrava",
+      "url": "https://facebook.com/groups/ostrava",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "belgica",
+      "nombre": "Psytrance Bélgica",
+      "url": "https://facebook.com/groups/belgica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bruselas",
+      "nombre": "Psytrance Bruselas",
+      "url": "https://facebook.com/groups/bruselas",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "amberes",
+      "nombre": "Psytrance Amberes",
+      "url": "https://facebook.com/groups/amberes",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "gante",
+      "nombre": "Psytrance Gante",
+      "url": "https://facebook.com/groups/gante",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "eslovaquia",
+      "nombre": "Psytrance Eslovaquia",
+      "url": "https://facebook.com/groups/eslovaquia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bratislava",
+      "nombre": "Psytrance Bratislava",
+      "url": "https://facebook.com/groups/bratislava",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kosice",
+      "nombre": "Psytrance Košice",
+      "url": "https://facebook.com/groups/kosice",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "banskabystrica",
+      "nombre": "Psytrance Banská Bystrica",
+      "url": "https://facebook.com/groups/banskabystrica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "uruguay",
+      "nombre": "Psytrance Uruguay",
+      "url": "https://facebook.com/groups/uruguay",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "montevideo",
+      "nombre": "Psytrance Montevideo",
+      "url": "https://facebook.com/groups/montevideo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "puntadeleste",
+      "nombre": "Psytrance Punta del Este",
+      "url": "https://facebook.com/groups/puntadeleste",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "rumania",
+      "nombre": "Psytrance Rumanía",
+      "url": "https://facebook.com/groups/rumania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bucarest",
+      "nombre": "Psytrance Bucarest",
+      "url": "https://facebook.com/groups/bucarest",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "cluj-napoca",
+      "nombre": "Psytrance Cluj-Napoca",
+      "url": "https://facebook.com/groups/cluj-napoca",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "timisoara",
+      "nombre": "Psytrance Timișoara",
+      "url": "https://facebook.com/groups/timisoara",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "colombia",
+      "nombre": "Psytrance Colombia",
+      "url": "https://facebook.com/groups/colombia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bogota",
+      "nombre": "Psytrance Bogotá",
+      "url": "https://facebook.com/groups/bogota",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "medellin",
+      "nombre": "Psytrance Medellín",
+      "url": "https://facebook.com/groups/medellin",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "cali",
+      "nombre": "Psytrance Cali",
+      "url": "https://facebook.com/groups/cali",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kosovo",
+      "nombre": "Psytrance Kosovo",
+      "url": "https://facebook.com/groups/kosovo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "pristina",
+      "nombre": "Psytrance Pristina",
+      "url": "https://facebook.com/groups/pristina",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "prizren",
+      "nombre": "Psytrance Prizren",
+      "url": "https://facebook.com/groups/prizren",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "pec",
+      "nombre": "Psytrance Peć",
+      "url": "https://facebook.com/groups/pec",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "andorra",
+      "nombre": "Psytrance Andorra",
+      "url": "https://facebook.com/groups/andorra",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "andorralavieja",
+      "nombre": "Psytrance Andorra la Vieja",
+      "url": "https://facebook.com/groups/andorralavieja",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "israel",
+      "nombre": "Psytrance Israel",
+      "url": "https://facebook.com/groups/israel",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "telaviv",
+      "nombre": "Psytrance Tel Aviv",
+      "url": "https://facebook.com/groups/telaviv",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "jerusalen",
+      "nombre": "Psytrance Jerusalén",
+      "url": "https://facebook.com/groups/jerusalen",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "haifa",
+      "nombre": "Psytrance Haifa",
+      "url": "https://facebook.com/groups/haifa",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "dinamarca",
+      "nombre": "Psytrance Dinamarca",
+      "url": "https://facebook.com/groups/dinamarca",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "copenhague",
+      "nombre": "Psytrance Copenhague",
+      "url": "https://facebook.com/groups/copenhague",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "aarhus",
+      "nombre": "Psytrance Aarhus",
+      "url": "https://facebook.com/groups/aarhus",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "odense",
+      "nombre": "Psytrance Odense",
+      "url": "https://facebook.com/groups/odense",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "austria",
+      "nombre": "Psytrance Austria",
+      "url": "https://facebook.com/groups/austria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "viena",
+      "nombre": "Psytrance Viena",
+      "url": "https://facebook.com/groups/viena",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "salzburgo",
+      "nombre": "Psytrance Salzburgo",
+      "url": "https://facebook.com/groups/salzburgo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "graz",
+      "nombre": "Psytrance Graz",
+      "url": "https://facebook.com/groups/graz",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "chipre",
+      "nombre": "Psytrance Chipre",
+      "url": "https://facebook.com/groups/chipre",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "nicosia",
+      "nombre": "Psytrance Nicosia",
+      "url": "https://facebook.com/groups/nicosia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "limasol",
+      "nombre": "Psytrance Limasol",
+      "url": "https://facebook.com/groups/limasol",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "pafos",
+      "nombre": "Psytrance Pafos",
+      "url": "https://facebook.com/groups/pafos",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "letonia",
+      "nombre": "Psytrance Letonia",
+      "url": "https://facebook.com/groups/letonia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "riga",
+      "nombre": "Psytrance Riga",
+      "url": "https://facebook.com/groups/riga",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "daugavpils",
+      "nombre": "Psytrance Daugavpils",
+      "url": "https://facebook.com/groups/daugavpils",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "liepaja",
+      "nombre": "Psytrance Liepāja",
+      "url": "https://facebook.com/groups/liepaja",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "argentina",
+      "nombre": "Psytrance Argentina",
+      "url": "https://facebook.com/groups/argentina",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "buenosaires",
+      "nombre": "Psytrance Buenos Aires",
+      "url": "https://facebook.com/groups/buenosaires",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "cordoba",
+      "nombre": "Psytrance Córdoba",
+      "url": "https://facebook.com/groups/cordoba",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "rosario",
+      "nombre": "Psytrance Rosario",
+      "url": "https://facebook.com/groups/rosario",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "mexico",
+      "nombre": "Psytrance México",
+      "url": "https://facebook.com/groups/mexico",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "ciudaddemexico",
+      "nombre": "Psytrance Ciudad de México",
+      "url": "https://facebook.com/groups/ciudaddemexico",
+      "tipo_grupo": [
+        "psytrance",
+        "urban"
+      ]
+    },
+    {
+      "id": "guadalajara",
+      "nombre": "Psytrance Guadalajara",
+      "url": "https://facebook.com/groups/guadalajara",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "monterrey",
+      "nombre": "Psytrance Monterrey",
+      "url": "https://facebook.com/groups/monterrey",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "brasil",
+      "nombre": "Psytrance Brasil",
+      "url": "https://facebook.com/groups/brasil",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "saopaulo",
+      "nombre": "Psytrance São Paulo",
+      "url": "https://facebook.com/groups/saopaulo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "riodejaneiro",
+      "nombre": "Psytrance Río de Janeiro",
+      "url": "https://facebook.com/groups/riodejaneiro",
+      "tipo_grupo": [
+        "psytrance",
+        "river"
+      ]
+    },
+    {
+      "id": "belohorizonte",
+      "nombre": "Psytrance Belo Horizonte",
+      "url": "https://facebook.com/groups/belohorizonte",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "serbia",
+      "nombre": "Psytrance Serbia",
+      "url": "https://facebook.com/groups/serbia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "belgrado",
+      "nombre": "Psytrance Belgrado",
+      "url": "https://facebook.com/groups/belgrado",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "novisad",
+      "nombre": "Psytrance Novi Sad",
+      "url": "https://facebook.com/groups/novisad",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "nis",
+      "nombre": "Psytrance Niš",
+      "url": "https://facebook.com/groups/nis",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "espana",
+      "nombre": "Psytrance España",
+      "url": "https://facebook.com/groups/espana",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "madrid",
+      "nombre": "Psytrance Madrid",
+      "url": "https://facebook.com/groups/madrid",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "barcelona",
+      "nombre": "Psytrance Barcelona",
+      "url": "https://facebook.com/groups/barcelona",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "valencia",
+      "nombre": "Psytrance Valencia",
+      "url": "https://facebook.com/groups/valencia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "suiza",
+      "nombre": "Psytrance Suiza",
+      "url": "https://facebook.com/groups/suiza",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "zurich",
+      "nombre": "Psytrance Zúrich",
+      "url": "https://facebook.com/groups/zurich",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "ginebra",
+      "nombre": "Psytrance Ginebra",
+      "url": "https://facebook.com/groups/ginebra",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "berna",
+      "nombre": "Psytrance Berna",
+      "url": "https://facebook.com/groups/berna",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bulgaria",
+      "nombre": "Psytrance Bulgaria",
+      "url": "https://facebook.com/groups/bulgaria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sofia",
+      "nombre": "Psytrance Sofía",
+      "url": "https://facebook.com/groups/sofia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "plovdiv",
+      "nombre": "Psytrance Plovdiv",
+      "url": "https://facebook.com/groups/plovdiv",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "varna",
+      "nombre": "Psytrance Varna",
+      "url": "https://facebook.com/groups/varna",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bosnia",
+      "nombre": "Psytrance Bosnia",
+      "url": "https://facebook.com/groups/bosnia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sarajevo",
+      "nombre": "Psytrance Sarajevo",
+      "url": "https://facebook.com/groups/sarajevo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "banjaluka",
+      "nombre": "Psytrance Banja Luka",
+      "url": "https://facebook.com/groups/banjaluka",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "mostar",
+      "nombre": "Psytrance Mostar",
+      "url": "https://facebook.com/groups/mostar",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "niksic",
+      "nombre": "Psytrance Nikšić",
+      "url": "https://facebook.com/groups/niksic",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "luxemburgo",
+      "nombre": "Psytrance Luxemburgo",
+      "url": "https://facebook.com/groups/luxemburgo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "esch-sur-alzette",
+      "nombre": "Psytrance Esch-sur-Alzette",
+      "url": "https://facebook.com/groups/esch-sur-alzette",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    }
+  ],
+  "timestamp": "2026-08-03T22:49:37.192878",
+  "total": 310,
+  "paises_rotacion": [
+    "Luxemburgo",
+    "Chile",
+    "Croacia",
+    "Kosovo",
+    "Polonia",
+    "Argentina",
+    "Grecia",
+    "Irlanda",
+    "República Checa",
+    "Serbia",
+    "Bosnia",
+    "Australia",
+    "Albania",
+    "Chipre",
+    "Alemania",
+    "Noruega",
+    "España",
+    "Lituania",
+    "Islandia",
+    "Portugal",
+    "Uruguay",
+    "Hungría",
+    "Bielorrusia",
+    "Mónaco",
+    "Turquía",
+    "Andorra",
+    "Bélgica",
+    "Ucrania",
+    "Malta",
+    "Rumanía"
+  ]
+}

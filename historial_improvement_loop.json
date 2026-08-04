@@ -1,0 +1,2014 @@
+[
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 60,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 101.3,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785538147.249352
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 3,
+      "max_posts_per_tag": 3,
+      "timeout_total": 90,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 153.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785538403.103276
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 60,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 87.4,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785538513.254397
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 1,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 78.5,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785539312.065058
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 1,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 80.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785539423.9743412
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 108.9,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785540272.904136
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 92.4,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785540613.721757
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 103.7,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785542807.161543
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 101.5,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785543498.792623
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 5,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 26.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785543587.59032
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 109.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785543839.7772539
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 12.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785543887.832278
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 9.9,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785543933.073313
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 3,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 17.9,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785543982.711157
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 3,
+      "max_posts_per_tag": 3,
+      "timeout_total": 60,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 17.3,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785544034.218613
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 109.1,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785545120.6937249
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 10.5,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785545179.564784
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 3,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 22.3,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785545236.4769611
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 3,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 20.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785545313.035178
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 3,
+      "max_posts_per_tag": 3,
+      "timeout_total": 60,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 21.7,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785545384.998165
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 81.9,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785769742.2851
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 8.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785769750.872051
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 8.1,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785769758.967105
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 7,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 27.4,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785769786.415478
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 12,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 41.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785769827.449504
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 84.2,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785772528.480263
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 8.9,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785772537.363297
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 8.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785772545.954798
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 134.1,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785801663.100692
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 14.5,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785801677.636228
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 13.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785801690.649687
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 7,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 48.5,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785801739.1882849
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 12,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 89.1,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785801828.259201
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 146.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785804726.040375
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 13.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785804739.6673899
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 14.3,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785804753.9356182
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 7,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 49.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785804802.9107351
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 12,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 88.2,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785804891.136225
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 90.3,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785807745.6146188
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 7.7,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785807753.3519201
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 7.7,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785807761.094111
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 7,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 26.8,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785807787.882095
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 12,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 45.1,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785807833.023395
+  },
+  {
+    "iteracion": 1,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": false,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 83.6,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {
+      "requests_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "playwright_only": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "hibrido_requests_pw": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_requests": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "sin_tor_playwright": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "con_llm_vision": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      },
+      "fusion_scraper": {
+        "eventos": 0,
+        "fuentes": 0,
+        "organizadores": 0,
+        "con_descripcion": 0,
+        "score": 0,
+        "tiempo": 0
+      }
+    },
+    "timestamp": 1785819097.645175
+  },
+  {
+    "iteracion": 2,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 3,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 9.1,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785819106.7961972
+  },
+  {
+    "iteracion": 3,
+    "config": {
+      "max_hashtags": 2,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 9.0,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785819115.7719512
+  },
+  {
+    "iteracion": 4,
+    "config": {
+      "max_hashtags": 7,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 27.7,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785819143.4585721
+  },
+  {
+    "iteracion": 5,
+    "config": {
+      "max_hashtags": 12,
+      "max_posts_per_tag": 2,
+      "timeout_total": 30,
+      "use_tor": true,
+      "priorizar_hashtags_productivos": true,
+      "usar_playwright": true,
+      "mejor_arquitectura": "requests_only"
+    },
+    "metricas": {
+      "eventos": 0,
+      "fuentes": 0,
+      "organizadores": 0,
+      "con_descripcion": 0,
+      "score": 0,
+      "tiempo": 43.9,
+      "arquitectura": "requests_only"
+    },
+    "metricas_por_arch": {},
+    "timestamp": 1785819187.386462
+  }
+]

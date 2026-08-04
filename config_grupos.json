@@ -1,0 +1,521 @@
+{
+  "subgeneros": [
+    "darkpsy",
+    "forest",
+    "psychill",
+    "psybient",
+    "fullon",
+    "progressive",
+    "goa",
+    "hitech",
+    "twilight",
+    "psycore",
+    "suomisaundi",
+    "zenon",
+    "psychedelic",
+    "psytrance"
+  ],
+  "rotacion_paises_por_run": 30,
+  "max_keywords_por_run": 250,
+  "paises": [
+    {
+      "nombre": "España",
+      "ciudades": [
+        "Madrid",
+        "Barcelona",
+        "Valencia",
+        "Sevilla",
+        "Málaga",
+        "Bilbao",
+        "Zaragoza",
+        "Alicante",
+        "Murcia",
+        "Palma"
+      ]
+    },
+    {
+      "nombre": "Alemania",
+      "ciudades": [
+        "Berlín",
+        "Múnich",
+        "Hamburgo",
+        "Colonia",
+        "Frankfurt",
+        "Stuttgart",
+        "Düsseldorf",
+        "Leipzig",
+        "Dortmund",
+        "Essen"
+      ]
+    },
+    {
+      "nombre": "Bélgica",
+      "ciudades": [
+        "Bruselas",
+        "Amberes",
+        "Gante",
+        "Lovaina",
+        "Lieja"
+      ]
+    },
+    {
+      "nombre": "Portugal",
+      "ciudades": [
+        "Lisboa",
+        "Oporto",
+        "Coímbra",
+        "Braga",
+        "Faro"
+      ]
+    },
+    {
+      "nombre": "Francia",
+      "ciudades": [
+        "París",
+        "Lyon",
+        "Marsella",
+        "Toulouse",
+        "Burdeos",
+        "Lille",
+        "Nantes",
+        "Estrasburgo"
+      ]
+    },
+    {
+      "nombre": "Italia",
+      "ciudades": [
+        "Roma",
+        "Milán",
+        "Nápoles",
+        "Turín",
+        "Boloña",
+        "Florencia",
+        "Verona",
+        "Génova"
+      ]
+    },
+    {
+      "nombre": "Países Bajos",
+      "ciudades": [
+        "Ámsterdam",
+        "Róterdam",
+        "Utrecht",
+        "La Haya",
+        "Eindhoven",
+        "Groninga",
+        "Maastricht"
+      ]
+    },
+    {
+      "nombre": "Reino Unido",
+      "ciudades": [
+        "Londres",
+        "Mánchester",
+        "Birmingham",
+        "Liverpool",
+        "Bristol",
+        "Glasgow",
+        "Edimburgo"
+      ]
+    },
+    {
+      "nombre": "Austria",
+      "ciudades": [
+        "Viena",
+        "Salzburgo",
+        "Graz",
+        "Innsbruck",
+        "Linz"
+      ]
+    },
+    {
+      "nombre": "Suiza",
+      "ciudades": [
+        "Zúrich",
+        "Ginebra",
+        "Berna",
+        "Basilea",
+        "Lausana"
+      ]
+    },
+    {
+      "nombre": "Suecia",
+      "ciudades": [
+        "Estocolmo",
+        "Gotemburgo",
+        "Malmö",
+        "Uppsala"
+      ]
+    },
+    {
+      "nombre": "Noruega",
+      "ciudades": [
+        "Oslo",
+        "Bergen",
+        "Trondheim",
+        "Stavanger"
+      ]
+    },
+    {
+      "nombre": "Dinamarca",
+      "ciudades": [
+        "Copenhague",
+        "Aarhus",
+        "Odense",
+        "Aalborg"
+      ]
+    },
+    {
+      "nombre": "Polonia",
+      "ciudades": [
+        "Varsovia",
+        "Cracovia",
+        "Łódź",
+        "Wrocław",
+        "Poznań",
+        "Gdańsk"
+      ]
+    },
+    {
+      "nombre": "República Checa",
+      "ciudades": [
+        "Praga",
+        "Brno",
+        "Ostrava",
+        "Plzeň"
+      ]
+    },
+    {
+      "nombre": "Hungría",
+      "ciudades": [
+        "Budapest",
+        "Debrecen",
+        "Szeged",
+        "Pécs"
+      ]
+    },
+    {
+      "nombre": "Grecia",
+      "ciudades": [
+        "Atenas",
+        "Salónica",
+        "Patras",
+        "Heraclión"
+      ]
+    },
+    {
+      "nombre": "Finlandia",
+      "ciudades": [
+        "Helsinki",
+        "Tampere",
+        "Turku",
+        "Oulu"
+      ]
+    },
+    {
+      "nombre": "Irlanda",
+      "ciudades": [
+        "Dublín",
+        "Cork",
+        "Galway",
+        "Limerick"
+      ]
+    },
+    {
+      "nombre": "Rumanía",
+      "ciudades": [
+        "Bucarest",
+        "Cluj-Napoca",
+        "Timișoara",
+        "Iași",
+        "Constanza"
+      ]
+    },
+    {
+      "nombre": "Croacia",
+      "ciudades": [
+        "Zagreb",
+        "Split",
+        "Rijeka",
+        "Zadar"
+      ]
+    },
+    {
+      "nombre": "Bulgaria",
+      "ciudades": [
+        "Sofía",
+        "Plovdiv",
+        "Varna",
+        "Burgas"
+      ]
+    },
+    {
+      "nombre": "Eslovaquia",
+      "ciudades": [
+        "Bratislava",
+        "Košice",
+        "Banská Bystrica"
+      ]
+    },
+    {
+      "nombre": "Eslovenia",
+      "ciudades": [
+        "Liubliana",
+        "Maribor",
+        "Celje",
+        "Kranj"
+      ]
+    },
+    {
+      "nombre": "Estonia",
+      "ciudades": [
+        "Tallin",
+        "Tartu",
+        "Narva"
+      ]
+    },
+    {
+      "nombre": "Letonia",
+      "ciudades": [
+        "Riga",
+        "Daugavpils",
+        "Liepāja"
+      ]
+    },
+    {
+      "nombre": "Lituania",
+      "ciudades": [
+        "Vilna",
+        "Kaunas",
+        "Klaipeda",
+        "Šiauliai"
+      ]
+    },
+    {
+      "nombre": "Luxemburgo",
+      "ciudades": [
+        "Luxemburgo",
+        "Esch-sur-Alzette"
+      ]
+    },
+    {
+      "nombre": "Malta",
+      "ciudades": [
+        "La Valeta",
+        "Birkirkara",
+        "Sliema"
+      ]
+    },
+    {
+      "nombre": "Chipre",
+      "ciudades": [
+        "Nicosia",
+        "Limasol",
+        "Pafos"
+      ]
+    },
+    {
+      "nombre": "Islandia",
+      "ciudades": [
+        "Reikiavik",
+        "Akureyri"
+      ]
+    },
+    {
+      "nombre": "Mónaco",
+      "ciudades": [
+        "Mónaco"
+      ]
+    },
+    {
+      "nombre": "Andorra",
+      "ciudades": [
+        "Andorra la Vieja"
+      ]
+    },
+    {
+      "nombre": "San Marino",
+      "ciudades": [
+        "San Marino"
+      ]
+    },
+    {
+      "nombre": "Ucrania",
+      "ciudades": [
+        "Kiev",
+        "Odesa",
+        "Jarkov",
+        "Lviv",
+        "Dnipro"
+      ]
+    },
+    {
+      "nombre": "Moldavia",
+      "ciudades": [
+        "Chisináu",
+        "Tiraspol"
+      ]
+    },
+    {
+      "nombre": "Bielorrusia",
+      "ciudades": [
+        "Minsk",
+        "Gómel",
+        "Mogiliov"
+      ]
+    },
+    {
+      "nombre": "Serbia",
+      "ciudades": [
+        "Belgrado",
+        "Novi Sad",
+        "Niš",
+        "Kragujevac"
+      ]
+    },
+    {
+      "nombre": "Bosnia",
+      "ciudades": [
+        "Sarajevo",
+        "Banja Luka",
+        "Mostar"
+      ]
+    },
+    {
+      "nombre": "Montenegro",
+      "ciudades": [
+        "Podgorica",
+        "Nikšić",
+        "Herceg Novi"
+      ]
+    },
+    {
+      "nombre": "Kosovo",
+      "ciudades": [
+        "Pristina",
+        "Prizren",
+        "Peć"
+      ]
+    },
+    {
+      "nombre": "Macedonia del Norte",
+      "ciudades": [
+        "Skopie",
+        "Bitola",
+        "Kumanovo"
+      ]
+    },
+    {
+      "nombre": "Albania",
+      "ciudades": [
+        "Tirana",
+        "Durrës",
+        "Vlorë",
+        "Elbasan"
+      ]
+    },
+    {
+      "nombre": "Turquía",
+      "ciudades": [
+        "Estambul",
+        "Ankara",
+        "Esmirna",
+        "Antalya",
+        "Bursa"
+      ]
+    },
+    {
+      "nombre": "Rusia",
+      "ciudades": [
+        "Moscú",
+        "San Petersburgo",
+        "Novosibirsk",
+        "Ekaterimburgo"
+      ]
+    },
+    {
+      "nombre": "Israel",
+      "ciudades": [
+        "Tel Aviv",
+        "Jerusalén",
+        "Haifa",
+        "Rishon LeZion"
+      ]
+    },
+    {
+      "nombre": "México",
+      "ciudades": [
+        "Ciudad de México",
+        "Guadalajara",
+        "Monterrey",
+        "Puebla",
+        "Tijuana"
+      ]
+    },
+    {
+      "nombre": "Brasil",
+      "ciudades": [
+        "São Paulo",
+        "Río de Janeiro",
+        "Belo Horizonte",
+        "Brasilia",
+        "Salvador"
+      ]
+    },
+    {
+      "nombre": "Argentina",
+      "ciudades": [
+        "Buenos Aires",
+        "Córdoba",
+        "Rosario",
+        "Mendoza",
+        "La Plata"
+      ]
+    },
+    {
+      "nombre": "Chile",
+      "ciudades": [
+        "Santiago",
+        "Valparaíso",
+        "Concepción",
+        "Viña del Mar"
+      ]
+    },
+    {
+      "nombre": "Colombia",
+      "ciudades": [
+        "Bogotá",
+        "Medellín",
+        "Cali",
+        "Barranquilla",
+        "Cartagena"
+      ]
+    },
+    {
+      "nombre": "Perú",
+      "ciudades": [
+        "Lima",
+        "Arequipa",
+        "Trujillo",
+        "Cusco"
+      ]
+    },
+    {
+      "nombre": "Uruguay",
+      "ciudades": [
+        "Montevideo",
+        "Punta del Este"
+      ]
+    },
+    {
+      "nombre": "Australia",
+      "ciudades": [
+        "Sídney",
+        "Melbourne",
+        "Brisbane",
+        "Perth",
+        "Adelaida"
+      ]
+    }
+  ]
+}

@@ -6,3 +6,4 @@ beautifulsoup4
 lxml
 requests
 python-dotenv
+instaloader>=4.10

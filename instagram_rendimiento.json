@@ -1,0 +1,274 @@
+{
+  "psybientpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:58:12.340475+00:00"
+  },
+  "psybientparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:58:14.648482+00:00"
+  },
+  "psychillpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 6,
+    "tiempo_total": 25.560000000000002,
+    "ultima_vez": "2026-07-31T23:10:52.714664+00:00"
+  },
+  "psychillparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 6,
+    "tiempo_total": 15.43,
+    "ultima_vez": "2026-07-31T23:11:02.161288+00:00"
+  },
+  "goapsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 2,
+    "tiempo_total": 7.86,
+    "ultima_vez": "2026-07-31T21:53:27.316443+00:00"
+  },
+  "goaparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 2,
+    "tiempo_total": 7.92,
+    "ultima_vez": "2026-07-31T21:53:36.549652+00:00"
+  },
+  "darkpsypsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 2.89,
+    "ultima_vez": "2026-07-31T21:27:23.590376+00:00"
+  },
+  "darkpsyparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 3.79,
+    "ultima_vez": "2026-07-31T21:27:29.900660+00:00"
+  },
+  "forestpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 5,
+    "tiempo_total": 11.17,
+    "ultima_vez": "2026-07-31T22:00:09.055364+00:00"
+  },
+  "forestparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 5,
+    "tiempo_total": 12.850000000000001,
+    "ultima_vez": "2026-07-31T22:00:19.905831+00:00"
+  },
+  "psytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 10.71,
+    "ultima_vez": "2026-07-31T23:11:11.216647+00:00"
+  },
+  "psytranceparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 10.93,
+    "ultima_vez": "2026-07-31T23:11:19.388278+00:00"
+  },
+  "fullonpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 13.0,
+    "ultima_vez": "2026-07-31T21:53:08.876366+00:00"
+  },
+  "fullonparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 12.02,
+    "ultima_vez": "2026-07-31T21:53:18.031923+00:00"
+  },
+  "suomisaundipsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 5,
+    "tiempo_total": 12.65,
+    "ultima_vez": "2026-07-31T21:59:50.906015+00:00"
+  },
+  "suomisaundiparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 5,
+    "tiempo_total": 14.89,
+    "ultima_vez": "2026-07-31T22:00:00.323651+00:00"
+  },
+  "progressivepsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 0.44,
+    "ultima_vez": "2026-07-31T21:15:54.371298+00:00"
+  },
+  "progressiveparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 2.21,
+    "ultima_vez": "2026-07-31T21:16:00.674237+00:00"
+  },
+  "psychedelicpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 5.9399999999999995,
+    "ultima_vez": "2026-07-31T21:36:35.927736+00:00"
+  },
+  "psychedelicparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 5.220000000000001,
+    "ultima_vez": "2026-07-31T21:36:39.945301+00:00"
+  },
+  "psycorepsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 4.13,
+    "ultima_vez": "2026-07-31T21:44:26.033313+00:00"
+  },
+  "psycoreparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 3,
+    "tiempo_total": 3.5,
+    "ultima_vez": "2026-07-31T21:44:29.452861+00:00"
+  },
+  "hitechpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 4,
+    "tiempo_total": 8.46,
+    "ultima_vez": "2026-07-31T21:34:07.153140+00:00"
+  },
+  "hitechparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 4,
+    "tiempo_total": 8.190000000000001,
+    "ultima_vez": "2026-07-31T21:34:10.851712+00:00"
+  },
+  "twilightpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 2,
+    "tiempo_total": 6.07,
+    "ultima_vez": "2026-07-31T21:36:28.874588+00:00"
+  },
+  "twilightparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 2,
+    "tiempo_total": 6.21,
+    "ultima_vez": "2026-07-31T21:36:32.451240+00:00"
+  },
+  "zenonpsytrance": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 3.53,
+    "ultima_vez": "2026-07-31T21:28:11.506615+00:00"
+  },
+  "zenonparty": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 3.78,
+    "ultima_vez": "2026-07-31T21:28:16.941964+00:00"
+  },
+  "psytrancelviv": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 3.18,
+    "ultima_vez": "2026-07-31T21:28:59.802858+00:00"
+  },
+  "psytranceandorra la vieja": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 3.88,
+    "ultima_vez": "2026-07-31T21:29:06.518952+00:00"
+  },
+  "psytranceherceg novi": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 2.8,
+    "ultima_vez": "2026-07-31T21:29:11.755192+00:00"
+  },
+  "psytrancedurr s": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 3.95,
+    "ultima_vez": "2026-07-31T21:29:19.071670+00:00"
+  },
+  "psytrancetartu": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 3.29,
+    "ultima_vez": "2026-07-31T21:29:25.004862+00:00"
+  },
+  "psytrancekaunas": {
+    "intentos": 0,
+    "posts": 0,
+    "eventos": 0,
+    "errores": 1,
+    "tiempo_total": 4.06,
+    "ultima_vez": "2026-07-31T21:29:30.627583+00:00"
+  }
+}

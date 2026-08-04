@@ -1,0 +1,5 @@
+{
+  "username": "cuenta_secundaria_publica",
+  "session_id": "",
+  "nota": "Ejemplo sin cookies reales. Con session_id vacio, el módulo usa scraping anonimo (requests + Playwright fallback). Para mayor yield, generar con una cuenta secundaria (no personal) y rellenar session_id."
+}

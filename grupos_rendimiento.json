@@ -1,0 +1,79 @@
+{
+  "forestfamily": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:41:55.048165+00:00"
+  },
+  "goapsytrance": {
+    "intentos": 2,
+    "eventos": 2,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:45:06.573304+00:00"
+  },
+  "hitechpsytrance": {
+    "intentos": 2,
+    "eventos": 2,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:45:06.573920+00:00"
+  },
+  "progressivepsytrance": {
+    "intentos": 2,
+    "eventos": 2,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:48:21.027775+00:00"
+  },
+  "psytrancecommunity": {
+    "intentos": 3,
+    "eventos": 3,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:48:21.029045+00:00"
+  },
+  "suomipsy": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:41:55.052284+00:00"
+  },
+  "twilightpsytrance": {
+    "intentos": 3,
+    "eventos": 3,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:48:21.029574+00:00"
+  },
+  "darkpsytrancefamily": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:45:06.571350+00:00"
+  },
+  "fullonpsytrance": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:45:06.572732+00:00"
+  },
+  "forestpsytrance": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:48:21.026784+00:00"
+  },
+  "psychedelicmindz": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-07-31T19:48:21.028322+00:00"
+  }
+}

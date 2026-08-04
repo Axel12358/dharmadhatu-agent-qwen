@@ -1,0 +1,9 @@
+{
+  "max_hashtags": 2,
+  "max_posts_per_tag": 3,
+  "timeout_total": 30,
+  "use_tor": true,
+  "priorizar_hashtags_productivos": true,
+  "usar_playwright": false,
+  "mejor_arquitectura": "requests_only"
+}

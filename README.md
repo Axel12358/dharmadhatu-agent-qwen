@@ -7,19 +7,20 @@ El Dharmadhatu Bot v5 es un orquestador de eventos que busca eventos de psytranc
 ## Características
 
 ### Extracción Multi-fuente
-- **Goabase**: API JSON directa (301 eventos, limit ampliado)
+- **Goabase**: API JSON directa (301 eventos, limit ampliado de 100)
 - **Songkick**: API GraphQL (1 evento)
-- **Resident Advisor**: API GraphQL sin login (~20 psytrance tras limpieza)
-- **Facebook**: Búsqueda pública SERP + grupos públicos (Playwright + requests)
+- **Resident Advisor**: API GraphQL sin login (~17 psytrance tras limpieza)
+- **Facebook**: Búsqueda pública SERP + grupos (7 eventos por ejecución, ~120s)
 - **Reddit**: RSS de subreddits psytrance (rate-limit 429, filtrado estricto)
-- **Meetup**: JSON-LD + HTML parsing (40+ ciudades, keywords ampliadas)
+- **Meetup**: JSON-LD + HTML parsing (70+ ciudades, keywords ampliadas)
 - **Psytrance.pl**, **Ektoplazm**, **IsraTrance**: scrapers especializados
 
 ### Calidad y Validación
-- `limpiar_eventos()`: valida fecha, link y nombre antes de clasificar
+- `limpiar_eventos()`: valida fecha, link, nombre y lugar antes de clasificar
 - `limpiar_calidad()`: filtra eventos sin fecha real o link válido, y subgéneros no-psy de fuentes generales
 - `deduplicar_eventos()`: elimina duplicados por (nombre, fecha, lugar)
 - `filtrar_no_psy()`: marca RA general como no_psy
+- Eventos de Facebook con fecha N/A se conservan (extracción de fechas puede fallar en páginas públicas)
 
 ### Clasificación de Subgénero
 Los eventos se clasifican automáticamente en los siguientes subgéneros específicos:

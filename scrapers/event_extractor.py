@@ -124,6 +124,124 @@ COUNTRIES_ES = [
     "bielorrusia", "chipre", "malta", "luxemburgo",
 ]
 
+# Sinónimos de subgéneros para ampliar la clasificación por texto.
+# Las claves son términos que aparecen en títulos/descripciones; los valores
+# son el subgénero canónico al que mapean. Orden = prioridad de coincidencia.
+SINONIMOS = {
+    "dark": "darkpsy",
+    "darkpsy": "darkpsy",
+    "dark psy": "darkpsy",
+    "dark-psy": "darkpsy",
+    "dark-psytrance": "darkpsy",
+    "forest": "forest",
+    "forest psy": "forest",
+    "forest-psy": "forest",
+    "forestpsy": "forest",
+    "goa": "goa",
+    "goa trance": "goa",
+    "goatrance": "goa",
+    "fullon": "fullon",
+    "full-on": "fullon",
+    "full on": "fullon",
+    "progressive": "progressive",
+    "prog": "progressive",
+    "prog psy": "progressive",
+    "progressive trance": "progressive",
+    "hitech": "hitech",
+    "hi-tech": "hitech",
+    "hi tech": "hitech",
+    "psychill": "psychill",
+    "psy-chill": "psychill",
+    "psy chill": "psychill",
+    "psybient": "psybient",
+    "psytrance": "psytrance",
+    "psy trance": "psytrance",
+    "psychedelic": "psychedelic",
+    "psychedelic trance": "psychedelic",
+    "twilight": "twilight",
+    "twilight psy": "twilight",
+    "psycore": "psycore",
+    "psy core": "psycore",
+    "suomisaundi": "suomisaundi",
+    "suomi": "suomisaundi",
+    "suomi psy": "suomisaundi",
+    "zenon": "zenon",
+    "zenon psy": "zenon",
+}
+
+# Subgéneros base con coincidencia por substring (comportamiento original).
+SUBGENEROS_BASE = list(dict.fromkeys(SINONIMOS.values()))
+
+# Mapeo de fragmentos conocidos de festivales/collectivos a subgénero.
+# Se usa como señal de refuerzo cuando el nombre del organizador o del evento
+# incluye estos términos. Prioriza coincidencias exactas de nombre.
+FESTIVAL_SUGIERE = {
+    "ozora": "psytrance",
+    "boom festival": "psytrance",
+    "boom": "psytrance",
+    "saga": "progressive",
+    "the Meadow": "progressive",
+    "Vuu": "forest",
+    "Anthema": "progressive",
+    "Antheia": "forest",
+    "Hydra": "forest",
+    "Tsunami": "darkpsy",
+    "Carp": "darkpsy",
+    "Kosa": "darkpsy",
+    "Psyland": "forest",
+    "Shivanandi": "psytrance",
+    "Moksha": "psytrance",
+    "Whitenoise": "darkpsy",
+}
+
+
+# Mapeo de frases/alias de ALTA precisión a subgénero. Se usa en la estrategia
+# ponderada (clasificación por campos auxiliares) evitando falsos positivos:
+# términos cortos como "goa" o "forest" aparecen como subcadena en nombres que
+# no son psyclub. Se exige coincidencia por límites de palabra.
+PALABRAS_CLAVE_PRECISAS = {
+    "darkpsy": "darkpsy",
+    "dark psy": "darkpsy",
+    "forest psytrance": "forest",
+    "forest psy": "forest",
+    "psychill": "psychill",
+    "psybient": "psybient",
+    "fullon": "fullon",
+    "full on": "fullon",
+    "progressive psytrance": "progressive",
+    "progressive psy": "progressive",
+    "goa trance": "goa",
+    "goatrance": "goa",
+    "hitech psytrance": "hitech",
+    "twilight": "twilight",
+    "psycore": "psycore",
+    "suomisaundi": "suomisaundi",
+    "zenon psytrance": "zenon",
+    "psychedelic": "psychedelic",
+    "psytrance": "psytrance",
+    "psy trance": "psytrance",
+}
+
+
+def _buscar_subgenero_en_texto(texto, usar_sinonimos):
+    """Devuelve el primer subgénero hallado con alta precisión (word-boundary).
+
+    Prioriza frases de alta precisión (PALABRAS_CLAVE_PRECISAS) y evita
+    subcadenas ambigüas. Se usa en la estrategia ponderada de
+    `clasificar_subgenero`.
+    """
+    if not texto:
+        return None
+    texto_lower = texto.lower()
+    for frase, subgenero in PALABRAS_CLAVE_PRECISAS.items():
+        if re.search(r"\b" + re.escape(frase) + r"\b", texto_lower):
+            return subgenero
+    if usar_sinonimos:
+        for sinonimo, subgenero in SINONIMOS.items():
+            if re.search(r"\b" + re.escape(sinonimo) + r"\b", texto_lower):
+                return subgenero
+    return None
+
 
 class EventExtractor:
     def extract_all(self, text, source_name="", source_url=""):
@@ -137,6 +255,73 @@ class EventExtractor:
             if ev:
                 results.append(ev)
         return results
+
+    def clasificar_subgenero(self, texto: str, organizador: str = "",
+                             lugar: str = "", descripcion: str = "",
+                             email: str = "", link: str = "",
+                             usar_sinonimos: bool = True,
+                             peso_titulo: int = 3,
+                             peso_org: int = 2,
+                             peso_lugar: int = 1,
+                             peso_desc: int = 1,
+                             peso_email: int = 1,
+                             peso_link: int = 1,
+                             umbral: int = 2) -> str:
+        """Clasifica un evento en un subgénero específico.
+
+        Estrategias en orden de prioridad:
+        1. Coincidencia por substring con los subgéneros base (comportamiento
+           original, no se altera).
+        2. Coincidencia con límites de palabra sobre SINONIMOS, que amplía
+           con términos como "dark", "prog", "full-on" o "hi-tech".
+        3. (Ampliación) Búsqueda por pesos sobre campos auxiliares. Si el evento
+           ya no fue clasificado por las 2 primeras estrategias, se exploran los
+           campos organizador, lugar, descripcion, email y link. Cada coincidencia
+           suma un peso al subgénero candidato; gana el de mayor puntuación
+           (siempre que alcance el `umbral`).
+
+        Los parámetros de peso/umbral permiten que el loop de mejora pruebe
+        combinaciones. El valor por defecto conserva el comportamiento anterior
+        (titulo pesa 3, sinónimos activados), por lo que no hay regresión.
+        """
+        if not texto and not organizador and not lugar and not descripcion:
+            return "general"
+
+        texto_lower = (texto or "").lower()
+
+        # Estrategia 1: substring (comportamiento original)
+        for subgenero in SUBGENEROS_BASE:
+            if subgenero in texto_lower:
+                return subgenero
+
+        # Estrategia 2: sinónimos con límites de palabra (ampliación)
+        if usar_sinonimos:
+            for sinonimo, subgenero in SINONIMOS.items():
+                if re.search(r"\b" + re.escape(sinonimo) + r"\b", texto_lower):
+                    return subgenero
+
+        # Estrategia 3: puntuación ponderada sobre campos auxiliares.
+        # Sólo se usa si la estrategia 1/2 no clasificó (texto_lower no tuvo match).
+        campos = (
+            (texto_lower, peso_titulo),
+            ((organizador or "").lower(), peso_org),
+            ((lugar or "").lower(), peso_lugar),
+            ((descripcion or "").lower(), peso_desc),
+            ((email or "").lower(), peso_email),
+            ((link or "").lower(), peso_link),
+        )
+        puntuaciones: dict = {}
+        for contenido, peso in campos:
+            if not contenido:
+                continue
+            sub = _buscar_subgenero_en_texto(contenido, usar_sinonimos)
+            if sub:
+                puntuaciones[sub] = puntuaciones.get(sub, 0) + peso
+        if puntuaciones:
+            mejor = max(puntuaciones, key=puntuaciones.get)
+            if puntuaciones[mejor] >= umbral:
+                return mejor
+        return "general"
 
     def _extract_single(self, text, source_name, source_url):
         text = text.strip()

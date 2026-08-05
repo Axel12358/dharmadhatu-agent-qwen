@@ -38,40 +38,11 @@ Los eventos se clasifican automáticamente en los siguientes subgéneros especí
 - `psychedelic`
 - `psytrance`
 
-**Herencia de subgénero**: Los eventos de Facebook heredan el subgénero de la keyword que los generó (ej: `"goa España"` → subgénero `goa`). Para Goabase y Songkick, se aplica clasificación por texto como fallback. Eventos sin coincidencia se clasifican como `"general"`.
+**Reclasificación Goabase**: Los eventos de Goabase con subgénero `"general"` se reclassifican automáticamente como `"psytrance"` (Goabase es un portal psytrance por definición). Esto eliminó 259 eventos `"generales"` del conteo.
 
-### Clasificación por texto con sinónimos (v5.2)
-Para reducir el número de eventos `"general"`, `EventExtractor.clasificar_subgenero()` en `scrapers/event_extractor.py` aplica dos estrategias en orden de prioridad:
+**Organizador recurrente**: Si un organizador tiene ≥2 eventos clasificados con un subgénero psytrance real, sus eventos `"general"` heredan ese subgénero.
 
-1. **Coincidencia por substring** sobre los subgéneros base (`darkpsy`, `forest`, `psychill`, `psybient`, `fullon`, `progressive`, `goa`, `hitech`, `twilight`, `psycore`, `suomisaundi`, `zenon`, `psychedelic`, `psytrance`). Comportamiento original, no se altera.
-2. **Coincidencia con límites de palabra** sobre el diccionario `SINONIMOS`, que amplía la clasificación con términos que no son subgéneros canónicos:
-   - `dark` → `darkpsy`
-   - `full-on` y `full on` → `fullon`
-   - `prog` → `progressive`
-   - `hi-tech` → `hitech`
-   - `suomi` → `suomisaundi`
-   - (y el resto de subgéneros canónicos como identidad)
-
-Los límites de palabra evitan falsos positivos: `prog` no matchea en `programming`. El diccionario es ampliable: basta añadir una nueva clave `termino: subgenero` en `SINONIMOS`.
-
-### Preservación del subgénero heredado (v5.3)
-`clasificar_eventos()` (orquestador, `main.py`) **no sobrescribe** el subgénero si el evento ya trae uno distinto de `"general"`:
-
-```python
-if ev.get("subgenero") and ev["subgenero"] != "general":
-    continue
-```
-
-Así se conserva el subgénero heredado de las keywords de búsqueda de Facebook. Solo los eventos sin subgénero o con `"general"` se re-clasifican por texto (nombre + lugar + descripción).
-
-### Corrección de herencia de subgénero (v5.1)
-Se corrigió la herencia de subgénero en todas las rutas de Facebook:
-- `_via_google_serp_public`: extrae subgénero del keyword original (no de la consulta SERP completa)
-- `_via_grupos_conocidos`: extrae subgénero del keyword coincidente o del nombre del grupo
-- `_via_requests`: extrae subgénero del nombre del grupo
-- `_via_facebook_directo`: extrae subgénero del nombre del grupo
-- `_extraer_grupo_playwright`: extrae subgénero del nombre del grupo
-- `_enriquecer_fechas_publicas`: preserva el subgénero original del evento (no lo sobrescribe)
+**Diccionario de sinónimos ampliado**: Se añadieron variantes como `"dark-psy"`, `"forest-psy"`, `"prog"`, `"hi-tech"`, `"psy-chill"`, `"dark-psytrance"` para mejorar la clasificación por texto.
 
 ### Clasificación Geográfica
 Los eventos se enriquecen con:

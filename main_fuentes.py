@@ -16,6 +16,7 @@ import json
 import re
 import sys
 import time
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict
@@ -99,14 +100,60 @@ def limpiar_calidad(eventos):
 
 
 def clasificar_eventos(eventos):
-    """Añade/rellena subgenero respetando el ya asignado."""
+    """Añade/rellena subgenero respetando el ya asignado.
+
+    Estrategias en orden:
+    1. Respetar subgénero ya asignado (no general).
+    2. Para fuentes especializadas (Goabase, Psytrance.pl, etc.) con
+       subgénero "general", forzar "psytrance" (su catálogo es psytrance).
+    3. Clasificación por texto (nombre + lugar + descripción).
+    4. Clasificación por organizador recurrente (si un organizador ya
+       tiene eventos clasificados, heredar el subgénero mayoritario).
+    """
+    # Primera pasada: fuentes especializadas con "general" → "psytrance"
+    for ev in eventos:
+        if ev.get("subgenero") == "general" and ev.get("fuente") in FUENTES_ESPECIALIZADAS:
+            ev["subgenero"] = "psytrance"
+
+    # Segunda pasada: clasificación por texto para los que sigan "general"
     for ev in eventos:
         if ev.get("subgenero") and ev["subgenero"] != "general":
             continue
         texto = " ".join(filter(None, [ev.get("nombre"), ev.get("lugar"),
                                        ev.get("descripcion")]))
         ev["subgenero"] = _extractor.clasificar_subgenero(texto)
+
+    # Tercera pasada: organizador recurrente
+    _aplicar_organizador_recurrente(eventos)
+
     return eventos
+
+
+def _aplicar_organizador_recurrente(eventos):
+    """Si un organizador tiene ≥2 eventos ya clasificados con un subgénero
+    psytrance real, asignar ese subgénero a sus eventos "general"."""
+    org_subgeneros = {}
+    for ev in eventos:
+        org = ev.get("organizador", "").strip()
+        sg = ev.get("subgenero", "")
+        if not org or org == "N/A" or sg == "general" or sg == "no_psy" or not sg:
+            continue
+        org_subgeneros.setdefault(org, []).append(sg)
+
+    # Determinar subgénero mayoritario por organizador
+    org_dominante = {}
+    for org, subs in org_subgeneros.items():
+        if len(subs) >= 2:
+            dominante = Counter(subs).most_common(1)[0][0]
+            org_dominante[org] = dominante
+
+    # Aplicar a eventos "general" de esos organizadores
+    for ev in eventos:
+        if ev.get("subgenero") != "general":
+            continue
+        org = ev.get("organizador", "").strip()
+        if org in org_dominante:
+            ev["subgenero"] = org_dominante[org]
 
 
 def filtrar_no_psy(eventos):

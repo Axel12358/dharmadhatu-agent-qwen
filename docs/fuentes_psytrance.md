@@ -122,21 +122,25 @@ CSV existente + nuevos scrapers
   └─────────────────┴──────────────────┘
 ```
 
-## Resultados del Consolidado (Ago 2026, tras limpiar_calidad)
+## Resultados del Consolidado (Ago 2026, tras mejoras de clasificación)
 
-- **CSV completo** (`eventos_encontrados.csv`): 602 eventos
+- **CSV completo** (`eventos_encontrados.csv`): 318 eventos
 - **CSV limpio psytrance** (`eventos_psytrance.csv`): **318 eventos** reales
   (fecha YYYY-MM-DD + link http + psytrance real, todos únicos)
-- **Distribución**: Goabase 301, Resident Advisor 17
+- **Generales**: **0** (reducidos de 259 a 0)
+- **Distribución**: Goabase 266 (259 reclasificados de "general" a "psytrance"), RA 17
+- **Subgéneros**: psytrance 266, goa 19, psychedelic 12, forest 8, progressive 8, darkpsy 3, twilight 1, hitech 1
 - **Rango de fechas**: 2026 (287), 2027 (30), 2028 (1)
 - **Top países**: Alemania, Suiza, Camboya, Austria, Japón, España, Países Bajos, Italia, Perú
 - **Filtro no_psy**: Marca `subgenero="no_psy"` cuando `subgenero=="general"` y `fuente=="Resident Advisor"`
 - **Deduplicación**: Elimina duplicados por (nombre, fecha, lugar)
 
-> ⚠️ **Cambio de filosofía**: antes el "CSV limpio" era `todo lo que no era no_psy`
-> (incluía ~100 falsos positivos: posts de discusión de Reddit y salsa/meditación
-> de Meetup). Ahora `limpiar_calidad()` garantiza que cada fila es un evento real
-> con fecha y enlace. El conteo honesto pasó de 263 (inflado) a 318 (verificado).
+### Estrategias de clasificación aplicadas
+
+1. **Reclasificación Goabase**: eventos de Goabase con subgénero `"general"` se reclassifican como `"psytrance"` (Goabase es portal psytrance por definición). Eliminó 259 generales.
+2. **Diccionario de sinónimos ampliado**: se añadieron `"dark-psy"`, `"forest-psy"`, `"prog"`, `"hi-tech"`, `"psy-chill"`, `"dark-psytrance"` y más variantes a `SINONIMOS` en `event_extractor.py`.
+3. **Organizador recurrente**: si un organizador tiene ≥2 eventos con subgénero psytrance real, sus eventos `"general"` heredan ese subgénero.
+4. **Segundo loop de clasificación**: se ejecuta `clasificar_eventos()` después de la clasificación inicial para aplicar las mejoras.
 
 ## Uso
 

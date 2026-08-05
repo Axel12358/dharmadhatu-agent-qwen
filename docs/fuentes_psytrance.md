@@ -133,9 +133,10 @@ CSV existente + nuevos scrapers
 
 ### Integración de Facebook
 
-- Movido a `ejecutar_fuentes_nuevas()` para que se ejecute siempre (antes solo se ejecutaba si no había CSV)
-- Limitado a `max_keywords=3` y `max_visitas=10` para runtime ~120s
-- Eventos con "Fecha no disponible" se conservan (la extracción de fechas de FB puede fallar en páginas públicas)
+- Siempre se ejecuta: `max_keywords=15`, `max_visitas=50`, timeout 300s
+- SERP público: Startpage, Bing, DuckDuckGo, Mojeek, Qwant, Brave
+- Grupos conocidos: Psychedelic Trance Community, Forest Tribe, Psytrance Israel, Goa Gil, etc.
+- Eventos con "Fecha no disponible" se conservan (extracción de fechas puede fallar en páginas públicas)
 - Eventos con subgénero "general" de Facebook se reclassifican como "psytrance" (fueron encontrados vía keywords psytrance)
 
 ## Uso

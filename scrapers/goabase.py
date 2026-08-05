@@ -84,6 +84,7 @@ def scrape_goabase(limit=100):
                     'organizador': org_name,
                     'email': email,
                     'link': link,
+                    'descripcion': event_data.get('description') or "",
                 })
                 
                 # Pequeña pausa para no sobrecargar el servidor

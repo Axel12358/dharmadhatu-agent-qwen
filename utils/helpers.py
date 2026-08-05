@@ -65,9 +65,10 @@ def validar_evento(evento):
 
     lugar = (evento.get("lugar") or "").strip()
     fuente = (evento.get("fuente") or "").strip()
-    fuentes_especializadas = {"Goabase", "Psytrance.pl", "IsraTrance",
-                              "Ektoplazm", "Songkick"}
-    if fuente not in fuentes_especializadas:
+    # Fuentes donde el lugar no siempre está disponible
+    fuentes_sin_lugar = {"Goabase", "Psytrance.pl", "IsraTrance",
+                         "Ektoplazm", "Songkick", "Facebook (público SERP)"}
+    if fuente not in fuentes_sin_lugar:
         if not lugar or lugar == "N/A":
             return False
 

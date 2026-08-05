@@ -122,25 +122,21 @@ CSV existente + nuevos scrapers
   └─────────────────┴──────────────────┘
 ```
 
-## Resultados del Consolidado (Ago 2026, tras mejoras de clasificación)
+## Resultados del Consolidado (tras integración Facebook)
 
-- **CSV completo** (`eventos_encontrados.csv`): 318 eventos
-- **CSV limpio psytrance** (`eventos_psytrance.csv`): **318 eventos** reales
-  (fecha YYYY-MM-DD + link http + psytrance real, todos únicos)
-- **Generales**: **0** (reducidos de 259 a 0)
-- **Distribución**: Goabase 266 (259 reclasificados de "general" a "psytrance"), RA 17
-- **Subgéneros**: psytrance 266, goa 19, psychedelic 12, forest 8, progressive 8, darkpsy 3, twilight 1, hitech 1
-- **Rango de fechas**: 2026 (287), 2027 (30), 2028 (1)
-- **Top países**: Alemania, Suiza, Camboya, Austria, Japón, España, Países Bajos, Italia, Perú
-- **Filtro no_psy**: Marca `subgenero="no_psy"` cuando `subgenero=="general"` y `fuente=="Resident Advisor"`
-- **Deduplicación**: Elimina duplicados por (nombre, fecha, lugar)
+- **CSV completo** (`eventos_encontrados.csv`): 325 eventos
+- **CSV limpio psytrance** (`eventos_psytrance.csv`): **325 eventos** reales
+- **Distribución**: Goabase 301, Resident Advisor 17, Facebook 7
+- **Subgéneros**: psytrance 271, goa 19, psychedelic 12, forest 8, progressive 8, darkpsy 5, twilight 1, hitech 1
+- **Rango de fechas**: 2026 (mayoría), 2027, 2028
+- **Generales**: 0 (reducidos de 259 a 0)
 
-### Estrategias de clasificación aplicadas
+### Integración de Facebook
 
-1. **Reclasificación Goabase**: eventos de Goabase con subgénero `"general"` se reclassifican como `"psytrance"` (Goabase es portal psytrance por definición). Eliminó 259 generales.
-2. **Diccionario de sinónimos ampliado**: se añadieron `"dark-psy"`, `"forest-psy"`, `"prog"`, `"hi-tech"`, `"psy-chill"`, `"dark-psytrance"` y más variantes a `SINONIMOS` en `event_extractor.py`.
-3. **Organizador recurrente**: si un organizador tiene ≥2 eventos con subgénero psytrance real, sus eventos `"general"` heredan ese subgénero.
-4. **Segundo loop de clasificación**: se ejecuta `clasificar_eventos()` después de la clasificación inicial para aplicar las mejoras.
+- Movido a `ejecutar_fuentes_nuevas()` para que se ejecute siempre (antes solo se ejecutaba si no había CSV)
+- Limitado a `max_keywords=3` y `max_visitas=10` para runtime ~120s
+- Eventos con "Fecha no disponible" se conservan (la extracción de fechas de FB puede fallar en páginas públicas)
+- Eventos con subgénero "general" de Facebook se reclassifican como "psytrance" (fueron encontrados vía keywords psytrance)
 
 ## Uso
 

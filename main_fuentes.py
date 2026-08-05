@@ -86,15 +86,24 @@ def limpiar_calidad(eventos):
 
     Elimina falsos positivos (posts de discusión, salsa/meditación de Meetup,
     etc.) que antes entraban al CSV 'limpio' solo por no ser 'no_psy'.
+
+    Excepción: eventos de Facebook con link real y subgénero psytrance real
+    se conservan aunque la fecha no se haya podido extraer (el enriquecimiento
+    de fechas puede fallar en páginas públicas de FB).
     """
     limpios = []
     for ev in eventos:
-        if not fecha_valida(ev.get("fecha")):
-            continue
         if not link_valido(ev.get("link")):
             continue
         if not es_psytrance_real(ev):
             continue
+        fecha = ev.get("fecha", "")
+        es_facebook = "Facebook" in ev.get("fuente", "")
+        if not fecha_valida(fecha):
+            if es_facebook and fecha in ("Fecha no disponible", "N/A", ""):
+                ev["fecha"] = "N/A"
+            else:
+                continue
         limpios.append(ev)
     return limpios
 
@@ -106,16 +115,22 @@ def clasificar_eventos(eventos):
     1. Respetar subgénero ya asignado (no general).
     2. Para fuentes especializadas (Goabase, Psytrance.pl, etc.) con
        subgénero "general", forzar "psytrance" (su catálogo es psytrance).
-    3. Clasificación por texto (nombre + lugar + descripción).
-    4. Clasificación por organizador recurrente (si un organizador ya
-       tiene eventos clasificados, heredar el subgénero mayoritario).
+    3. Para eventos de Facebook con subgénero "general", forzar "psytrance"
+       (fueron encontrados vía keywords psytrance).
+    4. Clasificación por texto (nombre + lugar + descripción).
+    5. Clasificación por organizador recurrente.
     """
     # Primera pasada: fuentes especializadas con "general" → "psytrance"
     for ev in eventos:
         if ev.get("subgenero") == "general" and ev.get("fuente") in FUENTES_ESPECIALIZADAS:
             ev["subgenero"] = "psytrance"
 
-    # Segunda pasada: clasificación por texto para los que sigan "general"
+    # Segunda pasada: Facebook con "general" → "psytrance"
+    for ev in eventos:
+        if ev.get("subgenero") == "general" and "Facebook" in ev.get("fuente", ""):
+            ev["subgenero"] = "psytrance"
+
+    # Tercera pasada: clasificación por texto para los que sigan "general"
     for ev in eventos:
         if ev.get("subgenero") and ev["subgenero"] != "general":
             continue
@@ -123,7 +138,7 @@ def clasificar_eventos(eventos):
                                        ev.get("descripcion")]))
         ev["subgenero"] = _extractor.clasificar_subgenero(texto)
 
-    # Tercera pasada: organizador recurrente
+    # Cuarta pasada: organizador recurrente
     _aplicar_organizador_recurrente(eventos)
 
     return eventos
@@ -241,6 +256,22 @@ async def ejecutar_fuentes_nuevas():
     except Exception as e:
         print(f"  ❌ Eventbrite: {e}")
 
+    # --- Facebook (SERP público + grupos) ---
+    try:
+        evs = await asyncio.wait_for(
+            scrape_facebook_events(max_keywords=3, max_visitas=10),
+            timeout=180
+        )
+        if evs:
+            print(f"  ✅ Facebook: {len(evs)} eventos")
+            todos.extend(evs)
+        else:
+            print("  ⚠️ Facebook: 0 eventos")
+    except asyncio.TimeoutError:
+        print("  ⚠️ Facebook: timeout (180s) — omitido")
+    except Exception as e:
+        print(f"  ❌ Facebook: {e}")
+
     return todos
 
 
@@ -261,14 +292,6 @@ async def ejecutar_fuentes_existentes():
                 todos.extend(evs)
         except Exception as e:
             print(f"  ❌ {nombre}: {e}")
-
-    try:
-        evs = await scrape_facebook_events()
-        if evs:
-            print(f"  ✅ Facebook: {len(evs)} eventos")
-            todos.extend(evs)
-    except Exception as e:
-        print(f"  ❌ Facebook: {e}")
 
     return todos
 

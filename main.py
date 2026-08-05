@@ -8,6 +8,53 @@ from scrapers import scrape_goabase, scrape_songkick
 from scrapers import scrape_ra
 from scrapers.facebook_mcp import scrape_facebook_events
 from utils.helpers import save_csv
+from scrapers.event_extractor import EventExtractor
+from utils import geo_utils
+
+# Fuentes donde "general" = probablemente NO es psytrance (reversible, configurable)
+FUENTES_NO_PSY = {"Resident Advisor"}
+
+
+def filtrar_no_psy(eventos):
+    """Marca como 'no_psy' los eventos con subgenero='general' de fuentes no especializadas.
+
+    Goabase es portal de psytrance → se excluye de esta lista.
+    Configurable: añadir/quitar fuentes en FUENTES_NO_PSY.
+    """
+    for ev in eventos:
+        if ev.get("subgenero") == "general" and ev.get("fuente") in FUENTES_NO_PSY:
+            ev["subgenero"] = "no_psy"
+    return eventos
+
+
+def clasificar_eventos(eventos):
+    """Añade/rellena la columna subgenero usando EventExtractor.clasificar_subgenero.
+
+    Si el evento ya trae un subgénero distinto de "general" (p.ej. heredado de
+    las keywords de búsqueda de Facebook), se respeta y no se sobrescribe.
+    """
+    extractor = EventExtractor()
+    for ev in eventos:
+        # Respetar subgénero ya asignado (p.ej. herencia desde keywords de FB)
+        if ev.get("subgenero") and ev["subgenero"] != "general":
+            continue
+        # Obtener texto representativo: nombre + lugar + descripcion
+        texto = " ".join(filter(None, [ev.get("nombre"), ev.get("lugar"), ev.get("descripcion")]))
+        ev["subgenero"] = extractor.clasificar_subgenero(texto)
+    return eventos
+
+
+def clasificar_geo_events(eventos):
+    """Añade continente y subcontinente a cada evento usando geo_utils.clasificar_geo."""
+    for ev in eventos:
+        pais = ev.get("pais")
+        if pais and pais not in ("N/A", ""):
+            geo = geo_utils.clasificar_geo(pais)
+            ev.update(geo)
+        else:
+            ev.update({"continente": "Otro", "subcontinente": "Otro"})
+    return eventos
+
 
 async def main():
     print("🧘 Dharmadhatu Bot v5")
@@ -81,6 +128,11 @@ async def main():
     except Exception as e:
         print(f"   ❌ Error en Instagram (flujo continua): {e}")
     
+    # Clasificar eventos por subgénero para enriquecimiento
+    eventos = clasificar_eventos(eventos)
+    eventos = filtrar_no_psy(eventos)
+    eventos = clasificar_geo_events(eventos)
+
     # Guardar resultados
     if eventos:
         save_csv(eventos, "eventos_encontrados.csv")

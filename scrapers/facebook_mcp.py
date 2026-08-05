@@ -55,14 +55,35 @@ EVENTOS_VISITADOS_FILE = str(Path(_PROJECT_ROOT) / "eventos_visitados.json")
 # Versión del formato del caché: invalidar si cambia la lógica de extracción
 ENRIQUECIMIENTO_CACHE_VERSION = 2
 
-# Límite de páginas de FB visitadas por ejecución en el enriquecimiento
-MAX_VISITAS_ENRIQUECIMIENTO = 30
+    # Límite de páginas de FB visitadas por ejecución en el enriquecimiento
+MAX_VISITAS_ENRIQUECIMIENTO = 80
 VISITA_TIMEOUT_MS = 20000
 
-MAX_KEYWORDS_POR_RUN = 250
+MAX_KEYWORDS_POR_RUN = 600
 
-# El SERP (Startpage) + visitas a páginas públicas de FB necesita más tiempo
-SERP_TIMEOUT = 300
+# Sobrescritura dinámica desde loop_mejora.py (None = usar valor por defecto).
+# Mecanismo aditivo: si no se llama a set_limites_loop(), todo se comporta
+# exactamente como antes (no se rompe nada).
+CONFIG_RUNTIME = {
+    "max_keywords_por_run": None,
+    "max_visitas_enriquecimiento": None,
+}
+
+
+def set_limites_loop(max_keywords=None, max_visitas=None):
+    """Permite que loop_mejora.py ajuste los límites de FB sin tocar constantes.
+
+    Pasar None deja el valor por defecto (reversible). Se resetea a None al
+    terminar cada scrape_facebook_events() para no contaminar futuras llamadas.
+    """
+    if max_keywords is not None:
+        CONFIG_RUNTIME["max_keywords_por_run"] = int(max_keywords)
+    if max_visitas is not None:
+        CONFIG_RUNTIME["max_visitas_enriquecimiento"] = int(max_visitas)
+
+# El SERP (Startpage/DDG/Bing/Google) + visitas a páginas públicas de FB necesita
+# más tiempo con los delays ampliados (10-20s) y 4 motores en cascada.
+SERP_TIMEOUT = 900
 
 # Términos psytrance para filtrar ruido en los resultados del SERP
 # (términos fuertes: un evento real de la escena casi siempre los contiene)
@@ -104,6 +125,48 @@ NOISE_KEYWORDS = [
     "no cover", "dj maiko", "american festival",
     "open house", "deep creek", "moss avenue", "blue hills",
     "winter social", "sale & fest", "annual",
+    # Ampliación del filtro de ruido (aditiva): eventos claramente no-psytrance
+    "wedding", "boda", "bautizo", "communion", "comunión",
+    "birthday party", "cumpleaños", "baby shower", "gender reveal",
+    "corporate", "empresarial", "business", "networking", "meetup",
+    "webinar", "seminar", "seminario", "workshop", "curso", "masterclass",
+    "fundraiser", "recogida de fondos", "caridad", "charity",
+    "food festival", "gastronomía", "street food", "food market",
+    "craft fair", "mercado artesanal", "art market",
+    "music festival", "festival de música", "rock concert", "pop concert",
+    "indie concert", "metal concert", "folk concert", "hip hop concert",
+    "reggae concert", "latin concert", "gospel", "choir", "coro",
+    "orchestra", "orquesta", "symphony", "sinfonía",
+    "cinema", "cine", "film festival", "festival de cine",
+    "photography", "fotografía", "exposición de arte", "expo",
+    "fashion week", "semana de la moda",
+    "trading", "investing", "crypto", "bitcoin", "blockchain",
+    "gaming", "esports", "video game", "videojuegos", "lan party",
+    "superbowl", "olympics", "olimpiadas", "world cup", "mundial",
+    "quinceañera", "prom", "graduation", "graduación",
+    "retiro", "retreat", "ayurveda", "detox", "wellness",
+    "zumba", "pilates", "crossfit", "spinning", "bootcamp",
+    "climbing", "escalada", "hiking", "senderismo", "sailing", "regata",
+    "rodeo", "bullfight", "corrida de toros", "gala dinner", "cena de gala",
+    "soul food", "restaurant opening", "inauguración de restaurante",
+    "coffee tasting", "cata de café", "whisky tasting", "cata de whisky",
+    "beer festival", "oktoberfest", "harvest festival", "fiesta de la vendimia",
+    "pride parade", "desfile", "march", "manifestación", "protest",
+    "town hall", "ayuntamiento", "city council", "asamblea",
+    "convention", "congreso", "exhibición", "trade show", "feria de muestras",
+    "open day", "jornada de puertas abiertas", "puertas abiertas",
+    "kids", "niños", "infantil", "family day", "día de la familia",
+    "church", "iglesia", "mosque", "sinagoga", "templo", "sermon",
+    "funeral", "memorial service", "servicio conmemorativo",
+    "fundacion", "fundación", "ong", "nonprofit", "sin ánimo de lucro",
+    "airport", "aeropuerto", "station opening", "inauguración de estación",
+    "escapes", "escape room", "escape game", "arcade",
+    "quiz night", "trivia", "bingo night", "casino night",
+    "dance competition", "concurso de baile", "pageant", "concurso de belleza",
+    "pet expo", "animal shelter", "protectora de animales",
+    "yoga", "meditación", "reiki", "chakra", "crystal healing",
+    "garden party", "fiesta de jardín", "bbq", "barbacoa",
+    "picnic", "picnic comunal", "potluck",
 ]
 
 from scrapers.event_extractor import EventExtractor, VENUE_TYPE_KEYWORDS
@@ -324,7 +387,9 @@ def _generar_keywords(config, paises_seleccionados):
     afecta a la Fase 2 (expansión), nunca a la base de subgéneros.
     """
     subgeneros = config.get("subgeneros", ["psytrance"])
-    max_kw = config.get("max_keywords_por_run", MAX_KEYWORDS_POR_RUN)
+    max_kw = CONFIG_RUNTIME["max_keywords_por_run"] or config.get(
+        "max_keywords_por_run", MAX_KEYWORDS_POR_RUN
+    )
     extras = list(EXTRA_KEYWORDS)
 
     state = _load_search_state()
@@ -700,7 +765,11 @@ class FacebookEventsFinder:
                 soup_text = re.sub(r'\s+', ' ', soup_text)
 
                 if len(soup_text) > 50:
-                    eventos.extend(self.extractor.extract_all(soup_text[:5000], gname, gurl))
+                    evs = self.extractor.extract_all(soup_text[:5000], gname, gurl)
+                    kw_subgenero = _extraer_subgenero_desde_keyword(gname)
+                    for ev in evs:
+                        ev["subgenero"] = kw_subgenero
+                    eventos.extend(evs)
         except Exception:
             pass
         return eventos
@@ -756,6 +825,9 @@ class FacebookEventsFinder:
             soup = BeautifulSoup(resp.text, "html.parser")
             body = soup.get_text(separator=" ", strip=True)
             evs = self.extractor.extract_all(body[:3000], gname, gurl)
+            kw_subgenero = _extraer_subgenero_desde_keyword(gname)
+            for ev in evs:
+                ev["subgenero"] = kw_subgenero
             eventos.extend(evs)
 
         dt = time.time() - t0
@@ -766,51 +838,95 @@ class FacebookEventsFinder:
     # ESTRATEGIA 3: Lista conocida + descubiertos (fallback)
     # ------------------------------------------------------------------ #
     async def _via_grupos_conocidos(self, keywords):
-        """Grupos conocidos de Facebook: solo genera placeholders si hay cookies
-        para scrapear posts reales. Sin cookies = 0 eventos (no placeholders)."""
+        """Grupos conocidos de Facebook: visita cada grupo público y extrae
+        eventos reales de sus publicaciones usando Playwright o requests.
+        Sin cookies: extrae del HTML público del grupo (sin login).
+        Con cookies: extrae posts reales del grupo con más detalle.
+        """
         eventos = []
         t0 = time.time()
+        grupos_a_visitar = {}
 
-        if not self.cookies:
-            dt = time.time() - t0
-            self.optimizer.registrar_resultado("grupos_conocidos", eventos, dt, False)
-            return eventos
-
-        candidatos = {}
+        # Construir lista de grupos: conocidos + descubiertos + encontrados
         for gid, gname in CONOCIDOS.items():
-            candidatos[gid] = {"nombre": gname, "url": f"https://facebook.com/groups/{gid}"}
-
+            grupos_a_visitar[gid] = {"nombre": gname, "url": f"https://facebook.com/groups/{gid}"}
         descubiertos = _cargar_grupos_descubiertos()
         for gid, gdata in descubiertos.items():
-            if gid not in candidatos:
-                candidatos[gid] = {"nombre": gdata.get("nombre", gid),
-                                   "url": gdata.get("url", f"https://facebook.com/groups/{gid}")}
-
+            if gid not in grupos_a_visitar:
+                grupos_a_visitar[gid] = {"nombre": gdata.get("nombre", gid),
+                                         "url": gdata.get("url", f"https://facebook.com/groups/{gid}")}
         for gid, gdata in self.grupos_encontrados.items():
-            if gid not in candidatos:
-                candidatos[gid] = gdata
+            if gid not in grupos_a_visitar:
+                grupos_a_visitar[gid] = gdata
 
-        keywords_lower = [kw.lower() for kw in keywords]
-        matching = []
-        for gid, gdata in candidatos.items():
-            gname_lower = gdata["nombre"].lower()
-            if any(kw in gname_lower for kw in keywords_lower):
-                matching.append((gid, gdata))
+        # Filtrar por keywords si se proporcionan
+        if keywords:
+            kw_lower = [kw.lower() for kw in keywords]
+            grupos_filtrados = {}
+            for gid, gdata in grupos_a_visitar.items():
+                if any(kw in gdata["nombre"].lower() for kw in kw_lower):
+                    grupos_filtrados[gid] = gdata
+            grupos_a_visitar = grupos_filtrados
 
-        random.shuffle(matching)
-        for gid, gdata in matching[:30]:
+        # Limitar a 30 grupos por ejecución para evitar timeouts
+        grupos_list = list(grupos_a_visitar.items())[:30]
+        random.shuffle(grupos_list)
+
+        # Estrategia A: Playwright (más robusto para grupos públicos)
+        for gid, gdata in grupos_list:
             if time.time() - t0 > TIMEOUT_PER_STRATEGY:
                 break
-            eventos.append({
-                "nombre": f"{gdata['nombre']} - Posible evento",
-                "fecha": "N/A", "lugar": "N/A", "pais": "N/A",
-                "fuente": f"Facebook ({gdata['nombre']})",
-                "organizador": gdata["nombre"],
-                "email": "N/A", "url": gdata["url"],
-            })
+            gname = gdata.get("nombre", gid)
+            gurl = gdata.get("url", f"https://facebook.com/groups/{gid}")
+            try:
+                evs = await self._extraer_grupo_playwright(gid, gname, gurl)
+                kw_subgenero = _extraer_subgenero_desde_keyword(gname)
+                for ev in evs:
+                    ev["subgenero"] = kw_subgenero
+                eventos.extend(evs)
+            except Exception:
+                pass
+
+        # Estrategia B: requests (fallback si Playwright no disponible o lento)
+        if len(eventos) < 10:
+            for gid, gdata in grupos_list[:10]:
+                if time.time() - t0 > TIMEOUT_PER_STRATEGY:
+                    break
+                gname = gdata.get("nombre", gid)
+                gurl = gdata.get("url", f"https://facebook.com/groups/{gid}")
+                try:
+                    evs = await self._requests_grupo(gurl, gname)
+                    kw_subgenero = _extraer_subgenero_desde_keyword(gname)
+                    for ev in evs:
+                        ev["subgenero"] = kw_subgenero
+                    eventos.extend(evs)
+                except Exception:
+                    pass
 
         dt = time.time() - t0
         self.optimizer.registrar_resultado("grupos_conocidos", eventos, dt, bool(eventos))
+        return eventos
+
+    async def _requests_grupo(self, gurl, gname):
+        """Extrae eventos de la página pública de un grupo FB vía requests."""
+        eventos = []
+        try:
+            import requests as _requests
+            from bs4 import BeautifulSoup as _BS
+            headers = {"User-Agent": self.anti_block.random_user_agent()}
+            r = _requests.get(gurl, headers=headers, timeout=10)
+            if r.status_code != 200:
+                return eventos
+            soup = _BS(r.text, "html.parser")
+            body = soup.get_text(separator=" ", strip=True)
+            if len(body) < 50:
+                return eventos
+            evs = self.extractor.extract_all(body[:5000], gname, gurl)
+            for ev in evs:
+                ev["subgenero"] = _extraer_subgenero_desde_keyword(gname)
+            eventos.extend(evs)
+        except Exception:
+            pass
         return eventos
 
     # ------------------------------------------------------------------ #
@@ -846,6 +962,10 @@ class FacebookEventsFinder:
                 for post in posts[:5]:
                     text = post.get("text") or post.get("caption") or ""
                     evs = self.extractor.extract_all(text, gname, post.get("post_url", ""))
+                    # Heredar subgénero de la keyword del grupo
+                    kw_subgenero = _extraer_subgenero_desde_keyword(gname)
+                    for ev in evs:
+                        ev["subgenero"] = kw_subgenero
                     eventos.extend(evs)
             except Exception:
                 continue
@@ -859,8 +979,12 @@ class FacebookEventsFinder:
     # ------------------------------------------------------------------ #
     async def _via_google_serp_public(self, keywords):
         """Busca eventos públicos de Facebook via SERP (site:facebook.com/events).
-        Sin login. Usa Startpage via Playwright como motor principal (sin CAPTCHA,
-        90+ resultados por query) y DuckDuckGo HTML POST como respaldo.
+        Sin login. Motores en cascada según prioridad:
+          1. Startpage (Playwright) — motor principal (sin CAPTCHA, 90+ resultados)
+          2. DuckDuckGo (HTML POST) — respaldo
+          3. Bing (Playwright) — respaldo si los anteriores no alcanzan
+          4. Google (Playwright) — último recurso
+        Delays de 10-20s entre consultas para evitar rate-limit.
         Extrae del SERP: título, fecha, ciudad, venue, descripción.
         """
         eventos = []
@@ -940,10 +1064,11 @@ class FacebookEventsFinder:
                     if len(eventos) >= 50:
                         break
 
+                    kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
                     bloques = await self._serp_startpage_playwright(context, consulta)
 
                     for b in bloques:
-                        ev = self._extraer_del_serp_publico(b)
+                        ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
                         if not ev:
                             continue
                         # Filtro de ruido: descartar eventos claramente NO psytrance
@@ -960,7 +1085,7 @@ class FacebookEventsFinder:
                                 break
 
                     if i < len(consultas):
-                        await asyncio.sleep(random.uniform(5.0, 8.0))
+                        await asyncio.sleep(random.uniform(10.0, 20.0))
 
                 # Enriquecer fechas visitando las páginas públicas de FB (sin login)
                 if eventos:
@@ -978,9 +1103,7 @@ class FacebookEventsFinder:
 
                 session = _requests.Session()
                 session.headers.update({
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
-                                  'AppleWebKit/537.36 (KHTML, like Gecko) '
-                                  'Chrome/120.0.0.0 Safari/537.36',
+                    'User-Agent': self.anti_block.random_user_agent(),
                     'Accept': 'text/html,application/xhtml+xml',
                     'Accept-Language': 'en-US,en;q=0.9',
                 })
@@ -989,10 +1112,14 @@ class FacebookEventsFinder:
                     if len(eventos) >= 50:
                         break
 
+                    # Rotar UA por consulta para diversificar la huella
+                    session.headers.update({'User-Agent': self.anti_block.random_user_agent()})
+
+                    kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
                     bloques = self._serp_duckduckgo_html(consulta, session)
 
                     for b in bloques:
-                        ev = self._extraer_del_serp_publico(b)
+                        ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
                         if not ev:
                             continue
                         nombre_lower = (ev.get("nombre", "") or "").lower()
@@ -1008,10 +1135,92 @@ class FacebookEventsFinder:
                                 break
 
                     if i < len(consultas):
-                        await asyncio.sleep(random.uniform(4.5, 6.5))
+                        await asyncio.sleep(random.uniform(10.0, 20.0))
 
             except Exception as e:
                 print(f"  ⚠️ Error en DuckDuckGo fallback: {e}")
+
+        # FASE 3: Bing Playwright (respaldo si los anteriores no alcanzaron 50)
+        if len(eventos) < 50:
+            try:
+                from playwright.async_api import async_playwright
+
+                async with async_playwright() as p:
+                    browser = await p.chromium.launch(
+                        headless=True,
+                        args=["--no-sandbox", "--disable-dev-shm-usage",
+                               "--disable-blink-features=AutomationControlled"],
+                    )
+                    context = await self.anti_block.create_stealth_context(browser, use_tor=True)
+                    for i, consulta in enumerate(consultas[:6], 1):
+                        if len(eventos) >= 50:
+                            break
+
+                        kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
+                        bloques = await self._serp_bing_playwright(context, consulta)
+
+                        for b in bloques:
+                            ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
+                            if not ev:
+                                continue
+                            nombre_lower = (ev.get("nombre", "") or "").lower()
+                            texto_lower = (b.get("texto", "") or "").lower()
+                            candidato = nombre_lower + " " + texto_lower
+                            if any(nk in candidato for nk in NOISE_KEYWORDS):
+                                continue
+                            uid = ev.get("url", "")
+                            if uid not in used:
+                                eventos.append(ev)
+                                used.add(uid)
+                                if len(eventos) >= 50:
+                                    break
+
+                        if i < len(consultas[:6]):
+                            await asyncio.sleep(random.uniform(10.0, 20.0))
+                    await browser.close()
+            except Exception as e:
+                print(f"  ⚠️ Error en Bing Playwright: {e}")
+
+        # FASE 4: Google Playwright (último recurso si los anteriores no alcanzaron 50)
+        if len(eventos) < 50:
+            try:
+                from playwright.async_api import async_playwright
+
+                async with async_playwright() as p:
+                    browser = await p.chromium.launch(
+                        headless=True,
+                        args=["--no-sandbox", "--disable-dev-shm-usage",
+                               "--disable-blink-features=AutomationControlled"],
+                    )
+                    context = await self.anti_block.create_stealth_context(browser, use_tor=True)
+                    for i, consulta in enumerate(consultas[:6], 1):
+                        if len(eventos) >= 50:
+                            break
+
+                        kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
+                        bloques = await self._serp_google_playwright(context, consulta)
+
+                        for b in bloques:
+                            ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
+                            if not ev:
+                                continue
+                            nombre_lower = (ev.get("nombre", "") or "").lower()
+                            texto_lower = (b.get("texto", "") or "").lower()
+                            candidato = nombre_lower + " " + texto_lower
+                            if any(nk in candidato for nk in NOISE_KEYWORDS):
+                                continue
+                            uid = ev.get("url", "")
+                            if uid not in used:
+                                eventos.append(ev)
+                                used.add(uid)
+                                if len(eventos) >= 50:
+                                    break
+
+                        if i < len(consultas[:6]):
+                            await asyncio.sleep(random.uniform(10.0, 20.0))
+                    await browser.close()
+            except Exception as e:
+                print(f"  ⚠️ Error en Google Playwright: {e}")
 
         dt = time.time() - t0
         self.optimizer.registrar_resultado("google_serp_public", eventos, dt, bool(eventos))
@@ -1092,7 +1301,7 @@ class FacebookEventsFinder:
             if session is None:
                 session = requests.Session()
                 session.headers.update({
-                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "User-Agent": self.anti_block.random_user_agent(),
                 })
             proxies = self.anti_block.requests_proxies() if hasattr(self, "anti_block") else None
             resp = session.post(
@@ -1165,6 +1374,70 @@ class FacebookEventsFinder:
                 if p_tag:
                     snippet = p_tag.get_text(" ", strip=True)
                 bloques.append({"titulo": titulo, "url": url_ev, "texto": snippet})
+
+        except Exception:
+            pass
+        finally:
+            if page:
+                try:
+                    await page.close()
+                except Exception:
+                    pass
+        return bloques
+
+    async def _serp_google_playwright(self, context, consulta):
+        """Busca vía Google con Playwright. Extrae enlaces a facebook.com/events.
+        Último recurso (Google suele mostrar CAPTCHA). Usa página regional y
+        detecta bloqueo para no perder tiempo.
+        """
+        bloques = []
+        page = None
+        try:
+            page = await context.new_page()
+            await self.anti_block.apply_playwright_stealth(page)
+            url = ("https://www.google.com/search?q=" + urllib.parse.quote(consulta)
+                   + "&num=20&hl=en&gl=us")
+            await page.goto(url, timeout=25000, wait_until="domcontentloaded")
+            await asyncio.sleep(random.uniform(3.0, 5.0))
+
+            html = await page.content()
+            if self.anti_block.detect_block(html, url):
+                return bloques
+            if BeautifulSoup is None:
+                return bloques
+
+            soup = BeautifulSoup(html, "html.parser")
+            vistos = set()
+
+            for res in soup.select("div.g, div.MjjYud"):
+                a = res.find("a", href=True)
+                if not a:
+                    continue
+                href = urllib.parse.unquote(a.get("href", ""))
+                m = re.search(r"facebook\.com/events/[^/]+/[^/?]+/\d+", href)
+                if not m:
+                    continue
+                url_ev = "https://" + m.group(0)
+                if url_ev in vistos:
+                    continue
+                vistos.add(url_ev)
+                titulo = a.get_text(" ", strip=True)
+                h3 = res.find("h3")
+                if h3:
+                    titulo = h3.get_text(" ", strip=True)
+                texto = res.get_text(" ", strip=True)
+                bloques.append({"titulo": titulo, "url": url_ev, "texto": texto})
+
+            # Fallback: regex sobre todo el HTML
+            if not bloques:
+                for m in re.finditer(
+                    r'https?://(?:www\.)?facebook\.com/events/[^/]+/[^/?]+/\d+',
+                    html
+                ):
+                    url_ev = m.group(0)
+                    if url_ev not in vistos:
+                        vistos.add(url_ev)
+                        bloques.append({"titulo": "", "url": url_ev, "texto": ""})
 
         except Exception:
             pass
@@ -1378,8 +1651,8 @@ class FacebookEventsFinder:
                 continue
             pendientes.append(ev)
 
-        # Limitar visitas por ejecución
-        limite = MAX_VISITAS_ENRIQUECIMIENTO
+        # Limitar visitas por ejecución (configurable desde loop_mejora.py)
+        limite = CONFIG_RUNTIME["max_visitas_enriquecimiento"] or MAX_VISITAS_ENRIQUECIMIENTO
         if len(pendientes) > limite:
             print(f"  🗂️ Enriquecimiento FB: {len(pendientes)} eventos, visitando {limite} (caché {len(visitados)})")
             pendientes = pendientes[:limite]
@@ -1607,8 +1880,11 @@ class FacebookEventsFinder:
         except Exception:
             pass
 
-    def _extraer_del_serp_publico(self, bloque):
-        """Extrae evento desde bloque SERP (Google/Startpage) sin visitar FB."""
+    def _extraer_del_serp_publico(self, bloque, subgenero="general"):
+        """Extrae evento desde bloque SERP (Google/Startpage) sin visitar FB.
+
+        subgenero: subgénero heredado de la keyword que generó este resultado.
+        """
         titulo = (bloque.get("titulo") or "").strip()
         texto = bloque.get("texto") or ""
         url = bloque.get("url") or ""
@@ -1677,7 +1953,7 @@ class FacebookEventsFinder:
         email_match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', texto)
         if email_match:
             email = email_match.group(0)
-        
+
         tipo_lugar = self.extractor._extract_venue_type(f"{nombre} {lugar} {descripcion}") or "N/A"
 
         return {
@@ -1693,6 +1969,7 @@ class FacebookEventsFinder:
             "url": url,
             "link": url,
             "descripcion": descripcion,
+            "subgenero": subgenero,
         }
 
     def _normalizar_fecha_publica(self, fecha_str):
@@ -1870,10 +2147,51 @@ class FacebookEventsFinder:
             print(f"   ⚠️ Error guardando grupos: {e}")
 
 
-# ---------------------------------------------------------------------- #
-# FUNCIÓN PRINCIPAL
-# ---------------------------------------------------------------------- #
-async def scrape_facebook_events():
+def _extraer_subgenero_desde_keyword(keyword):
+    """Extrae el subgénero del primer token de una keyword.
+
+    Las keywords generadas por _generar_keywords tienen el formato
+    "{subgenero} {pais}" o "{subgenero} {ciudad}" o "{subgenero} {pais} {extra}".
+    El primer token es el subgénero. Se valida contra la lista conocida;
+    si no coincide, devuelve "general".
+    """
+    if not keyword:
+        return "general"
+    tokens = keyword.strip().split()
+    if not tokens:
+        return "general"
+    candidato = tokens[0].lower()
+    # Validar contra subgéneros conocidos
+    subgeneros_conocidos = {
+        "darkpsy", "forest", "psychill", "psybient", "fullon",
+        "progressive", "goa", "hitech", "twilight", "psycore",
+        "suomisaundi", "zenon", "psychedelic", "psytrance",
+    }
+    if candidato in subgeneros_conocidos:
+        return candidato
+    return "general"
+
+
+    # ---------------------------------------------------------------------- #
+    # FUNCIÓN PRINCIPAL
+    # ---------------------------------------------------------------------- #
+async def scrape_facebook_events(max_keywords=None, max_visitas=None):
+    """Punto de entrada principal de Facebook.
+
+    Parámetros opcionales (usados por loop_mejora.py):
+      - max_keywords: nº máximo de keywords (None = MAX_KEYWORDS_POR_RUN).
+      - max_visitas: nº de páginas de enriquecimiento (None = MAX_VISITAS_...).
+    Sin argumentos se comporta exactamente igual que antes (nunca restar).
+    """
+    set_limites_loop(max_keywords=max_keywords, max_visitas=max_visitas)
+    try:
+        return await _scrape_facebook_events_inner()
+    finally:
+        # Reversible: restablece los valores por defecto tras la ejecución
+        set_limites_loop(max_keywords=None, max_visitas=None)
+
+
+async def _scrape_facebook_events_inner():
     try:
         with open(CONFIG_FILE) as f:
             config = json.load(f)
@@ -1892,7 +2210,10 @@ async def scrape_facebook_events():
     print(f"   🎛️ Subgéneros ({len(subgeneros)}): {', '.join(subgeneros)}")
 
     keywords = _generar_keywords(config, paises_seleccionados)
-    print(f"   Facebook: {len(keywords)} keywords generadas (máx {config.get('max_keywords_por_run', MAX_KEYWORDS_POR_RUN)})")
+    max_kw_activo = CONFIG_RUNTIME["max_keywords_por_run"] or config.get(
+        "max_keywords_por_run", MAX_KEYWORDS_POR_RUN
+    )
+    print(f"   Facebook: {len(keywords)} keywords generadas (máx {max_kw_activo})")
 
     finder = FacebookEventsFinder()
 

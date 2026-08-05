@@ -1,11 +1,28 @@
 {
   "groups": [
     {
+      "id": "psytrancefamily",
+      "nombre": "Psytrance Family",
+      "url": "https://facebook.com/groups/psytrancefamily",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
       "id": "goapsytrance",
       "nombre": "Psytrance & Goa Trance",
       "url": "https://facebook.com/groups/goapsytrance",
       "tipo_grupo": [
         "goa",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psychedelicmindz",
+      "nombre": "Psychedelic Mindz",
+      "url": "https://facebook.com/groups/psychedelicmindz",
+      "tipo_grupo": [
+        "psychedelic",
         "psytrance"
       ]
     },
@@ -24,100 +41,6 @@
       "url": "https://facebook.com/groups/forestpsytrance",
       "tipo_grupo": [
         "forest",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "fullonpsytrance",
-      "nombre": "Full-On Psytrance",
-      "url": "https://facebook.com/groups/fullonpsytrance",
-      "tipo_grupo": [
-        "fullon",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "goatrancefamily",
-      "nombre": "Goa Trance Family",
-      "url": "https://facebook.com/groups/goatrancefamily",
-      "tipo_grupo": [
-        "goa"
-      ]
-    },
-    {
-      "id": "darkpsyfamily",
-      "nombre": "Darkpsy Family",
-      "url": "https://facebook.com/groups/darkpsyfamily",
-      "tipo_grupo": [
-        "dark",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "progressivepsytrance",
-      "nombre": "Progressive Psytrance",
-      "url": "https://facebook.com/groups/progressivepsytrance",
-      "tipo_grupo": [
-        "progressive",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "hitechpsytrance",
-      "nombre": "Hi-Tech Psytrance",
-      "url": "https://facebook.com/groups/hitechpsytrance",
-      "tipo_grupo": [
-        "hitech",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "forestfamily",
-      "nombre": "Forest Family",
-      "url": "https://facebook.com/groups/forestfamily",
-      "tipo_grupo": [
-        "forest"
-      ]
-    },
-    {
-      "id": "nightfullon",
-      "nombre": "Night Full-On",
-      "url": "https://facebook.com/groups/nightfullon",
-      "tipo_grupo": [
-        "fullon"
-      ]
-    },
-    {
-      "id": "morningfullon",
-      "nombre": "Morning Full-On",
-      "url": "https://facebook.com/groups/morningfullon",
-      "tipo_grupo": [
-        "fullon"
-      ]
-    },
-    {
-      "id": "twilightpsytrance",
-      "nombre": "Twilight Psytrance",
-      "url": "https://facebook.com/groups/twilightpsytrance",
-      "tipo_grupo": [
-        "twilight",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "psytrancefamily",
-      "nombre": "Psytrance Family",
-      "url": "https://facebook.com/groups/psytrancefamily",
-      "tipo_grupo": [
-        "psytrance"
-      ]
-    },
-    {
-      "id": "psychedelicmindz",
-      "nombre": "Psychedelic Mindz",
-      "url": "https://facebook.com/groups/psychedelicmindz",
-      "tipo_grupo": [
-        "psychedelic",
         "psytrance"
       ]
     },
@@ -162,6 +85,15 @@
       ]
     },
     {
+      "id": "fullonpsytrance",
+      "nombre": "Full-On Psytrance",
+      "url": "https://facebook.com/groups/fullonpsytrance",
+      "tipo_grupo": [
+        "fullon",
+        "psytrance"
+      ]
+    },
+    {
       "id": "psychedelicfestivals",
       "nombre": "Psychedelic Festivals Worldwide",
       "url": "https://facebook.com/groups/psychedelicfestivals",
@@ -188,10 +120,27 @@
       ]
     },
     {
+      "id": "goatrancefamily",
+      "nombre": "Goa Trance Family",
+      "url": "https://facebook.com/groups/goatrancefamily",
+      "tipo_grupo": [
+        "goa"
+      ]
+    },
+    {
       "id": "psytranceculture",
       "nombre": "Psytrance Culture",
       "url": "https://facebook.com/groups/psytranceculture",
       "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "darkpsyfamily",
+      "nombre": "Darkpsy Family",
+      "url": "https://facebook.com/groups/darkpsyfamily",
+      "tipo_grupo": [
+        "dark",
         "psytrance"
       ]
     },
@@ -233,6 +182,33 @@
       "url": "https://facebook.com/groups/suomipsy",
       "tipo_grupo": [
         "suomi",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "progressivepsytrance",
+      "nombre": "Progressive Psytrance",
+      "url": "https://facebook.com/groups/progressivepsytrance",
+      "tipo_grupo": [
+        "progressive",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "twilightpsytrance",
+      "nombre": "Twilight Psytrance",
+      "url": "https://facebook.com/groups/twilightpsytrance",
+      "tipo_grupo": [
+        "twilight",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "hitechpsytrance",
+      "nombre": "Hi-Tech Psytrance",
+      "url": "https://facebook.com/groups/hitechpsytrance",
+      "tipo_grupo": [
+        "hitech",
         "psytrance"
       ]
     },
@@ -306,6 +282,30 @@
       "url": "https://facebook.com/groups/psytranceaustralia",
       "tipo_grupo": [
         "psytrance"
+      ]
+    },
+    {
+      "id": "forestfamily",
+      "nombre": "Forest Family",
+      "url": "https://facebook.com/groups/forestfamily",
+      "tipo_grupo": [
+        "forest"
+      ]
+    },
+    {
+      "id": "nightfullon",
+      "nombre": "Night Full-On",
+      "url": "https://facebook.com/groups/nightfullon",
+      "tipo_grupo": [
+        "fullon"
+      ]
+    },
+    {
+      "id": "morningfullon",
+      "nombre": "Morning Full-On",
+      "url": "https://facebook.com/groups/morningfullon",
+      "tipo_grupo": [
+        "fullon"
       ]
     },
     {
@@ -2517,40 +2517,341 @@
       "tipo_grupo": [
         "psytrance"
       ]
+    },
+    {
+      "id": "coreadelsur",
+      "nombre": "Psytrance Corea del Sur",
+      "url": "https://facebook.com/groups/coreadelsur",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "seul",
+      "nombre": "Psytrance Seúl",
+      "url": "https://facebook.com/groups/seul",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "busan",
+      "nombre": "Psytrance Busán",
+      "url": "https://facebook.com/groups/busan",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "inchon",
+      "nombre": "Psytrance Inchon",
+      "url": "https://facebook.com/groups/inchon",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "filipinas",
+      "nombre": "Psytrance Filipinas",
+      "url": "https://facebook.com/groups/filipinas",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "manila",
+      "nombre": "Psytrance Manila",
+      "url": "https://facebook.com/groups/manila",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "cebu",
+      "nombre": "Psytrance Cebu",
+      "url": "https://facebook.com/groups/cebu",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "davao",
+      "nombre": "Psytrance Davao",
+      "url": "https://facebook.com/groups/davao",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "india",
+      "nombre": "Psytrance India",
+      "url": "https://facebook.com/groups/india",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bombay",
+      "nombre": "Psytrance Bombay",
+      "url": "https://facebook.com/groups/bombay",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "nuevadelhi",
+      "nombre": "Psytrance Nueva Delhi",
+      "url": "https://facebook.com/groups/nuevadelhi",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bangalore",
+      "nombre": "Psytrance Bangalore",
+      "url": "https://facebook.com/groups/bangalore",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "marruecos",
+      "nombre": "Psytrance Marruecos",
+      "url": "https://facebook.com/groups/marruecos",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "casablanca",
+      "nombre": "Psytrance Casablanca",
+      "url": "https://facebook.com/groups/casablanca",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "rabat",
+      "nombre": "Psytrance Rabat",
+      "url": "https://facebook.com/groups/rabat",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "marrakech",
+      "nombre": "Psytrance Marrakech",
+      "url": "https://facebook.com/groups/marrakech",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tailandia",
+      "nombre": "Psytrance Tailandia",
+      "url": "https://facebook.com/groups/tailandia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bangkok",
+      "nombre": "Psytrance Bangkok",
+      "url": "https://facebook.com/groups/bangkok",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "chiangmai",
+      "nombre": "Psytrance Chiang Mai",
+      "url": "https://facebook.com/groups/chiangmai",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "phuket",
+      "nombre": "Psytrance Phuket",
+      "url": "https://facebook.com/groups/phuket",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "indonesia",
+      "nombre": "Psytrance Indonesia",
+      "url": "https://facebook.com/groups/indonesia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "yakarta",
+      "nombre": "Psytrance Yakarta",
+      "url": "https://facebook.com/groups/yakarta",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bandung",
+      "nombre": "Psytrance Bandung",
+      "url": "https://facebook.com/groups/bandung",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "surabaya",
+      "nombre": "Psytrance Surabaya",
+      "url": "https://facebook.com/groups/surabaya",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "japon",
+      "nombre": "Psytrance Japón",
+      "url": "https://facebook.com/groups/japon",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "tokio",
+      "nombre": "Psytrance Tokio",
+      "url": "https://facebook.com/groups/tokio",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "osaka",
+      "nombre": "Psytrance Osaka",
+      "url": "https://facebook.com/groups/osaka",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kioto",
+      "nombre": "Psytrance Kioto",
+      "url": "https://facebook.com/groups/kioto",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "sudafrica",
+      "nombre": "Psytrance Sudáfrica",
+      "url": "https://facebook.com/groups/sudafrica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "ciudaddelcabo",
+      "nombre": "Psytrance Ciudad del Cabo",
+      "url": "https://facebook.com/groups/ciudaddelcabo",
+      "tipo_grupo": [
+        "psytrance",
+        "urban"
+      ]
+    },
+    {
+      "id": "johannesburgo",
+      "nombre": "Psytrance Johannesburgo",
+      "url": "https://facebook.com/groups/johannesburgo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "durban",
+      "nombre": "Psytrance Durban",
+      "url": "https://facebook.com/groups/durban",
+      "tipo_grupo": [
+        "psytrance",
+        "urban"
+      ]
+    },
+    {
+      "id": "nepal",
+      "nombre": "Psytrance Nepal",
+      "url": "https://facebook.com/groups/nepal",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "kathmandu",
+      "nombre": "Psytrance Kathmandu",
+      "url": "https://facebook.com/groups/kathmandu",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "pokhara",
+      "nombre": "Psytrance Pokhara",
+      "url": "https://facebook.com/groups/pokhara",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "bhaktapur",
+      "nombre": "Psytrance Bhaktapur",
+      "url": "https://facebook.com/groups/bhaktapur",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "egipto",
+      "nombre": "Psytrance Egipto",
+      "url": "https://facebook.com/groups/egipto",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "elcairo",
+      "nombre": "Psytrance El Cairo",
+      "url": "https://facebook.com/groups/elcairo",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "alejandria",
+      "nombre": "Psytrance Alejandría",
+      "url": "https://facebook.com/groups/alejandria",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "giza",
+      "nombre": "Psytrance Giza",
+      "url": "https://facebook.com/groups/giza",
+      "tipo_grupo": [
+        "psytrance"
+      ]
     }
   ],
-  "timestamp": "2026-08-03T22:49:37.192878",
-  "total": 310,
+  "timestamp": "2026-08-04T20:26:09.679013",
+  "total": 350,
   "paises_rotacion": [
+    "México",
     "Luxemburgo",
-    "Chile",
-    "Croacia",
-    "Kosovo",
-    "Polonia",
+    "Nepal",
     "Argentina",
-    "Grecia",
-    "Irlanda",
-    "República Checa",
-    "Serbia",
-    "Bosnia",
-    "Australia",
-    "Albania",
-    "Chipre",
-    "Alemania",
-    "Noruega",
+    "Letonia",
+    "Francia",
+    "Dinamarca",
     "España",
-    "Lituania",
-    "Islandia",
-    "Portugal",
-    "Uruguay",
-    "Hungría",
-    "Bielorrusia",
-    "Mónaco",
-    "Turquía",
-    "Andorra",
-    "Bélgica",
-    "Ucrania",
-    "Malta",
-    "Rumanía"
+    "Eslovenia"
   ]
 }

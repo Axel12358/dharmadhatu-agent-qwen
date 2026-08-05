@@ -1,42 +1,25 @@
 {
-  "max_eventos": 150,
-  "busquedas_facebook": 50,
-  "timeout": 30,
-  "priorizar_paises": [
-    "Alemania",
-    "Francia",
-    "Italia",
-    "Espa\u00f1a",
-    "Portugal",
-    "Reino Unido",
-    "Holanda"
-  ],
-  "extraer_contactos": true,
-  "buscar_en_grupos": true,
-  "subgeneros": [
-    "psytrance",
-    "goa",
-    "fullon",
-    "progressive",
-    "darkpsy",
-    "hitech"
-  ],
-  "tipos_evento": [
-    "festival",
-    "party",
-    "gathering",
-    "rave",
-    "outdoor",
-    "indoor"
-  ],
-  "ciudades": [
-    "Madrid",
-    "Barcelona",
-    "Lisboa",
-    "Berl\u00edn",
-    "Par\u00eds",
-    "Roma",
-    "Londres",
-    "\u00c1msterdam"
-  ]
+  "timestamp": "2026-08-04T14:35:38.887990",
+  "configuracion": {
+    "lote_ciudades": 16,
+    "horizonte_meses": 6,
+    "max_eventos": 300,
+    "max_keywords": 600,
+    "max_visitas": 80
+  },
+  "score": 2111.09,
+  "eventos_totales": 426,
+  "eventos_con_email": 426,
+  "tiempo_segundos": 189.1,
+  "por_fuente": {
+    "Goabase": 100,
+    "Songkick": 1,
+    "Resident Advisor": 300,
+    "Facebook (público SERP)": 25
+  },
+  "pesos_score": {
+    "eventos": 2,
+    "email": 3,
+    "tiempo": 0.1
+  }
 }

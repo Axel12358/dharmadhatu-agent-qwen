@@ -1,0 +1,30 @@
+{
+  "configuracion": {
+    "usar_sinonimos": true,
+    "peso_titulo": 3,
+    "peso_org": 2,
+    "peso_lugar": 1,
+    "peso_desc": 1,
+    "peso_email": 1,
+    "peso_link": 1,
+    "umbral": 1
+  },
+  "estadisticas": {
+    "total": 602,
+    "general": 257,
+    "nuevos_clasificados": 2,
+    "distribucion": {
+      "general": 257,
+      "goa": 19,
+      "psychedelic": 13,
+      "forest": 9,
+      "psytrance": 8,
+      "progressive": 8,
+      "twilight": 1,
+      "hitech": 1,
+      "no_psy": 283,
+      "darkpsy": 3
+    },
+    "max_subgenero_pct": 0.8202898550724638
+  }
+}

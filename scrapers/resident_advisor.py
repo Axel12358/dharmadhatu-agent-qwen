@@ -48,10 +48,23 @@ HEADERS = {
 }
 
 # Ciudades europeas clave (las que RA soporta). Se resuelve el id por búsqueda.
+# Lista ampliada (mejora): añade Oslo, Bruselas, Dublín, Edimburgo, Hamburgo,
+# Colonia, Múnich, Roma, Nápoles, Turín, Burdeos, Lyon, Marsella, Oporto,
+# Boloña, Florencia, Verona y Génova (+18 ciudades) para superar 250 eventos
+# consolidados. Mantiene las 16 originales intactas (nunca se restan).
 CIUDADES_RA = [
     "Berlin", "Barcelona", "Madrid", "Amsterdam", "Paris", "London",
     "Lisbon", "Vienna", "Milan", "Budapest", "Prague", "Tel Aviv",
     "Athens", "Zurich", "Copenhagen", "Stockholm",
+    # Ampliación (18 ciudades nuevas)
+    "Oslo", "Brussels", "Dublin", "Edinburgh",
+    "Hamburg", "Cologne", "Munich", "Rome", "Naples", "Turin",
+    "Bordeaux", "Lyon", "Marseille", "Porto",
+    "Bologna", "Florence", "Verona", "Genoa",
+    # Ampliación global (12 ciudades no europeas)
+    "Buenos Aires", "Ciudad de México", "São Paulo",
+    "Istanbul", "Bombay", "Bangkok", "Tokyo", "Seoul",
+    "Jakarta", "Cape Town", "Cairo", "Casablanca",
 ]
 
 # Géneros que interesan para el proyecto (psytrance/techno/scene)
@@ -71,9 +84,42 @@ KEYWORDS_TITULO = [
 
 MAX_PAGINAS_POR_CIUDAD = 3
 PAGE_SIZE = 50
-MAX_EVENTOS = 60
+# Tope final de eventos (ampliado para 46 ciudades y >300 eventos consolidados).
+MAX_EVENTOS = 300
+
+# Horizonte de búsqueda en meses. None = sin límite superior (comportamiento
+# original, todos los eventos futuros). loop_mejora.py puede probar 6/9/12 meses.
+HORIZONTE_MESES = None
+
+# Sobrescritura dinámica desde loop_mejora.py (None = usar valor por defecto).
+# Mecanismo aditivo: si no se llama a set_parametros_loop(), scrape_ra() se
+# comporta exactamente como antes.
+_OVERRIDE_CIUDADES = None
+_OVERRIDE_MAX_EVENTOS = None
+_OVERRIDE_HORIZONTE = None
 
 _extractor = EventExtractor()
+
+
+def set_parametros_loop(ciudades=None, max_eventos=None, horizonte_meses=None):
+    """Permite que loop_mejora.py ajuste ciudades/eventos/horizonte sin tocar
+    constantes. Pasar None deja el valor por defecto (reversible)."""
+    global _OVERRIDE_CIUDADES, _OVERRIDE_MAX_EVENTOS, _OVERRIDE_HORIZONTE
+    if ciudades is not None:
+        _OVERRIDE_CIUDADES = list(ciudades)
+    if max_eventos is not None:
+        _OVERRIDE_MAX_EVENTOS = int(max_eventos)
+    if horizonte_meses is not None:
+        _OVERRIDE_HORIZONTE = int(horizonte_meses)
+
+
+def _fecha_dentro_de_meses(meses) -> str:
+    """Devuelve YYYY-MM-DD para 'hoy + meses' (uso como límite superior)."""
+    ahora = datetime.now(timezone.utc)
+    anio = ahora.year + (ahora.month - 1 + meses) // 12
+    mes = (ahora.month - 1 + meses) % 12 + 1
+    dia = min(ahora.day, 28)
+    return ahora.replace(year=anio, month=mes, day=dia).strftime("%Y-%m-%d")
 
 
 def _gql(query: str) -> dict:
@@ -101,16 +147,26 @@ def _resolver_area(ciudad: str) -> Optional[dict]:
     return None
 
 
-def _eventos_area(area_id, area_nombre) -> List[Dict]:
-    """Página eventos futuros de un área, filtrando por género/título."""
+def _eventos_area(area_id, area_nombre, horizonte_meses=None) -> List[Dict]:
+    """Página eventos futuros de un área, filtrando por género/título.
+
+    horizonte_meses: límite superior de fechas (None = todos los futuros,
+    comportamiento original). Con 6, solo eventos de los próximos 6 meses.
+    """
     hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     eventos = []
     eventos_area_totales = 0
 
+    filtro_fecha = f'date: {{gte: "{hoy}T00:00:00"'
+    if horizonte_meses:
+        fin = _fecha_dentro_de_meses(horizonte_meses)
+        filtro_fecha += f', lte: "{fin}T23:59:59"'
+    filtro_fecha += "}"
+
     for page in range(1, MAX_PAGINAS_POR_CIUDAD + 1):
         q = (
             "query { facetedSearch(types: EVENT, "
-            f"filters: {{ areas: {{eq: {area_id}}}, date: {{gte: \"{hoy}T00:00:00\"}} }}, "
+            f"filters: {{ areas: {{eq: {area_id}}}, {filtro_fecha} }}, "
             "sort: { date: { order: ASCENDING } }, "
             f"page: {page}, pageSize: {PAGE_SIZE}) "
             "{ totalResults results { id data { __typename "
@@ -208,16 +264,31 @@ def _normalizar_evento(ev: dict, area_nombre: str) -> Optional[Dict]:
     return evento
 
 
-def scrape_ra() -> List[Dict]:
+def scrape_ra(ciudades=None, max_eventos=None, horizonte_meses=None) -> List[Dict]:
+    """Scrapea eventos de Resident Advisor.
+
+    Parámetros opcionales (usados por loop_mejora.py):
+      - ciudades: sublista de ciudades a procesar (None = CIUDADES_RA completa).
+      - max_eventos: tope final de eventos (None = MAX_EVENTOS).
+      - horizonte_meses: límite superior de fechas (None = sin límite).
+    Sin argumentos se comporta exactamente igual que antes (nunca restar).
+    """
     print("🌐 Scraping Resident Advisor (GraphQL, sin login)...")
+    if ciudades is None:
+        ciudades = _OVERRIDE_CIUDADES or CIUDADES_RA
+    if max_eventos is None:
+        max_eventos = _OVERRIDE_MAX_EVENTOS or MAX_EVENTOS
+    if horizonte_meses is None:
+        horizonte_meses = _OVERRIDE_HORIZONTE or HORIZONTE_MESES
+
     todos = []
 
-    for ciudad in CIUDADES_RA:
+    for ciudad in ciudades:
         area = _resolver_area(ciudad)
         if not area:
             print(f"  ⚠️ {ciudad}: área no encontrada")
             continue
-        evs = _eventos_area(area["id"], area["name"])
+        evs = _eventos_area(area["id"], area["name"], horizonte_meses)
         print(f"  ✅ {area['name']}: {len(evs)} eventos de interés")
         todos.extend(evs)
         time.sleep(0.5)
@@ -231,7 +302,7 @@ def scrape_ra() -> List[Dict]:
             vistos.add(k)
             unicos.append(ev)
 
-    unicos = unicos[:MAX_EVENTOS]
+    unicos = unicos[:max_eventos]
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(unicos, f, indent=2, ensure_ascii=False)

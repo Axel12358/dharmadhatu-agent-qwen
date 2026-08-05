@@ -1,0 +1,40 @@
+{
+  "_comentario": "Configuración del loop de mejora continua (loop_mejora.py). El loop prueba combinaciones de (lote de ciudades RA) × (max_keywords FB) × (max_visitas FB) × (horizonte RA). Cada combinación se evalúa con el score: eventos_totales*peso_eventos + eventos_con_email*peso_email - tiempo*penalizacion_tiempo. La mejor se guarda en mejor_configuracion.json.",
+  "ra": {
+    "ciudades": [
+      "Berlin", "Barcelona", "Madrid", "Amsterdam", "Paris", "London",
+      "Lisbon", "Vienna", "Milan", "Budapest", "Prague", "Tel Aviv",
+      "Athens", "Zurich", "Copenhagen", "Stockholm",
+      "Oslo", "Brussels", "Dublin", "Edinburgh",
+      "Hamburg", "Cologne", "Munich", "Rome", "Naples", "Turin",
+      "Bordeaux", "Lyon", "Marseille", "Porto",
+      "Bologna", "Florence", "Verona", "Genoa",
+      "Buenos Aires", "Ciudad de México", "São Paulo",
+      "Istanbul", "Bombay", "Bangkok", "Tokyo", "Seoul",
+      "Jakarta", "Cape Town", "Cairo", "Casablanca"
+    ],
+    "lotes_ciudades": [16, 25, 34, 46],
+    "horizonte_meses": [6, 9, 12],
+    "max_eventos": [300]
+  },
+  "facebook": {
+    "max_keywords": [400, 600],
+    "max_visitas_enriquecimiento": [50, 80]
+  },
+  "pesos_score": {
+    "eventos": 2,
+    "email": 3,
+    "tiempo": 0.1
+  },
+  "max_iteraciones": 4,
+  "reusar_estaticas": true,
+  "incluir_fuentes": {
+    "goabase": true,
+    "songkick": true,
+    "resident_advisor": true,
+    "facebook": true,
+    "instagram": false
+  },
+  "reporte": "reporte_loop.md",
+  "csv": "eventos_encontrados.csv"
+}

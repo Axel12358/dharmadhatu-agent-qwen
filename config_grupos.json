@@ -516,6 +516,181 @@
         "Perth",
         "Adelaida"
       ]
+    },
+    {
+      "nombre": "India",
+      "ciudades": [
+        "Bombay",
+        "Nueva Delhi",
+        "Bangalore",
+        "Chennai",
+        "Kolkata"
+      ]
+    },
+    {
+      "nombre": "Nepal",
+      "ciudades": [
+        "Kathmandu",
+        "Pokhara",
+        "Bhaktapur"
+      ]
+    },
+    {
+      "nombre": "Tailandia",
+      "ciudades": [
+        "Bangkok",
+        "Chiang Mai",
+        "Phuket"
+      ]
+    },
+    {
+      "nombre": "Japón",
+      "ciudades": [
+        "Tokio",
+        "Osaka",
+        "Kioto",
+        "Nagaoka"
+      ]
+    },
+    {
+      "nombre": "Corea del Sur",
+      "ciudades": [
+        "Seúl",
+        "Busán",
+        "Inchon"
+      ]
+    },
+    {
+      "nombre": "Filipinas",
+      "ciudades": [
+        "Manila",
+        "Cebu",
+        "Davao"
+      ]
+    },
+    {
+      "nombre": "Indonesia",
+      "ciudades": [
+        "Yakarta",
+        "Bandung",
+        "Surabaya"
+      ]
+    },
+    {
+      "nombre": "Sudáfrica",
+      "ciudades": [
+        "Ciudad del Cabo",
+        "Johannesburgo",
+        "Durban"
+      ]
+    },
+    {
+      "nombre": "Egipto",
+      "ciudades": [
+        "El Cairo",
+        "Alejandría",
+        "Giza"
+      ]
+    },
+    {
+      "nombre": "Marruecos",
+      "ciudades": [
+        "Casablanca",
+        "Rabat",
+        "Marrakech"
+      ]
+    },
+    {
+      "nombre": "Turquía",
+      "ciudades": [
+        "Estambul",
+        "Ankara",
+        "Esmirna",
+        "Bursa",
+        "Izmir"
+      ]
+    },
+    {
+      "nombre": "Bielorrusia",
+      "ciudades": [
+        "Minsk",
+        "Gómel",
+        "Mogiliov"
+      ]
+    },
+    {
+      "nombre": "Moldavia",
+      "ciudades": [
+        "Chisináu",
+        "Tiraspol"
+      ]
+    },
+    {
+      "nombre": "Bosnia",
+      "ciudades": [
+        "Sarajevo",
+        "Banja Luka",
+        "Mostar"
+      ]
+    },
+    {
+      "nombre": "Montenegro",
+      "ciudades": [
+        "Podgorica",
+        "Nikšić",
+        "Herceg Novi"
+      ]
+    },
+    {
+      "nombre": "Kosovo",
+      "ciudades": [
+        "Pristina",
+        "Prizren",
+        "Peć"
+      ]
+    },
+    {
+      "nombre": "Macedonia del Norte",
+      "ciudades": [
+        "Skopie",
+        "Bitola",
+        "Kumanovo"
+      ]
+    },
+    {
+      "nombre": "Albania",
+      "ciudades": [
+        "Tirana",
+        "Durrës",
+        "Vlorë",
+        "Elbasan"
+      ]
+    },
+    {
+      "nombre": "Perú",
+      "ciudades": [
+        "Lima",
+        "Arequipa",
+        "Trujillo",
+        "Cusco"
+      ]
+    },
+    {
+      "nombre": "Uruguay",
+      "ciudades": [
+        "Montevideo",
+        "Punta del Este"
+      ]
+    },
+    {
+      "nombre": "Australia",
+      "ciudades": [
+        "Sídney",
+        "Melbourne",
+        "Brisbane",
+        "Perth",
+        "Adelaida"
+      ]
     }
   ]
 }

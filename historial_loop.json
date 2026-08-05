@@ -1,0 +1,1011 @@
+{
+  "ejecuciones": [
+    {
+      "timestamp": "2026-08-04T10:39:15.570534",
+      "resultados": [
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 30
+          },
+          "eventos_totales": 267,
+          "eventos_deduplicados": 267,
+          "eventos_con_email": 267,
+          "tiempo_segundos": 252.0,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 16
+          },
+          "score": 1309.8
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-08-04T11:47:30.924990",
+      "resultados": [
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 30
+          },
+          "eventos_totales": 268,
+          "eventos_deduplicados": 268,
+          "eventos_con_email": 268,
+          "tiempo_segundos": 263.7,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 17
+          },
+          "score": 1313.63
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 40
+          },
+          "eventos_totales": 274,
+          "eventos_deduplicados": 274,
+          "eventos_con_email": 274,
+          "tiempo_segundos": 222.8,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 23
+          },
+          "score": 1347.72
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 50
+          },
+          "eventos_totales": 273,
+          "eventos_deduplicados": 273,
+          "eventos_con_email": 273,
+          "tiempo_segundos": 205.5,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 22
+          },
+          "score": 1344.45
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 300,
+            "max_visitas": 30
+          },
+          "eventos_totales": 273,
+          "eventos_deduplicados": 273,
+          "eventos_con_email": 273,
+          "tiempo_segundos": 196.3,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 22
+          },
+          "score": 1345.37
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 300,
+            "max_visitas": 40
+          },
+          "eventos_totales": 273,
+          "eventos_deduplicados": 273,
+          "eventos_con_email": 273,
+          "tiempo_segundos": 194.1,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 22
+          },
+          "score": 1345.59
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 300,
+            "max_visitas": 50
+          },
+          "eventos_totales": 273,
+          "eventos_deduplicados": 273,
+          "eventos_con_email": 273,
+          "tiempo_segundos": 232.0,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 22
+          },
+          "score": 1341.8
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 350,
+            "max_visitas": 30
+          },
+          "eventos_totales": 274,
+          "eventos_deduplicados": 274,
+          "eventos_con_email": 274,
+          "tiempo_segundos": 232.7,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 23
+          },
+          "score": 1346.73
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 350,
+            "max_visitas": 40
+          },
+          "eventos_totales": 268,
+          "eventos_deduplicados": 268,
+          "eventos_con_email": 268,
+          "tiempo_segundos": 200.3,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 17
+          },
+          "score": 1319.97
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 350,
+            "max_visitas": 50
+          },
+          "eventos_totales": 274,
+          "eventos_deduplicados": 274,
+          "eventos_con_email": 274,
+          "tiempo_segundos": 206.7,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 23
+          },
+          "score": 1349.33
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 400,
+            "max_visitas": 30
+          },
+          "eventos_totales": 272,
+          "eventos_deduplicados": 272,
+          "eventos_con_email": 272,
+          "tiempo_segundos": 222.2,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 21
+          },
+          "score": 1337.78
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 400,
+            "max_visitas": 40
+          },
+          "eventos_totales": 271,
+          "eventos_deduplicados": 271,
+          "eventos_con_email": 271,
+          "tiempo_segundos": 215.8,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 20
+          },
+          "score": 1333.42
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 400,
+            "max_visitas": 50
+          },
+          "eventos_totales": 277,
+          "eventos_deduplicados": 277,
+          "eventos_con_email": 277,
+          "tiempo_segundos": 215.6,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150,
+            "Facebook (público SERP)": 26
+          },
+          "score": 1363.44
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-08-04T12:37:39.619561",
+      "resultados": [
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 30
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 42.3,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1250.77
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 40
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 38.2,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.18
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 250,
+            "max_visitas": 50
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 39.4,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.06
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 300,
+            "max_visitas": 30
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 39.8,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.02
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 300,
+            "max_visitas": 40
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 38.1,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.19
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 300,
+            "max_visitas": 50
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 39.8,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.02
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 350,
+            "max_visitas": 30
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 38.1,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.19
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 350,
+            "max_visitas": 40
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 45.4,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1250.46
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 350,
+            "max_visitas": 50
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 39.0,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.1
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 400,
+            "max_visitas": 30
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 40.0,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.0
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 400,
+            "max_visitas": 40
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 38.9,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.11
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 150,
+            "max_keywords": 400,
+            "max_visitas": 50
+          },
+          "eventos_totales": 251,
+          "eventos_deduplicados": 251,
+          "eventos_con_email": 251,
+          "tiempo_segundos": 36.5,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 150
+          },
+          "score": 1251.35
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-08-04T13:32:55.257573",
+      "resultados": [
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 300,
+            "max_keywords": 250,
+            "max_visitas": 30
+          },
+          "eventos_totales": 401,
+          "eventos_deduplicados": 401,
+          "eventos_con_email": 401,
+          "tiempo_segundos": 38.7,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 300
+          },
+          "score": 2001.13
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-08-04T14:35:38.892000",
+      "resultados": [
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 300,
+            "max_keywords": 400,
+            "max_visitas": 50
+          },
+          "eventos_totales": 401,
+          "eventos_deduplicados": 401,
+          "eventos_con_email": 401,
+          "tiempo_segundos": 171.8,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 300
+          },
+          "score": 1987.82
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 300,
+            "max_keywords": 400,
+            "max_visitas": 80
+          },
+          "eventos_totales": 419,
+          "eventos_deduplicados": 419,
+          "eventos_con_email": 419,
+          "tiempo_segundos": 194.2,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 300,
+            "Facebook (público SERP)": 18
+          },
+          "score": 2075.58
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 300,
+            "max_keywords": 600,
+            "max_visitas": 50
+          },
+          "eventos_totales": 420,
+          "eventos_deduplicados": 420,
+          "eventos_con_email": 420,
+          "tiempo_segundos": 199.0,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 300,
+            "Facebook (público SERP)": 19
+          },
+          "score": 2080.1
+        },
+        {
+          "configuracion": {
+            "lote_ciudades": 16,
+            "horizonte_meses": 6,
+            "max_eventos": 300,
+            "max_keywords": 600,
+            "max_visitas": 80
+          },
+          "eventos_totales": 426,
+          "eventos_deduplicados": 426,
+          "eventos_con_email": 426,
+          "tiempo_segundos": 189.1,
+          "por_fuente": {
+            "Goabase": 100,
+            "Songkick": 1,
+            "Resident Advisor": 300,
+            "Facebook (público SERP)": 25
+          },
+          "score": 2111.09
+        }
+      ]
+    }
+  ],
+  "mejores_previos": [
+    {
+      "timestamp": "2026-08-04T10:39:15.568786",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 250,
+        "max_visitas": 30
+      },
+      "score": 1309.8,
+      "eventos_totales": 267,
+      "eventos_con_email": 267,
+      "tiempo_segundos": 252.0,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150,
+        "Facebook (público SERP)": 16
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T11:08:26.916600",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 250,
+        "max_visitas": 30
+      },
+      "score": 1313.63,
+      "eventos_totales": 268,
+      "eventos_con_email": 268,
+      "tiempo_segundos": 263.7,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150,
+        "Facebook (público SERP)": 17
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T11:12:09.762229",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 250,
+        "max_visitas": 40
+      },
+      "score": 1347.72,
+      "eventos_totales": 274,
+      "eventos_con_email": 274,
+      "tiempo_segundos": 222.8,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150,
+        "Facebook (público SERP)": 23
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T11:36:37.322726",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 350,
+        "max_visitas": 50
+      },
+      "score": 1349.33,
+      "eventos_totales": 274,
+      "eventos_con_email": 274,
+      "tiempo_segundos": 206.7,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150,
+        "Facebook (público SERP)": 23
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T11:47:30.923501",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 400,
+        "max_visitas": 50
+      },
+      "score": 1363.44,
+      "eventos_totales": 277,
+      "eventos_con_email": 277,
+      "tiempo_segundos": 215.6,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150,
+        "Facebook (público SERP)": 26
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T12:30:26.345255",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 250,
+        "max_visitas": 30
+      },
+      "score": 1250.77,
+      "eventos_totales": 251,
+      "eventos_con_email": 251,
+      "tiempo_segundos": 42.3,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T12:31:04.504595",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 250,
+        "max_visitas": 40
+      },
+      "score": 1251.18,
+      "eventos_totales": 251,
+      "eventos_con_email": 251,
+      "tiempo_segundos": 38.2,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T12:33:01.875027",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 300,
+        "max_visitas": 40
+      },
+      "score": 1251.19,
+      "eventos_totales": 251,
+      "eventos_con_email": 251,
+      "tiempo_segundos": 38.1,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T12:37:39.616841",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 150,
+        "max_keywords": 400,
+        "max_visitas": 50
+      },
+      "score": 1251.35,
+      "eventos_totales": 251,
+      "eventos_con_email": 251,
+      "tiempo_segundos": 36.5,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 150
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T12:52:18.790401",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 400,
+        "max_visitas": 50
+      },
+      "score": 2079.35,
+      "eventos_totales": 420,
+      "eventos_con_email": 420,
+      "tiempo_segundos": 206.5,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300,
+        "Facebook (público SERP)": 19
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T13:32:55.246685",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 250,
+        "max_visitas": 30
+      },
+      "score": 2001.13,
+      "eventos_totales": 401,
+      "eventos_con_email": 401,
+      "tiempo_segundos": 38.7,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T13:39:21.731567",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 400,
+        "max_visitas": 50
+      },
+      "score": 2087.68,
+      "eventos_totales": 422,
+      "eventos_con_email": 422,
+      "tiempo_segundos": 223.2,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300,
+        "Facebook (público SERP)": 21
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T14:25:56.596805",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 400,
+        "max_visitas": 50
+      },
+      "score": 1987.82,
+      "eventos_totales": 401,
+      "eventos_con_email": 401,
+      "tiempo_segundos": 171.8,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T14:29:10.833171",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 400,
+        "max_visitas": 80
+      },
+      "score": 2075.58,
+      "eventos_totales": 419,
+      "eventos_con_email": 419,
+      "tiempo_segundos": 194.2,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300,
+        "Facebook (público SERP)": 18
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T14:32:29.832904",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 600,
+        "max_visitas": 50
+      },
+      "score": 2080.1,
+      "eventos_totales": 420,
+      "eventos_con_email": 420,
+      "tiempo_segundos": 199.0,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300,
+        "Facebook (público SERP)": 19
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    },
+    {
+      "timestamp": "2026-08-04T14:35:38.887990",
+      "configuracion": {
+        "lote_ciudades": 16,
+        "horizonte_meses": 6,
+        "max_eventos": 300,
+        "max_keywords": 600,
+        "max_visitas": 80
+      },
+      "score": 2111.09,
+      "eventos_totales": 426,
+      "eventos_con_email": 426,
+      "tiempo_segundos": 189.1,
+      "por_fuente": {
+        "Goabase": 100,
+        "Songkick": 1,
+        "Resident Advisor": 300,
+        "Facebook (público SERP)": 25
+      },
+      "pesos_score": {
+        "eventos": 2,
+        "email": 3,
+        "tiempo": 0.1
+      }
+    }
+  ]
+}

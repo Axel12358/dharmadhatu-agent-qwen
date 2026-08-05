@@ -124,10 +124,10 @@ CSV existente + nuevos scrapers
 
 ## Resultados del Consolidado (tras integración Facebook)
 
-- **CSV completo** (`eventos_encontrados.csv`): 325 eventos
-- **CSV limpio psytrance** (`eventos_psytrance.csv`): **325 eventos** reales
-- **Distribución**: Goabase 301, Resident Advisor 17, Facebook 7
-- **Subgéneros**: psytrance 271, goa 19, psychedelic 12, forest 8, progressive 8, darkpsy 5, twilight 1, hitech 1
+- **CSV completo** (`eventos_encontrados.csv`): 326 eventos
+- **CSV limpio psytrance** (`eventos_psytrance.csv`): **326 eventos** reales
+- **Distribución**: Goabase 301, Resident Advisor 17, Facebook 8
+- **Subgéneros**: psytrance 272, goa 19, psychedelic 12, forest 8, progressive 8, darkpsy 5, twilight 1, hitech 1
 - **Rango de fechas**: 2026 (mayoría), 2027, 2028
 - **Generales**: 0 (reducidos de 259 a 0)
 

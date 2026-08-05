@@ -133,7 +133,7 @@ CSV existente + nuevos scrapers
 
 ### Integración de Facebook
 
-- Siempre se ejecuta: `max_keywords=15`, `max_visitas=50`, timeout 300s
+- Siempre se ejecuta: `max_keywords=15`, `max_visitas=50`, timeout 600s (10 min)
 - SERP público: Startpage, Bing, DuckDuckGo, Mojeek, Qwant, Brave
 - Grupos conocidos: Psychedelic Trance Community, Forest Tribe, Psytrance Israel, Goa Gil, etc.
 - Eventos con "Fecha no disponible" se conservan (extracción de fechas puede fallar en páginas públicas)

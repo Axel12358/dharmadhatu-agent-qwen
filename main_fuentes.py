@@ -257,11 +257,11 @@ async def ejecutar_fuentes_nuevas():
         print(f"  ❌ Eventbrite: {e}")
 
     # --- Facebook (SERP público + grupos) ---
-    # Siempre se ejecuta: max_keywords=15, max_visitas=50, timeout 300s
+    # Siempre se ejecuta: max_keywords=15, max_visitas=50, timeout 600s (10 min)
     try:
         evs = await asyncio.wait_for(
             scrape_facebook_events(max_keywords=15, max_visitas=50),
-            timeout=300
+            timeout=600
         )
         if evs:
             print(f"  ✅ Facebook: {len(evs)} eventos")
@@ -269,7 +269,7 @@ async def ejecutar_fuentes_nuevas():
         else:
             print("  ⚠️ Facebook: 0 eventos")
     except asyncio.TimeoutError:
-        print("  ⚠️ Facebook: timeout (300s) — omitido")
+        print("  ⚠️ Facebook: timeout (600s) — omitido")
     except Exception as e:
         print(f"  ❌ Facebook: {e}")
 

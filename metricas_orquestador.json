@@ -1,0 +1,1462 @@
+[
+  {
+    "timestamp": "2026-08-06T01:06:51.377799+00:00",
+    "duracion_total_s": 89.62,
+    "scrapers": [
+      "reddit",
+      "psytrance_pl"
+    ],
+    "detalle": {
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": false,
+        "eventos": 0,
+        "tiempo": 60.01,
+        "error": "timeout",
+        "timestamp": "2026-08-06T01:05:21.765735+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:06:21.772622+00:00"
+      }
+    },
+    "eventos_brutos": 6,
+    "eventos_nuevos_añadidos": 6,
+    "total_consolidado": 426,
+    "modo_dry_run": true
+  },
+  {
+    "timestamp": "2026-08-06T01:07:59.459375+00:00",
+    "duracion_total_s": 11.03,
+    "scrapers": [
+      "psytrance_pl"
+    ],
+    "detalle": {
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 11.01,
+        "error": null,
+        "timestamp": "2026-08-06T01:07:48.436967+00:00"
+      }
+    },
+    "eventos_brutos": 6,
+    "eventos_nuevos_añadidos": 6,
+    "total_consolidado": 426,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T01:08:14.440510+00:00",
+    "duracion_total_s": 10.13,
+    "scrapers": [
+      "psytrance_pl"
+    ],
+    "detalle": {
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 10.12,
+        "error": null,
+        "timestamp": "2026-08-06T01:08:04.316449+00:00"
+      }
+    },
+    "eventos_brutos": 6,
+    "eventos_nuevos_añadidos": 0,
+    "total_consolidado": 426,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T01:53:22.537653+00:00",
+    "duracion_total_s": 317.52,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 80.37,
+        "error": null,
+        "timestamp": "2026-08-06T01:48:05.078926+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:49:25.445684+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 9.02,
+        "error": null,
+        "timestamp": "2026-08-06T01:49:25.445731+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 22,
+        "tiempo": 228.06,
+        "error": null,
+        "timestamp": "2026-08-06T01:49:34.461682+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:53:22.524192+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:53:22.524259+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:53:22.524277+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:53:22.524331+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:53:22.524347+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T01:53:22.524375+00:00"
+      }
+    },
+    "eventos_brutos": 433,
+    "eventos_nuevos_añadidos": 5,
+    "total_consolidado": 457,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T04:38:37.795522+00:00",
+    "duracion_total_s": 486.43,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 82.66,
+        "error": null,
+        "timestamp": "2026-08-06T04:30:31.389173+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:31:54.047860+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 6.62,
+        "error": null,
+        "timestamp": "2026-08-06T04:31:54.047936+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 40,
+        "tiempo": 397.11,
+        "error": null,
+        "timestamp": "2026-08-06T04:32:00.671170+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:38:37.781036+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 2,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:38:37.781073+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:38:37.781106+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:38:37.781144+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:38:37.781160+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T04:38:37.781189+00:00"
+      }
+    },
+    "eventos_brutos": 453,
+    "eventos_nuevos_añadidos": 10,
+    "total_consolidado": 449,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T15:11:34.975154+00:00",
+    "duracion_total_s": 332.54,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 91.16,
+        "error": null,
+        "timestamp": "2026-08-06T15:06:02.466017+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:07:33.622640+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:07:33.622726+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 38,
+        "tiempo": 132.32,
+        "error": null,
+        "timestamp": "2026-08-06T15:07:33.623598+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 109.01,
+        "error": null,
+        "timestamp": "2026-08-06T15:09:45.947793+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:11:34.960759+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:11:34.960826+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:11:34.960937+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:11:34.960958+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T15:11:34.961030+00:00"
+      }
+    },
+    "eventos_brutos": 449,
+    "eventos_nuevos_añadidos": 7,
+    "total_consolidado": 469,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T16:28:37.265543+00:00",
+    "duracion_total_s": 411.12,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 89.2,
+        "error": null,
+        "timestamp": "2026-08-06T16:21:46.173520+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:23:15.370552+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:23:15.370603+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 26,
+        "tiempo": 321.88,
+        "error": null,
+        "timestamp": "2026-08-06T16:23:15.371041+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:28:37.246465+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:28:37.246576+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:28:37.246614+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:28:37.246723+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:28:37.246747+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:28:37.246859+00:00"
+      }
+    },
+    "eventos_brutos": 437,
+    "eventos_nuevos_añadidos": 2,
+    "total_consolidado": 462,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T16:46:45.670792+00:00",
+    "duracion_total_s": 415.1,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 85.43,
+        "error": null,
+        "timestamp": "2026-08-06T16:39:50.585414+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:41:16.011350+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.35,
+        "error": null,
+        "timestamp": "2026-08-06T16:41:16.011475+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 26,
+        "tiempo": 325.03,
+        "error": null,
+        "timestamp": "2026-08-06T16:41:16.364177+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:46:41.391816+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:46:41.391864+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:46:41.391886+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:46:41.391953+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:46:41.391970+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T16:46:41.392007+00:00"
+      }
+    },
+    "eventos_brutos": 437,
+    "eventos_nuevos_añadidos": 1,
+    "total_consolidado": 448,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T17:03:42.851324+00:00",
+    "duracion_total_s": 0.01,
+    "scrapers": [],
+    "detalle": {},
+    "eventos_brutos": 0,
+    "eventos_nuevos_añadidos": 0,
+    "total_consolidado": 448,
+    "modo_dry_run": true
+  },
+  {
+    "timestamp": "2026-08-06T17:06:53.321622+00:00",
+    "duracion_total_s": 43.64,
+    "scrapers": [],
+    "detalle": {},
+    "eventos_brutos": 3,
+    "eventos_nuevos_añadidos": 3,
+    "total_consolidado": 451,
+    "modo_dry_run": true
+  },
+  {
+    "timestamp": "2026-08-06T17:17:21.607436+00:00",
+    "duracion_total_s": 526.31,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 89.3,
+        "error": null,
+        "timestamp": "2026-08-06T17:08:35.309598+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:10:04.610494+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:10:04.610643+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 30,
+        "tiempo": 391.46,
+        "error": null,
+        "timestamp": "2026-08-06T17:10:04.611481+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:16:36.068705+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:16:36.068750+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:16:36.068774+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:16:36.068834+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:16:36.068854+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T17:16:36.068886+00:00"
+      }
+    },
+    "eventos_brutos": 444,
+    "eventos_nuevos_añadidos": 8,
+    "total_consolidado": 456,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-06T17:52:13.427411+00:00",
+    "duracion_total_s": 42.76,
+    "scrapers": [],
+    "detalle": {},
+    "eventos_brutos": 3,
+    "eventos_nuevos_añadidos": 0,
+    "total_consolidado": 456,
+    "modo_dry_run": true
+  },
+  {
+    "timestamp": "2026-08-06T18:43:58.363435+00:00",
+    "duracion_total_s": 488.93,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 94.65,
+        "error": null,
+        "timestamp": "2026-08-06T18:35:49.466831+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:37:24.121083+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:37:24.121157+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 27,
+        "tiempo": 135.3,
+        "error": null,
+        "timestamp": "2026-08-06T18:37:24.121944+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 222.93,
+        "error": null,
+        "timestamp": "2026-08-06T18:39:39.417711+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:43:22.343561+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:43:22.343664+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:43:22.343763+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:43:22.343790+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-06T18:43:22.343845+00:00"
+      }
+    },
+    "eventos_brutos": 441,
+    "eventos_nuevos_añadidos": 1,
+    "total_consolidado": 465,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-12T23:22:43.765921+00:00",
+    "duracion_total_s": 120.54,
+    "scrapers": [],
+    "detalle": {},
+    "eventos_brutos": 0,
+    "eventos_nuevos_añadidos": 0,
+    "total_consolidado": 452,
+    "modo_dry_run": true
+  },
+  {
+    "timestamp": "2026-08-13T02:02:17.805159+00:00",
+    "duracion_total_s": 959.68,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 82.33,
+        "error": null,
+        "timestamp": "2026-08-13T01:46:18.153453+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:47:40.484659+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 2.24,
+        "error": null,
+        "timestamp": "2026-08-13T01:47:40.484798+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 54,
+        "tiempo": 500.4,
+        "error": null,
+        "timestamp": "2026-08-13T01:47:42.725567+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:56:03.120730+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:56:03.120805+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:56:03.120913+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:56:03.121137+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:56:03.121176+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T01:56:03.121302+00:00"
+      }
+    },
+    "eventos_brutos": 468,
+    "eventos_nuevos_añadidos": 32,
+    "total_consolidado": 499,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-13T15:33:07.936000+00:00",
+    "duracion_total_s": 1075.44,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 76.64,
+        "error": null,
+        "timestamp": "2026-08-13T15:15:12.533648+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T15:16:29.173820+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 12.05,
+        "error": null,
+        "timestamp": "2026-08-13T15:16:29.174108+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 26,
+        "tiempo": 171.82,
+        "error": null,
+        "timestamp": "2026-08-13T15:16:41.227653+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 74.66,
+        "error": null,
+        "timestamp": "2026-08-13T15:19:33.044385+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 2,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T15:20:47.702757+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T15:20:47.702882+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T15:20:47.702962+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T15:20:47.702981+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-13T15:20:47.703029+00:00"
+      }
+    },
+    "eventos_brutos": 468,
+    "eventos_nuevos_añadidos": 49,
+    "total_consolidado": 526,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-14T02:17:21.705948+00:00",
+    "duracion_total_s": 1513.7,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": false,
+        "eventos": 0,
+        "tiempo": 120.0,
+        "error": "timeout",
+        "timestamp": "2026-08-14T01:52:08.022769+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T01:54:08.027291+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T01:54:08.030239+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 67,
+        "tiempo": 625.76,
+        "error": null,
+        "timestamp": "2026-08-14T01:54:08.031414+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T02:04:33.792203+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 2,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T02:04:33.792253+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T02:04:33.792313+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T02:04:33.792375+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T02:04:33.792391+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T02:04:33.792429+00:00"
+      }
+    },
+    "eventos_brutos": 380,
+    "eventos_nuevos_añadidos": 9,
+    "total_consolidado": 482,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-14T04:19:28.235655+00:00",
+    "duracion_total_s": 1276.95,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 97.79,
+        "error": null,
+        "timestamp": "2026-08-14T03:58:11.300973+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T03:59:49.087340+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T03:59:49.087421+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 62,
+        "tiempo": 463.81,
+        "error": null,
+        "timestamp": "2026-08-14T03:59:49.088178+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T04:07:32.897498+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 2,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T04:07:32.897564+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T04:07:32.897632+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T04:07:32.897721+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T04:07:32.897761+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T04:07:32.897814+00:00"
+      }
+    },
+    "eventos_brutos": 477,
+    "eventos_nuevos_añadidos": 5,
+    "total_consolidado": 440,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-14T15:28:06.158810+00:00",
+    "duracion_total_s": 1457.17,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "facebook",
+      "instagram",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 100,
+        "tiempo": 74.1,
+        "error": null,
+        "timestamp": "2026-08-14T15:03:49.013925+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 120,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:05:03.111602+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 300,
+        "tiempo": 10.13,
+        "error": null,
+        "timestamp": "2026-08-14T15:05:03.111671+00:00"
+      },
+      "facebook": {
+        "scraper": "facebook",
+        "timeout": 900,
+        "exito": true,
+        "eventos": 46,
+        "tiempo": 484.46,
+        "error": null,
+        "timestamp": "2026-08-14T15:05:13.242165+00:00"
+      },
+      "instagram": {
+        "scraper": "instagram",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:13:17.701276+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 2,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:13:17.701335+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:13:17.701383+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:13:17.701404+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:13:17.701423+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-14T15:13:17.701464+00:00"
+      }
+    },
+    "eventos_brutos": 453,
+    "eventos_nuevos_añadidos": 6,
+    "total_consolidado": 427,
+    "modo_dry_run": false
+  }
+]

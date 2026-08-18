@@ -30,7 +30,12 @@
         "Zaragoza",
         "Alicante",
         "Murcia",
-        "Palma"
+        "Palma",
+        "Valladolid",
+        "Salamanca",
+        "Córdoba",
+        "Tenerife",
+        "Granada"
       ]
     },
     {
@@ -45,7 +50,12 @@
         "Düsseldorf",
         "Leipzig",
         "Dortmund",
-        "Essen"
+        "Essen",
+        "Hannover",
+        "Bremen",
+        "Friburgo",
+        "Núremberg",
+        "Mannheim"
       ]
     },
     {
@@ -65,7 +75,10 @@
         "Oporto",
         "Coímbra",
         "Braga",
-        "Faro"
+        "Faro",
+        "Sintra",
+        "Évora",
+        "Aveiro"
       ]
     },
     {
@@ -78,7 +91,11 @@
         "Burdeos",
         "Lille",
         "Nantes",
-        "Estrasburgo"
+        "Estrasburgo",
+        "Niza",
+        "Montpellier",
+        "Rennes",
+        "Grenoble"
       ]
     },
     {
@@ -91,7 +108,10 @@
         "Boloña",
         "Florencia",
         "Verona",
-        "Génova"
+        "Génova",
+        "Venecia",
+        "Palermo",
+        "Catania"
       ]
     },
     {
@@ -103,7 +123,10 @@
         "La Haya",
         "Eindhoven",
         "Groninga",
-        "Maastricht"
+        "Maastricht",
+        "Delft",
+        "Leiden",
+        "Haarlem"
       ]
     },
     {
@@ -115,7 +138,12 @@
         "Liverpool",
         "Bristol",
         "Glasgow",
-        "Edimburgo"
+        "Edimburgo",
+        "Leeds",
+        "Newcastle",
+        "Oxford",
+        "Cambridge",
+        "Brighton"
       ]
     },
     {
@@ -135,7 +163,9 @@
         "Ginebra",
         "Berna",
         "Basilea",
-        "Lausana"
+        "Lausana",
+        "Lugano",
+        "Zug"
       ]
     },
     {
@@ -144,7 +174,9 @@
         "Estocolmo",
         "Gotemburgo",
         "Malmö",
-        "Uppsala"
+        "Uppsala",
+        "Lund",
+        "Helsingborg"
       ]
     },
     {
@@ -173,7 +205,10 @@
         "Łódź",
         "Wrocław",
         "Poznań",
-        "Gdańsk"
+        "Gdańsk",
+        "Katowice",
+        "Lublin",
+        "Breslavia"
       ]
     },
     {
@@ -200,7 +235,10 @@
         "Atenas",
         "Salónica",
         "Patras",
-        "Heraclión"
+        "Heraclión",
+        "Tesalónica",
+        "Rodas",
+        "Creta"
       ]
     },
     {
@@ -421,7 +459,10 @@
         "Ankara",
         "Esmirna",
         "Antalya",
-        "Bursa"
+        "Bursa",
+        "Izmir",
+        "Esquishehir",
+        "Bodrum"
       ]
     },
     {
@@ -430,7 +471,10 @@
         "Moscú",
         "San Petersburgo",
         "Novosibirsk",
-        "Ekaterimburgo"
+        "Ekaterimburgo",
+        "Kazán",
+        "Rostov",
+        "Samara"
       ]
     },
     {
@@ -439,7 +483,10 @@
         "Tel Aviv",
         "Jerusalén",
         "Haifa",
-        "Rishon LeZion"
+        "Rishon LeZion",
+        "Netanya",
+        "Eilat",
+        "Ashdod"
       ]
     },
     {
@@ -449,7 +496,13 @@
         "Guadalajara",
         "Monterrey",
         "Puebla",
-        "Tijuana"
+        "Tijuana",
+        "Querétaro",
+        "Cancún",
+        "Mérida",
+        "Oaxaca",
+        "León",
+        "San Luis Potosí"
       ]
     },
     {
@@ -459,7 +512,14 @@
         "Río de Janeiro",
         "Belo Horizonte",
         "Brasilia",
-        "Salvador"
+        "Salvador",
+        "Curitiba",
+        "Porto Alegre",
+        "Fortaleza",
+        "Recife",
+        "Campinas",
+        "Manaus",
+        "Florianópolis"
       ]
     },
     {
@@ -469,7 +529,12 @@
         "Córdoba",
         "Rosario",
         "Mendoza",
-        "La Plata"
+        "La Plata",
+        "Bariloche",
+        "Mar del Plata",
+        "Santa Fe",
+        "Neuquén",
+        "Salta"
       ]
     },
     {
@@ -478,7 +543,11 @@
         "Santiago",
         "Valparaíso",
         "Concepción",
-        "Viña del Mar"
+        "Viña del Mar",
+        "Valdivia",
+        "Temuco",
+        "Antofagasta",
+        "Iquique"
       ]
     },
     {
@@ -488,7 +557,11 @@
         "Medellín",
         "Cali",
         "Barranquilla",
-        "Cartagena"
+        "Cartagena",
+        "Bucaramanga",
+        "Manizales",
+        "Pereira",
+        "Santa Marta"
       ]
     },
     {
@@ -497,14 +570,18 @@
         "Lima",
         "Arequipa",
         "Trujillo",
-        "Cusco"
+        "Cusco",
+        "Iquitos",
+        "Puno"
       ]
     },
     {
       "nombre": "Uruguay",
       "ciudades": [
         "Montevideo",
-        "Punta del Este"
+        "Punta del Este",
+        "Colonia del Sacramento",
+        "Paysandú"
       ]
     },
     {
@@ -514,7 +591,11 @@
         "Melbourne",
         "Brisbane",
         "Perth",
-        "Adelaida"
+        "Adelaida",
+        "Canberra",
+        "Darwin",
+        "Hobart",
+        "Gold Coast"
       ]
     },
     {
@@ -524,7 +605,11 @@
         "Nueva Delhi",
         "Bangalore",
         "Chennai",
-        "Kolkata"
+        "Kolkata",
+        "Pune",
+        "Hyderabad",
+        "Goa",
+        "Jaipur"
       ]
     },
     {
@@ -540,7 +625,10 @@
       "ciudades": [
         "Bangkok",
         "Chiang Mai",
-        "Phuket"
+        "Phuket",
+        "Koh Phangan",
+        "Koh Samui",
+        "Pattaya"
       ]
     },
     {
@@ -549,7 +637,11 @@
         "Tokio",
         "Osaka",
         "Kioto",
-        "Nagaoka"
+        "Nagaoka",
+        "Sapporo",
+        "Fukuoka",
+        "Hiroshima",
+        "Nagoya"
       ]
     },
     {
@@ -573,7 +665,10 @@
       "ciudades": [
         "Yakarta",
         "Bandung",
-        "Surabaya"
+        "Surabaya",
+        "Bali",
+        "Yogyakarta",
+        "Semarang"
       ]
     },
     {
@@ -581,7 +676,11 @@
       "ciudades": [
         "Ciudad del Cabo",
         "Johannesburgo",
-        "Durban"
+        "Durban",
+        "Pretoria",
+        "Puerto Elizabeth",
+        "Bloemfontein",
+        "Knysna"
       ]
     },
     {
@@ -601,95 +700,24 @@
       ]
     },
     {
-      "nombre": "Turquía",
+      "nombre": "Estados Unidos",
       "ciudades": [
-        "Estambul",
-        "Ankara",
-        "Esmirna",
-        "Bursa",
-        "Izmir"
+        "Nueva York",
+        "Los Ángeles",
+        "Miami",
+        "San Francisco",
+        "Austin",
+        "Denver",
+        "Seattle"
       ]
     },
     {
-      "nombre": "Bielorrusia",
+      "nombre": "Canadá",
       "ciudades": [
-        "Minsk",
-        "Gómel",
-        "Mogiliov"
-      ]
-    },
-    {
-      "nombre": "Moldavia",
-      "ciudades": [
-        "Chisináu",
-        "Tiraspol"
-      ]
-    },
-    {
-      "nombre": "Bosnia",
-      "ciudades": [
-        "Sarajevo",
-        "Banja Luka",
-        "Mostar"
-      ]
-    },
-    {
-      "nombre": "Montenegro",
-      "ciudades": [
-        "Podgorica",
-        "Nikšić",
-        "Herceg Novi"
-      ]
-    },
-    {
-      "nombre": "Kosovo",
-      "ciudades": [
-        "Pristina",
-        "Prizren",
-        "Peć"
-      ]
-    },
-    {
-      "nombre": "Macedonia del Norte",
-      "ciudades": [
-        "Skopie",
-        "Bitola",
-        "Kumanovo"
-      ]
-    },
-    {
-      "nombre": "Albania",
-      "ciudades": [
-        "Tirana",
-        "Durrës",
-        "Vlorë",
-        "Elbasan"
-      ]
-    },
-    {
-      "nombre": "Perú",
-      "ciudades": [
-        "Lima",
-        "Arequipa",
-        "Trujillo",
-        "Cusco"
-      ]
-    },
-    {
-      "nombre": "Uruguay",
-      "ciudades": [
-        "Montevideo",
-        "Punta del Este"
-      ]
-    },
-    {
-      "nombre": "Australia",
-      "ciudades": [
-        "Sídney",
-        "Melbourne",
-        "Brisbane",
-        "Perth",
-        "Adelaida"
+        "Toronto",
+        "Montreal",
+        "Vancouver",
+        "Calgary"
       ]
     }
   ]

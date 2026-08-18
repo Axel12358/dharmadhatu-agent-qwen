@@ -831,14 +831,42 @@ def scrape_instagram_events_v2(config: Optional[dict] = None) -> List[Dict]:
 
 
 # Mantener compatibilidad: scrape_instagram_events usa v2 por defecto
-def scrape_instagram_events(config: Optional[dict] = None) -> List[Dict]:
+def scrape_instagram_events(config: Optional[dict] = None,
+                            timeout: Optional[float] = None,
+                            deduplicador=None) -> List[Dict]:
     """
     Wrapper que usa el nuevo Improvement Loop por defecto.
     Para forzar versión legacy, pasar config={'legacy': True}
+
+    Params opcionales (usados por core/orquestador; main.py no cambia):
+      - timeout: override de TIMEOUT_TOTAL_SEG (segundos).
+      - deduplicador: instancia de core.deduplicador.Deduplicador para
+        devolver solo eventos no vistos en el run actual.
     """
-    if config and config.get("legacy", False):
-        return _scrape_instagram_events_legacy(config)
-    return scrape_instagram_events_v2(config)
+    global TIMEOUT_TOTAL_SEG
+    if timeout:
+        TIMEOUT_TOTAL_SEG = float(timeout)
+    if config is None:
+        config = {}
+    if timeout:
+        config.setdefault("timeout_total", int(timeout))
+    if config.get("legacy", False):
+        eventos = _scrape_instagram_events_legacy(config)
+    else:
+        eventos = scrape_instagram_events_v2(config)
+    if deduplicador is not None:
+        antes = len(eventos)
+        nuevos = []
+        for ev in eventos:
+            if deduplicador.filtrar_nuevos([ev]):
+                nuevos.append(ev)
+        eventos = nuevos
+        print(f"🎯 Dedup global (Instagram): {antes} → {len(eventos)} nuevos", flush=True)
+        try:
+            deduplicador.guardar()
+        except Exception:
+            pass
+    return eventos
 
 
 # Renombrar la función original para acceso interno

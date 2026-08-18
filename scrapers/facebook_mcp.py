@@ -61,6 +61,9 @@ VISITA_TIMEOUT_MS = 20000
 
 MAX_KEYWORDS_POR_RUN = 600
 
+# Techo de eventos nuevos por pasada de scrape_facebook_events (volumen agresivo)
+MAX_EVENTOS_POR_RUN = 80
+
 # Sobrescritura dinámica desde loop_mejora.py (None = usar valor por defecto).
 # Mecanismo aditivo: si no se llama a set_limites_loop(), todo se comporta
 # exactamente como antes (no se rompe nada).
@@ -249,6 +252,49 @@ CONOCIDOS = {
     "psytranceeslovaquia": "Psytrance Eslovaquia",
     "psytrancechequia": "Psytrance Chequia",
     "psytrancefinlandia": "Psytrance Finlandia",
+    "goatrance": "Goa Trance",
+    "psytranceglobal": "Psytrance Global",
+    "psytranceevents": "Psytrance Events",
+    "psychedelictranceevents": "Psychedelic Trance Events",
+    "goatranceevents": "Goa Trance Events",
+    "darkpsyevents": "Dark Psy Events",
+    "forestpsyevents": "Forest Psy Events",
+    "hitechevents": "Hi-Tech Events",
+    "fullonevents": "Full-On Events",
+    "psytranceparties": "Psytrance Parties",
+    "psytrancefestivals": "Psytrance Festivals",
+    "psytranceworldwide": "Psytrance Worldwide",
+    "psytrancefamilygathering": "Psytrance Family Gathering",
+    "goagil": "Goa Gil",
+    "psytranceasia": "Psytrance Asia",
+    "psytranceoceania": "Psytrance Oceania",
+    "psytranceafrica": "Psytrance Africa",
+    "psytrancemiddleeast": "Psytrance Middle East",
+    "psytranceukraine": "Psytrance Ukraine",
+    "psytrancepoland": "Psytrance Poland",
+    "psytranceczech": "Psytrance Czech",
+    "psytrancehungary": "Psytrance Hungary",
+    "psytrancegreece": "Psytrance Greece",
+    "psytranceportugalia": "Psytrance Portugal",
+    "psytranceitaly": "Psytrance Italy",
+    "psytrancefrance": "Psytrance France",
+    "psytranceusa": "Psytrance USA",
+    "psytrancecanada": "Psytrance Canada",
+    "psytrancemexico": "Psytrance México",
+    "psytrancebrazil": "Psytrance Brazil",
+    "psytranceargentina": "Psytrance Argentina",
+    "psytrancechile": "Psytrance Chile",
+    "psytrancecolombia": "Psytrance Colombia",
+    "psytranceperu": "Psytrance Perú",
+    "psytrancejapan": "Psytrance Japan",
+    "psytranceaustralia": "Psytrance Australia",
+    "psytranceindia": "Psytrance India",
+    "psytranceisrael": "Psytrance Israel",
+    "psytrancecorea": "Psytrance Korea",
+    "psytrancechina": "Psytrance China",
+    "psytranceuk": "Psytrance UK",
+    "psytrancegermany": "Psytrance Germany",
+    "psytranceespaña": "Psytrance España",
 }
 
 EXTRA_KEYWORDS = [
@@ -868,13 +914,13 @@ class FacebookEventsFinder:
                     grupos_filtrados[gid] = gdata
             grupos_a_visitar = grupos_filtrados
 
-        # Limitar a 30 grupos por ejecución para evitar timeouts
-        grupos_list = list(grupos_a_visitar.items())[:30]
+        # Limitar a 60 grupos por ejecución para evitar timeouts
+        grupos_list = list(grupos_a_visitar.items())[:60]
         random.shuffle(grupos_list)
 
         # Estrategia A: Playwright (más robusto para grupos públicos)
         for gid, gdata in grupos_list:
-            if time.time() - t0 > TIMEOUT_PER_STRATEGY:
+            if time.time() - t0 > 90:
                 break
             gname = gdata.get("nombre", gid)
             gurl = gdata.get("url", f"https://facebook.com/groups/{gid}")
@@ -890,7 +936,7 @@ class FacebookEventsFinder:
         # Estrategia B: requests (fallback si Playwright no disponible o lento)
         if len(eventos) < 10:
             for gid, gdata in grupos_list[:10]:
-                if time.time() - t0 > TIMEOUT_PER_STRATEGY:
+                if time.time() - t0 > 90:
                     break
                 gname = gdata.get("nombre", gid)
                 gurl = gdata.get("url", f"https://facebook.com/groups/{gid}")
@@ -1018,7 +1064,8 @@ class FacebookEventsFinder:
             kw_l = kw.strip().lower()
             if kw_l in seen:
                 continue
-            # Filtrar keywords que contengan nombre de país
+            # Filtrar keywords que contengan nombre de país: las queries
+            # genéricas rinden más resultados por SERP que las específicas.
             if any(pais in kw_l for pais in paises_nombres):
                 continue
             seen.add(kw_l)
@@ -1061,7 +1108,7 @@ class FacebookEventsFinder:
                 context = await self._crear_context_con_fallback(browser, url_probe=probe_url)
 
                 for i, consulta in enumerate(consultas, 1):
-                    if len(eventos) >= 50:
+                    if len(eventos) >= MAX_EVENTOS_POR_RUN:
                         break
 
                     kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
@@ -1081,7 +1128,7 @@ class FacebookEventsFinder:
                         if uid not in used:
                             eventos.append(ev)
                             used.add(uid)
-                            if len(eventos) >= 50:
+                            if len(eventos) >= MAX_EVENTOS_POR_RUN:
                                 break
 
                     if i < len(consultas):
@@ -1097,7 +1144,7 @@ class FacebookEventsFinder:
             print(f"  ⚠️ Error en Startpage Playwright: {e}")
 
         # FASE 2: DuckDuckGo HTML POST como respaldo si Startpage no alcanzó 40
-        if len(eventos) < 50:
+        if len(eventos) < MAX_EVENTOS_POR_RUN:
             try:
                 import requests as _requests
 
@@ -1109,7 +1156,7 @@ class FacebookEventsFinder:
                 })
 
                 for i, consulta in enumerate(consultas, 1):
-                    if len(eventos) >= 50:
+                    if len(eventos) >= MAX_EVENTOS_POR_RUN:
                         break
 
                     # Rotar UA por consulta para diversificar la huella
@@ -1131,7 +1178,7 @@ class FacebookEventsFinder:
                         if uid not in used:
                             eventos.append(ev)
                             used.add(uid)
-                            if len(eventos) >= 50:
+                            if len(eventos) >= MAX_EVENTOS_POR_RUN:
                                 break
 
                     if i < len(consultas):
@@ -1140,8 +1187,70 @@ class FacebookEventsFinder:
             except Exception as e:
                 print(f"  ⚠️ Error en DuckDuckGo fallback: {e}")
 
+        # FASE 2b: Mojeek/Qwant/Brave (fallbacks ligeros sin CAPTCHA)
+        if len(eventos) < MAX_EVENTOS_POR_RUN:
+            try:
+                import requests as _requests
+                session = _requests.Session()
+                session.headers.update({
+                    'User-Agent': self.anti_block.random_user_agent(),
+                })
+                for i, consulta in enumerate(consultas, 1):
+                    if len(eventos) >= MAX_EVENTOS_POR_RUN:
+                        break
+                    kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
+                    # Mojeek
+                    bloques = self._serp_mojeek_html(consulta, session)
+                    for b in bloques:
+                        ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
+                        if not ev:
+                            continue
+                        nombre_lower = (ev.get("nombre", "") or "").lower()
+                        texto_lower = (b.get("texto", "") or "").lower()
+                        candidato = nombre_lower + " " + texto_lower
+                        if any(nk in candidato for nk in NOISE_KEYWORDS):
+                            continue
+                        uid = ev.get("url", "")
+                        if uid not in used:
+                            eventos.append(ev)
+                            used.add(uid)
+                    # Qwant
+                    bloques = self._serp_qwant_html(consulta, session)
+                    for b in bloques:
+                        ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
+                        if not ev:
+                            continue
+                        nombre_lower = (ev.get("nombre", "") or "").lower()
+                        texto_lower = (b.get("texto", "") or "").lower()
+                        candidato = nombre_lower + " " + texto_lower
+                        if any(nk in candidato for nk in NOISE_KEYWORDS):
+                            continue
+                        uid = ev.get("url", "")
+                        if uid not in used:
+                            eventos.append(ev)
+                            used.add(uid)
+                    # Brave
+                    bloques = self._serp_brave_html(consulta, session)
+                    for b in bloques:
+                        ev = self._extraer_del_serp_publico(b, subgenero=kw_subgenero)
+                        if not ev:
+                            continue
+                        nombre_lower = (ev.get("nombre", "") or "").lower()
+                        texto_lower = (b.get("texto", "") or "").lower()
+                        candidato = nombre_lower + " " + texto_lower
+                        if any(nk in candidato for nk in NOISE_KEYWORDS):
+                            continue
+                        uid = ev.get("url", "")
+                        if uid not in used:
+                            eventos.append(ev)
+                            used.add(uid)
+                    if i < len(consultas):
+                        await asyncio.sleep(random.uniform(5.0, 10.0))
+            except Exception as e:
+                print(f"  ⚠️ Error en Mojeek/Qwant/Brave fallback: {e}")
+
         # FASE 3: Bing Playwright (respaldo si los anteriores no alcanzaron 50)
-        if len(eventos) < 50:
+        if len(eventos) < MAX_EVENTOS_POR_RUN:
             try:
                 from playwright.async_api import async_playwright
 
@@ -1153,7 +1262,7 @@ class FacebookEventsFinder:
                     )
                     context = await self.anti_block.create_stealth_context(browser, use_tor=True)
                     for i, consulta in enumerate(consultas[:6], 1):
-                        if len(eventos) >= 50:
+                        if len(eventos) >= MAX_EVENTOS_POR_RUN:
                             break
 
                         kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
@@ -1172,7 +1281,7 @@ class FacebookEventsFinder:
                             if uid not in used:
                                 eventos.append(ev)
                                 used.add(uid)
-                                if len(eventos) >= 50:
+                                if len(eventos) >= MAX_EVENTOS_POR_RUN:
                                     break
 
                         if i < len(consultas[:6]):
@@ -1182,7 +1291,7 @@ class FacebookEventsFinder:
                 print(f"  ⚠️ Error en Bing Playwright: {e}")
 
         # FASE 4: Google Playwright (último recurso si los anteriores no alcanzaron 50)
-        if len(eventos) < 50:
+        if len(eventos) < MAX_EVENTOS_POR_RUN:
             try:
                 from playwright.async_api import async_playwright
 
@@ -1194,7 +1303,7 @@ class FacebookEventsFinder:
                     )
                     context = await self.anti_block.create_stealth_context(browser, use_tor=True)
                     for i, consulta in enumerate(consultas[:6], 1):
-                        if len(eventos) >= 50:
+                        if len(eventos) >= MAX_EVENTOS_POR_RUN:
                             break
 
                         kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
@@ -1213,7 +1322,7 @@ class FacebookEventsFinder:
                             if uid not in used:
                                 eventos.append(ev)
                                 used.add(uid)
-                                if len(eventos) >= 50:
+                                if len(eventos) >= MAX_EVENTOS_POR_RUN:
                                     break
 
                         if i < len(consultas[:6]):
@@ -1332,6 +1441,141 @@ class FacebookEventsFinder:
                 snip = res.select_one(".result__snippet")
                 texto = snip.get_text(" ", strip=True) if snip else ""
                 bloques.append({"titulo": titulo, "url": url_ev, "texto": texto})
+        except Exception:
+            pass
+        return bloques
+
+    def _serp_mojeek_html(self, consulta, session=None):
+        """Busca vía Mojeek HTML. Extrae enlaces a facebook.com/events.
+        Mojeek es un motor de búsqueda independiente sin CAPTCHA.
+        """
+        bloques = []
+        vistos = set()
+        try:
+            import requests
+            if session is None:
+                session = requests.Session()
+                session.headers.update({
+                    "User-Agent": self.anti_block.random_user_agent(),
+                })
+            resp = session.get(
+                "https://www.mojeek.com/search",
+                params={"q": consulta},
+                timeout=15,
+            )
+            if resp.status_code != 200:
+                return bloques
+            if BeautifulSoup is None:
+                return bloques
+            soup = BeautifulSoup(resp.text, "html.parser")
+            for res in soup.select(".results-standard li, .results-standard .result"):
+                a = res.find("a", href=True)
+                if not a:
+                    continue
+                href = a.get("href", "")
+                m = re.search(r"facebook\.com/events/[^/]+/[^/?]+/\d+", href)
+                if not m:
+                    continue
+                url_ev = "https://" + m.group(0)
+                if url_ev in vistos:
+                    continue
+                vistos.add(url_ev)
+                titulo = a.get_text(" ", strip=True)
+                snippet = ""
+                p_tag = res.find("p")
+                if p_tag:
+                    snippet = p_tag.get_text(" ", strip=True)
+                bloques.append({"titulo": titulo, "url": url_ev, "texto": snippet})
+        except Exception:
+            pass
+        return bloques
+
+    def _serp_qwant_html(self, consulta, session=None):
+        """Busca vía Qwant HTML. Extrae enlaces a facebook.com/events.
+        Qwant es un motor de búsqueda privado sin CAPTCHA.
+        """
+        bloques = []
+        vistos = set()
+        try:
+            import requests
+            if session is None:
+                session = requests.Session()
+                session.headers.update({
+                    "User-Agent": self.anti_block.random_user_agent(),
+                })
+            resp = session.get(
+                "https://lite.qwant.com/",
+                params={"q": consulta, "t": "web"},
+                timeout=15,
+            )
+            if resp.status_code != 200:
+                return bloques
+            if BeautifulSoup is None:
+                return bloques
+            soup = BeautifulSoup(resp.text, "html.parser")
+            for res in soup.select("li"):
+                a = res.find("a", href=True)
+                if not a:
+                    continue
+                href = a.get("href", "")
+                m = re.search(r"facebook\.com/events/[^/]+/[^/?]+/\d+", href)
+                if not m:
+                    continue
+                url_ev = "https://" + m.group(0)
+                if url_ev in vistos:
+                    continue
+                vistos.add(url_ev)
+                titulo = a.get_text(" ", strip=True)
+                snippet = ""
+                p_tag = res.find("p")
+                if p_tag:
+                    snippet = p_tag.get_text(" ", strip=True)
+                bloques.append({"titulo": titulo, "url": url_ev, "texto": snippet})
+        except Exception:
+            pass
+        return bloques
+
+    def _serp_brave_html(self, consulta, session=None):
+        """Busca vía Brave Search HTML. Extrae enlaces a facebook.com/events.
+        Brave es un motor de búsqueda privado sin CAPTCHA.
+        """
+        bloques = []
+        vistos = set()
+        try:
+            import requests
+            if session is None:
+                session = requests.Session()
+                session.headers.update({
+                    "User-Agent": self.anti_block.random_user_agent(),
+                })
+            resp = session.get(
+                "https://search.brave.com/search",
+                params={"q": consulta},
+                timeout=15,
+            )
+            if resp.status_code != 200:
+                return bloques
+            if BeautifulSoup is None:
+                return bloques
+            soup = BeautifulSoup(resp.text, "html.parser")
+            for res in soup.select(".snippet"):
+                a = res.find("a", href=True)
+                if not a:
+                    continue
+                href = a.get("href", "")
+                m = re.search(r"facebook\.com/events/[^/]+/[^/?]+/\d+", href)
+                if not m:
+                    continue
+                url_ev = "https://" + m.group(0)
+                if url_ev in vistos:
+                    continue
+                vistos.add(url_ev)
+                titulo = a.get_text(" ", strip=True)
+                snippet = ""
+                p_tag = res.find("p")
+                if p_tag:
+                    snippet = p_tag.get_text(" ", strip=True)
+                bloques.append({"titulo": titulo, "url": url_ev, "texto": snippet})
         except Exception:
             pass
         return bloques
@@ -1648,6 +1892,10 @@ class FacebookEventsFinder:
                     ev["email"] = prev["email"]
                 if prev.get("fecha") and ev.get("fecha") in (None, "", "Fecha no disponible"):
                     ev["fecha"] = prev["fecha"]
+                # Si la visita anterior no logró organizador, reintentar:
+                # limpiar_calidad exige organizador para FB sin fecha.
+                if not prev.get("organizador") or prev.get("organizador") in ("", "N/A"):
+                    pendientes.append(ev)
                 continue
             pendientes.append(ev)
 
@@ -1973,7 +2221,15 @@ class FacebookEventsFinder:
         }
 
     def _normalizar_fecha_publica(self, fecha_str):
-        """Convierte '10. April 2026' / '10 April 2026' / '10.04.2026' a ISO, o None."""
+        """Convierte múltiples formatos de fecha a ISO (YYYY-MM-DD), o None.
+        
+        Formatos soportados:
+        - 2026-04-10 / 10.04.2026 / 10-04-2026 / 10/4/26
+        - 10. April 2026 / 10 April 2026 / 10th April 2026
+        - 1 de octubre de 2016
+        - 15 Aug 2026 / Aug 15, 2026 / August 15, 2026
+        - 15/08/2026 / 2026/08/15
+        """
         if not fecha_str:
             return None
         flat = re.sub(r"\s+", " ", fecha_str)
@@ -2009,36 +2265,66 @@ class FacebookEventsFinder:
                 except ValueError:
                     pass
 
-        # 2) Nombre de mes: '10. April 2026', '10 April 2026', '10th April 2026',
-        #    '1 de octubre de 2016'
-        m = re.search(
-            r"\b(\d{1,2})(?:st|nd|rd|th)?[./\-\s]+(?:de\s+)?(enero|febrero|marzo|abril|mayo|junio|"
-            r"julio|agosto|septiembre|octubre|noviembre|diciembre|january|february|"
-            r"march|april|may|june|july|august|september|october|november|december|"
-            r"jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\w*(?:\s*,\s*)?(?:\s+de\s+|\s+del\s+|\s+of\s+|\s+)?\s*(\d{4})?\b",
-            flat, re.IGNORECASE
-        )
-        if not m:
-            return None
-        dia, mes_nombre, anio = m.group(1), m.group(2), m.group(3)
+        # 2) Nombre de mes, en ambos órdenes:
+        #    - día primero: '10. April 2026', '10 April 2026', '10th April 2026',
+        #      '1 de octubre de 2016', '15 Aug 2026', '15 August 2026'
+        #    - mes primero: 'Aug 15, 2026', 'August 15, 2026', 'Aug 15', 'August 15'
+        #    - precedido de día de la semana: 'Friday, August 15 at 10:00 PM'
         meses_es = {
             "enero": 1, "febrero": 2, "marzo": 3, "abril": 4, "mayo": 5,
             "junio": 6, "julio": 7, "agosto": 8, "septiembre": 9,
             "octubre": 10, "noviembre": 11, "diciembre": 12,
+            "ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6,
+            "jul": 7, "ago": 8, "sep": 9, "sept": 9, "oct": 10, "nov": 11,
+            "dic": 12,
         }
         meses_en = {
             "january": 1, "february": 2, "march": 3, "april": 4, "may": 5,
             "june": 6, "july": 7, "august": 8, "september": 9, "october": 10,
             "november": 11, "december": 12,
+            "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+            "jul": 7, "aug": 8, "sep": 9, "sept": 9, "oct": 10, "nov": 11,
+            "dec": 12,
         }
-        mese = meses_es.get(mes_nombre.lower()) or meses_en.get(mes_nombre.lower())
-        if not mese:
-            return None
-        anio_int = int(anio) if anio else datetime.now().year
-        try:
-            return f"{anio_int:04d}-{mese:02d}-{int(dia):02d}"
-        except ValueError:
-            return None
+        mes_nombres = ("enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
+                       "septiembre|octubre|noviembre|diciembre|january|february|"
+                       "march|april|may|june|july|august|september|october|"
+                       "november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|"
+                       "sept|oct|nov|dec")
+        def _a_iso(dia, mes_nombre, anio):
+            mese = meses_es.get(mes_nombre.lower()) or meses_en.get(mes_nombre.lower())
+            if not mese:
+                return None
+            anio_int = int(anio) if anio else datetime.now().year
+            try:
+                return f"{anio_int:04d}-{mese:02d}-{int(dia):02d}"
+            except ValueError:
+                return None
+
+        # 2a) Día primero: '15 Aug 2026', '15 August 2026', '10th April 2026'
+        m = re.search(
+            r"\b(\d{1,2})(?:st|nd|rd|th)?[./\-\s]+(?:de\s+)?(" + mes_nombres +
+            r")\w*(?:\s*,\s*)?(?:\s+de\s+|\s+del\s+|\s+of\s+|\s+)?\s*(\d{4})?\b",
+            flat, re.IGNORECASE
+        )
+        if m:
+            iso = _a_iso(m.group(1), m.group(2), m.group(3))
+            if iso:
+                return iso
+
+        # 2b) Mes primero: 'Aug 15, 2026', 'August 15, 2026', 'Aug 15', 'August 15'
+        #     (también con día de la semana previo: 'Friday, August 15 at 10:00 PM')
+        m = re.search(
+            r"\b(" + mes_nombres + r")\w*(?:\s*,?\s*|\s+de\s+|\s+del\s+|\s+of\s+)"
+            r"(\d{1,2})(?:st|nd|rd|th)?(?:\s*,?\s*(?:de\s+|del\s+|of\s+)?\s*(\d{4}))?\b",
+            flat, re.IGNORECASE
+        )
+        if m:
+            iso = _a_iso(m.group(2), m.group(1), m.group(3))
+            if iso:
+                return iso
+
+        return None
 
     # ------------------------------------------------------------------ #
     # ORQUESTADOR
@@ -2062,7 +2348,7 @@ class FacebookEventsFinder:
                 used.add(uid)
 
         # Grupos conocidos (sin cookies retorna 0)
-        resultados = await run_with_timeout(self._via_grupos_conocidos(keywords), timeout=TIMEOUT_PER_STRATEGY)
+        resultados = await run_with_timeout(self._via_grupos_conocidos(keywords), timeout=90)
         for ev in resultados:
             uid = ev.get("url", "")
             if uid not in used:
@@ -2233,38 +2519,6 @@ async def _scrape_facebook_events_inner():
     return eventos
 
 
-    def _normalizar_fecha_publica(self, fecha_str):
-        """Convierte '10. April 2026' / '10 April 2026' a ISO, o None."""
-        if not fecha_str:
-            return None
-        m = re.search(
-            r"\b(\d{1,2})[./\-\s]+\s*(?:de\s+)?(enero|febrero|marzo|abril|mayo|junio|"
-            r"julio|agosto|septiembre|octubre|noviembre|diciembre|january|february|"
-            r"march|april|may|june|july|august|september|october|november|december|"
-            r"jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec)\w*[\s.,]*\s*(\d{4})?\b",
-            fecha_str, re.IGNORECASE
-        )
-        if not m:
-            return None
-        dia, mes_nombre, anio = m.group(1), m.group(2), m.group(3)
-        meses_es = {
-            "enero": 1, "febrero": 2, "marzo": 3, "abril": 4, "mayo": 5,
-            "junio": 6, "julio": 7, "agosto": 8, "septiembre": 9,
-            "octubre": 10, "noviembre": 11, "diciembre": 12,
-        }
-        meses_en = {
-            "january": 1, "february": 2, "march": 3, "april": 4, "may": 5,
-            "june": 6, "july": 7, "august": 8, "september": 9, "october": 10,
-            "november": 11, "december": 12,
-        }
-        mese = meses_es.get(mes_nombre.lower()) or meses_en.get(mes_nombre.lower())
-        if not mese:
-            return None
-        anio_int = int(anio) if anio else datetime.now().year
-        try:
-            return f"{anio_int:04d}-{mese:02d}-{int(dia):02d}"
-        except ValueError:
-            return None
 def setup_cookies():
     try:
         from playwright.sync_api import sync_playwright

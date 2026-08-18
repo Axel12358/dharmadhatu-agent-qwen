@@ -324,6 +324,10 @@ class AntiBlock:
         if stats["errors"] == 0:
             stats["blocked"] = False
 
+    def is_blocked(self, domain):
+        """True si el dominio está marcado como bloqueado."""
+        return bool(self.domain_stats[domain].get("blocked", False))
+
     # ------------------------------------------------------------------ #
     # EXPONENTIAL BACKOFF
     # ------------------------------------------------------------------ #

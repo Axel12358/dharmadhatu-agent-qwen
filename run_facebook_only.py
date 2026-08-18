@@ -15,6 +15,7 @@ from pathlib import Path
 
 from scrapers.facebook_mcp import scrape_facebook_events
 from utils.helpers import deduplicar_eventos
+from main_fuentes import clasificar_eventos, limpiar_calidad
 
 OUTPUT_TODOS = "eventos_encontrados.csv"
 OUTPUT_LIMPIO = "eventos_psytrance.csv"
@@ -58,26 +59,45 @@ async def main(dry_run=False):
     # 1. Cargar CSV existente
     eventos_existentes = cargar_csv_existente(OUTPUT_TODOS)
 
-    # 2. Ejecutar Facebook con parámetros agresivos
-    print("\n🔍 Ejecutando Facebook (max_keywords=8, max_visitas=15)...")
-    try:
-        facebook_events = await asyncio.wait_for(
-            scrape_facebook_events(max_keywords=8, max_visitas=15),
-            timeout=600
-        )
-        print(f"  ✅ Facebook: {len(facebook_events)} eventos encontrados")
-    except asyncio.TimeoutError:
-        print("  ⚠️ Facebook: timeout (600s)")
-        facebook_events = []
-    except Exception as e:
-        print(f"  ❌ Facebook: {e}")
-        facebook_events = []
+    # 2. Ejecutar Facebook con parámetros agresivos.
+    #    Tres pasadas seguidas: la rotación de países (rotation_state.json)
+    #    selecciona países distintos en cada pasada, cubriendo así varios
+    #    grupos de países sin saturar una sola ejecución.
+    facebook_events = []
+    PASADAS = 3
+    for pasada in range(1, PASADAS + 1):
+        print(f"\n🔍 Facebook pasada {pasada}/{PASADAS} "
+              f"(max_keywords=30, max_visitas=60)...")
+        try:
+            evs = await asyncio.wait_for(
+                scrape_facebook_events(max_keywords=30, max_visitas=60),
+                timeout=1200
+            )
+            print(f"  ✅ Facebook pasada {pasada}: {len(evs)} eventos")
+            facebook_events.extend(evs)
+        except asyncio.TimeoutError:
+            print(f"  ⚠️ Facebook pasada {pasada}: timeout (1200s)")
+        except Exception as e:
+            print(f"  ❌ Facebook pasada {pasada}: {e}")
+    print(f"\n📊 Facebook total: {len(facebook_events)} eventos (antes de dedup)")
 
-    # 3. Consolidar
+    # 3. Consolidar: los eventos existentes ya pasaron el control de calidad en
+    #    ejecuciones anteriores → se conservan tal cual (nunca restar).
+    #    Solo los NUEVOS se clasifican y filtran.
+    print(f"\n📊 Total bruto: {len(eventos_existentes)} existentes + "
+          f"{len(facebook_events)} nuevos = {len(eventos_existentes) + len(facebook_events)}")
+
+    # 3b. Clasificar y filtrar solo los eventos nuevos de Facebook
+    print("\n🏷️ Clasificando nuevos...")
+    facebook_events = clasificar_eventos(facebook_events)
+    print("🧹 Filtrando calidad de nuevos...")
+    antes = len(facebook_events)
+    facebook_events = limpiar_calidad(facebook_events)
+    print(f"   {antes} → {len(facebook_events)} nuevos reales")
+
     todos = eventos_existentes + facebook_events
-    print(f"\n📊 Total bruto: {len(todos)} eventos")
 
-    # 4. Deduplicar
+    # 4. Deduplicar (conserva el primero = el ya existente en el CSV)
     print("\n🔄 Deduplicando...")
     antes = len(todos)
     todos = deduplicar_eventos(todos)
@@ -97,6 +117,7 @@ async def main(dry_run=False):
             fuentes[f] = fuentes.get(f, 0) + 1
         for f, c in sorted(fuentes.items(), key=lambda x: -x[1]):
             print(f"   {f}: {c}")
+        fb_count = sum(1 for e in todos if "Facebook" in e.get("fuente", ""))
 
         # Stats por subgénero
         print("\n🎵 Desglose por subgénero:")
@@ -106,6 +127,7 @@ async def main(dry_run=False):
             subs[s] = subs.get(s, 0) + 1
         for s, c in sorted(subs.items(), key=lambda x: -x[1]):
             print(f"   {s}: {c}")
+        print(f"\n✅ Total: {len(todos)} | Facebook: {fb_count}")
     else:
         print("\n🔍 Modo dry-run — sin exportar")
 

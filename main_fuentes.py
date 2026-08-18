@@ -90,6 +90,8 @@ def limpiar_calidad(eventos):
     Excepción: eventos de Facebook con link real y subgénero psytrance real
     se conservan aunque la fecha no se haya podido extraer (el enriquecimiento
     de fechas puede fallar en páginas públicas de FB).
+    
+    Para Facebook sin fecha, se exige al menos link y organizador.
     """
     limpios = []
     for ev in eventos:
@@ -101,6 +103,10 @@ def limpiar_calidad(eventos):
         es_facebook = "Facebook" in ev.get("fuente", "")
         if not fecha_valida(fecha):
             if es_facebook and fecha in ("Fecha no disponible", "N/A", ""):
+                # Para Facebook sin fecha, exigir link y al menos organizador
+                organizador = ev.get("organizador", "")
+                if not organizador or organizador in ("N/A", ""):
+                    continue
                 ev["fecha"] = "N/A"
             else:
                 continue
@@ -257,11 +263,11 @@ async def ejecutar_fuentes_nuevas():
         print(f"  ❌ Eventbrite: {e}")
 
     # --- Facebook (SERP público + grupos) ---
-    # Siempre se ejecuta: max_keywords=15, max_visitas=50, timeout 600s (10 min)
+    # Siempre se ejecuta: max_keywords=12, max_visitas=20, timeout 900s (15 min)
     try:
         evs = await asyncio.wait_for(
-            scrape_facebook_events(max_keywords=15, max_visitas=50),
-            timeout=600
+            scrape_facebook_events(max_keywords=12, max_visitas=20),
+            timeout=900
         )
         if evs:
             print(f"  ✅ Facebook: {len(evs)} eventos")
@@ -269,7 +275,7 @@ async def ejecutar_fuentes_nuevas():
         else:
             print("  ⚠️ Facebook: 0 eventos")
     except asyncio.TimeoutError:
-        print("  ⚠️ Facebook: timeout (600s) — omitido")
+        print("  ⚠️ Facebook: timeout (900s) — omitido")
     except Exception as e:
         print(f"  ❌ Facebook: {e}")
 

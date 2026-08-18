@@ -1,32 +1,6 @@
 {
   "groups": [
     {
-      "id": "psytrancefamily",
-      "nombre": "Psytrance Family",
-      "url": "https://facebook.com/groups/psytrancefamily",
-      "tipo_grupo": [
-        "psytrance"
-      ]
-    },
-    {
-      "id": "goapsytrance",
-      "nombre": "Psytrance & Goa Trance",
-      "url": "https://facebook.com/groups/goapsytrance",
-      "tipo_grupo": [
-        "goa",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "psychedelicmindz",
-      "nombre": "Psychedelic Mindz",
-      "url": "https://facebook.com/groups/psychedelicmindz",
-      "tipo_grupo": [
-        "psychedelic",
-        "psytrance"
-      ]
-    },
-    {
       "id": "darkpsytrancefamily",
       "nombre": "Dark Psytrance Family",
       "url": "https://facebook.com/groups/darkpsytrancefamily",
@@ -41,6 +15,158 @@
       "url": "https://facebook.com/groups/forestpsytrance",
       "tipo_grupo": [
         "forest",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "darkpsyfamily",
+      "nombre": "Darkpsy Family",
+      "url": "https://facebook.com/groups/darkpsyfamily",
+      "tipo_grupo": [
+        "dark",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "forestfamily",
+      "nombre": "Forest Family",
+      "url": "https://facebook.com/groups/forestfamily",
+      "tipo_grupo": [
+        "forest"
+      ]
+    },
+    {
+      "id": "darkpsyevents",
+      "nombre": "Dark Psy Events",
+      "url": "https://facebook.com/groups/darkpsyevents",
+      "tipo_grupo": [
+        "dark",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "forestpsyevents",
+      "nombre": "Forest Psy Events",
+      "url": "https://facebook.com/groups/forestpsyevents",
+      "tipo_grupo": [
+        "forest",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "goapsytrance",
+      "nombre": "Psytrance & Goa Trance",
+      "url": "https://facebook.com/groups/goapsytrance",
+      "tipo_grupo": [
+        "goa",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "fullonpsytrance",
+      "nombre": "Full-On Psytrance",
+      "url": "https://facebook.com/groups/fullonpsytrance",
+      "tipo_grupo": [
+        "fullon",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "goatrancefamily",
+      "nombre": "Goa Trance Family",
+      "url": "https://facebook.com/groups/goatrancefamily",
+      "tipo_grupo": [
+        "goa"
+      ]
+    },
+    {
+      "id": "progressivepsytrance",
+      "nombre": "Progressive Psytrance",
+      "url": "https://facebook.com/groups/progressivepsytrance",
+      "tipo_grupo": [
+        "progressive",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "hitechpsytrance",
+      "nombre": "Hi-Tech Psytrance",
+      "url": "https://facebook.com/groups/hitechpsytrance",
+      "tipo_grupo": [
+        "hitech",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "nightfullon",
+      "nombre": "Night Full-On",
+      "url": "https://facebook.com/groups/nightfullon",
+      "tipo_grupo": [
+        "fullon"
+      ]
+    },
+    {
+      "id": "morningfullon",
+      "nombre": "Morning Full-On",
+      "url": "https://facebook.com/groups/morningfullon",
+      "tipo_grupo": [
+        "fullon"
+      ]
+    },
+    {
+      "id": "goatrance",
+      "nombre": "Goa Trance",
+      "url": "https://facebook.com/groups/goatrance",
+      "tipo_grupo": [
+        "goa"
+      ]
+    },
+    {
+      "id": "goatranceevents",
+      "nombre": "Goa Trance Events",
+      "url": "https://facebook.com/groups/goatranceevents",
+      "tipo_grupo": [
+        "goa"
+      ]
+    },
+    {
+      "id": "hitechevents",
+      "nombre": "Hi-Tech Events",
+      "url": "https://facebook.com/groups/hitechevents",
+      "tipo_grupo": [
+        "hitech"
+      ]
+    },
+    {
+      "id": "fullonevents",
+      "nombre": "Full-On Events",
+      "url": "https://facebook.com/groups/fullonevents",
+      "tipo_grupo": [
+        "fullon"
+      ]
+    },
+    {
+      "id": "goagil",
+      "nombre": "Goa Gil",
+      "url": "https://facebook.com/groups/goagil",
+      "tipo_grupo": [
+        "goa"
+      ]
+    },
+    {
+      "id": "psytrancefamily",
+      "nombre": "Psytrance Family",
+      "url": "https://facebook.com/groups/psytrancefamily",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psychedelicmindz",
+      "nombre": "Psychedelic Mindz",
+      "url": "https://facebook.com/groups/psychedelicmindz",
+      "tipo_grupo": [
+        "psychedelic",
         "psytrance"
       ]
     },
@@ -85,15 +211,6 @@
       ]
     },
     {
-      "id": "fullonpsytrance",
-      "nombre": "Full-On Psytrance",
-      "url": "https://facebook.com/groups/fullonpsytrance",
-      "tipo_grupo": [
-        "fullon",
-        "psytrance"
-      ]
-    },
-    {
       "id": "psychedelicfestivals",
       "nombre": "Psychedelic Festivals Worldwide",
       "url": "https://facebook.com/groups/psychedelicfestivals",
@@ -120,27 +237,10 @@
       ]
     },
     {
-      "id": "goatrancefamily",
-      "nombre": "Goa Trance Family",
-      "url": "https://facebook.com/groups/goatrancefamily",
-      "tipo_grupo": [
-        "goa"
-      ]
-    },
-    {
       "id": "psytranceculture",
       "nombre": "Psytrance Culture",
       "url": "https://facebook.com/groups/psytranceculture",
       "tipo_grupo": [
-        "psytrance"
-      ]
-    },
-    {
-      "id": "darkpsyfamily",
-      "nombre": "Darkpsy Family",
-      "url": "https://facebook.com/groups/darkpsyfamily",
-      "tipo_grupo": [
-        "dark",
         "psytrance"
       ]
     },
@@ -186,29 +286,11 @@
       ]
     },
     {
-      "id": "progressivepsytrance",
-      "nombre": "Progressive Psytrance",
-      "url": "https://facebook.com/groups/progressivepsytrance",
-      "tipo_grupo": [
-        "progressive",
-        "psytrance"
-      ]
-    },
-    {
       "id": "twilightpsytrance",
       "nombre": "Twilight Psytrance",
       "url": "https://facebook.com/groups/twilightpsytrance",
       "tipo_grupo": [
         "twilight",
-        "psytrance"
-      ]
-    },
-    {
-      "id": "hitechpsytrance",
-      "nombre": "Hi-Tech Psytrance",
-      "url": "https://facebook.com/groups/hitechpsytrance",
-      "tipo_grupo": [
-        "hitech",
         "psytrance"
       ]
     },
@@ -282,30 +364,6 @@
       "url": "https://facebook.com/groups/psytranceaustralia",
       "tipo_grupo": [
         "psytrance"
-      ]
-    },
-    {
-      "id": "forestfamily",
-      "nombre": "Forest Family",
-      "url": "https://facebook.com/groups/forestfamily",
-      "tipo_grupo": [
-        "forest"
-      ]
-    },
-    {
-      "id": "nightfullon",
-      "nombre": "Night Full-On",
-      "url": "https://facebook.com/groups/nightfullon",
-      "tipo_grupo": [
-        "fullon"
-      ]
-    },
-    {
-      "id": "morningfullon",
-      "nombre": "Morning Full-On",
-      "url": "https://facebook.com/groups/morningfullon",
-      "tipo_grupo": [
-        "fullon"
       ]
     },
     {
@@ -582,6 +640,200 @@
       ]
     },
     {
+      "id": "psytranceglobal",
+      "nombre": "Psytrance Global",
+      "url": "https://facebook.com/groups/psytranceglobal",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceevents",
+      "nombre": "Psytrance Events",
+      "url": "https://facebook.com/groups/psytranceevents",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psychedelictranceevents",
+      "nombre": "Psychedelic Trance Events",
+      "url": "https://facebook.com/groups/psychedelictranceevents",
+      "tipo_grupo": [
+        "psychedelic",
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceparties",
+      "nombre": "Psytrance Parties",
+      "url": "https://facebook.com/groups/psytranceparties",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancefestivals",
+      "nombre": "Psytrance Festivals",
+      "url": "https://facebook.com/groups/psytrancefestivals",
+      "tipo_grupo": [
+        "psytrance",
+        "festival"
+      ]
+    },
+    {
+      "id": "psytranceworldwide",
+      "nombre": "Psytrance Worldwide",
+      "url": "https://facebook.com/groups/psytranceworldwide",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancefamilygathering",
+      "nombre": "Psytrance Family Gathering",
+      "url": "https://facebook.com/groups/psytrancefamilygathering",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceasia",
+      "nombre": "Psytrance Asia",
+      "url": "https://facebook.com/groups/psytranceasia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceoceania",
+      "nombre": "Psytrance Oceania",
+      "url": "https://facebook.com/groups/psytranceoceania",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceafrica",
+      "nombre": "Psytrance Africa",
+      "url": "https://facebook.com/groups/psytranceafrica",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancemiddleeast",
+      "nombre": "Psytrance Middle East",
+      "url": "https://facebook.com/groups/psytrancemiddleeast",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceukraine",
+      "nombre": "Psytrance Ukraine",
+      "url": "https://facebook.com/groups/psytranceukraine",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancepoland",
+      "nombre": "Psytrance Poland",
+      "url": "https://facebook.com/groups/psytrancepoland",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceczech",
+      "nombre": "Psytrance Czech",
+      "url": "https://facebook.com/groups/psytranceczech",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancehungary",
+      "nombre": "Psytrance Hungary",
+      "url": "https://facebook.com/groups/psytrancehungary",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancegreece",
+      "nombre": "Psytrance Greece",
+      "url": "https://facebook.com/groups/psytrancegreece",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceportugalia",
+      "nombre": "Psytrance Portugal",
+      "url": "https://facebook.com/groups/psytranceportugalia",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceitaly",
+      "nombre": "Psytrance Italy",
+      "url": "https://facebook.com/groups/psytranceitaly",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancefrance",
+      "nombre": "Psytrance France",
+      "url": "https://facebook.com/groups/psytrancefrance",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecanada",
+      "nombre": "Psytrance Canada",
+      "url": "https://facebook.com/groups/psytrancecanada",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancebrazil",
+      "nombre": "Psytrance Brazil",
+      "url": "https://facebook.com/groups/psytrancebrazil",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancecorea",
+      "nombre": "Psytrance Korea",
+      "url": "https://facebook.com/groups/psytrancecorea",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytrancechina",
+      "nombre": "Psytrance China",
+      "url": "https://facebook.com/groups/psytrancechina",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "psytranceespaña",
+      "nombre": "Psytrance España",
+      "url": "https://facebook.com/groups/psytranceespaña",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
       "id": "psytrancecostaricafest",
       "nombre": "Psytrance Costa Rica Festival",
       "url": "https://facebook.com/groups/psytrancecostaricafest",
@@ -797,14 +1049,6 @@
       ]
     },
     {
-      "id": "psytrancecanada",
-      "nombre": "Psytrance Canada",
-      "url": "https://facebook.com/groups/psytrancecanada",
-      "tipo_grupo": [
-        "psytrance"
-      ]
-    },
-    {
       "id": "psytrancethailand",
       "nombre": "Psytrance Thailand",
       "url": "https://facebook.com/groups/psytrancethailand",
@@ -829,25 +1073,9 @@
       ]
     },
     {
-      "id": "psytrancechina",
-      "nombre": "Psytrance China",
-      "url": "https://facebook.com/groups/psytrancechina",
-      "tipo_grupo": [
-        "psytrance"
-      ]
-    },
-    {
       "id": "psytrancekorea",
       "nombre": "Psytrance Korea",
       "url": "https://facebook.com/groups/psytrancekorea",
-      "tipo_grupo": [
-        "psytrance"
-      ]
-    },
-    {
-      "id": "psytranceafrica",
-      "nombre": "Psytrance Africa",
-      "url": "https://facebook.com/groups/psytranceafrica",
       "tipo_grupo": [
         "psytrance"
       ]
@@ -2839,19 +3067,214 @@
       "tipo_grupo": [
         "psytrance"
       ]
+    },
+    {
+      "id": "estadosunidos",
+      "nombre": "Psytrance Estados Unidos",
+      "url": "https://facebook.com/groups/estadosunidos",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "nuevayork",
+      "nombre": "Psytrance Nueva York",
+      "url": "https://facebook.com/groups/nuevayork",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "losangeles",
+      "nombre": "Psytrance Los Ángeles",
+      "url": "https://facebook.com/groups/losangeles",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "miami",
+      "nombre": "Psytrance Miami",
+      "url": "https://facebook.com/groups/miami",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "canada",
+      "nombre": "Psytrance Canadá",
+      "url": "https://facebook.com/groups/canada",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "toronto",
+      "nombre": "Psytrance Toronto",
+      "url": "https://facebook.com/groups/toronto",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "montreal",
+      "nombre": "Psytrance Montreal",
+      "url": "https://facebook.com/groups/montreal",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "vancouver",
+      "nombre": "Psytrance Vancouver",
+      "url": "https://facebook.com/groups/vancouver",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "coloniadelsacramento",
+      "nombre": "Psytrance Colonia del Sacramento",
+      "url": "https://facebook.com/groups/coloniadelsacramento",
+      "tipo_grupo": [
+        "psytrance"
+      ]
+    },
+    {
+      "id": "303577266469473",
+      "nombre": "Psytrance Collective Berlin - Facebook",
+      "url": "https://facebook.com/groups/303577266469473",
+      "tipo_grupo": []
+    },
+    {
+      "id": "385866251533827",
+      "nombre": "Psytrance Partys in Berlin - Facebook",
+      "url": "https://facebook.com/groups/385866251533827",
+      "tipo_grupo": []
+    },
+    {
+      "id": "145105872178268",
+      "nombre": "PSYTRANCE BERLIN - Facebook",
+      "url": "https://facebook.com/groups/145105872178268",
+      "tipo_grupo": []
+    },
+    {
+      "id": "psytance",
+      "nombre": "PsyTrance | Facebook",
+      "url": "https://facebook.com/groups/psytance",
+      "tipo_grupo": []
+    },
+    {
+      "id": "510492456393559",
+      "nombre": "DarkPsy Mexico | Facebook",
+      "url": "https://facebook.com/groups/510492456393559",
+      "tipo_grupo": []
+    },
+    {
+      "id": "470349841493846",
+      "nombre": "DarkPsy Mexico - Facebook",
+      "url": "https://facebook.com/groups/470349841493846",
+      "tipo_grupo": []
+    },
+    {
+      "id": "1416996298526065",
+      "nombre": "ॐ Darkpsy Mexico ॐ - Facebook",
+      "url": "https://facebook.com/groups/1416996298526065",
+      "tipo_grupo": []
+    },
+    {
+      "id": "Nightmares420clan",
+      "nombre": "Darkpsy, Psycore, Experimental & Hi-Tech Mexico | Facebook",
+      "url": "https://facebook.com/groups/Nightmares420clan",
+      "tipo_grupo": []
+    },
+    {
+      "id": "588702224548981",
+      "nombre": "Darkpsy & Hightech México - Facebook",
+      "url": "https://facebook.com/groups/588702224548981",
+      "tipo_grupo": []
+    },
+    {
+      "id": "394827284237155",
+      "nombre": "BARCELONA | Forest/ DarkPsy music for the soul ♥ ... - Facebook",
+      "url": "https://facebook.com/groups/394827284237155",
+      "tipo_grupo": []
+    },
+    {
+      "id": "429964907185500",
+      "nombre": "DarkPsy-Hi-Tech-PsyCore & Experimental Music. | Es un placer ... - Facebook",
+      "url": "https://facebook.com/groups/429964907185500",
+      "tipo_grupo": []
+    },
+    {
+      "id": "2183984865196003",
+      "nombre": "PSY EVENTS Barcelona - Facebook",
+      "url": "https://facebook.com/groups/2183984865196003",
+      "tipo_grupo": []
+    },
+    {
+      "id": "117826201617430",
+      "nombre": "Extreme Body Modifications | Hey guys! I am Lana Fist from ... - Facebook",
+      "url": "https://facebook.com/groups/117826201617430",
+      "tipo_grupo": []
+    },
+    {
+      "id": "psytrancepsy",
+      "nombre": "PsyTrance | Facebook",
+      "url": "https://facebook.com/groups/psytrancepsy",
+      "tipo_grupo": []
+    },
+    {
+      "id": "271625487184735",
+      "nombre": "Chapultepec Forest, Mexico City ️ - Facebook",
+      "url": "https://facebook.com/groups/271625487184735",
+      "tipo_grupo": []
+    },
+    {
+      "id": "1251087595497613",
+      "nombre": "Sons of the Forest Mexico - Facebook",
+      "url": "https://facebook.com/groups/1251087595497613",
+      "tipo_grupo": []
+    },
+    {
+      "id": "cityscapes",
+      "nombre": "World Cityscapes & Skyscrapers | Biggest Urban Forest in The Americas ...",
+      "url": "https://facebook.com/groups/cityscapes",
+      "tipo_grupo": []
+    },
+    {
+      "id": "672818376463049",
+      "nombre": "Ancient Forests | Aspen grove (1/22) Santa Fe National Forest, New ...",
+      "url": "https://facebook.com/groups/672818376463049",
+      "tipo_grupo": []
+    },
+    {
+      "id": "196793727637612",
+      "nombre": "Encontre esta familia en el bosque de los colomos el dia de ... - Facebook",
+      "url": "https://facebook.com/groups/196793727637612",
+      "tipo_grupo": []
+    },
+    {
+      "id": "486400935401588",
+      "nombre": "HITECH-ELECTRONIC'S | Voci quelques points importants à ... - Facebook",
+      "url": "https://facebook.com/groups/486400935401588",
+      "tipo_grupo": []
+    },
+    {
+      "id": "psytranceparis",
+      "nombre": "PsyTrance - Paris +++ | Mix Dark psy & Forest & Hitech - Facebook",
+      "url": "https://facebook.com/groups/psytranceparis",
+      "tipo_grupo": []
     }
   ],
-  "timestamp": "2026-08-04T20:26:09.679013",
-  "total": 350,
+  "timestamp": "2026-08-14T21:59:43.585662+00:00",
+  "total": 408,
   "paises_rotacion": [
-    "México",
-    "Luxemburgo",
-    "Nepal",
-    "Argentina",
-    "Letonia",
-    "Francia",
-    "Dinamarca",
-    "España",
-    "Eslovenia"
+    "Islandia",
+    "Canadá",
+    "Kosovo",
+    "Turquía",
+    "San Marino",
+    "Macedonia del Norte"
   ]
 }

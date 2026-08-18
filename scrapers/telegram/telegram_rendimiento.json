@@ -1,0 +1,26 @@
+{
+  "TheMysticRose": {
+    "canal": "TheMysticRose",
+    "runs": 14,
+    "eventos": 3,
+    "mensajes": 95,
+    "tiempo_s": 259.79,
+    "ultimo_run": "2026-08-14T15:43:09.920368+00:00"
+  },
+  "shorthanduniverseofficial": {
+    "canal": "shorthanduniverseofficial",
+    "runs": 12,
+    "eventos": 0,
+    "mensajes": 450,
+    "tiempo_s": 149.39,
+    "ultimo_run": "2026-08-14T15:43:13.541265+00:00"
+  },
+  "progressivetakeover": {
+    "canal": "progressivetakeover",
+    "runs": 12,
+    "eventos": 0,
+    "mensajes": 450,
+    "tiempo_s": 151.15,
+    "ultimo_run": "2026-08-14T15:43:17.746020+00:00"
+  }
+}

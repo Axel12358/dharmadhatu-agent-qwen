@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-08-14T06:12:12.901585+00:00",
+  "csv": "/Users/angelgarcia/dharmadhatu_agent_qwen/eventos_encontrados.csv",
+  "total_filas": 483,
+  "total_candidatos": 81,
+  "procesados": 81,
+  "actualizados": 69,
+  "siguen_incompletos": [
+    {
+      "nombre": "MarasmANNO RoMaN PSYtrance CapoDanno",
+      "link": "https://facebook.com/events/via-casilina-283-00176-roma-rm-italia/-marasmanno-roman-psytrance-capodanno-/886431367115371",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Psykabar - Psymoun au Slam",
+      "link": "https://facebook.com/events/slam-skatebar/psykabar-psymoun-au-slam-/1439391324347254",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "FULLNESS FEST 2025",
+      "link": "https://facebook.com/events/juncosa-de-les-garrigues/fullness-fest-2025/949814090538227",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Mindora (open air psychedelic trance party) - Obec Hubina",
+      "link": "https://facebook.com/events/obec-hubina/mindora-open-air-psychedelic-trance-party/861551950229848",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "SYNAPSENTAPSEN",
+      "link": "https://facebook.com/events/waagplatz-7-9020-klagenfurt-austria/synapsentapsen-psytrance-darkpsy-hitech/1466359757758973",
+      "faltan": [
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Psy-kick #2 dark progressive - zenonesque - 20.09.2025 ...",
+      "link": "https://facebook.com/events/mashroom-plac-wolnica-10/psy-kick-2-dark-progressive-zenonesque-20092025-mashroom-krak%C3%B3w/612024161774975",
+      "faltan": [
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Quilles Psy & Chill - 1ère édition",
+      "link": "https://facebook.com/events/salon-de-quilles-st-gr%C3%A9goire/quilles-psy-chill-1%C3%A8re-%C3%A9dition/8683715928423114",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "WINTER TALES IV (PSYTRANCE&CHILL OUT WEEKEND EVENT IN PRAGUE)",
+      "link": "https://facebook.com/events/prostor-element%C5%AF/winter-tales-iv-psytrancechill-out-weekend-event-in-prague/2548097882222392",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › παραλία-λαγονήσι › free-hitech-psycore-dark-psytrance-event › 41605",
+      "link": "https://facebook.com/events/παραλία-λαγονήσι/free-hitech-psycore-dark-psytrance-event/416054772096310",
+      "faltan": [
+        "fecha"
+      ]
+    },
+    {
+      "nombre": "Facebook m.facebook.com › events › s › psysolation-psychedelic-sets-f › 2658344224295247 Log in or s",
+      "link": "https://facebook.com/events/s/psysolation-psychedelic-sets-f/2658344224295247",
+      "faltan": [
+        "fecha"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › nicolás-romeo › espíritu-psychedelic › 415786300283179",
+      "link": "https://facebook.com/events/nicol%C3%A1s-romeo/esp%C3%ADritu-psychedelic/415786300283179",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › waldsteingartenstraße-135-1020-wien-österreich › psytrance-universe",
+      "link": "https://facebook.com/events/waldsteingartenstra%C3%9Fe-135-1020-wien-%C3%B6sterreich/psytrance-universe-pool-party-pratersauna/1308942564240829",
+      "faltan": [
+        "fecha",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › reykjavík-iceland › transition-psytrance-280924 › 858077236289562 T",
+      "link": "https://facebook.com/events/reykjav%C3%ADk-iceland/transition-psytrance-280924/858077236289562",
+      "faltan": [
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › underground-lounge-chicago › psychedelic-tendencies › 3947311444875",
+      "link": "https://facebook.com/events/underground-lounge-chicago/psychedelic-tendencies/394731144487504",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2274 @@
+{
+  "site:facebook.com/events \"hitech\" \"Cracovia\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Cracovia\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.83,
+    "ultimo_run": "2026-08-12T23:17:37.374552+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Ámsterdam\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Ámsterdam\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.64,
+    "ultimo_run": "2026-08-12T23:17:40.828533+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Roma\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Roma\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.41,
+    "ultimo_run": "2026-08-13T01:58:09.554940+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Amberes\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Amberes\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.52,
+    "ultimo_run": "2026-08-13T01:57:36.239376+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Utrecht\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Utrecht\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.99,
+    "ultimo_run": "2026-08-12T23:17:52.997145+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Trondheim\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Trondheim\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.33,
+    "ultimo_run": "2026-08-12T23:17:57.133146+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Barcelona\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Barcelona\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.8,
+    "ultimo_run": "2026-08-12T23:18:00.740287+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Lyon\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Lyon\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.31,
+    "ultimo_run": "2026-08-12T23:18:04.850670+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Utrecht\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Utrecht\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.18,
+    "ultimo_run": "2026-08-13T01:59:25.948702+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Estocolmo\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Estocolmo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.94,
+    "ultimo_run": "2026-08-12T23:18:12.155134+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Barcelona\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Barcelona\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.76,
+    "ultimo_run": "2026-08-12T23:18:15.719752+00:00"
+  },
+  "site:facebook.com/events \"fullon\"": {
+    "dork": "site:facebook.com/events \"fullon\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.81,
+    "ultimo_run": "2026-08-12T23:18:19.332945+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Gotemburgo\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Gotemburgo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.27,
+    "ultimo_run": "2026-08-12T23:18:23.402636+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"party\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"party\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.15,
+    "ultimo_run": "2026-08-12T23:18:27.354228+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Brno\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Brno\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.0,
+    "ultimo_run": "2026-08-12T23:18:31.161804+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Múnich\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Múnich\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.38,
+    "ultimo_run": "2026-08-12T23:18:35.353809+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Milán\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Milán\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.85,
+    "ultimo_run": "2026-08-13T00:53:58.284175+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Viena\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Viena\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.53,
+    "ultimo_run": "2026-08-12T23:18:43.933589+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Gotemburgo\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Gotemburgo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.96,
+    "ultimo_run": "2026-08-12T23:18:47.697549+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Gante\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Gante\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.65,
+    "ultimo_run": "2026-08-12T23:18:52.155493+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Odense\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Odense\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.99,
+    "ultimo_run": "2026-08-12T23:18:55.949314+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Coímbra\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Coímbra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.88,
+    "ultimo_run": "2026-08-12T23:18:59.630166+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Berlín\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Berlín\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.45,
+    "ultimo_run": "2026-08-12T23:19:03.887255+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Madrid\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Madrid\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.6,
+    "ultimo_run": "2026-08-13T01:58:53.039377+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Roma\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Roma\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.93,
+    "ultimo_run": "2026-08-12T23:19:11.940517+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"2026\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"2026\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.88,
+    "ultimo_run": "2026-08-13T01:58:57.109237+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Amberes\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Amberes\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.78,
+    "ultimo_run": "2026-08-12T23:19:19.954156+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Brno\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Brno\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.28,
+    "ultimo_run": "2026-08-12T23:19:24.036429+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Valencia\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Valencia\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.93,
+    "ultimo_run": "2026-08-12T23:19:27.771514+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Graz\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Graz\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.08,
+    "ultimo_run": "2026-08-12T23:19:31.659839+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Cracovia\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Cracovia\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.53,
+    "ultimo_run": "2026-08-13T00:56:02.315649+00:00"
+  },
+  "site:facebook.com/events \"goa\"": {
+    "dork": "site:facebook.com/events \"goa\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.26,
+    "ultimo_run": "2026-08-12T23:19:39.289778+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"party\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"party\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.61,
+    "ultimo_run": "2026-08-12T23:19:43.704714+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Praga\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Praga\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.01,
+    "ultimo_run": "2026-08-12T23:19:47.513900+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Lisboa\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Lisboa\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.79,
+    "ultimo_run": "2026-08-12T23:19:51.118522+00:00"
+  },
+  "site:facebook.com/groups \"goa\"": {
+    "dork": "site:facebook.com/groups \"goa\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.63,
+    "ultimo_run": "2026-08-12T23:19:55.558939+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Ginebra\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Ginebra\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.0,
+    "ultimo_run": "2026-08-13T00:55:45.343956+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Trondheim\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Trondheim\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 4.92,
+    "ultimo_run": "2026-08-13T00:56:05.166728+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Londres\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Londres\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.73,
+    "ultimo_run": "2026-08-12T23:20:06.338582+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Oporto\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Oporto\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.97,
+    "ultimo_run": "2026-08-12T23:20:10.106635+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Odense\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Odense\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.3,
+    "ultimo_run": "2026-08-12T23:21:23.227600+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Aarhus\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Aarhus\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.36,
+    "ultimo_run": "2026-08-12T23:21:27.392520+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Múnich\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Múnich\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.1,
+    "ultimo_run": "2026-08-13T00:55:08.790711+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Berna\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Berna\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.79,
+    "ultimo_run": "2026-08-12T23:21:34.543997+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Zúrich\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Zúrich\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.06,
+    "ultimo_run": "2026-08-13T01:57:48.529885+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Londres\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Londres\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.82,
+    "ultimo_run": "2026-08-12T23:21:42.703358+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Ámsterdam\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Ámsterdam\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.33,
+    "ultimo_run": "2026-08-13T00:53:49.750678+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Brno\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Brno\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.49,
+    "ultimo_run": "2026-08-13T00:53:54.047586+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Londres\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Londres\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.49,
+    "ultimo_run": "2026-08-13T00:54:02.577269+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Nápoles\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Nápoles\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.41,
+    "ultimo_run": "2026-08-13T00:54:06.789207+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Łódź\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Łódź\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.68,
+    "ultimo_run": "2026-08-13T00:54:11.281347+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Zúrich\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Zúrich\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.47,
+    "ultimo_run": "2026-08-13T00:54:15.558629+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Nápoles\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Nápoles\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.04,
+    "ultimo_run": "2026-08-13T00:54:19.400761+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Ginebra\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Ginebra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.21,
+    "ultimo_run": "2026-08-13T00:54:23.413684+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"festival\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"festival\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.5,
+    "ultimo_run": "2026-08-13T00:54:27.720081+00:00"
+  },
+  "site:facebook.com \"psybient\" \"@hotmail.com\"": {
+    "dork": "site:facebook.com \"psybient\" \"@hotmail.com\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.54,
+    "ultimo_run": "2026-08-13T00:54:32.069841+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Coímbra\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Coímbra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.4,
+    "ultimo_run": "2026-08-13T00:54:36.271149+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Viena\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Viena\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.21,
+    "ultimo_run": "2026-08-13T00:54:40.289567+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Coímbra\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Coímbra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.89,
+    "ultimo_run": "2026-08-13T00:54:43.990991+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Lyon\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Lyon\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.92,
+    "ultimo_run": "2026-08-13T00:54:47.719235+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Ginebra\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Ginebra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.4,
+    "ultimo_run": "2026-08-13T00:54:51.925807+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Aarhus\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Aarhus\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.68,
+    "ultimo_run": "2026-08-13T00:54:56.413344+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Graz\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Graz\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.35,
+    "ultimo_run": "2026-08-13T00:55:00.572770+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Malmö\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Malmö\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.24,
+    "ultimo_run": "2026-08-13T00:55:04.616225+00:00"
+  },
+  "site:facebook.com/events \"progressive\"": {
+    "dork": "site:facebook.com/events \"progressive\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.07,
+    "ultimo_run": "2026-08-13T00:55:12.668131+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Hamburgo\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Hamburgo\"",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 63.04,
+    "ultimo_run": "2026-08-13T04:16:01.807138+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\"": {
+    "dork": "site:facebook.com/events \"darkpsy\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.18,
+    "ultimo_run": "2026-08-13T00:55:20.937262+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Bruselas\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Bruselas\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.35,
+    "ultimo_run": "2026-08-13T00:55:25.087131+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Bergen\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Bergen\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.09,
+    "ultimo_run": "2026-08-13T00:55:28.979605+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Odense\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Odense\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.51,
+    "ultimo_run": "2026-08-13T00:55:33.293954+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"París\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"París\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.01,
+    "ultimo_run": "2026-08-13T00:55:37.112202+00:00"
+  },
+  "site:facebook.com/groups \"forest\"": {
+    "dork": "site:facebook.com/groups \"forest\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.38,
+    "ultimo_run": "2026-08-13T00:55:41.300040+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"open air\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"open air\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.46,
+    "ultimo_run": "2026-08-13T00:55:49.613491+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Birmingham\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Birmingham\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.07,
+    "ultimo_run": "2026-08-13T00:55:53.485750+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Birmingham\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Birmingham\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.45,
+    "ultimo_run": "2026-08-13T00:55:57.737841+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"Berlín\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"Berlín\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.93,
+    "ultimo_run": "2026-08-13T00:56:08.907760+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"rave\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"rave\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.6,
+    "ultimo_run": "2026-08-13T00:56:13.313137+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Aarhus\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Aarhus\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.47,
+    "ultimo_run": "2026-08-13T00:56:17.588992+00:00"
+  },
+  "site:facebook.com/events \"goa\" \"Trondheim\"": {
+    "dork": "site:facebook.com/events \"goa\" \"Trondheim\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.38,
+    "ultimo_run": "2026-08-13T00:56:21.775300+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Lisboa\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Lisboa\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.64,
+    "ultimo_run": "2026-08-13T00:56:26.221582+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"rave\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"rave\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.85,
+    "ultimo_run": "2026-08-13T00:56:29.873605+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Amberes\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Amberes\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.3,
+    "ultimo_run": "2026-08-13T01:57:00.527991+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Bruselas\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Bruselas\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.93,
+    "ultimo_run": "2026-08-13T01:57:04.268176+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Roma\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Roma\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.46,
+    "ultimo_run": "2026-08-13T01:57:08.532323+00:00"
+  },
+  "site:facebook.com/events \"forest\"": {
+    "dork": "site:facebook.com/events \"forest\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.08,
+    "ultimo_run": "2026-08-13T01:57:12.419206+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Madrid\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Madrid\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.09,
+    "ultimo_run": "2026-08-13T01:57:16.308702+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Múnich\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Múnich\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.36,
+    "ultimo_run": "2026-08-13T01:57:20.477890+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Utrecht\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Utrecht\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.02,
+    "ultimo_run": "2026-08-13T01:57:24.298040+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Bergen\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Bergen\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.67,
+    "ultimo_run": "2026-08-13T01:57:28.772059+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Oslo\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Oslo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.96,
+    "ultimo_run": "2026-08-13T01:57:32.538542+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"open air\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"open air\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.96,
+    "ultimo_run": "2026-08-13T01:57:40.026135+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Milán\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Milán\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.55,
+    "ultimo_run": "2026-08-13T01:57:44.384743+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Odense\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Odense\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.69,
+    "ultimo_run": "2026-08-13T01:57:53.021348+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Bergen\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Bergen\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.11,
+    "ultimo_run": "2026-08-13T01:57:56.931192+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Milán\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Milán\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.64,
+    "ultimo_run": "2026-08-13T01:58:01.371247+00:00"
+  },
+  "site:facebook.com/events \"psybient\"": {
+    "dork": "site:facebook.com/events \"psybient\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.31,
+    "ultimo_run": "2026-08-13T01:58:05.481365+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"2026\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"2026\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.36,
+    "ultimo_run": "2026-08-13T01:58:13.721688+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Coímbra\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Coímbra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.59,
+    "ultimo_run": "2026-08-13T01:58:18.117568+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Trondheim\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Trondheim\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.86,
+    "ultimo_run": "2026-08-13T01:58:21.782547+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Gotemburgo\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Gotemburgo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.91,
+    "ultimo_run": "2026-08-13T01:58:25.502210+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Łódź\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Łódź\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.31,
+    "ultimo_run": "2026-08-13T01:58:29.622660+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Valencia\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Valencia\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.9,
+    "ultimo_run": "2026-08-13T01:58:33.327167+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"Mánchester\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"Mánchester\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.75,
+    "ultimo_run": "2026-08-13T01:58:36.882747+00:00"
+  },
+  "site:facebook.com/events \"fullon\" \"Gotemburgo\"": {
+    "dork": "site:facebook.com/events \"fullon\" \"Gotemburgo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.83,
+    "ultimo_run": "2026-08-13T01:58:40.515322+00:00"
+  },
+  "site:facebook.com/groups \"psychill\"": {
+    "dork": "site:facebook.com/groups \"psychill\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.44,
+    "ultimo_run": "2026-08-13T01:58:44.762054+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Estocolmo\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Estocolmo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.57,
+    "ultimo_run": "2026-08-13T01:58:49.136769+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Barcelona\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Barcelona\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.02,
+    "ultimo_run": "2026-08-13T01:59:00.937323+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Malmö\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Malmö\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.3,
+    "ultimo_run": "2026-08-13T01:59:05.044732+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Oporto\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Oporto\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.59,
+    "ultimo_run": "2026-08-13T01:59:09.439436+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Odense\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Odense\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.39,
+    "ultimo_run": "2026-08-13T01:59:13.636637+00:00"
+  },
+  "site:facebook.com \"psychill\" \"@hotmail.com\"": {
+    "dork": "site:facebook.com \"psychill\" \"@hotmail.com\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.03,
+    "ultimo_run": "2026-08-13T01:59:17.476936+00:00"
+  },
+  "site:facebook.com/events \"psychill\"": {
+    "dork": "site:facebook.com/events \"psychill\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.44,
+    "ultimo_run": "2026-08-13T01:59:21.723606+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Zúrich\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Zúrich\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.75,
+    "ultimo_run": "2026-08-13T01:59:29.502977+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Viena\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Viena\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.67,
+    "ultimo_run": "2026-08-13T01:59:33.975748+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"rave\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"rave\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.41,
+    "ultimo_run": "2026-08-13T01:59:38.194919+00:00"
+  },
+  "site:facebook.com/events \"psybient\" \"Salzburgo\"": {
+    "dork": "site:facebook.com/events \"psybient\" \"Salzburgo\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-13T02:04:04.414333+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Oporto\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Oporto\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 5.27,
+    "ultimo_run": "2026-08-13T04:12:00.768916+00:00"
+  },
+  "site:facebook.com/events \"darkpsy\" \"París\"": {
+    "dork": "site:facebook.com/events \"darkpsy\" \"París\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 53.75,
+    "ultimo_run": "2026-08-13T04:12:57.935333+00:00"
+  },
+  "site:facebook.com/events \"progressive\" \"Coímbra\"": {
+    "dork": "site:facebook.com/events \"progressive\" \"Coímbra\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.32,
+    "ultimo_run": "2026-08-13T04:13:59.755193+00:00"
+  },
+  "site:facebook.com/events \"forest\" \"Varsovia\"": {
+    "dork": "site:facebook.com/events \"forest\" \"Varsovia\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.34,
+    "ultimo_run": "2026-08-13T04:14:59.235849+00:00"
+  },
+  "site:facebook.com/events \"hitech\" \"Nápoles\"": {
+    "dork": "site:facebook.com/events \"hitech\" \"Nápoles\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.83,
+    "ultimo_run": "2026-08-13T04:17:03.963562+00:00"
+  },
+  "site:facebook.com/events \"psychill\" \"festival\"": {
+    "dork": "site:facebook.com/events \"psychill\" \"festival\"",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 9.14,
+    "ultimo_run": "2026-08-13T04:21:35.413501+00:00"
+  },
+  "forest Praga facebook event": {
+    "dork": "forest Praga facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.64,
+    "ultimo_run": "2026-08-13T04:27:37.345230+00:00"
+  },
+  "forest Londres facebook event": {
+    "dork": "forest Londres facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.51,
+    "ultimo_run": "2026-08-13T04:28:36.841024+00:00"
+  },
+  "forest Odense facebook event": {
+    "dork": "forest Odense facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.39,
+    "ultimo_run": "2026-08-13T04:33:13.640831+00:00"
+  },
+  "hitech Ginebra facebook event": {
+    "dork": "hitech Ginebra facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 56.39,
+    "ultimo_run": "2026-08-13T04:34:13.398773+00:00"
+  },
+  "progressive Oslo facebook event": {
+    "dork": "progressive Oslo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.62,
+    "ultimo_run": "2026-08-13T04:39:55.150486+00:00"
+  },
+  "forest Malmö facebook event": {
+    "dork": "forest Malmö facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.79,
+    "ultimo_run": "2026-08-13T04:39:59.259474+00:00"
+  },
+  "forest Valencia facebook event": {
+    "dork": "forest Valencia facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.81,
+    "ultimo_run": "2026-08-13T04:40:02.844125+00:00"
+  },
+  "hitech Varsovia facebook event": {
+    "dork": "hitech Varsovia facebook event",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 5,
+    "tiempo_s": 17.83,
+    "ultimo_run": "2026-08-13T14:38:20.226408+00:00"
+  },
+  "goa Róterdam facebook event": {
+    "dork": "goa Róterdam facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.89,
+    "ultimo_run": "2026-08-13T04:40:09.322593+00:00"
+  },
+  "psybient Trondheim facebook event": {
+    "dork": "psybient Trondheim facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.77,
+    "ultimo_run": "2026-08-13T04:40:13.322827+00:00"
+  },
+  "psybient Zúrich facebook event": {
+    "dork": "psybient Zúrich facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.85,
+    "ultimo_run": "2026-08-13T04:40:16.975299+00:00"
+  },
+  "psybient Múnich facebook event": {
+    "dork": "psybient Múnich facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 5,
+    "tiempo_s": 7.56,
+    "ultimo_run": "2026-08-13T04:40:26.288599+00:00"
+  },
+  "goa París facebook event": {
+    "dork": "goa París facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 1,
+    "tiempo_s": 1.92,
+    "ultimo_run": "2026-08-13T04:40:31.235237+00:00"
+  },
+  "forest Róterdam facebook event": {
+    "dork": "forest Róterdam facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 3,
+    "tiempo_s": 1.46,
+    "ultimo_run": "2026-08-13T04:40:34.593625+00:00"
+  },
+  "hitech Berlín facebook event": {
+    "dork": "hitech Berlín facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.87,
+    "ultimo_run": "2026-08-13T04:40:37.957395+00:00"
+  },
+  "psychill party facebook event": {
+    "dork": "psychill party facebook event",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 12,
+    "tiempo_s": 28.75,
+    "ultimo_run": "2026-08-13T04:45:05.467479+00:00"
+  },
+  "goa Utrecht facebook event": {
+    "dork": "goa Utrecht facebook event",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 4.4,
+    "ultimo_run": "2026-08-13T15:22:50.326795+00:00"
+  },
+  "psybient Valencia facebook event": {
+    "dork": "psybient Valencia facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.81,
+    "ultimo_run": "2026-08-13T04:44:14.243771+00:00"
+  },
+  "psychill Utrecht facebook event": {
+    "dork": "psychill Utrecht facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.24,
+    "ultimo_run": "2026-08-13T04:44:18.169702+00:00"
+  },
+  "forest Nápoles facebook event": {
+    "dork": "forest Nápoles facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 2.56,
+    "ultimo_run": "2026-08-13T04:44:22.435845+00:00"
+  },
+  "darkpsy Łódź facebook event": {
+    "dork": "darkpsy Łódź facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 9,
+    "tiempo_s": 21.82,
+    "ultimo_run": "2026-08-13T04:44:46.735250+00:00"
+  },
+  "progressive Gotemburgo facebook event": {
+    "dork": "progressive Gotemburgo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 25.62,
+    "ultimo_run": "2026-08-13T14:38:48.455381+00:00"
+  },
+  "psychill Valencia facebook event": {
+    "dork": "psychill Valencia facebook event",
+    "runs": 2,
+    "eventos": 0,
+    "urls_visitadas": 8,
+    "tiempo_s": 34.45,
+    "ultimo_run": "2026-08-13T15:27:03.679060+00:00"
+  },
+  "forest Ámsterdam facebook event": {
+    "dork": "forest Ámsterdam facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 25.19,
+    "ultimo_run": "2026-08-13T14:39:49.040653+00:00"
+  },
+  "darkpsy Viena facebook event": {
+    "dork": "darkpsy Viena facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 9,
+    "tiempo_s": 36.66,
+    "ultimo_run": "2026-08-13T14:40:27.351556+00:00"
+  },
+  "goa Aarhus facebook event": {
+    "dork": "goa Aarhus facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 5.2,
+    "ultimo_run": "2026-08-13T14:40:35.552848+00:00"
+  },
+  "darkpsy Milán facebook event": {
+    "dork": "darkpsy Milán facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.69,
+    "ultimo_run": "2026-08-13T14:40:38.347732+00:00"
+  },
+  "forest festival facebook event": {
+    "dork": "forest festival facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.31,
+    "ultimo_run": "2026-08-13T14:41:39.236738+00:00"
+  },
+  "forest Graz facebook event": {
+    "dork": "forest Graz facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 59.63,
+    "ultimo_run": "2026-08-13T14:42:40.712858+00:00"
+  },
+  "hitech Cracovia facebook event": {
+    "dork": "hitech Cracovia facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 59.6,
+    "ultimo_run": "2026-08-13T14:43:42.143704+00:00"
+  },
+  "psybient Madrid facebook event": {
+    "dork": "psybient Madrid facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 5,
+    "tiempo_s": 20.31,
+    "ultimo_run": "2026-08-13T15:22:48.597902+00:00"
+  },
+  "darkpsy Mánchester facebook event": {
+    "dork": "darkpsy Mánchester facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 4.8,
+    "ultimo_run": "2026-08-13T15:22:58.387565+00:00"
+  },
+  "progressive Bergen facebook event": {
+    "dork": "progressive Bergen facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 29.02,
+    "ultimo_run": "2026-08-13T15:23:29.443880+00:00"
+  },
+  "forest Lyon facebook event": {
+    "dork": "forest Lyon facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 4,
+    "tiempo_s": 14.96,
+    "ultimo_run": "2026-08-13T15:23:47.224077+00:00"
+  },
+  "forest Bergen facebook event": {
+    "dork": "forest Bergen facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 5.83,
+    "ultimo_run": "2026-08-13T15:23:54.704601+00:00"
+  },
+  "hitech facebook event": {
+    "dork": "hitech facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.89,
+    "ultimo_run": "2026-08-13T15:24:01.891091+00:00"
+  },
+  "psychill Berna facebook event": {
+    "dork": "psychill Berna facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 5,
+    "tiempo_s": 20.36,
+    "ultimo_run": "2026-08-13T15:24:24.823832+00:00"
+  },
+  "progressive Valencia facebook event": {
+    "dork": "progressive Valencia facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 4.58,
+    "ultimo_run": "2026-08-13T15:24:31.656804+00:00"
+  },
+  "forest rave facebook event": {
+    "dork": "forest rave facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 8,
+    "tiempo_s": 30.5,
+    "ultimo_run": "2026-08-13T15:25:03.836770+00:00"
+  },
+  "progressive Londres facebook event": {
+    "dork": "progressive Londres facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 5.4,
+    "ultimo_run": "2026-08-13T15:25:11.108832+00:00"
+  },
+  "progressive Nápoles facebook event": {
+    "dork": "progressive Nápoles facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 9,
+    "tiempo_s": 48.03,
+    "ultimo_run": "2026-08-13T15:26:02.010729+00:00"
+  },
+  "hitech Amberes facebook event": {
+    "dork": "hitech Amberes facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 5,
+    "tiempo_s": 14.34,
+    "ultimo_run": "2026-08-13T15:26:18.736714+00:00"
+  },
+  "hitech Róterdam facebook event": {
+    "dork": "hitech Róterdam facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 3,
+    "tiempo_s": 9.98,
+    "ultimo_run": "2026-08-13T15:26:31.791235+00:00"
+  },
+  "darkpsy Gotemburgo facebook event": {
+    "dork": "darkpsy Gotemburgo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 6.0,
+    "ultimo_run": "2026-08-13T15:26:40.782383+00:00"
+  },
+  "hitech Hamburgo facebook event": {
+    "dork": "hitech Hamburgo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.82,
+    "ultimo_run": "2026-08-13T15:26:47.294555+00:00"
+  },
+  "forest Bruselas facebook event": {
+    "dork": "forest Bruselas facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 6.6,
+    "ultimo_run": "2026-08-13T15:26:57.308579+00:00"
+  },
+  "goa Mánchester facebook event": {
+    "dork": "goa Mánchester facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 3,
+    "tiempo_s": 13.18,
+    "ultimo_run": "2026-08-13T15:27:19.564990+00:00"
+  },
+  "goa Gotemburgo facebook event": {
+    "dork": "goa Gotemburgo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 9,
+    "tiempo_s": 5.96,
+    "ultimo_run": "2026-08-13T15:27:28.569113+00:00"
+  },
+  "forest Zúrich facebook event": {
+    "dork": "forest Zúrich facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 5,
+    "tiempo_s": 19.44,
+    "ultimo_run": "2026-08-13T15:35:33.618034+00:00"
+  },
+  "psychill Estocolmo facebook event": {
+    "dork": "psychill Estocolmo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 7.1,
+    "ultimo_run": "2026-08-13T15:35:42.964902+00:00"
+  },
+  "darkpsy Bruselas facebook event": {
+    "dork": "darkpsy Bruselas facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 9,
+    "tiempo_s": 34.37,
+    "ultimo_run": "2026-08-13T15:36:19.963950+00:00"
+  },
+  "progressive Utrecht facebook event": {
+    "dork": "progressive Utrecht facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 6.41,
+    "ultimo_run": "2026-08-13T15:36:29.568280+00:00"
+  },
+  "goa Marsella facebook event": {
+    "dork": "goa Marsella facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 9,
+    "tiempo_s": 32.85,
+    "ultimo_run": "2026-08-13T15:37:04.162166+00:00"
+  },
+  "progressive Gante facebook event": {
+    "dork": "progressive Gante facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 27.05,
+    "ultimo_run": "2026-08-13T15:37:33.247986+00:00"
+  },
+  "goa Múnich facebook event": {
+    "dork": "goa Múnich facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 21.41,
+    "ultimo_run": "2026-08-13T15:37:57.138707+00:00"
+  },
+  "darkpsy Roma facebook event": {
+    "dork": "darkpsy Roma facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 5.04,
+    "ultimo_run": "2026-08-13T15:38:05.003382+00:00"
+  },
+  "fullon Gotemburgo facebook event": {
+    "dork": "fullon Gotemburgo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.55,
+    "ultimo_run": "2026-08-13T15:38:14.028989+00:00"
+  },
+  "hitech París facebook event": {
+    "dork": "hitech París facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 3,
+    "tiempo_s": 11.25,
+    "ultimo_run": "2026-08-13T15:38:28.443432+00:00"
+  },
+  "hitech Mánchester facebook event": {
+    "dork": "hitech Mánchester facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 3,
+    "tiempo_s": 10.86,
+    "ultimo_run": "2026-08-13T15:38:41.477042+00:00"
+  },
+  "fullon Amberes facebook event": {
+    "dork": "fullon Amberes facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 25.66,
+    "ultimo_run": "2026-08-13T15:39:10.313906+00:00"
+  },
+  "psychill Salzburgo facebook event": {
+    "dork": "psychill Salzburgo facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 7,
+    "tiempo_s": 26.79,
+    "ultimo_run": "2026-08-13T15:39:38.986791+00:00"
+  },
+  "psybient Ostrava facebook event": {
+    "dork": "psybient Ostrava facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 6.45,
+    "ultimo_run": "2026-08-13T15:39:47.533641+00:00"
+  },
+  "psychill Mánchester facebook event": {
+    "dork": "psychill Mánchester facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 6.05,
+    "ultimo_run": "2026-08-13T15:39:56.811975+00:00"
+  },
+  "hitech Nápoles facebook event": {
+    "dork": "hitech Nápoles facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 3.95,
+    "ultimo_run": "2026-08-13T15:40:02.666953+00:00"
+  },
+  "hitech Bruselas facebook event": {
+    "dork": "hitech Bruselas facebook event",
+    "runs": 1,
+    "eventos": 0,
+    "urls_visitadas": 6,
+    "tiempo_s": 9.91,
+    "ultimo_run": "2026-08-13T15:40:15.976208+00:00"
+  },
+  "twilight Málaga página facebook page": {
+    "dork": "twilight Málaga página facebook page",
+    "runs": 1,
+    "hallazgos": 5,
+    "urls_visitadas": 5,
+    "tiempo_s": 62.29,
+    "ultimo_run": "2026-08-13T18:59:42.695695+00:00"
+  },
+  "psycore Zaragoza página facebook page": {
+    "dork": "psycore Zaragoza página facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 30.92,
+    "ultimo_run": "2026-08-13T19:00:16.386436+00:00"
+  },
+  "psytrance Alicante comunidad facebook": {
+    "dork": "psytrance Alicante comunidad facebook",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 49.97,
+    "ultimo_run": "2026-08-13T19:01:09.757896+00:00"
+  },
+  "forest Palma grupo facebook": {
+    "dork": "forest Palma grupo facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 54.64,
+    "ultimo_run": "2026-08-13T19:02:07.500278+00:00"
+  },
+  "psybient Tenerife group facebook": {
+    "dork": "psybient Tenerife group facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 60.09,
+    "ultimo_run": "2026-08-13T19:03:11.322239+00:00"
+  },
+  "twilight Leipzig community facebook": {
+    "dork": "twilight Leipzig community facebook",
+    "runs": 1,
+    "hallazgos": 1,
+    "urls_visitadas": 8,
+    "tiempo_s": 52.56,
+    "ultimo_run": "2026-08-13T19:04:07.763343+00:00"
+  },
+  "progressive Zaragoza página facebook page": {
+    "dork": "progressive Zaragoza página facebook page",
+    "runs": 1,
+    "hallazgos": 3,
+    "urls_visitadas": 3,
+    "tiempo_s": 45.87,
+    "ultimo_run": "2026-08-14T00:07:31.929349+00:00"
+  },
+  "twilight Barcelona página facebook page": {
+    "dork": "twilight Barcelona página facebook page",
+    "runs": 1,
+    "hallazgos": 5,
+    "urls_visitadas": 5,
+    "tiempo_s": 19.69,
+    "ultimo_run": "2026-08-14T00:07:55.335144+00:00"
+  },
+  "forest Hannover community facebook": {
+    "dork": "forest Hannover community facebook",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 54.84,
+    "ultimo_run": "2026-08-14T00:08:52.204768+00:00"
+  },
+  "fullon Málaga comunidad facebook": {
+    "dork": "fullon Málaga comunidad facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 77.15,
+    "ultimo_run": "2026-08-14T00:10:11.411515+00:00"
+  },
+  "goa Hannover group facebook": {
+    "dork": "goa Hannover group facebook",
+    "runs": 1,
+    "hallazgos": 8,
+    "urls_visitadas": 9,
+    "tiempo_s": 51.6,
+    "ultimo_run": "2026-08-14T00:11:06.041527+00:00"
+  },
+  "progressive Alicante página facebook page": {
+    "dork": "progressive Alicante página facebook page",
+    "runs": 1,
+    "hallazgos": 1,
+    "urls_visitadas": 6,
+    "tiempo_s": 54.36,
+    "ultimo_run": "2026-08-14T00:12:02.783902+00:00"
+  },
+  "forest Valencia página facebook page": {
+    "dork": "forest Valencia página facebook page",
+    "runs": 2,
+    "hallazgos": 13,
+    "urls_visitadas": 13,
+    "tiempo_s": 60.01,
+    "ultimo_run": "2026-08-14T02:06:36.444776+00:00"
+  },
+  "progressive Zaragoza grupo facebook": {
+    "dork": "progressive Zaragoza grupo facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 5.4,
+    "ultimo_run": "2026-08-14T01:02:58.489264+00:00"
+  },
+  "psybient Tenerife comunidad facebook": {
+    "dork": "psybient Tenerife comunidad facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 10.43,
+    "ultimo_run": "2026-08-14T01:03:11.292225+00:00"
+  },
+  "psycore Palma oficial facebook page": {
+    "dork": "psycore Palma oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.45,
+    "ultimo_run": "2026-08-14T01:03:21.484546+00:00"
+  },
+  "goa Alicante 2026 facebook events": {
+    "dork": "goa Alicante 2026 facebook events",
+    "runs": 1,
+    "hallazgos": 3,
+    "urls_visitadas": 3,
+    "tiempo_s": 4.07,
+    "ultimo_run": "2026-08-14T01:12:59.301710+00:00"
+  },
+  "forest Berlín oficial facebook page": {
+    "dork": "forest Berlín oficial facebook page",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 25.24,
+    "ultimo_run": "2026-08-14T01:13:27.560001+00:00"
+  },
+  "hitech Berlín 2025 facebook": {
+    "dork": "hitech Berlín 2025 facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 6.0,
+    "ultimo_run": "2026-08-14T01:13:36.274019+00:00"
+  },
+  "psytrance Granada community facebook": {
+    "dork": "psytrance Granada community facebook",
+    "runs": 1,
+    "hallazgos": 4,
+    "urls_visitadas": 4,
+    "tiempo_s": 4.9,
+    "ultimo_run": "2026-08-14T01:13:44.188468+00:00"
+  },
+  "twilight Zaragoza open air facebook": {
+    "dork": "twilight Zaragoza open air facebook",
+    "runs": 1,
+    "hallazgos": 3,
+    "urls_visitadas": 3,
+    "tiempo_s": 3.7,
+    "ultimo_run": "2026-08-14T01:13:51.284071+00:00"
+  },
+  "psycore Palma página facebook page": {
+    "dork": "psycore Palma página facebook page",
+    "runs": 1,
+    "hallazgos": 7,
+    "urls_visitadas": 7,
+    "tiempo_s": 19.11,
+    "ultimo_run": "2026-08-14T01:14:13.434667+00:00"
+  },
+  "psycore Murcia page facebook page": {
+    "dork": "psycore Murcia page facebook page",
+    "runs": 1,
+    "hallazgos": 2,
+    "urls_visitadas": 8,
+    "tiempo_s": 8.05,
+    "ultimo_run": "2026-08-14T01:14:23.872105+00:00"
+  },
+  "psychill Leipzig festival facebook": {
+    "dork": "psychill Leipzig festival facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 4.79,
+    "ultimo_run": "2026-08-14T01:14:31.091502+00:00"
+  },
+  "zenon Frankfurt comunidad facebook": {
+    "dork": "zenon Frankfurt comunidad facebook",
+    "runs": 1,
+    "hallazgos": 7,
+    "urls_visitadas": 7,
+    "tiempo_s": 18.98,
+    "ultimo_run": "2026-08-14T01:14:53.144584+00:00"
+  },
+  "psychill Salamanca 2025 facebook": {
+    "dork": "psychill Salamanca 2025 facebook",
+    "runs": 1,
+    "hallazgos": 2,
+    "urls_visitadas": 2,
+    "tiempo_s": 7.17,
+    "ultimo_run": "2026-08-14T01:15:03.167777+00:00"
+  },
+  "psycore Essen community facebook": {
+    "dork": "psycore Essen community facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 10.01,
+    "ultimo_run": "2026-08-14T02:06:49.693210+00:00"
+  },
+  "psychill Madrid page facebook page": {
+    "dork": "psychill Madrid page facebook page",
+    "runs": 1,
+    "hallazgos": 7,
+    "urls_visitadas": 8,
+    "tiempo_s": 28.35,
+    "ultimo_run": "2026-08-14T02:07:20.382476+00:00"
+  },
+  "psycore Murcia 2025 facebook": {
+    "dork": "psycore Murcia 2025 facebook",
+    "runs": 1,
+    "hallazgos": 8,
+    "urls_visitadas": 8,
+    "tiempo_s": 21.26,
+    "ultimo_run": "2026-08-14T02:07:45.279907+00:00"
+  },
+  "psybient Granada página facebook page": {
+    "dork": "psybient Granada página facebook page",
+    "runs": 1,
+    "hallazgos": 5,
+    "urls_visitadas": 6,
+    "tiempo_s": 12.32,
+    "ultimo_run": "2026-08-14T02:08:00.580312+00:00"
+  },
+  "hitech promoter \"@gmail.com\"": {
+    "dork": "hitech promoter \"@gmail.com\"",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 7.26,
+    "ultimo_run": "2026-08-14T02:08:10.690107+00:00"
+  },
+  "psychill organizador \"@gmail.com\" facebook": {
+    "dork": "psychill organizador \"@gmail.com\" facebook",
+    "runs": 4,
+    "hallazgos": 2,
+    "urls_visitadas": 3,
+    "tiempo_s": 32.82,
+    "ultimo_run": "2026-08-14T15:13:52.359621+00:00"
+  },
+  "goa Bilbao página facebook page": {
+    "dork": "goa Bilbao página facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 23.74,
+    "ultimo_run": "2026-08-14T02:08:52.062397+00:00"
+  },
+  "psychill Bilbao oficial facebook page": {
+    "dork": "psychill Bilbao oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.43,
+    "ultimo_run": "2026-08-14T02:08:57.359043+00:00"
+  },
+  "darkpsy Dortmund festival facebook": {
+    "dork": "darkpsy Dortmund festival facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 56.32,
+    "ultimo_run": "2026-08-14T02:09:57.339155+00:00"
+  },
+  "psybient Valladolid oficial facebook page": {
+    "dork": "psybient Valladolid oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 83.73,
+    "ultimo_run": "2026-08-14T02:15:02.820528+00:00"
+  },
+  "psybient contact facebook": {
+    "dork": "psybient contact facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.52,
+    "ultimo_run": "2026-08-14T02:16:03.863437+00:00"
+  },
+  "hitech organizador \"@hotmail.com\" facebook": {
+    "dork": "hitech organizador \"@hotmail.com\" facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.93,
+    "ultimo_run": "2026-08-14T02:19:53.198043+00:00"
+  },
+  "twilight Sevilla 2025 facebook": {
+    "dork": "twilight Sevilla 2025 facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.7,
+    "ultimo_run": "2026-08-14T02:20:54.162630+00:00"
+  },
+  "forest Salamanca oficial facebook page": {
+    "dork": "forest Salamanca oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.6,
+    "ultimo_run": "2026-08-14T02:21:55.025315+00:00"
+  },
+  "psychill Hamburgo page facebook page": {
+    "dork": "psychill Hamburgo page facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.15,
+    "ultimo_run": "2026-08-14T02:22:55.581608+00:00"
+  },
+  "progressive Dortmund festival facebook": {
+    "dork": "progressive Dortmund festival facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 118.58,
+    "ultimo_run": "2026-08-14T02:29:02.781201+00:00"
+  },
+  "psychedelic Bilbao community facebook": {
+    "dork": "psychedelic Bilbao community facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 9.7,
+    "ultimo_run": "2026-08-14T03:53:22.554093+00:00"
+  },
+  "psychill Tenerife 2025 facebook": {
+    "dork": "psychill Tenerife 2025 facebook",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 12.59,
+    "ultimo_run": "2026-08-14T03:53:37.779374+00:00"
+  },
+  "goa organizador \"@hotmail.com\" facebook": {
+    "dork": "goa organizador \"@hotmail.com\" facebook",
+    "runs": 5,
+    "hallazgos": 5,
+    "urls_visitadas": 6,
+    "tiempo_s": 20.68,
+    "ultimo_run": "2026-08-14T15:40:05.078230+00:00"
+  },
+  "psychill promoter \"@gmail.com\"": {
+    "dork": "psychill promoter \"@gmail.com\"",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 4.09,
+    "ultimo_run": "2026-08-14T03:53:52.088585+00:00"
+  },
+  "goa Alicante group facebook": {
+    "dork": "goa Alicante group facebook",
+    "runs": 1,
+    "hallazgos": 9,
+    "urls_visitadas": 9,
+    "tiempo_s": 7.62,
+    "ultimo_run": "2026-08-14T03:54:01.735197+00:00"
+  },
+  "darkpsy Salamanca página facebook page": {
+    "dork": "darkpsy Salamanca página facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 7.09,
+    "ultimo_run": "2026-08-14T04:08:49.957491+00:00"
+  },
+  "psychill Leipzig open air facebook": {
+    "dork": "psychill Leipzig open air facebook",
+    "runs": 1,
+    "hallazgos": 4,
+    "urls_visitadas": 4,
+    "tiempo_s": 17.63,
+    "ultimo_run": "2026-08-14T04:09:10.739155+00:00"
+  },
+  "psychill Málaga comunidad facebook": {
+    "dork": "psychill Málaga comunidad facebook",
+    "runs": 1,
+    "hallazgos": 5,
+    "urls_visitadas": 6,
+    "tiempo_s": 10.14,
+    "ultimo_run": "2026-08-14T04:09:23.084748+00:00"
+  },
+  "psycore Múnich grupo facebook": {
+    "dork": "psycore Múnich grupo facebook",
+    "runs": 1,
+    "hallazgos": 9,
+    "urls_visitadas": 9,
+    "tiempo_s": 12.08,
+    "ultimo_run": "2026-08-14T04:09:38.708345+00:00"
+  },
+  "psybient Zaragoza oficial facebook page": {
+    "dork": "psybient Zaragoza oficial facebook page",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 13.47,
+    "ultimo_run": "2026-08-14T04:16:20.550800+00:00"
+  },
+  "twilight Berlín página facebook page": {
+    "dork": "twilight Berlín página facebook page",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 23.87,
+    "ultimo_run": "2026-08-14T04:16:47.471672+00:00"
+  },
+  "forest Murcia group facebook": {
+    "dork": "forest Murcia group facebook",
+    "runs": 1,
+    "hallazgos": 8,
+    "urls_visitadas": 8,
+    "tiempo_s": 8.91,
+    "ultimo_run": "2026-08-14T04:16:59.037169+00:00"
+  },
+  "goa promoter \"@gmail.com\"": {
+    "dork": "goa promoter \"@gmail.com\"",
+    "runs": 3,
+    "hallazgos": 2,
+    "urls_visitadas": 6,
+    "tiempo_s": 12.85,
+    "ultimo_run": "2026-08-14T15:34:53.817126+00:00"
+  },
+  "progressive Düsseldorf 2026 facebook": {
+    "dork": "progressive Düsseldorf 2026 facebook",
+    "runs": 2,
+    "hallazgos": 2,
+    "urls_visitadas": 2,
+    "tiempo_s": 16.4,
+    "ultimo_run": "2026-08-14T05:05:34.192687+00:00"
+  },
+  "psybient colectivo facebook group": {
+    "dork": "psybient colectivo facebook group",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 8.93,
+    "ultimo_run": "2026-08-14T04:56:50.415547+00:00"
+  },
+  "psycore Málaga grupo facebook": {
+    "dork": "psycore Málaga grupo facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 11.0,
+    "ultimo_run": "2026-08-14T04:57:04.911440+00:00"
+  },
+  "suomisaundi Essen comunidad facebook": {
+    "dork": "suomisaundi Essen comunidad facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 10.02,
+    "ultimo_run": "2026-08-14T04:57:17.182250+00:00"
+  },
+  "darkpsy promoter \"@yahoo.com\"": {
+    "dork": "darkpsy promoter \"@yahoo.com\"",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 2,
+    "tiempo_s": 8.29,
+    "ultimo_run": "2026-08-14T04:57:28.050177+00:00"
+  },
+  "psychill Berlín oficial facebook page": {
+    "dork": "psychill Berlín oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 10.01,
+    "ultimo_run": "2026-08-14T05:05:47.241086+00:00"
+  },
+  "suomisaundi Salamanca community facebook": {
+    "dork": "suomisaundi Salamanca community facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 10.01,
+    "ultimo_run": "2026-08-14T05:05:59.502170+00:00"
+  },
+  "psycore Múnich open air facebook": {
+    "dork": "psycore Múnich open air facebook",
+    "runs": 1,
+    "hallazgos": 8,
+    "urls_visitadas": 8,
+    "tiempo_s": 25.15,
+    "ultimo_run": "2026-08-14T05:06:28.359822+00:00"
+  },
+  "hitech Granada 2025 facebook": {
+    "dork": "hitech Granada 2025 facebook",
+    "runs": 1,
+    "hallazgos": 5,
+    "urls_visitadas": 5,
+    "tiempo_s": 31.07,
+    "ultimo_run": "2026-08-14T05:07:01.523847+00:00"
+  },
+  "suomisaundi Madrid community facebook": {
+    "dork": "suomisaundi Madrid community facebook",
+    "runs": 1,
+    "hallazgos": 6,
+    "urls_visitadas": 6,
+    "tiempo_s": 18.2,
+    "ultimo_run": "2026-08-14T05:52:52.830472+00:00"
+  },
+  "psychill Murcia group facebook": {
+    "dork": "psychill Murcia group facebook",
+    "runs": 1,
+    "hallazgos": 7,
+    "urls_visitadas": 8,
+    "tiempo_s": 4.25,
+    "ultimo_run": "2026-08-14T05:52:59.601227+00:00"
+  },
+  "forest Zaragoza comunidad facebook": {
+    "dork": "forest Zaragoza comunidad facebook",
+    "runs": 1,
+    "hallazgos": 4,
+    "urls_visitadas": 4,
+    "tiempo_s": 7.51,
+    "ultimo_run": "2026-08-14T05:53:11.055530+00:00"
+  },
+  "darkpsy Zaragoza open air facebook": {
+    "dork": "darkpsy Zaragoza open air facebook",
+    "runs": 1,
+    "hallazgos": 8,
+    "urls_visitadas": 9,
+    "tiempo_s": 6.74,
+    "ultimo_run": "2026-08-14T05:53:20.485527+00:00"
+  },
+  "goa Sevilla open air facebook": {
+    "dork": "goa Sevilla open air facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T05:59:50.551035+00:00"
+  },
+  "forest psy organizador \"@gmail.com\"": {
+    "dork": "forest psy organizador \"@gmail.com\"",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.2,
+    "ultimo_run": "2026-08-14T06:00:51.311505+00:00"
+  },
+  "forest Valladolid group facebook": {
+    "dork": "forest Valladolid group facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.76,
+    "ultimo_run": "2026-08-14T06:01:52.608426+00:00"
+  },
+  "psybient Stuttgart 2026 facebook events": {
+    "dork": "psybient Stuttgart 2026 facebook events",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T06:05:21.332374+00:00"
+  },
+  "psybient Murcia página facebook page": {
+    "dork": "psybient Murcia página facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.2,
+    "ultimo_run": "2026-08-14T06:06:22.333305+00:00"
+  },
+  "psybient Leipzig grupo facebook": {
+    "dork": "psybient Leipzig grupo facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.51,
+    "ultimo_run": "2026-08-14T06:07:23.606395+00:00"
+  },
+  "hitech contacto facebook": {
+    "dork": "hitech contacto facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 118.96,
+    "ultimo_run": "2026-08-14T06:09:25.780343+00:00"
+  },
+  "hitech Múnich 2026 facebook events": {
+    "dork": "hitech Múnich 2026 facebook events",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:13:55.800222+00:00"
+  },
+  "psychill Zaragoza page facebook page": {
+    "dork": "psychill Zaragoza page facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:13:59.054111+00:00"
+  },
+  "psybient Düsseldorf 2026 facebook": {
+    "dork": "psybient Düsseldorf 2026 facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.96,
+    "ultimo_run": "2026-08-14T15:14:03.261467+00:00"
+  },
+  "darkpsy promoter \"@hotmail.com\"": {
+    "dork": "darkpsy promoter \"@hotmail.com\"",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.19,
+    "ultimo_run": "2026-08-14T15:14:06.963149+00:00"
+  },
+  "psychill Murcia página facebook page": {
+    "dork": "psychill Murcia página facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.01,
+    "ultimo_run": "2026-08-14T15:20:24.527569+00:00"
+  },
+  "fullon Alicante festival facebook": {
+    "dork": "fullon Alicante festival facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:20:28.275285+00:00"
+  },
+  "forest contacto facebook": {
+    "dork": "forest contacto facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.93,
+    "ultimo_run": "2026-08-14T15:20:32.518424+00:00"
+  },
+  "forest Granada 2026 facebook events": {
+    "dork": "forest Granada 2026 facebook events",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.42,
+    "ultimo_run": "2026-08-14T15:20:36.459673+00:00"
+  },
+  "goa Sevilla grupo facebook": {
+    "dork": "goa Sevilla grupo facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.68,
+    "ultimo_run": "2026-08-14T15:20:40.086674+00:00"
+  },
+  "hitech Essen 2025 facebook": {
+    "dork": "hitech Essen 2025 facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:22:56.362379+00:00"
+  },
+  "progressive page facebook page": {
+    "dork": "progressive page facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.22,
+    "ultimo_run": "2026-08-14T15:23:00.089557+00:00"
+  },
+  "hitech Murcia grupo facebook": {
+    "dork": "hitech Murcia grupo facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:23:03.358509+00:00"
+  },
+  "progressive organizador \"@yahoo.com\" facebook": {
+    "dork": "progressive organizador \"@yahoo.com\" facebook",
+    "runs": 2,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.76,
+    "ultimo_run": "2026-08-14T15:28:17.018816+00:00"
+  },
+  "fullon promoter \"@hotmail.com\"": {
+    "dork": "fullon promoter \"@hotmail.com\"",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.03,
+    "ultimo_run": "2026-08-14T15:28:09.269847+00:00"
+  },
+  "psybient Colonia community facebook": {
+    "dork": "psybient Colonia community facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:28:13.172044+00:00"
+  },
+  "fullon Múnich festival facebook": {
+    "dork": "fullon Múnich festival facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 1.02,
+    "ultimo_run": "2026-08-14T15:28:20.699818+00:00"
+  },
+  "forest Hamburgo oficial facebook page": {
+    "dork": "forest Hamburgo oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 0.0,
+    "ultimo_run": "2026-08-14T15:28:23.765135+00:00"
+  },
+  "fullon Málaga page facebook page": {
+    "dork": "fullon Málaga page facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.23,
+    "ultimo_run": "2026-08-14T15:35:53.818612+00:00"
+  },
+  "psychill Palma oficial facebook page": {
+    "dork": "psychill Palma oficial facebook page",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.56,
+    "ultimo_run": "2026-08-14T15:36:55.321099+00:00"
+  },
+  "psychill contacto facebook": {
+    "dork": "psychill contacto facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 58.17,
+    "ultimo_run": "2026-08-14T15:41:06.393499+00:00"
+  },
+  "goa Madrid festival facebook": {
+    "dork": "goa Madrid festival facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 57.65,
+    "ultimo_run": "2026-08-14T15:42:07.646192+00:00"
+  },
+  "goa Málaga open air facebook": {
+    "dork": "goa Málaga open air facebook",
+    "runs": 1,
+    "hallazgos": 0,
+    "urls_visitadas": 0,
+    "tiempo_s": 118.52,
+    "ultimo_run": "2026-08-14T15:44:09.735962+00:00"
+  }
+}

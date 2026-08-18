@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-08-14T06:12:27.313440+00:00",
+  "csv": "/Users/angelgarcia/dharmadhatu_agent_qwen/eventos_encontrados.csv",
+  "total_filas": 448,
+  "total_candidatos": 7,
+  "procesados": 7,
+  "actualizados": 6,
+  "eliminados_basura": 35,
+  "siguientes_incompletos": [
+    {
+      "nombre": "Mindora (open air psychedelic trance party) - Obec Hubina",
+      "link": "https://facebook.com/events/obec-hubina/mindora-open-air-psychedelic-trance-party/861551950229848",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Quilles Psy & Chill - 1ère édition",
+      "link": "https://facebook.com/events/salon-de-quilles-st-gr%C3%A9goire/quilles-psy-chill-1%C3%A8re-%C3%A9dition/8683715928423114",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Home Again x Rotkäppchen Picnic at Secret Location",
+      "link": "https://ra.co/events/2493530",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Mariano Mellino - Brunch Madrid",
+      "link": "https://ra.co/events/2496128",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "SYNTH presents CORE: AD003 with KØLPØS / CARMELO PONENTE / K",
+      "link": "https://ra.co/events/2508105",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "TØXIC ALL NIGHT LONG (MULTI ALL NIGHT LONG)",
+      "link": "https://ra.co/events/2502992",
+      "faltan": [
+        "lugar"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "tareas": {
+    "goabase_agent": {
+      "nombre": "goabase_agent",
+      "id": "goabase_agent",
+      "estado": "completada",
+      "timeout": 120,
+      "prioridad": 6,
+      "encolada": "2026-08-14T15:40:01.989127+00:00",
+      "usa_tor": false,
+      "completada": "2026-08-14T15:47:20.196004+00:00",
+      "resultado": {
+        "eventos": 100,
+        "tiempo": 438.2
+      }
+    },
+    "songkick_agent": {
+      "nombre": "songkick_agent",
+      "id": "songkick_agent",
+      "estado": "completada",
+      "timeout": 120,
+      "prioridad": 7,
+      "encolada": "2026-08-14T15:40:01.989133+00:00",
+      "usa_tor": false,
+      "completada": "2026-08-14T15:47:20.196068+00:00",
+      "resultado": {
+        "eventos": 1,
+        "tiempo": 438.2
+      }
+    },
+    "clasificador_agent": {
+      "nombre": "clasificador_agent",
+      "id": "clasificador_agent",
+      "estado": "completada",
+      "timeout": 120,
+      "prioridad": 9,
+      "encolada": "2026-08-14T15:40:01.989145+00:00",
+      "usa_tor": false,
+      "completada": "2026-08-14T15:47:20.196144+00:00",
+      "resultado": {
+        "eventos": 0,
+        "tiempo": 438.2
+      }
+    },
+    "organizador_agent": {
+      "nombre": "organizador_agent",
+      "id": "organizador_agent",
+      "estado": "completada",
+      "timeout": 60,
+      "prioridad": 10,
+      "encolada": "2026-08-14T15:40:01.989151+00:00",
+      "usa_tor": false,
+      "completada": "2026-08-14T15:47:20.196187+00:00",
+      "resultado": {
+        "eventos": 0,
+        "tiempo": 438.2
+      }
+    },
+    "facebook_events_agent": {
+      "nombre": "facebook_events_agent",
+      "id": "facebook_events_agent",
+      "estado": "completada",
+      "timeout": 300,
+      "prioridad": 1,
+      "encolada": "2026-08-14T15:40:01.989082+00:00",
+      "usa_tor": true,
+      "completada": "2026-08-14T15:42:43.355993+00:00",
+      "resultado": {
+        "eventos": 5,
+        "tiempo": 161.37
+      }
+    },
+    "facebook_dorks_agent": {
+      "nombre": "facebook_dorks_agent",
+      "id": "facebook_dorks_agent",
+      "estado": "completada",
+      "timeout": 240,
+      "prioridad": 2,
+      "encolada": "2026-08-14T15:40:01.989099+00:00",
+      "usa_tor": true,
+      "completada": "2026-08-14T15:44:13.102617+00:00",
+      "resultado": {
+        "eventos": 0,
+        "tiempo": 251.11
+      }
+    },
+    "instagram_dorks_agent": {
+      "nombre": "instagram_dorks_agent",
+      "id": "instagram_dorks_agent",
+      "estado": "completada",
+      "timeout": 240,
+      "prioridad": 3,
+      "encolada": "2026-08-14T15:40:01.989107+00:00",
+      "usa_tor": true,
+      "completada": "2026-08-14T15:47:20.194425+00:00",
+      "resultado": {
+        "eventos": 0,
+        "tiempo": 438.2
+      }
+    },
+    "telegram_agent": {
+      "nombre": "telegram_agent",
+      "id": "telegram_agent",
+      "estado": "completada",
+      "timeout": 180,
+      "prioridad": 4,
+      "encolada": "2026-08-14T15:40:01.989114+00:00",
+      "usa_tor": true,
+      "completada": "2026-08-14T15:47:20.194495+00:00",
+      "resultado": {
+        "eventos": 0,
+        "tiempo": 438.2
+      }
+    },
+    "resident_advisor_agent": {
+      "nombre": "resident_advisor_agent",
+      "id": "resident_advisor_agent",
+      "estado": "completada",
+      "timeout": 300,
+      "prioridad": 5,
+      "encolada": "2026-08-14T15:40:01.989121+00:00",
+      "usa_tor": false,
+      "completada": "2026-08-14T15:47:20.195414+00:00",
+      "resultado": {
+        "eventos": 100,
+        "tiempo": 438.2
+      }
+    },
+    "completador_agent": {
+      "nombre": "completador_agent",
+      "id": "completador_agent",
+      "estado": "completada",
+      "timeout": 600,
+      "prioridad": 8,
+      "encolada": "2026-08-14T15:40:01.989139+00:00",
+      "usa_tor": true,
+      "completada": "2026-08-14T15:47:20.196110+00:00",
+      "resultado": {
+        "eventos": 0,
+        "tiempo": 438.2
+      }
+    }
+  },
+  "orden": [
+    "goabase_agent",
+    "songkick_agent",
+    "clasificador_agent",
+    "organizador_agent",
+    "facebook_events_agent",
+    "facebook_dorks_agent",
+    "instagram_dorks_agent",
+    "telegram_agent",
+    "resident_advisor_agent",
+    "completador_agent"
+  ]
+}

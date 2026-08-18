@@ -7,3 +7,6 @@ lxml
 requests
 python-dotenv
 instaloader>=4.10
+yagooglesearch
+fake-useragent
+PySocks

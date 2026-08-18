@@ -140,5 +140,119 @@ async def main():
     else:
         print("\n⚠️ No se encontraron eventos en ninguna fuente")
 
+    # ---- Loop Central de Optimización (aditivo, no intrusivo) ----
+    # Si core/orquestador.py existe, ejecuta la orquestación paralela con
+    # dedup global y suma los eventos nuevos al CSV. Nunca borra datos.
+    try:
+        from pathlib import Path
+        if Path(__file__).resolve().parent.joinpath("core", "orquestador.py").exists():
+            print("\n🧠 Orquestando scrapers adicionales (dedup global)...")
+            from core.orquestador import orquestar_scrapers
+            nuevos = orquestar_scrapers()
+            print(f"   ➕ {len(nuevos)} eventos nuevos añadidos por el orquestador")
+    except Exception as e:
+        print(f"   ⚠️ Orquestador no disponible: {type(e).__name__}: {e}")
+
+    # ---- Completar N/A de Facebook (aditivo, no intrusivo) ----
+    # Visita las URLs de eventos FB con campos N/A (fecha/lugar/organizador)
+    # y los completa con Playwright. No pierde información: lo que no se puede
+    # obtener se deja como estaba.
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "scrapers", "completar_fb_na.py").exists():
+            print("\n🔧 Completando N/A de Facebook (Playwright)...")
+            from scrapers.completar_fb_na import completar_eventos_fb
+            _res = completar_eventos_fb()
+            print(f"   ➕ {_res['actualizados']} eventos de Facebook completados")
+    except Exception as e:
+        print(f"   ⚠️ Completar FB N/A no disponible: {type(e).__name__}: {e}")
+
+    # ---- Completar N/A de Facebook con búsqueda externa (aditivo, no intrusivo) ----
+    # Para aquellos eventos FB donde Playwright no mostró lugar o fecha, buscamos
+    # en DuckDuckGo/Google una página web alternativa (foros, sitios de entradas)
+    # que contenga lugar o fecha claros.
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "scrapers", "completar_fb_externo.py").exists():
+            print("\n🔎 Completando N/A de Facebook (búsqueda externa DuckDuckGo)...")
+            from scrapers.completar_fb_externo import completar_fb_externo
+            _res = completar_fb_externo()
+            print(f"   ➕ {_res['actualizados']} eventos de Facebook completados externamente")
+    except Exception as e:
+        print(f"   ⚠️ Completar FB externo no disponible: {type(e).__name__}: {e}")
+
+    # ---- Facebook Dorks (Google Dorks vía DuckDuckGo) — opcional y aditiva ----
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "scrapers", "facebook_dorks.py").exists():
+            print("\n🔍 Facebook Dorks (búsqueda OSINT)...")
+            from scrapers.facebook_dorks import scrape_facebook_dorks
+            _evs_dorks = scrape_facebook_dorks()
+            print(f"   ➕ {len(_evs_dorks)} eventos de Facebook Dorks")
+    except Exception as e:
+        print(f"   ⚠️ Facebook Dorks no disponible: {type(e).__name__}: {e}")
+
+    # ---- Instagram Dorks (Google Dorks vía DuckDuckGo) — opcional y aditiva ----
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "scrapers", "instagram_dorks.py").exists():
+            print("\n🔍 Instagram Dorks (búsqueda OSINT)...")
+            from scrapers.instagram_dorks import scrape_instagram_dorks
+            _evs_ig_dorks = scrape_instagram_dorks()
+            print(f"   ➕ {len(_evs_ig_dorks)} eventos de Instagram Dorks")
+    except Exception as e:
+        print(f"   ⚠️ Instagram Dorks no disponible: {type(e).__name__}: {e}")
+
+    # ---- MCP Organizador (motor central de dorks) — opcional y aditiva ----
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "core", "mcp_organizador.py").exists():
+            print("\n🔧 MCP Organizador (motor central de dorks)...")
+            from core.mcp_organizador import ejecutar_mcp_dorks
+            _evs_mcp = ejecutar_mcp_dorks()
+            print(f"   ➕ {len(_evs_mcp)} eventos de MCP Organizador")
+    except Exception as e:
+        print(f"   ⚠️ MCP Organizador no disponible: {type(e).__name__}: {e}")
+
+    # ---- Agente Coordinador (Sistema Multiagente Ligero) — opcional y aditiva ----
+    # Si core/agente_coordinador.py existe, ejecuta los subagentes en paralelo
+    # (máx 3 simultáneos, semáforo Tor máx 2) y suma eventos nuevos al CSV.
+    # Nunca rompe el flujo: si no está disponible, se sigue igual que antes.
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "core", "agente_coordinador.py").exists():
+            print("\n🤖 Agente Coordinador (multiagente ligero)...")
+            from core.agente_coordinador import ejecutar_agentes
+            _nuevos_coord = ejecutar_agentes()
+            print(f"   ➕ {_nuevos_coord} eventos nuevos añadidos por el coordinador de agentes")
+    except Exception as e:
+        print(f"   ⚠️ Agente Coordinador no disponible: {type(e).__name__}: {e}")
+
+    # ---- Supervisión algebra lineal (opcional, aditiva) ----
+    # Capa de mejora por álgebra lineal: rellena N/A (subgénero, tipo_lugar)
+    # con confianza alta y deduplica duplicados internos por similitud. Nunca
+    # resta eventos válidos; si el módulo no existe, se ignora sin romper.
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "core", "algebra_lineal.py").exists():
+            print("\n🧮 Supervisión algebra lineal (mejora CSV)...")
+            from core.algebra_lineal import supervisar_y_mejorar
+            _res_alg = supervisar_y_mejorar(
+                str(_P(__file__).resolve().parent / "eventos_encontrados.csv"),
+                aplicar_cambios=True)
+            _rs = _res_alg.get("resumen", {})
+            print(f"   ➕ {_rs.get('subgeneros_rellenados', 0)} subgéneros, "
+                  f"{_rs.get('tipos_lugar_rellenados', 0)} tipos de lugar "
+                  f"(dedup: {_rs.get('duplicados_eliminados', 0)})")
+    except Exception as e:
+        print(f"   ⚠️ Supervisión algebra no disponible: {type(e).__name__}: {e}")
+
 if __name__ == "__main__":
     asyncio.run(main())

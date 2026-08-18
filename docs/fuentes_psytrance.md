@@ -72,7 +72,7 @@ etc.). Un evento es válido si cumple TODOS:
 |--------|-------|--------|-------|
 | Goabase | 301 eventos | JSON-LD API | Portal psytrance específico. **Limit ampliado 100→301** (la API expone 301 parties futuras reales con fecha+link). |
 | Resident Advisor | 300 eventos | GraphQL público | Filtrado por género/keywords; solo ~17 sobreviven a `limpiar_calidad`. |
-| Facebook (SERP + grupos) | ~8 eventos reales | Playwright + requests | Búsqueda pública SERP + scraping de grupos públicos. Estrategia 5: grupos conocidos visitados con Playwright/requests para extraer eventos reales (no placeholders). |
+| Facebook (SERP + grupos) | **102 eventos reales** | Playwright + requests | Búsqueda pública SERP (5 fases: Startpage, DDG, Mojeek, Qwant, Brave, Bing, Google) + scraping de grupos públicos + recuperación de eventos cacheados. Enriquecimiento por página pública (fecha/organizador/email). |
 | Songkick | 1 evento | HTTP + BS4 | General, bajo yield para psytrance. |
 
 ## Validación de Calidad
@@ -122,22 +122,25 @@ CSV existente + nuevos scrapers
   └─────────────────┴──────────────────┘
 ```
 
-## Resultados del Consolidado (tras integración Facebook)
+## Resultados del Consolidado (Fase 3, Ago 2026)
 
-- **CSV completo** (`eventos_encontrados.csv`): 333 eventos
-- **CSV limpio psytrance** (`eventos_psytrance.csv`): **333 eventos** reales
-- **Distribución**: Goabase 301, Resident Advisor 17, Facebook 15
-- **Subgéneros**: psytrance 272, goa 19, psychedelic 12, darkpsy 10, forest 8, progressive 8, twilight 1, hitech 1, general 2
-- **Rango de fechas**: 2026 (mayoría), 2027, 2028
-- **Generales**: 2 (eventos de Facebook sin clasificación)
+- **CSV completo** (`eventos_encontrados.csv`): 420 eventos
+- **CSV limpio psytrance** (`eventos_psytrance.csv`): **420 eventos** reales
+- **Distribución**: Goabase 301, Resident Advisor 17, Facebook 102
+- **Subgéneros**: psytrance 343, goa 19, forest 18, darkpsy 17, psychedelic 12, progressive 8, twilight 1, hitech 1, psychill 1
+- **Facebook**: 102 eventos (101 SERP público + 1 Darkpsy Family), con 16 sin fecha (aceptados por tener link+organizador reales)
 
-### Integración de Facebook
+### Integración de Facebook (Fase 3)
 
-- Siempre se ejecuta: `max_keywords=15`, `max_visitas=50`, timeout 600s (10 min)
-- SERP público: Startpage, Bing, DuckDuckGo, Mojeek, Qwant, Brave
-- Grupos conocidos: Psychedelic Trance Community, Forest Tribe, Psytrance Israel, Goa Gil, etc.
-- Eventos con "Fecha no disponible" se conservan (extracción de fechas puede fallar en páginas públicas)
-- Eventos con subgénero "general" de Facebook se reclassifican como "psytrance" (fueron encontrados vía keywords psytrance)
+- `run_facebook_only.py`: 3 pasadas, `max_keywords=30`, `max_visitas=60`, timeout 1200s por pasada.
+- SERP público: Startpage, DuckDuckGo, Mojeek, Qwant, Brave, Bing, Google.
+- Techo por pasada: `MAX_EVENTOS_POR_RUN = 80` (antes 50).
+- `limpiar_calidad()` exige organizador real para Facebook sin fecha → el
+  enriquecimiento **reintenta** páginas cacheadas que no lograron organizador.
+- `recuperar_fb_cacheados.py`: recupera eventos con organizador en
+  `eventos_visitados.json` que quedaron fuera del CSV en runs anteriores
+  (re-visita vía Playwright). Fue la palanca que elevó Facebook de 50 a 102.
+- Eventos con subgénero "general" de Facebook se reclassifican como "psytrance" (fueron encontrados vía keywords psytrance).
 
 ## Uso
 
@@ -171,6 +174,70 @@ Todas las dependencias ya están en `requirements.txt`:
 5. **Psytrance.pl**: Principalmente histórico (2009-2017) + Facebook link.
 6. **Ektoplazm**: Netlabel, no portal de eventos. Menciones en blog only.
 7. **Goabase**: Los 301 eventos de la API son el pilar del dataset. `limpiar_calidad` solo los conserva si la API expone fecha+link reales (verificado: 301/301).
+
+## Loop Central de Optimización (Fase 4, Ago 2026)
+
+Nueva capa de orquestación que **mira todo el dataset con dedup global**, para que
+los scrapers convivan sin duplicar eventos entre fuentes ni entre ejecuciones.
+
+- **`core/orquestador.py`**: `orquestar_scrapers()` ejecuta en paralelo
+  (ThreadPoolExecutor) los scrapers activos definidos en `SCRAPERS`, cada uno con
+  `timeout` propio (Facebook 900s, Instagram 300s, Goabase/Songkick 120s, resto 60s).
+  Recolecta resultados, pasa el **Deduplicador global** y actualiza
+  `eventos_encontrados.csv` de forma **aditiva** (nunca borra filas). Resumen y
+  errores por scraper en `metricas_orquestador.json`.
+- **`core/deduplicador.py`**: `Deduplicador` con hash SHA-256 de
+  `nombre + fecha + desc`; guarda `cache_dedup.json`. `filtrar_nuevos()` devuelve
+  solo no vistos; `registrar_vistos()` los marca. Auto-limpieza si la caché supera
+  las 5000 entradas. Es la misma clave que usaba `utils.helpers.deduplicar_eventos`.
+- **`core/recursos.py`**: rotación de User-Agents (UAs propios + `anti_block`) y
+  proxies (`proxies.txt`) vía `obtener_user_agent()` / `obtener_proxy()` /
+  `obtener_proxies_dict()`.
+- **`scrapers/instagram_scraper.py`**: `scrape_instagram_events()` acepta ahora
+  `timeout` y `deduplicador` opcionales; filtra por dedup global antes de devolver.
+  (Nota: `scrapers/instagram` es un paquete que reexporta desde `instagram_scraper`).
+- **`main.py`**: al final de `main()`, llamada condicional y no intrusiva a
+  `core.orquestador` si existe el módulo.
+
+**Uso / prueba**:
+```bash
+python3 -c "from core.orquestador import orquestar_scrapers; orquestar_scrapers(dry_run=True)"  # valida sin tocar disco
+python3 -c "from core.orquestador import orquestar_scrapers; nuevos = orquestar_scrapers(activos=['psytrance_pl']); print(len(nuevos))"  # solo una fuente
+python3 -c "from core.orquestador import orquestar_scrapers; orquestar_scrapers()"  # run completo (generosa larga)
+```
+La primera ejecución real añadió 6 eventos de psytrance.pl (420 → 426); una segunda
+no devuelve ninguno (dedup global activo).
+
+## Completar N/A de Facebook (Fase 4b, Ago 2026)
+
+`scrapers/completar_fb_na.py` — `completar_eventos_fb()` visita con Playwright
+(sin cookies, stealth + user-agent móvil) las URLs de eventos de Facebook que
+tienen `fecha`, `lugar` u `organizador` = N/A / "Fecha no disponible" y completa
+los campos que faltan. Nunca borra ni pisa valores existentes: si un campo no se
+puede obtener, se deja como estaba.
+
+- Paralelismo limitado (por defecto 5 navegadores vía `ThreadPoolExecutor`).
+- Máximo 2 intentos por URL; timeout de 20s por página.
+- Extrae por selectores (desktop) y por líneas del texto visible (móvil:
+  `h1` real saltando el aviso "Este navegador no es compatible", fecha por línea
+  candidata, lugar desde `fecha | hora | lugar` o dirección, organizador por
+  patrones ES/EN con limpieza de conjunciones).
+- Fechas normalizadas a ISO (YYYY-MM-DD); un año suelto en un título NO cuenta
+  como fecha (evita "CAMAKAVUM FESTIVAL 2026" → 2026-01-01 falso).
+- Salidas: CSV actualizado (mismo orden de columnas) + `eventos_completados.json`
+  con resumen (actualizados / siguen incompletos).
+
+**Resultado de la primera corrida**: 45 candidatos → 30 completados, 16 siguen
+incompletos (11 de ellos solo por `lugar`, lo más difícil sin ciudad visible).
+37 filas mejoradas en total, 0 datos perdidos (457 filas intactas).
+
+**Uso**:
+```bash
+python3 scrapers/completar_fb_na.py            # completo
+python3 scrapers/completar_fb_na.py --limit 5  # solo 5 primeros
+python3 -c "from scrapers.completar_fb_na import completar_eventos_fb; completar_eventos_fb()"
+```
+Integrado al final de `main.py` (llamada opcional y no intrusiva).
 
 ## Principios de Diseño
 

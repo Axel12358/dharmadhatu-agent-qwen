@@ -37,6 +37,18 @@ except Exception:
     def get_anti_block():
         return None
 
+# Loop Central de Optimización: deduplicador global y recursos compartidos
+# (opcional). Se usan si están disponibles; el scraper funciona igual sin ellos.
+try:
+    from core.deduplicador import Deduplicador
+except Exception:
+    Deduplicador = None
+
+try:
+    from core import recursos as _recursos
+except Exception:
+    _recursos = None
+
 # ------------------------------------------------------------------ #
 # CONFIGURACIÓN Y ARCHIVOS DE ESTADO
 # ------------------------------------------------------------------ #
@@ -217,24 +229,63 @@ def _extraer_json_instagram(html: str) -> Optional[Dict]:
     return None
 
 def _parsear_posts_desde_json(json_data: Dict) -> List[Dict]:
-    """Convierte JSON de Instagram a lista de posts con caption, url, location."""
-    posts = []
+    """Convierte JSON de Instagram a lista de posts con caption, url, location.
 
+    Cubre los esquemas públicos 2024-2026:
+    - graphql.hashtag.edge_hashtag_to_media.edges[].node  (página de tag pública)
+    - graph.hashtag.edge_hashtag_to_top_posts.edges[].node
+    - Recursivo sobre __typename GraphImage/GraphSidecar/GraphVideo.
+    """
+    posts = []
+    vistos_shortcode = set()
+
+    def _agregar(shortcode, caption, location):
+        if not shortcode or shortcode in vistos_shortcode:
+            return
+        vistos_shortcode.add(shortcode)
+        posts.append({
+            "shortcode": shortcode,
+            "url": f"https://www.instagram.com/p/{shortcode}/",
+            "caption": caption,
+            "location": location,
+        })
+
+    # 1) Buqueda dirigida: cualquier diccionario con edge_hashtag_to_top_posts/
+    #    edge_hashtag_to_media (vive bajo graphql.hashtag o graph.hashtag).
+    def buscar_directo(obj):
+        if isinstance(obj, dict):
+            for clave in ("edge_hashtag_to_top_posts", "edge_hashtag_to_media",
+                          "edge_hashtag_to_recent_media"):
+                lista = obj.get(clave)
+                if isinstance(lista, dict) and isinstance(lista.get("edges"), list):
+                    for edge in lista["edges"]:
+                        node = edge.get("node") or {}
+                        sc = node.get("shortcode")
+                        cap = ""
+                        caption_edges = node.get("edge_media_to_caption", {}).get("edges", [])
+                        if caption_edges:
+                            cap = caption_edges[0].get("node", {}).get("text", "") or ""
+                        loc = ""
+                        if node.get("location"):
+                            loc = node["location"].get("name", "") or ""
+                        _agregar(sc, cap, loc)
+            for v in obj.values():
+                buscar_directo(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                buscar_directo(item)
+
+    buscar_directo(json_data)
+
+    # 2) Cuadro recursivo genérico (cubre GraphImage/GraphVideo/GraphSidecar).
     def recurse(obj):
         if isinstance(obj, dict):
-            # Post típico en GraphQL
-            if obj.get("__typename") == "GraphImage" or obj.get("__typename") == "GraphSidecar" or obj.get("__typename") == "GraphVideo":
+            if obj.get("__typename") in ("GraphImage", "GraphSidecar", "GraphVideo"):
                 shortcode = obj.get("shortcode")
                 caption_edges = obj.get("edge_media_to_caption", {}).get("edges", [])
                 caption = caption_edges[0]["node"]["text"] if caption_edges else ""
                 location = obj.get("location", {}).get("name", "") if obj.get("location") else ""
-                if shortcode:
-                    posts.append({
-                        "shortcode": shortcode,
-                        "url": f"https://www.instagram.com/p/{shortcode}/",
-                        "caption": caption,
-                        "location": location,
-                    })
+                _agregar(shortcode, caption, location)
             for v in obj.values():
                 recurse(v)
         elif isinstance(obj, list):
@@ -256,16 +307,35 @@ def _fase1_requests(hashtag: str, t0_global: float) -> List[Dict]:
         if ab:
             ab.wait_if_needed("instagram.com")
 
-        headers = {
-            "User-Agent": ab.random_user_agent() if ab else random.choice([
+        # User-Agent desde recursos compartidos (con fallback a anti_block/aleatorio)
+        ua = None
+        if _recursos is not None:
+            try:
+                ua = _recursos.obtener_user_agent()
+            except Exception:
+                ua = None
+        if not ua:
+            ua = ab.random_user_agent() if ab else random.choice([
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
-            ]),
+            ])
+
+        headers = {
+            "User-Agent": ua,
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
+            "Accept-Encoding": "identity",
         }
 
-        proxies = ab.requests_proxies() if ab else None
+        # Proxy desde recursos compartidos (con fallback a anti_block)
+        proxies = None
+        if _recursos is not None:
+            try:
+                proxies = _recursos.obtener_proxies_dict()
+            except Exception:
+                proxies = None
+        if proxies is None:
+            proxies = ab.requests_proxies() if ab else None
         r = requests.get(url, headers=headers, timeout=TIMEOUT_REQUESTS, proxies=proxies)
 
         if r.status_code != 200 or len(r.text) < 5000:
@@ -306,6 +376,19 @@ async def _fase2_playwright(hashtag: str, t0_global: float) -> List[Dict]:
                 args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-blink-features=AutomationControlled"],
             )
             context = await ab.create_stealth_context(browser, use_tor=True) if ab else await browser.new_context()
+
+            try:
+                from playwright.async_api import async_playwright as _apw
+            except Exception:
+                pass
+            # User-Agent realista desde recursos compartidos (si el context lo permite)
+            if _recursos is not None and context is not None and not getattr(context, "_locked", False):
+                try:
+                    await context.add_init_script(
+                        f"Object.defineProperty(navigator,'userAgent',{{get:()=> '{_recursos.obtener_user_agent()}'}});"
+                    )
+                except Exception:
+                    pass
 
             page = await context.new_page()
             await page.goto(url, timeout=TIMEOUT_PLAYWRIGHT * 1000, wait_until="domcontentloaded")
@@ -381,11 +464,20 @@ def _inferir_subgenero(hashtag: str, caption: str) -> str:
 # ------------------------------------------------------------------ #
 # PIPELINE PRINCIPAL
 # ------------------------------------------------------------------ #
-def scrape_instagram_events(config: Optional[Dict] = None) -> List[Dict]:
+def scrape_instagram_events(config: Optional[Dict] = None,
+                            timeout: Optional[float] = None,
+                            deduplicador=None) -> List[Dict]:
     """
     Entry point principal.
+    Params (opcionales, usados por core/orquestador; main.py no cambia):
+      - timeout: override del TIMEOUT_GLOBAL (segundos).
+      - deduplicador: instancia de core.deduplicador.Deduplicador para evitar
+        que este scraper devuelva eventos ya registrados en el run actual.
     Returns: lista de eventos en formato estándar del proyecto.
     """
+    global TIMEOUT_GLOBAL
+    if timeout:
+        TIMEOUT_GLOBAL = float(timeout)
     t0 = time.time()
     if config is None:
         config = {}
@@ -486,8 +578,23 @@ def scrape_instagram_events(config: Optional[Dict] = None) -> List[Dict]:
     if unicos:
         _save_json(OUTPUT_FILE, unicos)
         print(f"✅ {len(unicos)} eventos guardados en {OUTPUT_FILE}")
-    else:
-        print("⚠️ No se encontraron eventos en este run")
+
+    # Dedup global (Loop Central de Optimización): filtrar los que el
+    # deduplicador ya registró en este run. Solo se devuelven los nuevos.
+    if deduplicador is not None:
+        antes = len(unicos)
+        nuevos = []
+        for ev in unicos:
+            if deduplicador.filtrar_nuevos([ev]):
+                nuevos.append(ev)
+        unicos = nuevos
+        print(f"🎯 Dedup global: {antes} → {len(unicos)} nuevos para el orquestador")
+        try:
+            deduplicador.guardar()
+        except Exception:
+            pass
+
+    print("⚠️ No se encontraron eventos en este run" if not unicos else "")
 
     total_t = round(time.time() - t0, 1)
     print(f"⏱ Tiempo total: {total_t}s | Hashtags: {len(hashtags)} | Eventos: {len(unicos)}")

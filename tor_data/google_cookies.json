@@ -1,0 +1,20 @@
+[
+  {
+    "name": "CONSENT",
+    "value": "YES+cb.20220301-11-p0.en+FX+700",
+    "domain": ".google.com",
+    "path": "/"
+  },
+  {
+    "name": "SOCS",
+    "value": "CAI",
+    "domain": ".google.com",
+    "path": "/"
+  },
+  {
+    "name": "NID",
+    "value": "23=ADolaRzUJv0KJ5G2E1OjJU_YlGd8H2hDwJz1h6kQW5x8V1Z2m3n4o5p6q7r8s9t",
+    "domain": ".google.com",
+    "path": "/"
+  }
+]

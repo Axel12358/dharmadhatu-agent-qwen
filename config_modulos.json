@@ -1,0 +1,19 @@
+{
+  "activos": {
+    "goabase": true,
+    "songkick": true,
+    "resident_advisor": true,
+    "telegram": true,
+    "reddit": true,
+    "psytrance_pl": true,
+    "isratrance": true,
+    "ektoplazm": true,
+    "meetup": true,
+    "facebook_mcp": true,
+    "facebook_events_from_groups": true,
+    "facebook_dorks": false,
+    "instagram_dorks": false,
+    "dorks_resultados": false,
+    "mcp_organizador": false
+  }
+}

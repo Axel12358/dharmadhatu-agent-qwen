@@ -1,82 +1,73 @@
 {
-  "timestamp": "2026-08-14T06:12:12.901585+00:00",
+  "timestamp": "2026-08-19T00:43:05.482922+00:00",
   "csv": "/Users/angelgarcia/dharmadhatu_agent_qwen/eventos_encontrados.csv",
-  "total_filas": 483,
-  "total_candidatos": 81,
-  "procesados": 81,
-  "actualizados": 69,
+  "total_filas": 475,
+  "total_candidatos": 58,
+  "procesados": 58,
+  "actualizados": 42,
   "siguen_incompletos": [
     {
-      "nombre": "MarasmANNO RoMaN PSYtrance CapoDanno",
-      "link": "https://facebook.com/events/via-casilina-283-00176-roma-rm-italia/-marasmanno-roman-psytrance-capodanno-/886431367115371",
+      "nombre": "Sesiones Intimas de Invierno Vol1 / PsyTrance - DarkPsy",
+      "link": "https://facebook.com/events/3-poniente-con-1-y-2-sur-ex-surikata-talca/sesiones-intimas-de-invierno-vol1-psytrance-darkpsy/449547918862084",
       "faltan": [
         "lugar"
       ]
     },
     {
-      "nombre": "Psykabar - Psymoun au Slam",
-      "link": "https://facebook.com/events/slam-skatebar/psykabar-psymoun-au-slam-/1439391324347254",
+      "nombre": "The DarkPsy",
+      "link": "https://facebook.com/events/alte-kaserne-zürich/the-darkpsy/1632223770730121",
       "faltan": [
         "lugar"
       ]
     },
     {
-      "nombre": "FULLNESS FEST 2025",
-      "link": "https://facebook.com/events/juncosa-de-les-garrigues/fullness-fest-2025/949814090538227",
+      "nombre": "Oblivion Open Air - 15 Agosto 2026",
+      "link": "https://facebook.com/events/cascina-bellunesi-ponte-capriasca/oblivion-open-air-15-agosto-2026/1601045564781803",
       "faltan": [
         "lugar"
       ]
     },
     {
-      "nombre": "Mindora (open air psychedelic trance party) - Obec Hubina",
-      "link": "https://facebook.com/events/obec-hubina/mindora-open-air-psychedelic-trance-party/861551950229848",
+      "nombre": "STEP TO PSY - Psytrance / Progressive / Goa @FLEX",
+      "link": "https://facebook.com/events/flex/step-to-psy-psytrance-progressive-goa-flex/720877374051631",
       "faltan": [
         "lugar"
       ]
     },
     {
-      "nombre": "SYNAPSENTAPSEN",
-      "link": "https://facebook.com/events/waagplatz-7-9020-klagenfurt-austria/synapsentapsen-psytrance-darkpsy-hitech/1466359757758973",
+      "nombre": "Planète Sauvage Festival 3026",
+      "link": "https://facebook.com/events/arcomps/planète-sauvage-festival-3026/830975866109817",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "JUL 4-6. UFOREST: DEPENDENCE DAY - PsyTrance Festival",
+      "link": "https://facebook.com/events/big-bear-lake-california-usa/jul-4-6-uforest-dependence-day-psytrance-resort-takeover/2330402090750825",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "DREAM FOREST - SPECIAL EDITION",
+      "link": "https://facebook.com/events/dream-beach-goa/dream-forest-special-edition/698300864158378",
       "faltan": [
         "organizador"
       ]
     },
     {
-      "nombre": "Psy-kick #2 dark progressive - zenonesque - 20.09.2025 ...",
-      "link": "https://facebook.com/events/mashroom-plac-wolnica-10/psy-kick-2-dark-progressive-zenonesque-20092025-mashroom-krak%C3%B3w/612024161774975",
+      "nombre": "Halloween Special with Tengri, Solarythm, Cosinus & Le Chat-Man",
+      "link": "https://facebook.com/events/esplanade-kongresshaus-21-2502-bielbienne-switzerland/halloween-special-with-tengri-solarythm-cosinus-le-chat-man/1120963493348143",
       "faltan": [
         "lugar",
         "organizador"
       ]
     },
     {
-      "nombre": "Quilles Psy & Chill - 1ère édition",
-      "link": "https://facebook.com/events/salon-de-quilles-st-gr%C3%A9goire/quilles-psy-chill-1%C3%A8re-%C3%A9dition/8683715928423114",
-      "faltan": [
-        "fecha",
-        "lugar",
-        "organizador"
-      ]
-    },
-    {
-      "nombre": "WINTER TALES IV (PSYTRANCE&CHILL OUT WEEKEND EVENT IN PRAGUE)",
-      "link": "https://facebook.com/events/prostor-element%C5%AF/winter-tales-iv-psytrancechill-out-weekend-event-in-prague/2548097882222392",
+      "nombre": "Noc Kupały · 20.06.2026 · Małopolskie, Kraków",
+      "link": "https://facebook.com/events/krak%C3%B3w/noc-kupa%C5%82y-20062026-ma%C5%82opolskie-krak%C3%B3w/950219550932912",
       "faltan": [
         "lugar"
-      ]
-    },
-    {
-      "nombre": "Facebook facebook.com › events › παραλία-λαγονήσι › free-hitech-psycore-dark-psytrance-event › 41605",
-      "link": "https://facebook.com/events/παραλία-λαγονήσι/free-hitech-psycore-dark-psytrance-event/416054772096310",
-      "faltan": [
-        "fecha"
-      ]
-    },
-    {
-      "nombre": "Facebook m.facebook.com › events › s › psysolation-psychedelic-sets-f › 2658344224295247 Log in or s",
-      "link": "https://facebook.com/events/s/psysolation-psychedelic-sets-f/2658344224295247",
-      "faltan": [
-        "fecha"
       ]
     },
     {
@@ -97,6 +88,33 @@
       ]
     },
     {
+      "nombre": "Facebook facebook.com › events › park-murckowski-murcki › muszlownik-psytrance-beach-2026 › 15945947",
+      "link": "https://facebook.com/events/park-murckowski-murcki/muszlownik-psytrance-beach-2026/1594594728341948",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › park-murckowski › muszlownik-psytrance-beach-2025 › 115293691322466",
+      "link": "https://facebook.com/events/park-murckowski/muszlownik-psytrance-beach-2025/1152936913224660",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › laveen-az › oracle-a-psychedelic-trancefamily-reunion-az- › 2125804",
+      "link": "https://facebook.com/events/laveen-az/oracle-a-psychedelic-trancefamily-reunion-az-/2125804541496961",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
       "nombre": "Facebook facebook.com › events › reykjavík-iceland › transition-psytrance-280924 › 858077236289562 T",
       "link": "https://facebook.com/events/reykjav%C3%ADk-iceland/transition-psytrance-280924/858077236289562",
       "faltan": [
@@ -105,8 +123,17 @@
       ]
     },
     {
-      "nombre": "Facebook facebook.com › events › underground-lounge-chicago › psychedelic-tendencies › 3947311444875",
-      "link": "https://facebook.com/events/underground-lounge-chicago/psychedelic-tendencies/394731144487504",
+      "nombre": "Facebook facebook.com › events › images-nightclub › spicy-mandala-plymouth-psytrance › 4169956110976",
+      "link": "https://facebook.com/events/images-nightclub/spicy-mandala-plymouth-psytrance/416995611097683",
+      "faltan": [
+        "fecha",
+        "lugar",
+        "organizador"
+      ]
+    },
+    {
+      "nombre": "Facebook facebook.com › events › stoyka › psychedelic-parties-at-stoyka › 353058101716795 Log in or ",
+      "link": "https://facebook.com/events/stoyka/psychedelic-parties-at-stoyka/353058101716795",
       "faltan": [
         "fecha",
         "lugar",

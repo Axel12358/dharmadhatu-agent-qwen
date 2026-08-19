@@ -1,29 +1,43 @@
 {
-  "timestamp": "2026-08-14T06:12:27.313440+00:00",
+  "timestamp": "2026-08-19T00:43:19.853523+00:00",
   "csv": "/Users/angelgarcia/dharmadhatu_agent_qwen/eventos_encontrados.csv",
-  "total_filas": 448,
-  "total_candidatos": 7,
-  "procesados": 7,
-  "actualizados": 6,
-  "eliminados_basura": 35,
+  "total_filas": 447,
+  "total_candidatos": 8,
+  "procesados": 8,
+  "actualizados": 5,
+  "eliminados_basura": 28,
   "siguientes_incompletos": [
     {
-      "nombre": "Mindora (open air psychedelic trance party) - Obec Hubina",
-      "link": "https://facebook.com/events/obec-hubina/mindora-open-air-psychedelic-trance-party/861551950229848",
+      "nombre": "The DarkPsy",
+      "link": "https://facebook.com/events/alte-kaserne-zürich/the-darkpsy/1632223770730121",
       "faltan": [
         "lugar"
       ]
     },
     {
-      "nombre": "Quilles Psy & Chill - 1ère édition",
-      "link": "https://facebook.com/events/salon-de-quilles-st-gr%C3%A9goire/quilles-psy-chill-1%C3%A8re-%C3%A9dition/8683715928423114",
+      "nombre": "STEP TO PSY - Psytrance / Progressive / Goa @FLEX",
+      "link": "https://facebook.com/events/flex/step-to-psy-psytrance-progressive-goa-flex/720877374051631",
       "faltan": [
         "lugar"
       ]
     },
     {
-      "nombre": "Home Again x Rotkäppchen Picnic at Secret Location",
-      "link": "https://ra.co/events/2493530",
+      "nombre": "Planète Sauvage Festival 3026",
+      "link": "https://facebook.com/events/arcomps/planète-sauvage-festival-3026/830975866109817",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Moquette vol.1",
+      "link": "https://ra.co/events/2466985",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "La Cantera-Underground Techno 22.08",
+      "link": "https://ra.co/events/2515051",
       "faltan": [
         "lugar"
       ]
@@ -38,13 +52,6 @@
     {
       "nombre": "SYNTH presents CORE: AD003 with KØLPØS / CARMELO PONENTE / K",
       "link": "https://ra.co/events/2508105",
-      "faltan": [
-        "lugar"
-      ]
-    },
-    {
-      "nombre": "TØXIC ALL NIGHT LONG (MULTI ALL NIGHT LONG)",
-      "link": "https://ra.co/events/2502992",
       "faltan": [
         "lugar"
       ]

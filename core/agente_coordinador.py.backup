@@ -2,52 +2,32 @@
 """
 Agente Coordinador — Sistema Multiagente Ligero (Dharmadhatu Bot v5).
 
-- Ejecuta subagentes en paralelo con ThreadPoolExecutor (máx 3 simultáneos).
-- NO usa semáforo global bloqueante que cause cuelgues; cada subagente usa
-  future.result(timeout=...) con cancelación y siempre se libera en finally.
-- Cada subagente tiene su propio timeout definido en config_modulos.json.
-- Recopilación de resultados, deduplicación y supervisión de álgebra lineal.
+- Carga la lista de subagentes disponibles (función, timeout, prioridad).
+- Ejecuta subagentes en paralelo con `ThreadPoolExecutor` (máx 3 simultáneos).
+- Los subagentes que usan Tor comparten un semáforo global (máx 2 a la vez).
+- Recolecta resultados, aplica deduplicación global (core/deduplicador.py)
+  y supervisión de álgebra lineal.
+- Guarda métricas (`metricas_agentes.json`) y estado (`estado_agentes.json`).
 
-Principio: siempre sumar, nunca restar. Si un subagente falla, los demás continúan.
-Es idempotente: re-ejecutar no duplica eventos en el CSV.
+Principio: siempre sumar, nunca restar. Si un subagente falla, los demás
+continúan. Es idempotente: re-ejecutar no duplica eventos en el CSV.
 """
 
 from __future__ import annotations
 
-import asyncio
 import csv
 import json
 import os
 import time
-from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutTimeout
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FutTimeout
 from datetime import datetime, timezone
 from pathlib import Path
+from threading import BoundedSemaphore
 from typing import Any, Callable, Dict, List, Optional
 
 from core.deduplicador import Deduplicador
 from core.task_queue import TaskQueue
-
-from scrapers import (
-    scrape_goabase, scrape_songkick, scrape_ra,
-    scrape_facebook_events,
-    scrape_reddit_psy, scrape_psytrance_pl, scrape_isratrance,
-    scrape_ektoplazm, scrape_meetup_psy
-)
-from scrapers.telegram.scraper import scrape_telegram_events
-
-# Mapeo de nombres de subagentes a funciones reales
-FUNCION_SUBAGENTES: Dict[str, Callable[[], Dict]] = {
-    "goabase": scrape_goabase,
-    "resident_advisor": scrape_ra,
-    "facebook_mcp": lambda: asyncio.run(scrape_facebook_events()),
-    "facebook_events_from_groups": lambda: asyncio.run(scrape_facebook_events()),
-    "telegram": scrape_telegram_events,
-    "reddit": scrape_reddit_psy,
-    "psytrance_pl": scrape_psytrance_pl,
-    "isratrance": scrape_isratrance,
-    "ektoplazm": scrape_ektoplazm,
-    "meetup": scrape_meetup_psy,
-}
 
 PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
 
@@ -56,20 +36,17 @@ METRICAS_FILE = str(Path(PROJECT_ROOT) / "metricas_agentes.json")
 ESTADO_FILE = str(Path(PROJECT_ROOT) / "estado_agentes.json")
 QUEUE_FILE = str(Path(PROJECT_ROOT) / "task_queue_state.json")
 
+MAX_SIMULTANEOS = 2
+MAX_TOR_SIMULTANEOS = 1
+MAX_RETRIES_TOR = 3  # Reintentos con rotación Tor para 0 hallazgos
 TIMEOUT_DEFECTO = 300
 
-# Timeouts por tipo de subagente (segundos)
-TIMEOUTS_POR_AGENTE = {
-    "resident_advisor": 300,
-    "facebook_mcp": 30,
-    "facebook_events_from_groups": 30,
-    "telegram": 3,
-    "reddit": 3,
-    "psytrance_pl": 3,
-    "isratrance": 3,
-    "ektoplazm": 3,
-    "meetup": 3,
-}
+# Semáforo global: subagentes que usan Tor nunca superan MAX_TOR_SIMULTANEOS
+SEMAFORO_TOR = BoundedSemaphore(MAX_TOR_SIMULTANEOS)
+
+# CSV fieldnames estándar del bot (mismo orden que orquestador.py)
+CSV_KEYS = ["nombre", "fecha", "lugar", "pais", "continente", "subcontinente",
+            "fuente", "organizador", "email", "link", "subgenero", "tipo_lugar"]
 
 
 def _leer_csv(filename: str) -> List[Dict]:
@@ -85,10 +62,7 @@ def _leer_csv(filename: str) -> List[Dict]:
 def _escribir_csv(filename: str, eventos: List[Dict]) -> None:
     tmp = filename + ".tmp"
     with open(tmp, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=[
-            "nombre", "fecha", "lugar", "pais", "continente", "subcontinente",
-            "fuente", "organizador", "email", "link", "subgenero", "tipo_lugar"
-        ], extrasaction="ignore")
+        writer = csv.DictWriter(f, fieldnames=CSV_KEYS, extrasaction="ignore")
         writer.writeheader()
         for ev in eventos:
             out = dict(ev)
@@ -123,72 +97,32 @@ def _leer_json(filename: str) -> Any:
         return None
 
 
-def _timeout_por_nombre(nombre: str) -> int:
-    return TIMEOUTS_POR_AGENTE.get(nombre, TIMEOUT_DEFECTO)
-
-
-def _leer_subagentes_activos(activos: Optional[List[str]] = None) -> List[Dict]:
-    """Carga la lista de subagentes, filtrando por los activos en config_modulos.json."""
-    _SUBAGENTES_DEFECTO = [
-        {"nombre": "resident_advisor", "funcion": "scrape_resident_advisor", "usa_tor": True, "timeout": 90},
-        {"nombre": "telegram", "funcion": "scrape_telegram", "usa_tor": True, "timeout": 4},
-        {"nombre": "reddit", "funcion": "scrape_reddit", "usa_tor": True, "timeout": 4},
-        {"nombre": "psytrance_pl", "funcion": "scrape_psytrance_pl", "usa_tor": True, "timeout": 6},
-        {"nombre": "isratrance", "funcion": "scrape_isratrance", "usa_tor": True, "timeout": 4},
-        {"nombre": "ektoplazm", "funcion": "scrape_ektoplazm", "usa_tor": True, "timeout": 4},
-        {"nombre": "meetup", "funcion": "scrape_meetup", "usa_tor": True, "timeout": 4},
-    ]
-
-    config_path = Path(PROJECT_ROOT) / "config_modulos.json"
-    config_activos: Dict[str, bool] = {}
-    if config_path.exists():
-        try:
-            with open(config_path) as f:
-                config_activos = json.load(f).get("activos", {})
-        except Exception:
-            pass
-
-    registro = [s for s in _SUBAGENTES_DEFECTO if s["nombre"] in config_activos]
+# ---------------------------------------------------------------------------
+# Carga de subagentes
+# ---------------------------------------------------------------------------
+def _cargar_subagentes(activos: Optional[List[str]] = None) -> List[Dict]:
+    """Carga el registro de subagentes (opcionalmente filtrado por nombre)."""
+    from agents import construir_registro
+    registro = construir_registro()
     if activos:
         registro = [ag for ag in registro if ag["nombre"] in activos]
-    if not registro:
-        registro = _SUBAGENTES_DEFECTO[:]
     return registro
 
 
-def _obtener_funcion(nombre: str) -> Callable[[], Dict]:
-    """Obtiene la función real desde el mapeo FUNCION_SUBAGENTES."""
-    return FUNCION_SUBAGENTES.get(nombre, lambda: {"eventos": []})
-
-
 def _ejecutar_subagente(ag: Dict) -> Dict:
-    """Ejecuta un subagente. El timeout es impuesto por el caller
-    mediante fut.result(timeout=...). No usa semáforo global ni señales."""
-    nombre = ag["nombre"]
-    funcion = _obtener_funcion(nombre)
-
-    resultado = {"eventos": [], "error": None, "tiempo": 0.0}
-    t0 = time.time()
-
-    try:
-        res = funcion()
-        if isinstance(res, dict):
-            resultado["eventos"] = res.get("eventos", [])
-        elif isinstance(res, list):
-            resultado["eventos"] = res
-        else:
-            resultado["eventos"] = []
-        resultado["tiempo"] = round(time.time() - t0, 2)
-        return resultado
-    except Exception as e:
-        print(f"  ❌ Error en {nombre}: {str(e)[:60]}")
-        resultado["error"] = str(e)
-        resultado["tiempo"] = round(time.time() - t0, 2)
-        return resultado
+    """Ejecuta un subagente respetando el semáforo global de Tor."""
+    fn: Callable[[], Dict] = ag["funcion"]
+    if ag.get("usa_tor"):
+        with SEMAFORO_TOR:
+            return fn()
+    return fn()
 
 
+# ---------------------------------------------------------------------------
+# Coordinador
+# ---------------------------------------------------------------------------
 def ejecutar_agentes(activos: Optional[List[str]] = None,
-                     max_simultaneos: int = 5,
+                     max_simultaneos: int = MAX_SIMULTANEOS,
                      dry_run: bool = False) -> int:
     """Ejecuta los subagentes en paralelo y devuelve el nº de eventos NUEVOS
     añadidos al CSV (aditivo, no duplica; 0 si ya estaban todos vistos).
@@ -197,7 +131,7 @@ def ejecutar_agentes(activos: Optional[List[str]] = None,
     - `max_simultaneos`: nº máximo de subagentes concurrentes.
     - `dry_run`: no escribe CSV ni caché (solo valida el flujo).
     """
-    registro = _leer_subagentes_activos(activos)
+    registro = _cargar_subagentes(activos)
     if not registro:
         print("⚠️ No hay subagentes configurados.")
         return 0
@@ -207,7 +141,8 @@ def ejecutar_agentes(activos: Optional[List[str]] = None,
     print("📅 " + datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M"))
     print("=" * 60)
     print(f"Subagentes ({len(registro)}): " + ", ".join(a["nombre"] for a in registro))
-    print(f"Paralelismo máx: {max_simultaneos}")
+    print(f"Paralelismo máx: {max_simultaneos} | Tor simultáneo máx: {MAX_TOR_SIMULTANEOS}")
+    print(f"  Nota: máximo 2 subagentes con Tor a la vez (semáforo global)")
 
     t_inicio = time.time()
     dedup = Deduplicador()
@@ -230,13 +165,12 @@ def ejecutar_agentes(activos: Optional[List[str]] = None,
     with ThreadPoolExecutor(max_workers=max_simultaneos) as pool:
         futuros = {}
         for ag in registro:
-            timeout = _timeout_por_nombre(ag["nombre"])
-            futuros[ag["nombre"]] = (
-                pool.submit(_ejecutar_subagente, ag),
-                timeout,
-                time.time())
+            futuros[ag["nombre"]] = (pool.submit(_ejecutar_subagente, ag),
+                                     ag.get("timeout", TIMEOUT_DEFECTO),
+                                     time.time())
 
         for nombre, (fut, timeout, t_submit) in futuros.items():
+            t_ag = t_submit
             entrada = {
                 "subagente": nombre,
                 "timeout": timeout,
@@ -247,14 +181,44 @@ def ejecutar_agentes(activos: Optional[List[str]] = None,
                 "detalle": {},
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             }
-            t_ag = t_submit
             try:
+                # Buscar el subagente en el registro para determinar si usa Tor
+                ag = next((a for a in registro if a["nombre"] == nombre), {})
                 resultado = fut.result(timeout=timeout)
                 evs = [dict(e) for e in (resultado or {}).get("eventos", []) or []]
                 evs_normalizados = [_normalizar_evento(e) for e in evs]
                 entrada["exito"] = True
                 entrada["eventos"] = len(evs_normalizados)
                 entrada["detalle"] = dict(resultado.get("detalle", {}) or {})
+
+                # --- Detección de 0 hallazgos + reintento con rotación Tor ---
+                if not evs_normalizados and ag.get("usa_tor"):
+                    for retry in range(1, MAX_RETRIES_TOR + 1):
+                        print(f"  ⚠️ {nombre}: 0 hallazgos — reintentando "
+                              f"intento {retry}/{MAX_RETRIES_TOR} con Tor rotado...")
+                        # Rotar Tor
+                        try:
+                            from core.tor_utils import rotar_tor
+                            rotado = rotar_tor()
+                            print(f"  🔁 Tor rotado: {rotado}")
+                        except Exception as e_rot:
+                            print(f"  ⚠️ Rotación Tor falló: {str(e_rot)[:60]}")
+                        # Pausa breve entre rotación y reintento
+                        time.sleep(5)
+                        # Re-ejecutar el subagente (dentro del semáforo Tor si aplica)
+                        try:
+                            with SEMAFORO_TOR:
+                                resultado = _ejecutar_subagente(ag)
+                            evs = [dict(e) for e in (resultado or {}).get("eventos", []) or []]
+                            evs_normalizados = [_normalizar_evento(e) for e in evs]
+                            entrada["eventos"] = len(evs_normalizados)
+                            entrada["detalle"] = dict(resultado.get("detalle", {}) or {})
+                            if evs_normalizados:
+                                print(f"  ✅ {nombre}: ÉXITO en retry {retry} "
+                                      f"({len(evs_normalizados)} eventos)")
+                                break
+                        except Exception as e_retry:
+                            print(f"  ❌ {nombre} retry {retry}: {str(e_retry)[:60]}")
 
                 todos_eventos.extend(evs_normalizados)
                 estado = "✅" if evs_normalizados else "⚠️"
@@ -313,6 +277,7 @@ def ejecutar_agentes(activos: Optional[List[str]] = None,
         "eventos_nuevos_añadidos": len(nuevos),
         "total_consolidado": len(consolidados),
         "modo_dry_run": dry_run,
+        "cola": cola.resumen(),
     }
     if not dry_run:
         _guardar_json(ESTADO_FILE, estado)

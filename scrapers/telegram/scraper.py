@@ -57,7 +57,7 @@ CANALES_PRODUCTIVOS = _STATE_DIR / "telegram_canales_productivos.json"
 RENDIMIENTO = _STATE_DIR / "telegram_rendimiento.json"
 
 # Límites y control de tiempo
-TIMEOUT_FASE = 180  # 3 minutos máximo para toda la fase Telegram
+TIMEOUT_FASE = 15  # 15 segundos máximo para toda la fase Telegram
 TIMEOUT_REQUEST = 25
 MAX_MENSAJES_POR_CANAL = 50      # objetivo
 PAGINAS_POR_CANAL = 3            # 20 msgs/página → hasta 60 (cap 50)

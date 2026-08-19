@@ -1,83 +1,83 @@
-# Tor state file last generated on 2026-08-18 10:35:55 local time
+# Tor state file last generated on 2026-08-18 20:17:37 local time
 # Other times below are in UTC
 # You *do not* need to edit this file.
 
-CircuitBuildTimeBin 335 2
+CircuitBuildTimeBin 335 3
 CircuitBuildTimeBin 345 1
 CircuitBuildTimeBin 365 1
 CircuitBuildTimeBin 375 1
-CircuitBuildTimeBin 395 1
+CircuitBuildTimeBin 395 2
 CircuitBuildTimeBin 405 4
 CircuitBuildTimeBin 415 4
 CircuitBuildTimeBin 425 8
 CircuitBuildTimeBin 435 2
 CircuitBuildTimeBin 445 6
-CircuitBuildTimeBin 455 8
-CircuitBuildTimeBin 465 5
+CircuitBuildTimeBin 455 9
+CircuitBuildTimeBin 465 6
 CircuitBuildTimeBin 475 4
 CircuitBuildTimeBin 485 8
-CircuitBuildTimeBin 495 4
-CircuitBuildTimeBin 505 11
+CircuitBuildTimeBin 495 5
+CircuitBuildTimeBin 505 13
 CircuitBuildTimeBin 515 13
 CircuitBuildTimeBin 525 13
 CircuitBuildTimeBin 535 7
 CircuitBuildTimeBin 545 11
-CircuitBuildTimeBin 555 5
-CircuitBuildTimeBin 565 15
+CircuitBuildTimeBin 555 7
+CircuitBuildTimeBin 565 16
 CircuitBuildTimeBin 575 2
 CircuitBuildTimeBin 585 5
 CircuitBuildTimeBin 595 8
 CircuitBuildTimeBin 605 3
 CircuitBuildTimeBin 615 4
 CircuitBuildTimeBin 625 5
-CircuitBuildTimeBin 635 5
+CircuitBuildTimeBin 635 7
 CircuitBuildTimeBin 645 5
-CircuitBuildTimeBin 655 10
-CircuitBuildTimeBin 665 3
+CircuitBuildTimeBin 655 11
+CircuitBuildTimeBin 665 5
 CircuitBuildTimeBin 675 4
 CircuitBuildTimeBin 685 5
 CircuitBuildTimeBin 695 5
 CircuitBuildTimeBin 705 9
 CircuitBuildTimeBin 715 5
-CircuitBuildTimeBin 725 6
+CircuitBuildTimeBin 725 7
 CircuitBuildTimeBin 735 5
 CircuitBuildTimeBin 745 5
 CircuitBuildTimeBin 755 4
 CircuitBuildTimeBin 765 5
-CircuitBuildTimeBin 775 2
+CircuitBuildTimeBin 775 3
 CircuitBuildTimeBin 785 4
 CircuitBuildTimeBin 795 1
 CircuitBuildTimeBin 805 3
 CircuitBuildTimeBin 815 3
 CircuitBuildTimeBin 825 2
-CircuitBuildTimeBin 835 4
+CircuitBuildTimeBin 835 5
 CircuitBuildTimeBin 845 4
 CircuitBuildTimeBin 855 3
-CircuitBuildTimeBin 865 5
+CircuitBuildTimeBin 865 6
 CircuitBuildTimeBin 875 2
 CircuitBuildTimeBin 885 5
 CircuitBuildTimeBin 895 2
 CircuitBuildTimeBin 905 5
 CircuitBuildTimeBin 925 8
 CircuitBuildTimeBin 935 3
-CircuitBuildTimeBin 945 3
+CircuitBuildTimeBin 945 4
 CircuitBuildTimeBin 955 2
 CircuitBuildTimeBin 965 3
 CircuitBuildTimeBin 975 3
 CircuitBuildTimeBin 995 1
-CircuitBuildTimeBin 1005 2
+CircuitBuildTimeBin 1005 3
 CircuitBuildTimeBin 1015 2
 CircuitBuildTimeBin 1025 5
 CircuitBuildTimeBin 1035 4
-CircuitBuildTimeBin 1045 2
+CircuitBuildTimeBin 1045 3
 CircuitBuildTimeBin 1055 1
 CircuitBuildTimeBin 1065 1
 CircuitBuildTimeBin 1075 4
 CircuitBuildTimeBin 1085 2
-CircuitBuildTimeBin 1105 3
-CircuitBuildTimeBin 1115 2
+CircuitBuildTimeBin 1105 4
+CircuitBuildTimeBin 1115 3
 CircuitBuildTimeBin 1145 3
-CircuitBuildTimeBin 1155 2
+CircuitBuildTimeBin 1155 3
 CircuitBuildTimeBin 1165 1
 CircuitBuildTimeBin 1175 1
 CircuitBuildTimeBin 1185 1
@@ -86,7 +86,7 @@ CircuitBuildTimeBin 1215 2
 CircuitBuildTimeBin 1275 1
 CircuitBuildTimeBin 1305 2
 CircuitBuildTimeBin 1355 1
-CircuitBuildTimeBin 1365 1
+CircuitBuildTimeBin 1365 2
 CircuitBuildTimeBin 1375 2
 CircuitBuildTimeBin 1395 1
 CircuitBuildTimeBin 1405 1
@@ -97,6 +97,7 @@ CircuitBuildTimeBin 1495 2
 CircuitBuildTimeBin 1545 1
 CircuitBuildTimeBin 1605 1
 CircuitBuildTimeBin 1615 1
+CircuitBuildTimeBin 1665 1
 CircuitBuildTimeBin 1675 1
 CircuitBuildTimeBin 1695 1
 CircuitBuildTimeBin 1735 1
@@ -105,14 +106,16 @@ CircuitBuildTimeBin 2035 1
 CircuitBuildTimeBin 2065 1
 CircuitBuildTimeBin 2115 1
 CircuitBuildTimeBin 2165 1
+CircuitBuildTimeBin 2245 1
+CircuitBuildTimeBin 2295 1
 CircuitBuildTimeBin 2445 1
 CircuitBuildTimeBin 3085 1
 CircuitBuildTimeBin 4135 1
 CircuitBuildTimeBin 6015 1
-CircuitBuildAbandonedCount 2
+CircuitBuildAbandonedCount 3
 Dormant 0
-Guard in=default rsa_id=50DD4682DC6C1C3991AAA20F806D0C905901AD6E nickname=glorilla sampled_on=2026-08-10T10:21:44 sampled_idx=0 sampled_by=0.4.9.11 listed=1 confirmed_on=2026-08-07T17:38:56 confirmed_idx=0 pb_use_attempts=3.000000 pb_use_successes=3.000000 pb_circ_attempts=89.000000 pb_circ_successes=86.000000 pb_successful_circuits_closed=86.000000 pb_timeouts=1.000000
-Guard in=default rsa_id=B3A1B8DB8E44423A3DE116063129E925F399EF14 nickname=NTH165R1 sampled_on=2026-08-11T04:44:30 sampled_idx=1 sampled_by=0.4.9.11 listed=1 confirmed_on=2026-08-10T14:14:05 confirmed_idx=1 pb_circ_attempts=54.000000 pb_circ_successes=53.000000 pb_successful_circuits_closed=53.000000
+Guard in=default rsa_id=50DD4682DC6C1C3991AAA20F806D0C905901AD6E nickname=glorilla sampled_on=2026-08-10T10:21:44 sampled_idx=0 sampled_by=0.4.9.11 listed=1 confirmed_on=2026-08-07T17:38:56 confirmed_idx=0 pb_use_attempts=3.000000 pb_use_successes=3.000000 pb_circ_attempts=95.000000 pb_circ_successes=92.000000 pb_successful_circuits_closed=92.000000 pb_timeouts=1.000000
+Guard in=default rsa_id=B3A1B8DB8E44423A3DE116063129E925F399EF14 nickname=NTH165R1 sampled_on=2026-08-11T04:44:30 sampled_idx=1 sampled_by=0.4.9.11 listed=1 confirmed_on=2026-08-10T14:14:05 confirmed_idx=1 pb_circ_attempts=61.000000 pb_circ_successes=59.000000 pb_successful_circuits_closed=59.000000
 Guard in=default rsa_id=90BCBF737079BB5047CB2AEAE49FBC1BA91B5EDB nickname=snowball sampled_on=2026-08-05T19:43:02 sampled_idx=2 sampled_by=0.4.9.11 listed=1 confirmed_on=2026-08-11T21:15:14 confirmed_idx=2
 Guard in=default rsa_id=27A80F0A969793C47EACAF260397387BDE9DD288 nickname=youngbuck sampled_on=2026-08-12T17:25:21 sampled_idx=3 sampled_by=0.4.9.11 listed=1
 Guard in=default rsa_id=7614CF9CD5758B2D884376B3FF6EE613A43BD31D nickname=Thalcon sampled_on=2026-08-08T07:47:40 sampled_idx=4 sampled_by=0.4.9.11 listed=1
@@ -131,6 +134,6 @@ Guard in=default rsa_id=0AE076CD2A4201BF2D90C325211A10D2C8DD6CE9 nickname=Tajjin
 Guard in=default rsa_id=CD478DBDF96F456C386E2BE52670E76A815EDBF3 nickname=subspacerelay1 sampled_on=2026-08-14T05:31:20 sampled_idx=17 sampled_by=0.4.9.11 listed=1
 Guard in=default rsa_id=D7ABD3E509A1D54EB1F4C67E80644C1097DA9EF6 nickname=tp2 sampled_on=2026-08-05T19:25:30 sampled_idx=18 sampled_by=0.4.9.11 listed=1
 Guard in=default rsa_id=54476788A1AA7C348F20390DFC52ACA1352F4C57 nickname=luna sampled_on=2026-08-03T07:40:52 sampled_idx=19 sampled_by=0.4.9.11 listed=1
-LastWritten 2026-08-18 16:35:55
+LastWritten 2026-08-19 02:17:37
 TorVersion Tor 0.4.9.11
-TotalBuildTimes 376
+TotalBuildTimes 406

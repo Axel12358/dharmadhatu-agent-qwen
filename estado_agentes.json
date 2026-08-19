@@ -1,23 +1,17 @@
 {
-  "timestamp": "2026-08-14T15:47:24.496008+00:00",
-  "duracion_total_s": 442.52,
+  "timestamp": "2026-08-19T22:12:42.992293+00:00",
+  "duracion_total_s": 140.71,
   "subagentes": [
-    "facebook_events_agent",
-    "facebook_dorks_agent",
-    "instagram_dorks_agent",
-    "telegram_agent",
-    "resident_advisor_agent",
-    "goabase_agent",
-    "songkick_agent",
-    "completador_agent",
-    "clasificador_agent",
-    "organizador_agent"
+    "resident_advisor",
+    "telegram",
+    "reddit",
+    "psytrance_pl",
+    "isratrance",
+    "ektoplazm",
+    "meetup"
   ],
-  "eventos_brutos": 206,
-  "eventos_nuevos_añadidos": 4,
-  "total_consolidado": 426,
-  "modo_dry_run": false,
-  "cola": {
-    "completada": 10
-  }
+  "eventos_brutos": 510,
+  "eventos_nuevos_añadidos": 10,
+  "total_consolidado": 611,
+  "modo_dry_run": false
 }

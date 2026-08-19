@@ -1,162 +1,89 @@
 {
-  "timestamp": "2026-08-14T15:47:24.496684+00:00",
-  "duracion_total_s": 442.52,
+  "timestamp": "2026-08-19T22:12:42.993568+00:00",
+  "duracion_total_s": 140.71,
   "subagentes": [
-    "facebook_events_agent",
-    "facebook_dorks_agent",
-    "instagram_dorks_agent",
-    "telegram_agent",
-    "resident_advisor_agent",
-    "goabase_agent",
-    "songkick_agent",
-    "completador_agent",
-    "clasificador_agent",
-    "organizador_agent"
+    "resident_advisor",
+    "telegram",
+    "reddit",
+    "psytrance_pl",
+    "isratrance",
+    "ektoplazm",
+    "meetup"
   ],
   "detalle": {
-    "facebook_events_agent": {
-      "subagente": "facebook_events_agent",
+    "resident_advisor": {
+      "subagente": "resident_advisor",
       "timeout": 300,
       "exito": true,
-      "eventos": 5,
-      "tiempo": 161.37,
+      "eventos": 500,
+      "tiempo": 121.4,
       "error": null,
-      "detalle": {
-        "facebook_mcp_error": "TypeError: 'coroutine' object is not iterable",
-        "facebook_groups": 5,
-        "facebook_groups_tiempo_s": 161.4
-      },
-      "timestamp": "2026-08-14T15:40:01.991667+00:00"
+      "detalle": {},
+      "timestamp": "2026-08-19T22:10:22.307287+00:00"
     },
-    "facebook_dorks_agent": {
-      "subagente": "facebook_dorks_agent",
-      "timeout": 240,
+    "telegram": {
+      "subagente": "telegram",
+      "timeout": 3,
       "exito": true,
       "eventos": 0,
-      "tiempo": 251.11,
+      "tiempo": 121.4,
       "error": null,
-      "detalle": {
-        "total_hallazgos": 0,
-        "grupos": 0,
-        "paginas": 0,
-        "correos": 0,
-        "tiempo_s": 251.1
-      },
-      "timestamp": "2026-08-14T15:42:43.356007+00:00"
+      "detalle": {},
+      "timestamp": "2026-08-19T22:12:23.702476+00:00"
     },
-    "instagram_dorks_agent": {
-      "subagente": "instagram_dorks_agent",
-      "timeout": 240,
+    "reddit": {
+      "subagente": "reddit",
+      "timeout": 3,
+      "exito": false,
+      "eventos": 0,
+      "tiempo": 124.4,
+      "error": "timeout",
+      "detalle": {},
+      "timestamp": "2026-08-19T22:12:23.702654+00:00"
+    },
+    "psytrance_pl": {
+      "subagente": "psytrance_pl",
+      "timeout": 3,
+      "exito": true,
+      "eventos": 6,
+      "tiempo": 124.4,
+      "error": null,
+      "detalle": {},
+      "timestamp": "2026-08-19T22:12:26.703099+00:00"
+    },
+    "isratrance": {
+      "subagente": "isratrance",
+      "timeout": 3,
       "exito": true,
       "eventos": 0,
-      "tiempo": 438.2,
+      "tiempo": 124.4,
       "error": null,
-      "detalle": {
-        "posts": 0,
-        "tiempo_s": 242.4
-      },
-      "timestamp": "2026-08-14T15:44:13.102633+00:00"
+      "detalle": {},
+      "timestamp": "2026-08-19T22:12:26.703156+00:00"
     },
-    "telegram_agent": {
-      "subagente": "telegram_agent",
-      "timeout": 180,
+    "ektoplazm": {
+      "subagente": "ektoplazm",
+      "timeout": 3,
       "exito": true,
-      "eventos": 0,
-      "tiempo": 438.2,
+      "eventos": 3,
+      "tiempo": 124.4,
       "error": null,
-      "detalle": {
-        "canales": 0,
-        "tiempo_s": 34.4
-      },
-      "timestamp": "2026-08-14T15:47:20.194447+00:00"
+      "detalle": {},
+      "timestamp": "2026-08-19T22:12:26.703178+00:00"
     },
-    "resident_advisor_agent": {
-      "subagente": "resident_advisor_agent",
-      "timeout": 300,
-      "exito": true,
-      "eventos": 100,
-      "tiempo": 438.2,
-      "error": null,
-      "detalle": {
-        "ciudades": "todas",
-        "tiempo_s": 87.7
-      },
-      "timestamp": "2026-08-14T15:47:20.194501+00:00"
-    },
-    "goabase_agent": {
-      "subagente": "goabase_agent",
-      "timeout": 120,
-      "exito": true,
-      "eventos": 100,
-      "tiempo": 438.2,
-      "error": null,
-      "detalle": {
-        "limite": 100,
-        "tiempo_s": 76.3
-      },
-      "timestamp": "2026-08-14T15:47:20.195426+00:00"
-    },
-    "songkick_agent": {
-      "subagente": "songkick_agent",
-      "timeout": 120,
+    "meetup": {
+      "subagente": "meetup",
+      "timeout": 3,
       "exito": true,
       "eventos": 1,
-      "tiempo": 438.2,
+      "tiempo": 124.4,
       "error": null,
-      "detalle": {
-        "limite": 100,
-        "tiempo_s": 1.4
-      },
-      "timestamp": "2026-08-14T15:47:20.196012+00:00"
-    },
-    "completador_agent": {
-      "subagente": "completador_agent",
-      "timeout": 600,
-      "exito": true,
-      "eventos": 0,
-      "tiempo": 438.2,
-      "error": null,
-      "detalle": {
-        "fb_na_error": "ModuleNotFoundError: No module named 'playwright_stealth'",
-        "fb_externo_error": "ModuleNotFoundError: No module named 'playwright_stealth'"
-      },
-      "timestamp": "2026-08-14T15:47:20.196074+00:00"
-    },
-    "clasificador_agent": {
-      "subagente": "clasificador_agent",
-      "timeout": 120,
-      "exito": true,
-      "eventos": 0,
-      "tiempo": 438.2,
-      "error": null,
-      "detalle": {
-        "subgeneros_rellenados": 0,
-        "tipos_lugar_rellenados": 0,
-        "duplicados_eliminados": 0,
-        "eventos_analizados": 0
-      },
-      "timestamp": "2026-08-14T15:47:20.196118+00:00"
-    },
-    "organizador_agent": {
-      "subagente": "organizador_agent",
-      "timeout": 60,
-      "exito": true,
-      "eventos": 0,
-      "tiempo": 438.2,
-      "error": null,
-      "detalle": {
-        "organizadores_facebook.json": 136,
-        "correos_organizadores.json": 3,
-        "grupos_encontrados.json": 387,
-        "eventos_facebook_dorks.json": 3,
-        "consolidado": "/Users/angelgarcia/dharmadhatu_agent_qwen/organizadores_consolidados.json",
-        "timestamp": "2026-08-14T15:44:51.376735+00:00"
-      },
-      "timestamp": "2026-08-14T15:47:20.196153+00:00"
+      "detalle": {},
+      "timestamp": "2026-08-19T22:12:26.703203+00:00"
     }
   },
-  "eventos_brutos": 206,
-  "eventos_nuevos_añadidos": 4,
-  "total_consolidado": 426,
+  "eventos_brutos": 510,
+  "eventos_nuevos_añadidos": 10,
+  "total_consolidado": 611,
   "modo_dry_run": false
 }

@@ -82,7 +82,7 @@ class Ledger:
             elif touch_count == 1:
                 next_date = date.today() + timedelta(days=7)
             elif touch_count == 2:
-                next_date = date.today() + datetime.timedelta(days=21)
+                next_date = date.today() + timedelta(days=21)
             else:
                 continue
             today_date = date.fromisoformat(today_str)

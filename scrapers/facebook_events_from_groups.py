@@ -69,7 +69,7 @@ TIMEOUT_PER_GROUP = 8
 HTTP_TIMEOUT = (4, TIMEOUT_PER_GROUP)
 MAX_WORKERS = 10
 TARGET_EVENTS = 22
-TIME_BUDGET_SEC = 165
+TIME_BUDGET_SEC = 120
 HTTP_BUDGET_SEC = 30
 MAX_RESULTS_POR_GRUPO = 3
 LOGIN_MARKERS = ["login.php", "iniciar sesión", "log in", "crear cuenta", "sign up"]
@@ -753,10 +753,10 @@ def run_pipeline(config: Optional[dict] = None) -> List[Dict]:
 
     # ---- Fase 2: fallback por buscador ----
     restantes = [g for g in groups if g.get("id") not in produjo_eventos]
-    if len(eventos) < TARGET_EVENTS and restantes:
+    if len(eventos) < TARGET_EVENTS and restantes and (time.time() - t_inicio) < TIME_BUDGET_SEC:
         presupuesto = max(
-            15,
-            TIME_BUDGET_SEC - (time.time() - t_inicio) - 8,
+            5,
+            TIME_BUDGET_SEC - (time.time() - t_inicio) - 5,
         )
         print(
             f"🌐 Fase 2: fallback por buscador (presupuesto {presupuesto:.0f}s, "
@@ -771,11 +771,36 @@ def run_pipeline(config: Optional[dict] = None) -> List[Dict]:
                         args=["--no-sandbox", "--disable-dev-shm-usage",
                                "--disable-blink-features=AutomationControlled"],
                     )
-                    context = await get_anti_block().create_stealth_context(browser, use_tor=True)
+                    # Intentar Tor primero; si falla, usar conexión directa
+                    context = None
+                    try:
+                        context = await get_anti_block().create_stealth_context(browser, use_tor=True)
+                        # Probe rápido: si Tor no responde en 8s, caer a directo
+                        probe_page = await context.new_page()
+                        try:
+                            await probe_page.goto("https://www.startpage.com", timeout=8000, wait_until="domcontentloaded")
+                        except Exception:
+                            print("  ⚠️ Tor SOCKS no disponible en Fase 2, usando conexión directa", flush=True)
+                            try:
+                                await context.close()
+                            except Exception:
+                                pass
+                            context = await get_anti_block().create_stealth_context(browser, use_tor=False)
+                        finally:
+                            try:
+                                await probe_page.close()
+                            except Exception:
+                                pass
+                    except Exception:
+                        try:
+                            context.close()
+                        except Exception:
+                            pass
+                        context = await get_anti_block().create_stealth_context(browser, use_tor=False)
                     try:
                         return await _fase_fallback_async(
                             restantes, context,
-                            presupuesto=max(5, presupuesto),
+                            presupuesto=max(3, presupuesto),
                             objetivo=TARGET_EVENTS - len(eventos),
                         )
                     finally:

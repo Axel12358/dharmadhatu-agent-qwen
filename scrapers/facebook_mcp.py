@@ -59,7 +59,7 @@ ENRIQUECIMIENTO_CACHE_VERSION = 2
 MAX_VISITAS_ENRIQUECIMIENTO = 80
 VISITA_TIMEOUT_MS = 20000
 
-MAX_KEYWORDS_POR_RUN = 600
+MAX_KEYWORDS_POR_RUN = 50
 
 # Techo de eventos nuevos por pasada de scrape_facebook_events (volumen agresivo)
 MAX_EVENTOS_POR_RUN = 80
@@ -86,7 +86,7 @@ def set_limites_loop(max_keywords=None, max_visitas=None):
 
 # El SERP (Startpage/DDG/Bing/Google) + visitas a páginas públicas de FB necesita
 # más tiempo con los delays ampliados (10-20s) y 4 motores en cascada.
-SERP_TIMEOUT = 900
+SERP_TIMEOUT = 180
 
 # Términos psytrance para filtrar ruido en los resultados del SERP
 # (términos fuertes: un evento real de la escena casi siempre los contiene)
@@ -370,7 +370,7 @@ def _seleccionar_paises_rotacion(config):
     todos = config.get("paises", [])
     if not todos:
         return []
-    max_por_run = config.get("rotacion_paises_por_run", 15)
+    max_por_run = config.get("rotacion_paises_por_run", 10)
     state = _load_rotation_state()
     procesados = set(state.get("procesados", []))
     pendientes = [p for p in todos if p.get("nombre") not in procesados]
@@ -471,9 +471,12 @@ def _generar_keywords(config, paises_seleccionados):
     extras_final = random.sample(extras, min(2, len(extras)))
     combos_usados = []
     expansion = []
+    t_gen_start = time.time()
 
     for combo in pendientes:
         if len(base) + len(expansion) >= max_kw:
+            break
+        if time.time() - t_gen_start > 60:
             break
         sub, pais = combo.split("::", 1)
         pais_obj = next(
@@ -1101,14 +1104,13 @@ class FacebookEventsFinder:
                     args=["--no-sandbox", "--disable-dev-shm-usage",
                            "--disable-blink-features=AutomationControlled"],
                 )
-                # Usar Tor para obtener IP fresca (evita rate-limit por IP);
-                # si Tor no puede alcanzar Startpage (SOCKS caído/bloqueo del
-                # exit node), cae a conexión directa
-                probe_url = "https://www.startpage.com/sp/search?query=" + urllib.parse.quote(consultas[0])
-                context = await self._crear_context_con_fallback(browser, url_probe=probe_url)
+                context = await self._crear_context_con_fallback(browser, url_probe=consultas[0] if consultas else None)
 
                 for i, consulta in enumerate(consultas, 1):
                     if len(eventos) >= MAX_EVENTOS_POR_RUN:
+                        break
+                    if time.time() - t0 > SERP_TIMEOUT:
+                        print("  ⏰ Startpage: tiempo agotado, saliendo.")
                         break
 
                     kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
@@ -1132,10 +1134,10 @@ class FacebookEventsFinder:
                                 break
 
                     if i < len(consultas):
-                        await asyncio.sleep(random.uniform(10.0, 20.0))
+                        await asyncio.sleep(random.uniform(3.0, 5.0))
 
                 # Enriquecer fechas visitando las páginas públicas de FB (sin login)
-                if eventos:
+                if eventos and time.time() - t0 < SERP_TIMEOUT:
                     await self._enriquecer_fechas_publicas(eventos, context)
 
                 await browser.close()
@@ -1144,7 +1146,7 @@ class FacebookEventsFinder:
             print(f"  ⚠️ Error en Startpage Playwright: {e}")
 
         # FASE 2: DuckDuckGo HTML POST como respaldo si Startpage no alcanzó 40
-        if len(eventos) < MAX_EVENTOS_POR_RUN:
+        if len(eventos) < MAX_EVENTOS_POR_RUN and time.time() - t0 < SERP_TIMEOUT:
             try:
                 import requests as _requests
 
@@ -1157,6 +1159,9 @@ class FacebookEventsFinder:
 
                 for i, consulta in enumerate(consultas, 1):
                     if len(eventos) >= MAX_EVENTOS_POR_RUN:
+                        break
+                    if time.time() - t0 > SERP_TIMEOUT:
+                        print("  ⏰ DuckDuckGo: tiempo agotado, saliendo.")
                         break
 
                     # Rotar UA por consulta para diversificar la huella
@@ -1182,13 +1187,13 @@ class FacebookEventsFinder:
                                 break
 
                     if i < len(consultas):
-                        await asyncio.sleep(random.uniform(10.0, 20.0))
+                        await asyncio.sleep(random.uniform(3.0, 5.0))
 
             except Exception as e:
                 print(f"  ⚠️ Error en DuckDuckGo fallback: {e}")
 
         # FASE 2b: Mojeek/Qwant/Brave (fallbacks ligeros sin CAPTCHA)
-        if len(eventos) < MAX_EVENTOS_POR_RUN:
+        if len(eventos) < MAX_EVENTOS_POR_RUN and time.time() - t0 < SERP_TIMEOUT:
             try:
                 import requests as _requests
                 session = _requests.Session()
@@ -1197,6 +1202,9 @@ class FacebookEventsFinder:
                 })
                 for i, consulta in enumerate(consultas, 1):
                     if len(eventos) >= MAX_EVENTOS_POR_RUN:
+                        break
+                    if time.time() - t0 > SERP_TIMEOUT:
+                        print("  ⏰ Mojeek/Qwant/Brave: tiempo agotado, saliendo.")
                         break
                     kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
                     # Mojeek
@@ -1245,12 +1253,12 @@ class FacebookEventsFinder:
                             eventos.append(ev)
                             used.add(uid)
                     if i < len(consultas):
-                        await asyncio.sleep(random.uniform(5.0, 10.0))
+                        await asyncio.sleep(random.uniform(3.0, 5.0))
             except Exception as e:
                 print(f"  ⚠️ Error en Mojeek/Qwant/Brave fallback: {e}")
 
         # FASE 3: Bing Playwright (respaldo si los anteriores no alcanzaron 50)
-        if len(eventos) < MAX_EVENTOS_POR_RUN:
+        if len(eventos) < MAX_EVENTOS_POR_RUN and time.time() - t0 < SERP_TIMEOUT:
             try:
                 from playwright.async_api import async_playwright
 
@@ -1263,6 +1271,9 @@ class FacebookEventsFinder:
                     context = await self.anti_block.create_stealth_context(browser, use_tor=True)
                     for i, consulta in enumerate(consultas[:6], 1):
                         if len(eventos) >= MAX_EVENTOS_POR_RUN:
+                            break
+                        if time.time() - t0 > SERP_TIMEOUT:
+                            print("  ⏰ Bing: tiempo agotado, saliendo.")
                             break
 
                         kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
@@ -1285,13 +1296,13 @@ class FacebookEventsFinder:
                                     break
 
                         if i < len(consultas[:6]):
-                            await asyncio.sleep(random.uniform(10.0, 20.0))
+                            await asyncio.sleep(random.uniform(3.0, 5.0))
                     await browser.close()
             except Exception as e:
                 print(f"  ⚠️ Error en Bing Playwright: {e}")
 
         # FASE 4: Google Playwright (último recurso si los anteriores no alcanzaron 50)
-        if len(eventos) < MAX_EVENTOS_POR_RUN:
+        if len(eventos) < MAX_EVENTOS_POR_RUN and time.time() - t0 < SERP_TIMEOUT:
             try:
                 from playwright.async_api import async_playwright
 
@@ -1304,6 +1315,9 @@ class FacebookEventsFinder:
                     context = await self.anti_block.create_stealth_context(browser, use_tor=True)
                     for i, consulta in enumerate(consultas[:6], 1):
                         if len(eventos) >= MAX_EVENTOS_POR_RUN:
+                            break
+                        if time.time() - t0 > SERP_TIMEOUT:
+                            print("  ⏰ Google: tiempo agotado, saliendo.")
                             break
 
                         kw_subgenero = _extraer_subgenero_desde_keyword(keywords_sorted[i - 1])
@@ -1326,7 +1340,7 @@ class FacebookEventsFinder:
                                     break
 
                         if i < len(consultas[:6]):
-                            await asyncio.sleep(random.uniform(10.0, 20.0))
+                            await asyncio.sleep(random.uniform(3.0, 5.0))
                     await browser.close()
             except Exception as e:
                 print(f"  ⚠️ Error en Google Playwright: {e}")
@@ -1715,10 +1729,14 @@ class FacebookEventsFinder:
         try:
             page = await context.new_page()
             await self.anti_block.apply_playwright_stealth(page)
-            await page.goto(url_probe, timeout=20000, wait_until="domcontentloaded")
+            await page.goto(url_probe, timeout=10000, wait_until="domcontentloaded")
         except Exception as e:
             probe_ok = False
-            print(f"  ⚠️ Tor no navega ({str(e)[:70]}); usando conexión directa")
+            err_str = str(e)[:100]
+            if "SOCKS" in err_str or "ERR_SOCKS" in err_str or "Proxy" in err_str:
+                print(f"  ⚠️ Tor SOCKS no disponible, usando conexión directa")
+            else:
+                print(f"  ⚠️ Tor no navega ({err_str}); usando conexión directa")
         finally:
             if page:
                 try:
@@ -2332,6 +2350,7 @@ class FacebookEventsFinder:
     async def scrape(self, keywords):
         todos = []
         used = set()
+        t_start = time.time()
 
         async def run_with_timeout(coro, timeout=TIMEOUT_PER_STRATEGY):
             try:
@@ -2339,34 +2358,46 @@ class FacebookEventsFinder:
             except (asyncio.TimeoutError, Exception):
                 return []
 
+        def time_left():
+            return max(0, 180 - (time.time() - t_start))
+
         # ESTRATEGIA 5 PRIMERO: Búsqueda pública SERP (la más productiva)
-        resultados = await run_with_timeout(self._via_google_serp_public(keywords), timeout=SERP_TIMEOUT)
+        resultados = await run_with_timeout(self._via_google_serp_public(keywords), timeout=min(SERP_TIMEOUT, time_left()))
         for ev in resultados:
             uid = ev.get("url", "")
             if uid not in used:
                 todos.append(ev)
                 used.add(uid)
 
+        if time_left() < 10:
+            return todos
+
         # Grupos conocidos (sin cookies retorna 0)
-        resultados = await run_with_timeout(self._via_grupos_conocidos(keywords), timeout=90)
+        resultados = await run_with_timeout(self._via_grupos_conocidos(keywords), timeout=min(90, time_left()))
         for ev in resultados:
             uid = ev.get("url", "")
             if uid not in used:
                 todos.append(ev)
                 used.add(uid)
+
+        if time_left() < 10:
+            return todos
 
         # Facebook directo (solo con cookies)
         if self.cookies:
-            resultados = await run_with_timeout(self._via_facebook_directo(keywords), timeout=TIMEOUT_PER_STRATEGY)
+            resultados = await run_with_timeout(self._via_facebook_directo(keywords), timeout=min(TIMEOUT_PER_STRATEGY, time_left()))
             for ev in resultados:
                 uid = ev.get("url", "")
                 if uid not in used:
                     todos.append(ev)
                     used.add(uid)
 
+        if time_left() < 10:
+            return todos
+
         # DuckDuckGo Playwright (respaldo)
         if len(todos) < 10:
-            resultados = await run_with_timeout(self._via_duckduckgo_playwright(keywords), timeout=TIMEOUT_PER_STRATEGY)
+            resultados = await run_with_timeout(self._via_duckduckgo_playwright(keywords), timeout=min(TIMEOUT_PER_STRATEGY, time_left()))
             for ev in resultados:
                 uid = ev.get("url", "")
                 if uid not in used:

@@ -4,33 +4,12 @@ Dharmadhatu Bot v5 - Orquestador principal con Facebook integrado.
 """
 
 import asyncio
-import json
-import os
 from scrapers import scrape_goabase, scrape_songkick
 from scrapers import scrape_ra
 from scrapers.facebook_mcp import scrape_facebook_events
 from utils.helpers import save_csv
 from scrapers.event_extractor import EventExtractor
 from utils import geo_utils
-
-# Cargar configuración de módulos
-CONFIG_MOD = {}
-config_path = os.path.join(os.path.dirname(__file__), "config_modulos.json")
-if os.path.exists(config_path):
-    try:
-        with open(config_path) as f:
-            CONFIG_MOD = json.load(f).get("activos", {})
-    except Exception:
-        CONFIG_MOD = {}
-
-def modulo_activo(nombre):
-    """Retorna True si el módulo está activado en config_modulos.json."""
-    return CONFIG_MOD.get(nombre, True)  # Por defecto, activado si no hay config
-
-
-# Filtrar eventos no psy
-FUENTES_NO_PSY = {"Resident Advisor"}
-
 
 # Fuentes donde "general" = probablemente NO es psytrance (reversible, configurable)
 FUENTES_NO_PSY = {"Resident Advisor"}
@@ -107,24 +86,17 @@ async def main():
     except Exception as e:
         print(f"   ❌ Error en Songkick: {e}")
     
-    # 3. Facebook (solo si está activo en config_modulos.json)
-    if CONFIG_MOD.get("facebook_mcp", False) or CONFIG_MOD.get("facebook_events_from_groups", False):
-        print("\n📱 Scraping Facebook (grupos + búsqueda pública)...")
-        try:
-            facebook_events = await asyncio.wait_for(
-                scrape_facebook_events(), timeout=180
-            )
-            if facebook_events:
-                print(f"   ✅ {len(facebook_events)} eventos encontrados")
-                eventos.extend(facebook_events)
-            else:
-                print("   ⚠️ No se encontraron eventos en Facebook")
-        except asyncio.TimeoutError:
-            print("   ⚠️ Facebook timeout (180s) — continuando con resultados parciales")
-        except Exception as e:
-            print(f"   ❌ Error en Facebook: {e}")
-    else:
-        print("\n📱 Facebook desactivado en config_modulos.json — omitido")
+    # 3. Facebook (todo junto: grupos + búsqueda pública SERP)
+    print("\n📱 Scraping Facebook (grupos + búsqueda pública)...")
+    try:
+        facebook_events = await scrape_facebook_events()
+        if facebook_events:
+            print(f"   ✅ {len(facebook_events)} eventos encontrados")
+            eventos.extend(facebook_events)
+        else:
+            print("   ⚠️ No se encontraron eventos en Facebook")
+    except Exception as e:
+        print(f"   ❌ Error en Facebook: {e}")
     
     # 4. Resident Advisor (GraphQL, sin login)
     print("\n🌐 Scraping Resident Advisor...")
@@ -138,26 +110,23 @@ async def main():
     except Exception as e:
         print(f"   ❌ Error en Resident Advisor: {e}")
     
-    # 5. Instagram (solo si está activo en config_modulos.json)
-    if CONFIG_MOD.get("instagram_dorks", False):
-        #    No modifica ni deshabilita scrapers existentes. Si el módulo o Instaloader
-        #    fallan, el flujo continúa sin interrupción.
-        #    Requiere pip install instaloader. Con instagram_session.json hay mayor yield.
-        try:
-            from scrapers.instagram import scrape_instagram_events
-            print("\n📱 Scraping Instagram (hashtags + fallback) ...")
-            ig_events = await asyncio.to_thread(scrape_instagram_events)
-            if ig_events:
-                print(f"   ✅ {len(ig_events)} eventos de Instagram")
-                eventos.extend(ig_events)
-            else:
-                print("   ⚠️ Sin eventos de Instagram (requiere sesión para mayor yield)")
-        except ImportError:
-            print("\n📱 Instagram: scraper no disponible (instaloader ausente) — omitido")
-        except Exception as e:
-            print(f"   ❌ Error en Instagram (flujo continua): {e}")
-    else:
-        print("\n📱 Instagram desactivado en config_modulos.json — omitido")
+    # 5. Instagram (SUMA opcional — extrae eventos de hashtags organizadores conocidos).
+    #    No modifica ni deshabilita scrapers existentes. Si el módulo o Instaloader
+    #    fallan, el flujo continúa sin interrupción.
+    #    Requiere pip install instaloader. Con instagram_session.json hay mayor yield.
+    try:
+        from scrapers.instagram import scrape_instagram_events
+        print("\n📱 Scraping Instagram (hashtags + fallback) ...")
+        ig_events = await asyncio.to_thread(scrape_instagram_events)
+        if ig_events:
+            print(f"   ✅ {len(ig_events)} eventos de Instagram")
+            eventos.extend(ig_events)
+        else:
+            print("   ⚠️ Sin eventos de Instagram (requiere sesión para mayor yield)")
+    except ImportError:
+        print("\n📱 Instagram: scraper no disponible (instaloader ausente) — omitido")
+    except Exception as e:
+        print(f"   ❌ Error en Instagram (flujo continua): {e}")
     
     # Clasificar eventos por subgénero para enriquecimiento
     eventos = clasificar_eventos(eventos)
@@ -171,25 +140,18 @@ async def main():
     else:
         print("\n⚠️ No se encontraron eventos en ninguna fuente")
 
-# ---- Loop Central de Optimización (aditivo, no intrusivo) ----
-    # Si core/orquetrador.py existe, ejecuta la orquestación paralela con
-    # dedup global y suma eventos nuevos al CSV. Nunca borra datos.
-    # Se salta si Facebook o Instagram están desactivados en config_modulos.json
-    # para evitar timeouts por Playwright.
-    facebook_desactivado = not CONFIG_MOD.get("facebook_mcp", True) and not CONFIG_MOD.get("facebook_events_from_groups", True)
-    instagram_desactivado = not CONFIG_MOD.get("instagram_dorks", True)
-    if not facebook_desactivado or not instagram_desactivado:
-        try:
-            from pathlib import Path
-            if Path(__file__).resolve().parent.joinpath("core", "orquetrador.py").exists():
-                print("\n🧠 Orquestando scrapers adicionales (dedup global)...")
-                from core.orquetrador import orquestar_scrapers
-                nuevos = orquestar_scrapers()
-                print(f"   ➕ {len(nuevos)} eventos nuevos añadidos por el orquestador")
-        except Exception as e:
-            print(f"   ⚠️ Orquestador no disponible: {type(e).__name__}: {e}")
-    else:
-        print("\n🧠 Orquestador omitido (Facebook/Instagram desactivados en config_modulos.json)")
+    # ---- Loop Central de Optimización (aditivo, no intrusivo) ----
+    # Si core/orquestador.py existe, ejecuta la orquestación paralela con
+    # dedup global y suma los eventos nuevos al CSV. Nunca borra datos.
+    try:
+        from pathlib import Path
+        if Path(__file__).resolve().parent.joinpath("core", "orquestador.py").exists():
+            print("\n🧠 Orquestando scrapers adicionales (dedup global)...")
+            from core.orquestador import orquestar_scrapers
+            nuevos = orquestar_scrapers()
+            print(f"   ➕ {len(nuevos)} eventos nuevos añadidos por el orquestador")
+    except Exception as e:
+        print(f"   ⚠️ Orquestador no disponible: {type(e).__name__}: {e}")
 
     # ---- Completar N/A de Facebook (aditivo, no intrusivo) ----
     # Visita las URLs de eventos FB con campos N/A (fecha/lugar/organizador)
@@ -222,49 +184,40 @@ async def main():
         print(f"   ⚠️ Completar FB externo no disponible: {type(e).__name__}: {e}")
 
     # ---- Facebook Dorks (Google Dorks vía DuckDuckGo) — opcional y aditiva ----
-    if CONFIG_MOD.get("facebook_dorks", False):
-        try:
-            from pathlib import Path as _P
-            if _P(__file__).resolve().parent.joinpath(
-                    "scrapers", "facebook_dorks.py").exists():
-                print("\n🔍 Facebook Dorks (búsqueda OSINT)...")
-                from scrapers.facebook_dorks import scrape_facebook_dorks
-                _evs_dorks = scrape_facebook_dorks()
-                print(f"   ➕ {len(_evs_dorks)} eventos de Facebook Dorks")
-        except Exception as e:
-            print(f"   ⚠️ Facebook Dorks no disponible: {type(e).__name__}: {e}")
-    else:
-        print("\n🔍 Facebook Dorks desactivado en config_modulos.json — omitido")
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "scrapers", "facebook_dorks.py").exists():
+            print("\n🔍 Facebook Dorks (búsqueda OSINT)...")
+            from scrapers.facebook_dorks import scrape_facebook_dorks
+            _evs_dorks = scrape_facebook_dorks()
+            print(f"   ➕ {len(_evs_dorks)} eventos de Facebook Dorks")
+    except Exception as e:
+        print(f"   ⚠️ Facebook Dorks no disponible: {type(e).__name__}: {e}")
 
     # ---- Instagram Dorks (Google Dorks vía DuckDuckGo) — opcional y aditiva ----
-    if CONFIG_MOD.get("instagram_dorks", False):
-        try:
-            from pathlib import Path as _P
-            if _P(__file__).resolve().parent.joinpath(
-                    "scrapers", "instagram_dorks.py").exists():
-                print("\n🔍 Instagram Dorks (búsqueda OSINT)...")
-                from scrapers.instagram_dorks import scrape_instagram_dorks
-                _evs_ig_dorks = scrape_instagram_dorks()
-                print(f"   ➕ {len(_evs_ig_dorks)} eventos de Instagram Dorks")
-        except Exception as e:
-            print(f"   ⚠️ Instagram Dorks no disponible: {type(e).__name__}: {e}")
-    else:
-        print("\n🔍 Instagram Dorks desactivado en config_modulos.json — omitido")
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "scrapers", "instagram_dorks.py").exists():
+            print("\n🔍 Instagram Dorks (búsqueda OSINT)...")
+            from scrapers.instagram_dorks import scrape_instagram_dorks
+            _evs_ig_dorks = scrape_instagram_dorks()
+            print(f"   ➕ {len(_evs_ig_dorks)} eventos de Instagram Dorks")
+    except Exception as e:
+        print(f"   ⚠️ Instagram Dorks no disponible: {type(e).__name__}: {e}")
 
     # ---- MCP Organizador (motor central de dorks) — opcional y aditiva ----
-    if CONFIG_MOD.get("mcp_organizador", False):
-        try:
-            from pathlib import Path as _P
-            if _P(__file__).resolve().parent.joinpath(
-                    "core", "mcp_organizador.py").exists():
-                print("\n🔧 MCP Organizador (motor central de dorks)...")
-                from core.mcp_organizador import ejecutar_mcp_dorks
-                _evs_mcp = ejecutar_mcp_dorks()
-                print(f"   ➕ {len(_evs_mcp)} eventos de MCP Organizador")
-        except Exception as e:
-            print(f"   ⚠️ MCP Organizador no disponible: {type(e).__name__}: {e}")
-    else:
-        print("\n🔧 MCP Organizador desactivado en config_modulos.json — omitido")
+    try:
+        from pathlib import Path as _P
+        if _P(__file__).resolve().parent.joinpath(
+                "core", "mcp_organizador.py").exists():
+            print("\n🔧 MCP Organizador (motor central de dorks)...")
+            from core.mcp_organizador import ejecutar_mcp_dorks
+            _evs_mcp = ejecutar_mcp_dorks()
+            print(f"   ➕ {len(_evs_mcp)} eventos de MCP Organizador")
+    except Exception as e:
+        print(f"   ⚠️ MCP Organizador no disponible: {type(e).__name__}: {e}")
 
     # ---- Agente Coordinador (Sistema Multiagente Ligero) — opcional y aditiva ----
     # Si core/agente_coordinador.py existe, ejecuta los subagentes en paralelo

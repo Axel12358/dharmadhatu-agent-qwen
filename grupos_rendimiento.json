@@ -21,11 +21,11 @@
     "ultima_vez": "2026-07-31T19:45:06.573920+00:00"
   },
   "progressivepsytrance": {
-    "intentos": 4,
-    "eventos": 4,
+    "intentos": 5,
+    "eventos": 5,
     "errores": 0,
     "tiempo_total": 0.0,
-    "ultima_vez": "2026-08-14T15:25:38.770536+00:00"
+    "ultima_vez": "2026-08-19T00:22:52.186186+00:00"
   },
   "psytrancecommunity": {
     "intentos": 3,
@@ -84,11 +84,11 @@
     "ultima_vez": "2026-08-14T04:59:05.425107+00:00"
   },
   "goatrance": {
-    "intentos": 1,
-    "eventos": 1,
+    "intentos": 2,
+    "eventos": 2,
     "errores": 0,
     "tiempo_total": 0.0,
-    "ultima_vez": "2026-08-14T04:59:05.427823+00:00"
+    "ultima_vez": "2026-08-19T00:22:52.185473+00:00"
   },
   "nightfullon": {
     "intentos": 1,
@@ -105,11 +105,11 @@
     "ultima_vez": "2026-08-14T05:07:56.679945+00:00"
   },
   "hitechevents": {
-    "intentos": 2,
-    "eventos": 2,
+    "intentos": 3,
+    "eventos": 3,
     "errores": 0,
     "tiempo_total": 0.0,
-    "ultima_vez": "2026-08-14T15:42:43.353221+00:00"
+    "ultima_vez": "2026-08-18T17:23:33.888530+00:00"
   },
   "psychedelicfestivals": {
     "intentos": 1,
@@ -117,5 +117,40 @@
     "errores": 0,
     "tiempo_total": 0.0,
     "ultima_vez": "2026-08-14T15:25:38.771284+00:00"
+  },
+  "goagil": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-08-18T17:23:33.886828+00:00"
+  },
+  "196793727637612": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-08-19T00:22:52.179858+00:00"
+  },
+  "271625487184735": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-08-19T00:22:52.183149+00:00"
+  },
+  "Goagemeinschaft": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-08-19T00:22:52.183953+00:00"
+  },
+  "andorralavieja": {
+    "intentos": 1,
+    "eventos": 1,
+    "errores": 0,
+    "tiempo_total": 0.0,
+    "ultima_vez": "2026-08-19T00:22:52.184655+00:00"
   }
 }

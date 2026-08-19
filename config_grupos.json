@@ -15,8 +15,8 @@
     "psychedelic",
     "psytrance"
   ],
-  "rotacion_paises_por_run": 30,
-  "max_keywords_por_run": 250,
+  "rotacion_paises_por_run": 10,
+  "max_keywords_por_run": 50,
   "paises": [
     {
       "nombre": "España",

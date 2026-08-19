@@ -388,7 +388,7 @@ class MCPOrganizador:
             if nombre == "facebook_dorks":
                 from scrapers.facebook_dorks import scrape_facebook_dorks
                 # facebook_dorks devuelve dict con hallazgos + eventos
-                resultado = scrape_facebook_dorks(timeout=timeout)
+                resultado = scrape_facebook_dorks()
                 # Los eventos encontrados se devuelven para que el orquestador
                 # los agregue al CSV (aditivo, nunca resta).
                 eventos = resultado.get("eventos", []) or []

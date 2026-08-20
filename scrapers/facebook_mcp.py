@@ -827,16 +827,23 @@ class FacebookEventsFinder:
     # ESTRATEGIA 2: requests + BeautifulSoup con proxies
     # ------------------------------------------------------------------ #
     async def _via_requests(self, keywords):
+        """Estrategia 2 (reactivada): grupos FB conocidos vía curl_cffi + Tor.
+
+        Sustituye el requests plano (bloqueado en Tor) por core.http_client
+        (TLS de navegador + proxy SOCKS5, sin IP real). Si get_html devuelve
+        None, se omite el grupo y se pasa al siguiente (no cuelga).
+        """
         eventos = []
         t0 = time.time()
         try:
-            import requests
             from bs4 import BeautifulSoup
         except ImportError:
             return eventos
+        try:
+            from core.http_client import get_html
+        except Exception:
+            return eventos
 
-        socket.setdefaulttimeout(6)
-        domain = "facebook.com"
         grupos_a_visitar = list(self.grupos_encontrados.keys())[:10]
         random.shuffle(grupos_a_visitar)
 
@@ -847,31 +854,11 @@ class FacebookEventsFinder:
             gname = gdata.get("nombre", gid)
             gurl = gdata.get("url", f"https://facebook.com/groups/{gid}")
 
-            self.anti_block.wait_if_needed(domain)
-            proxy = self.anti_block.get_proxy()
-            headers = {"User-Agent": self.anti_block.random_user_agent()}
-
-            resp = None
-            try:
-                resp = requests.get(gurl, headers=headers, proxies=None, timeout=(4, 8))
-            except requests.RequestException:
-                resp = None
-            if resp is None and proxy:
-                try:
-                    resp = requests.get(gurl, headers=headers,
-                                        proxies={"http": proxy, "https": proxy},
-                                        timeout=(3, 6))
-                except requests.RequestException:
-                    self.anti_block.mark_proxy_failed(proxy)
-                    continue
-
-            if resp is None or resp.status_code != 200:
+            # Tor + curl_cffi (sin IP real). get_html -> None si falla/block.
+            html = await asyncio.to_thread(get_html, gurl, 15)
+            if not html:
                 continue
-            if self.anti_block.detect_block(resp.text, gurl):
-                continue
-
-            self.anti_block.mark_success(domain)
-            soup = BeautifulSoup(resp.text, "html.parser")
+            soup = BeautifulSoup(html, "html.parser")
             body = soup.get_text(separator=" ", strip=True)
             evs = self.extractor.extract_all(body[:3000], gname, gurl)
             kw_subgenero = _extraer_subgenero_desde_keyword(gname)
@@ -880,7 +867,7 @@ class FacebookEventsFinder:
             eventos.extend(evs)
 
         dt = time.time() - t0
-        self.optimizer.registrar_resultado("requests_proxies", eventos, dt, bool(eventos))
+        self.optimizer.registrar_resultado("requests_tor_curl", eventos, dt, bool(eventos))
         return eventos
 
     # ------------------------------------------------------------------ #
@@ -957,16 +944,23 @@ class FacebookEventsFinder:
         return eventos
 
     async def _requests_grupo(self, gurl, gname):
-        """Extrae eventos de la página pública de un grupo FB vía requests."""
+        """Extrae eventos de la página pública de un grupo FB vía curl_cffi + Tor.
+
+        Sustituye requests plano por core.http_client (sin IP real). Si
+        get_html devuelve None, omite el grupo. No requiere JavaScript.
+        """
         eventos = []
         try:
-            import requests as _requests
             from bs4 import BeautifulSoup as _BS
-            headers = {"User-Agent": self.anti_block.random_user_agent()}
-            r = _requests.get(gurl, headers=headers, timeout=10)
-            if r.status_code != 200:
+            from core.http_client import get_html
+            mb = gurl
+            if "mbasic.facebook.com" not in mb:
+                mb = mb.replace("https://facebook.com", "https://mbasic.facebook.com")
+                mb = mb.replace("http://facebook.com", "https://mbasic.facebook.com")
+            html = await asyncio.to_thread(get_html, mb, 15)
+            if not html:
                 return eventos
-            soup = _BS(r.text, "html.parser")
+            soup = _BS(html, "html.parser")
             body = soup.get_text(separator=" ", strip=True)
             if len(body) < 50:
                 return eventos
@@ -976,6 +970,91 @@ class FacebookEventsFinder:
             eventos.extend(evs)
         except Exception:
             pass
+        return eventos
+
+    # ------------------------------------------------------------------ #
+    # ESTRATEGIA 2b: curl_cffi + Tor (reactivación FB sin Playwright)
+    # ------------------------------------------------------------------ #
+    async def _via_curl_cffi(self, keywords):
+        """Reactivación de Facebook SIN cookies ni Playwright (vía Tor).
+
+        Estrategia: busca site:facebook.com/events <kw> psytrance en DDG-lite
+        usando curl_cffi + Tor (TLS de navegador, sin IP real), y extrae los
+        eventos directamente de los *snippets* de resultados (título + snippet),
+        que ya traen nombre, fecha y lugar. NO visita las páginas de Facebook
+        (login-walled vía Tor), evitando cuelgues y bloqueos.
+
+        Si get_html devuelve None (bloqueo/timeout), omite y sigue. Acotado
+        por tiempo (~90s) para no colgar. No usa conexión directa.
+        """
+        eventos = []
+        t0 = time.time()
+        try:
+            from core.http_client import get_html
+        except Exception:
+            return eventos
+        from bs4 import BeautifulSoup
+        import re as _re
+        import urllib.parse as _up
+
+        def _buscar_bloques(kw):
+            q = f"site:facebook.com/events {kw} psytrance"
+            html = get_html(
+                "https://lite.duckduckgo.com/lite/?q=" + _up.quote(q), 20
+            )
+            if not html:
+                return []
+            soup = BeautifulSoup(html, "html.parser")
+            links = soup.select("a.result-link")
+            snips = soup.select(".result-snippet")
+            bloques = []
+            for a, sn in zip(links, snips):
+                href = a.get("href", "")
+                m = _re.search(r"uddg=([^&]+)", href)
+                fburl = _up.unquote(m.group(1)) if m else ""
+                titulo = a.get_text(" ", strip=True)
+                snip = sn.get_text(" ", strip=True) if sn else ""
+                bloques.append((titulo, snip, fburl))
+            return bloques
+
+        kws = _seleccionar_keywords_diversas(keywords, 8)
+        vistos_url = set()
+        for kw in kws:
+            if time.time() - t0 > 70:
+                break
+            try:
+                bloques = await asyncio.to_thread(_buscar_bloques, kw)
+            except Exception:
+                bloques = []
+            for titulo, snip, fburl in bloques:
+                if fburl and fburl in vistos_url:
+                    continue
+                if fburl:
+                    vistos_url.add(fburl)
+                blob = f"{titulo} {snip}"
+                if len(blob) < 10:
+                    continue
+                evs = self.extractor.extract_all(blob[:1500], "Tor", fburl)
+                sub = _extraer_subgenero_desde_keyword(kw)
+                for ev in evs:
+                    ev["subgenero"] = sub or ev.get("subgenero", "")
+                    if fburl:
+                        ev["url"] = fburl
+                    nombre = (ev.get("nombre") or "").lower()
+                    candidato = nombre + " " + blob.lower()
+                    if any(nk in candidato for nk in NOISE_KEYWORDS):
+                        continue
+                    # Solo eventos con fecha real (evita ruido del snippet)
+                    if ev.get("fecha") in (None, "", "N/A"):
+                        continue
+                    eventos.append(ev)
+            if len(vistos_url) >= 25:
+                break
+
+        dt = time.time() - t0
+        self.optimizer.registrar_resultado(
+            "curl_cffi_tor", eventos, dt, bool(eventos)
+        )
         return eventos
 
     # ------------------------------------------------------------------ #
@@ -1734,9 +1813,9 @@ class FacebookEventsFinder:
             probe_ok = False
             err_str = str(e)[:100]
             if "SOCKS" in err_str or "ERR_SOCKS" in err_str or "Proxy" in err_str:
-                print(f"  ⚠️ Tor SOCKS no disponible, usando conexión directa")
+                print(f"  ⚠️ Tor SOCKS no disponible; reintentando por Tor")
             else:
-                print(f"  ⚠️ Tor no navega ({err_str}); usando conexión directa")
+                print(f"  ⚠️ Tor no navega ({err_str}); reintentando por Tor")
         finally:
             if page:
                 try:
@@ -1748,7 +1827,9 @@ class FacebookEventsFinder:
                 await context.close()
             except Exception:
                 pass
-            context = await self.anti_block.create_stealth_context(browser, use_tor=False)
+            # Seguimos por Tor (create_stealth_context SIEMPRE usa el proxy
+            # socks de Tor si está disponible): nunca conexión directa/IP real.
+            context = await self.anti_block.create_stealth_context(browser, use_tor=True)
         return context
 
     def _guardar_eventos_visitados(self, cache):
@@ -2361,7 +2442,25 @@ class FacebookEventsFinder:
         def time_left():
             return max(0, 180 - (time.time() - t_start))
 
-        # ESTRATEGIA 5 PRIMERO: Búsqueda pública SERP (la más productiva)
+        # ESTRATEGIA 2b PRIMERO: curl_cffi + Tor (reactivación FB sin Playwright,
+        # sin IP real). Extrae del SERP vía Tor y parsea los snippets. Rápido
+        # y no se cuelga: si Tor/DDG falla, get_html devuelve None y seguimos.
+        resultados = await run_with_timeout(self._via_curl_cffi(keywords), timeout=min(90, time_left()))
+        for ev in resultados:
+            uid = ev.get("url", "")
+            if uid not in used:
+                todos.append(ev)
+                used.add(uid)
+
+        if time_left() < 10:
+            return todos
+
+        # Si curl_cffi+Tor ya aportó suficientes eventos, no gastamos tiempo
+        # en la SERP/Playwright (más lenta y solo respaldo).
+        if len(todos) >= 10:
+            return todos
+
+        # ESTRATEGIA 5: Búsqueda pública SERP (respaldo, vía proxy Tor)
         resultados = await run_with_timeout(self._via_google_serp_public(keywords), timeout=min(SERP_TIMEOUT, time_left()))
         for ev in resultados:
             uid = ev.get("url", "")

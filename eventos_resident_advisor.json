@@ -195,21 +195,6 @@
     "generos": "Bass, Ambient"
   },
   {
-    "nombre": "Pulso: Flor Coto, Nacho Carbajal, Santi Calvo, No Silver Bullet, Szew, Mati Amoretti",
-    "fecha": "2026-08-20",
-    "lugar": "Crack Bellmer",
-    "ciudad": "Berlín",
-    "pais": "Alemania",
-    "tipo_lugar": "club",
-    "fuente": "Resident Advisor",
-    "organizador": "Crack Bellmer",
-    "email": "https://ra.co/events/2495363",
-    "url": "https://ra.co/events/2495363",
-    "link": "https://ra.co/events/2495363",
-    "descripcion": "<artist id=\"170037\">Chuki Juri</artist> \n<artist id=\"135442\">Flor Coto</artist>\n<artist id=\"149042\">Mati Amoretti</artist> \n<artist id=\"164217\">Nacho Carbajal</artist>\n<artist id=\"136360\">No Silver Bullet</artist> \n<artist id=\"161111\">Rafael</artist>\n<artist id=\"156401\">Santi Calvo</artist> \n<artist id=\"120346\">Szew</artist>; House, Deep House; Thursday, 20th August at Crack Bellmer \n\nReboot, 9th Floor, Groovypedia and La Casita Recordings are joining forces, united by a shared vision of the sce",
-    "generos": "House, Deep House"
-  },
-  {
     "nombre": "Renate x Queer Vinyl Night (Klubnacht + Free Open Air)",
     "fecha": "2026-08-20",
     "lugar": "Renate",
@@ -223,6 +208,21 @@
     "link": "https://ra.co/events/2485805",
     "descripcion": "GARDEN (from 14:00, FREE until 20:00) hosted by Queer Vinyl Night\n<artist id=\"68744\">SALAS</artist> & Rosas\n\nGREEN (from 22:00) hosted by Queer Vinyl Night\n<artist id=\"124077\">Kidcat</artist> b2b Broccoli\n<artist id=\"110987\">zikade</artist> b2b <artist id=\"116698\">Jimmie</artist>; Techno, House; GARTEN FÜR ALLE: Free Entry until 20:00 PM\nRenate is back for a new year with a fresh energy and excitement after our last-minute lease extension. Come be a part of this new journey as we create a bright",
     "generos": "Techno, House"
+  },
+  {
+    "nombre": "Pulso: Flor Coto, Nacho Carbajal, Santi Calvo, No Silver Bullet, Szew, Mati Amoretti",
+    "fecha": "2026-08-20",
+    "lugar": "Crack Bellmer",
+    "ciudad": "Berlín",
+    "pais": "Alemania",
+    "tipo_lugar": "club",
+    "fuente": "Resident Advisor",
+    "organizador": "Crack Bellmer",
+    "email": "https://ra.co/events/2495363",
+    "url": "https://ra.co/events/2495363",
+    "link": "https://ra.co/events/2495363",
+    "descripcion": "<artist id=\"170037\">Chuki Juri</artist> \n<artist id=\"135442\">Flor Coto</artist>\n<artist id=\"149042\">Mati Amoretti</artist> \n<artist id=\"164217\">Nacho Carbajal</artist>\n<artist id=\"136360\">No Silver Bullet</artist> \n<artist id=\"161111\">Rafael</artist>\n<artist id=\"156401\">Santi Calvo</artist> \n<artist id=\"120346\">Szew</artist>; House, Deep House; Thursday, 20th August at Crack Bellmer \n\nReboot, 9th Floor, Groovypedia and La Casita Recordings are joining forces, united by a shared vision of the sce",
+    "generos": "House, Deep House"
   },
   {
     "nombre": "STRAFF / Techno Thursday / 5€ until 1 AM",
@@ -405,21 +405,6 @@
     "generos": "House"
   },
   {
-    "nombre": "FREE ENTRY: Connect & RAVE: Community OPEN AIR at DNA. CLUB: Funky House, Bounce & Techno",
-    "fecha": "2026-08-21",
-    "lugar": "DNA. CLUB",
-    "ciudad": "Berlín",
-    "pais": "Alemania",
-    "tipo_lugar": "indoor, club, beach",
-    "fuente": "Resident Advisor",
-    "organizador": "DNA. CLUB",
-    "email": "https://ra.co/events/2495724",
-    "url": "https://ra.co/events/2495724",
-    "link": "https://ra.co/events/2495724",
-    "descripcion": "10 pm doors\n10.30 - 11.30 pm: DJ Set by Wonderboy\n11.30 pm - 00:00: Special Live Act Max Izee & Freshflowz\n00:00 - 01:00 am: DJ Set by JEKALO (Funky House, UK Garage)\n01:00 - 2:00 am: DJ Set by Bizzy (Disco & House)\n02:00 - 03:00 am: DJ Set by <artist id=\"170718\">Daniela Dair</artist> (Bounce & Techno); Techno, House; (Entry via Xara Beach = if You stand in front of Rossman, it’s in the end of the tunnel on the right)\n\n____________________________\n\n\nNew Community Format - to connect, share & dan",
-    "generos": "Techno, House"
-  },
-  {
     "nombre": "Sound Therapy",
     "fecha": "2026-08-21",
     "lugar": "Mena Berlin",
@@ -432,6 +417,21 @@
     "url": "https://ra.co/events/2501229",
     "link": "https://ra.co/events/2501229",
     "descripcion": "<artist id=\"148406\">Guido Iacovitti</artist> \nKraktus\n<artist id=\"24002\">Davidlab</artist> / <artist id=\"90061\">disttler</artist> \n<artist id=\"90321\">Hellotrip</artist>\n+ more TBA; Techno, House; **SOUND THERAPY**\n\nSound Therapy was born from the idea of blending house music with different styles of electronic music to create a unique sonic experience.\n\nThe first edition of this new project will feature Italian,Polish & Colombian DJs, who will take you on a carefully curated musical journey,",
+    "generos": "Techno, House"
+  },
+  {
+    "nombre": "FREE ENTRY: Connect & RAVE: Community OPEN AIR at DNA. CLUB: Funky House, Bounce & Techno",
+    "fecha": "2026-08-21",
+    "lugar": "DNA. CLUB",
+    "ciudad": "Berlín",
+    "pais": "Alemania",
+    "tipo_lugar": "indoor, club, beach",
+    "fuente": "Resident Advisor",
+    "organizador": "DNA. CLUB",
+    "email": "https://ra.co/events/2495724",
+    "url": "https://ra.co/events/2495724",
+    "link": "https://ra.co/events/2495724",
+    "descripcion": "10 pm doors\n10.30 - 11.30 pm: DJ Set by Wonderboy\n11.30 pm - 00:00: Special Live Act Max Izee & Freshflowz\n00:00 - 01:00 am: DJ Set by JEKALO (Funky House, UK Garage)\n01:00 - 2:00 am: DJ Set by Bizzy (Disco & House)\n02:00 - 03:00 am: DJ Set by <artist id=\"170718\">Daniela Dair</artist> (Bounce & Techno); Techno, House; (Entry via Xara Beach = if You stand in front of Rossman, it’s in the end of the tunnel on the right)\n\n____________________________\n\n\nNew Community Format - to connect, share & dan",
     "generos": "Techno, House"
   },
   {
@@ -660,6 +660,21 @@
     "generos": "House, Tech House"
   },
   {
+    "nombre": "10 Years Enter the Void with dela Moon (USA), Mo, Marie Moon, Upzet, Luca Hagenmüller, Baraquz",
+    "fecha": "2026-08-21",
+    "lugar": "Void Club",
+    "ciudad": "Berlín",
+    "pais": "Alemania",
+    "tipo_lugar": "indoor, outdoor, club",
+    "fuente": "Resident Advisor",
+    "organizador": "Void Club",
+    "email": "https://ra.co/events/2502911",
+    "url": "https://ra.co/events/2502911",
+    "link": "https://ra.co/events/2502911",
+    "descripcion": "<artist id=\"155535\">dela Moon</artist> (USA), Mo, <artist id=\"130614\">MARIE.MOON</artist>, <artist id=\"34603\">Upzet</artist>, Ānna Meā, <artist id=\"174274\">Gianni Noel</artist>, <artist id=\"45193\">Zeihta</artist>, <artist id=\"169320\">Luca Hagenmüller</artist>, <artist id=\"116878\">Nebuchadnezzar</artist>, Baraquz, <artist id=\"182496\">MixB</artist>, Sebtik; Drum & Bass, Techno; Fri 21.08.2026 | 10 Years Enter the Void\nTechno, Drum & Bass, Psytrance at VOID Club & Hall\n\nFull lineup to be announced ",
+    "generos": "Drum & Bass, Techno"
+  },
+  {
     "nombre": "WÜSTuWILD X NICE TRIES BERLIN",
     "fecha": "2026-08-21",
     "lugar": "Humboldthain Club",
@@ -720,21 +735,6 @@
     "generos": "Techno, Psytrance"
   },
   {
-    "nombre": "10 Years Enter the Void with dela Moon (USA), Mo, Marie Moon, Upzet, Luca Hagenmüller, Baraquz",
-    "fecha": "2026-08-21",
-    "lugar": "Void Club",
-    "ciudad": "Berlín",
-    "pais": "Alemania",
-    "tipo_lugar": "indoor, outdoor, club",
-    "fuente": "Resident Advisor",
-    "organizador": "Void Club",
-    "email": "https://ra.co/events/2502911",
-    "url": "https://ra.co/events/2502911",
-    "link": "https://ra.co/events/2502911",
-    "descripcion": "<artist id=\"155535\">dela Moon</artist> (USA), Mo, <artist id=\"130614\">MARIE.MOON</artist>, <artist id=\"34603\">Upzet</artist>, Ānna Meā, <artist id=\"174274\">Gianni Noel</artist>, <artist id=\"45193\">Zeihta</artist>, <artist id=\"169320\">Luca Hagenmüller</artist>, <artist id=\"116878\">Nebuchadnezzar</artist>, Baraquz, <artist id=\"182496\">MixB</artist>, Sebtik; Drum & Bass, Techno; Fri 21.08.2026 | 10 Years Enter the Void\nTechno, Drum & Bass, Psytrance at VOID Club & Hall\n\nFull lineup to be announced ",
-    "generos": "Drum & Bass, Techno"
-  },
-  {
     "nombre": "Midnight Flower",
     "fecha": "2026-08-21",
     "lugar": "Paloma",
@@ -763,21 +763,6 @@
     "link": "https://ra.co/events/2378887",
     "descripcion": "AN.JUDGE\n<artist id=\"177898\">BIJI ON DECKS</artist>\n<artist id=\"174895\">BOOTHBUNNY</artist>\n<artist id=\"168659\">Buday</artist>\nCLUBJOSEF\nDJ GAČI\nDJ WORKSHOP\nDJSPALTE\n<artist id=\"177231\">Dr.Waumiau</artist>\n<artist id=\"176762\">fU.impact</artist>\n<artist id=\"185493\">Glumo</artist>\nHELLO KIFFY\n<artist id=\"182839\">DJ Hitwave</artist>\n<artist id=\"185652\">Karolanne</artist>\n<artist id=\"170997\">Kolja.Kebab</artist>\nLEO.PARDYY\n<artist id=\"184314\">Levandream</artist>\n<artist id=\"156879\">Lisatrix</artist>",
     "generos": "Trance, Techno"
-  },
-  {
-    "nombre": "Renate Klubnacht + Open Air (Free Entry) DJ Line-Up curated by Lunacy Berlin",
-    "fecha": "2026-08-21",
-    "lugar": "Renate",
-    "ciudad": "Berlín",
-    "pais": "Alemania",
-    "tipo_lugar": "open air, garden",
-    "fuente": "Resident Advisor",
-    "organizador": "Renate",
-    "email": "https://ra.co/events/2511852",
-    "url": "https://ra.co/events/2511852",
-    "link": "https://ra.co/events/2511852",
-    "descripcion": "GARDEN (from 16:00) line up curated by Lunacy Berlin\n<artist id=\"68956\">Daniel Jaeger</artist>\n<artist id=\"14347\">Madmotormiquel</artist>\n\nGREEN (from 22:00) line up curated by Lunacy Berlin\n<artist id=\"103607\">Bizzarro Universe</artist>\n<artist id=\"155392\">Emma Keks</artist>\nHarris\n<artist id=\"70475\">Stephan Licha</artist>\n\nBLACK line up curated by Lunacy Berlin\n<artist id=\"29983\">Ady Toledano</artist>\n<artist id=\"83876\">Cook Strummer</artist>\n<artist id=\"146393\">Dj handbag</artist>\nMADDYY; Tec",
-    "generos": "Techno, House"
   },
   {
     "nombre": "8 Jahre Pfandidos (BOX OFFICE ONLY) w/ Sire Jonah, Mareike Bautz, SACID uvm",
@@ -1755,21 +1740,6 @@
     "generos": "Progressive House"
   },
   {
-    "nombre": "Glamour Freaks: Hermes Disco Eterno",
-    "fecha": "2026-08-21",
-    "lugar": "Slow Club",
-    "ciudad": "Barcelona",
-    "pais": "España",
-    "tipo_lugar": "club",
-    "fuente": "Resident Advisor",
-    "organizador": "Slow Club",
-    "email": "https://ra.co/events/2499999",
-    "url": "https://ra.co/events/2499999",
-    "link": "https://ra.co/events/2499999",
-    "descripcion": "<artist id=\"132487\">Hermes Disco Eterno</artist>; House, Disco; Glamour Freaks, parte de las noches underground de Slow Club, con nuestro DJ residente:\n\nHermes Disco Eterno\n\nUna selección house para la pista y la madrugada. Una noche que recorre el espectro de la música house, desde deep house y Chicago hasta progressive y casi con toques de techno.\n\nDirección: ",
-    "generos": "House, Disco"
-  },
-  {
     "nombre": "City Hall x AQV — FRIDAY 21.08 - Bob Tosh, DELUM, MAITI MERLINO, TOMS & Gabbi Lopez",
     "fecha": "2026-08-21",
     "lugar": "City Hall",
@@ -2025,6 +1995,21 @@
     "generos": "Techno, Electronica"
   },
   {
+    "nombre": "The Retrospective: Navider",
+    "fecha": "2026-08-22",
+    "lugar": "Slow Club",
+    "ciudad": "Barcelona",
+    "pais": "España",
+    "tipo_lugar": "club, forest",
+    "fuente": "Resident Advisor",
+    "organizador": "Slow Club",
+    "email": "https://ra.co/events/2500049",
+    "url": "https://ra.co/events/2500049",
+    "link": "https://ra.co/events/2500049",
+    "descripcion": "<artist id=\"173309\">Navider</artist>; House, Disco; Retrospective is about oldschool house music of 80 till now with underground and vibrant mode. Something from the soul, old-tapes but gold cuts!\n\nSaturday Night, August 22nd, The Glamour Freaks presents THE RETROSPECTIVE in the Jungle Boîte with\n\nNavider",
+    "generos": "House, Disco"
+  },
+  {
     "nombre": "Pastis & Buenri Vinyl Set All Night Long",
     "fecha": "2026-08-22",
     "lugar": "Nitsa Club",
@@ -2128,21 +2113,6 @@
     "link": "https://ra.co/events/2495814",
     "descripcion": "<artist id=\"102220\">AMANTRA</artist> \n<artist id=\"127735\">Cherolainne</artist> \nHigashi\n<artist id=\"154704\">Julio César</artist> \n<artist id=\"180023\">KBRAL</artist> \n<artist id=\"142076\">KMILA</artist> \n<artist id=\"114289\">M8NSE</artist> \nNORA\n<artist id=\"140664\">Rattlesnakke</artist> \n<artist id=\"163462\">SIMONA</artist>\n<artist id=\"176168\">T0M1</artist> \n<artist id=\"102869\">ZEI (Br)</artist>; Techno, Latin Bass; Vetor Magazine, Plasma y Pirexia reunimos en un mismo espacio a artistas internacion",
     "generos": "Techno, Latin Bass"
-  },
-  {
-    "nombre": "The Retrospective: Navider",
-    "fecha": "2026-08-22",
-    "lugar": "Slow Club",
-    "ciudad": "Barcelona",
-    "pais": "España",
-    "tipo_lugar": "club, forest",
-    "fuente": "Resident Advisor",
-    "organizador": "Slow Club",
-    "email": "https://ra.co/events/2500049",
-    "url": "https://ra.co/events/2500049",
-    "link": "https://ra.co/events/2500049",
-    "descripcion": "<artist id=\"173309\">Navider</artist>; House, Disco; Retrospective is about oldschool house music of 80 till now with underground and vibrant mode. Something from the soul, old-tapes but gold cuts!\n\nSaturday Night, August 22nd, The Glamour Freaks presents THE RETROSPECTIVE in the Jungle Boîte with\n\nNavider",
-    "generos": "House, Disco"
   },
   {
     "nombre": "City Hall pres. TEUF KULTURE || ITALIAN KONEKTION",
@@ -2685,6 +2655,21 @@
     "generos": "House, Electro"
   },
   {
+    "nombre": "Elements Cave - Phat Otiz (Live)",
+    "fecha": "2026-08-22",
+    "lugar": "Sala El Sol",
+    "ciudad": "Madrid",
+    "pais": "España",
+    "tipo_lugar": "indoor",
+    "fuente": "Resident Advisor",
+    "organizador": "Sala El Sol",
+    "email": "https://ra.co/events/2501571",
+    "url": "https://ra.co/events/2501571",
+    "link": "https://ra.co/events/2501571",
+    "descripcion": "Phat Otiz\n<artist id=\"129894\">Pulpix</artist> b2b Freska\n<artist id=\"122948\">DAVID MENA</artist> \n<artist id=\"141514\">JvggedDoggie</artist>; Techno, Acid; 22 Agosto, Sábado at Sala El SOL\n\nInvitaciones muy limitadas a través de esta Ticketera, una vez agotadas podrás encontrar anticipadas con consumición y bono-copas en Dice.fm\n\nPhat Otiz dio el paso al mundo de la escena underground del Tekno en 2017, y la Free Party Scene se sintió inmediatamente co",
+    "generos": "Techno, Acid"
+  },
+  {
     "nombre": "HOUSENATION X ROTTEN CITY BASEMENT: Javi Redondo, Álvaro Cabana",
     "fecha": "2026-08-22",
     "lugar": "EL SÓTANO",
@@ -2713,21 +2698,6 @@
     "link": "https://ra.co/events/2498680",
     "descripcion": "<artist id=\"158265\">P1P3</artist> \n6IXYOA \nMERAVIGLIA; Trance, Techno; Prepárate para una noche del mejor HARDGROOVE y HARDTRANCE de la capital.\n​\nAquí venimos a lo que venimos: música, sudor y pura esencia.\n​Crea clubbing, genera respeto y cuida a la familia allá donde vayas.\n\nDRESS CODE LIBRE (Ven como te dé la gana, pero ven a darlo todo).\n\n​¡MUCHO TECHNO, FAMILIA!",
     "generos": "Trance, Techno"
-  },
-  {
-    "nombre": "Elements Cave - Phat Otiz (Live)",
-    "fecha": "2026-08-22",
-    "lugar": "Sala El Sol",
-    "ciudad": "Madrid",
-    "pais": "España",
-    "tipo_lugar": "indoor",
-    "fuente": "Resident Advisor",
-    "organizador": "Sala El Sol",
-    "email": "https://ra.co/events/2501571",
-    "url": "https://ra.co/events/2501571",
-    "link": "https://ra.co/events/2501571",
-    "descripcion": "Phat Otiz\n<artist id=\"129894\">Pulpix</artist> b2b Freska\n<artist id=\"122948\">DAVID MENA</artist> \n<artist id=\"141514\">JvggedDoggie</artist>; Techno, Acid; 22 Agosto, Sábado at Sala El SOL\n\nInvitaciones muy limitadas a través de esta Ticketera, una vez agotadas podrás encontrar anticipadas con consumición y bono-copas en Dice.fm\n\nPhat Otiz dio el paso al mundo de la escena underground del Tekno en 2017, y la Free Party Scene se sintió inmediatamente co",
-    "generos": "Techno, Acid"
   },
   {
     "nombre": "MAGNUM X NEOTIKA",
@@ -2910,6 +2880,21 @@
     "generos": "Techno"
   },
   {
+    "nombre": "Elements Cave",
+    "fecha": "2026-08-29",
+    "lugar": "Sala El Sol",
+    "ciudad": "Madrid",
+    "pais": "España",
+    "tipo_lugar": "indoor",
+    "fuente": "Resident Advisor",
+    "organizador": "Sala El Sol",
+    "email": "https://ra.co/events/2501573",
+    "url": "https://ra.co/events/2501573",
+    "link": "https://ra.co/events/2501573",
+    "descripcion": "TBA; Techno, Acid; TBA",
+    "generos": "Techno, Acid"
+  },
+  {
     "nombre": "VIPPER Opening Party with Gentlemens Club,Skantia, SMG b2b Waeys, Spectral",
     "fecha": "2026-08-29",
     "lugar": "LAB theCLUB",
@@ -2953,21 +2938,6 @@
     "link": "https://ra.co/events/2498683",
     "descripcion": "ARTIIMANYA\nSAIAX\nSERGIO GONZALEZ; Trance, Techno; Prepárate para una noche del mejor HARDGROOVE y HARDTRANCE de la capital.\n​\nSi ya te cansaste del reggaeton camuflado en sitios que dicen ser de \"techno\", este es tu lugar. Aquí venimos a lo que venimos: música, sudor y pura esencia.\n​Crea clubbing, genera respeto y cuida a la familia allá donde vay",
     "generos": "Trance, Techno"
-  },
-  {
-    "nombre": "Elements Cave",
-    "fecha": "2026-08-29",
-    "lugar": "Sala El Sol",
-    "ciudad": "Madrid",
-    "pais": "España",
-    "tipo_lugar": "indoor",
-    "fuente": "Resident Advisor",
-    "organizador": "Sala El Sol",
-    "email": "https://ra.co/events/2501573",
-    "url": "https://ra.co/events/2501573",
-    "link": "https://ra.co/events/2501573",
-    "descripcion": "TBA; Techno, Acid; TBA",
-    "generos": "Techno, Acid"
   },
   {
     "nombre": "ART ELECTRONIC UNDERGROUND",
@@ -3090,21 +3060,6 @@
     "generos": "Tech House"
   },
   {
-    "nombre": "CHRØMA OPENING SEASON: Carlos Pérez B2B K-Style",
-    "fecha": "2026-09-04",
-    "lugar": "Sala ART",
-    "ciudad": "Madrid",
-    "pais": "España",
-    "tipo_lugar": "indoor, beach, warehouse",
-    "fuente": "Resident Advisor",
-    "organizador": "Sala ART",
-    "email": "https://ra.co/events/2504302",
-    "url": "https://ra.co/events/2504302",
-    "link": "https://ra.co/events/2504302",
-    "descripcion": "<artist id=\"97566\">Carlos Pérez</artist> B2B <artist id=\"36025\">K-Style</artist>, <artist id=\"176004\">JAIROSKUN</artist> B2B <artist id=\"171792\">Costa (2)</artist>, Artaban; Techno; LAST 16 PROMO TICKETS!!!\n\nIs it the industrial vibe? Is it the line-up of artists? Is it the ease with which it makes you lose yourself?\nThe answer lies in what motivates you to come back.\n\nWrap yourself in Chrøma's nights.\nWe are not responsible for what happens afterward",
-    "generos": "Techno"
-  },
-  {
     "nombre": "Play Cube Records Label Showcase — Hangar 48 Madrid",
     "fecha": "2026-09-04",
     "lugar": "Hangar48 Club",
@@ -3118,6 +3073,21 @@
     "link": "https://ra.co/events/2516936",
     "descripcion": "@CIRCO PARAISO \n@600mg IBUPROFEN \n@MIND LOOP DJ \n@VIRGINIA BLU \n@ERIK DISTOR \n@DJ NAX; Techno, Tech House; El próximo 4 de septiembre, Play Cube Records regresa a Madrid con una nueva edición de su Label Showcase en Hangar 48.\n\nDespués de nuestra primera edición en Madrid el pasado mes de mayo, Play Cube Records continúa ampliando su presencia en la capital. Desde aquel primer showcase, el sello ha segui",
     "generos": "Techno, Tech House"
+  },
+  {
+    "nombre": "CHRØMA OPENING SEASON: Carlos Pérez B2B K-Style",
+    "fecha": "2026-09-04",
+    "lugar": "Sala ART",
+    "ciudad": "Madrid",
+    "pais": "España",
+    "tipo_lugar": "indoor, beach, warehouse",
+    "fuente": "Resident Advisor",
+    "organizador": "Sala ART",
+    "email": "https://ra.co/events/2504302",
+    "url": "https://ra.co/events/2504302",
+    "link": "https://ra.co/events/2504302",
+    "descripcion": "<artist id=\"97566\">Carlos Pérez</artist> B2B <artist id=\"36025\">K-Style</artist>, <artist id=\"176004\">JAIROSKUN</artist> B2B <artist id=\"171792\">Costa (2)</artist>, Artaban; Techno; LAST 16 PROMO TICKETS!!!\n\nIs it the industrial vibe? Is it the line-up of artists? Is it the ease with which it makes you lose yourself?\nThe answer lies in what motivates you to come back.\n\nWrap yourself in Chrøma's nights.\nWe are not responsible for what happens afterward",
+    "generos": "Techno"
   },
   {
     "nombre": "ITACA LAST SUMMER EDITION WITH Miguel Rivas, NVMB ND P1P3",
@@ -3540,21 +3510,6 @@
     "generos": "Techno, Electronica"
   },
   {
-    "nombre": "KAMBALACHE: Djen, Maca Herrera, Misla, Guidomik",
-    "fecha": "2026-09-18",
-    "lugar": "EL SÓTANO",
-    "ciudad": "Madrid",
-    "pais": "España",
-    "tipo_lugar": "festival",
-    "fuente": "Resident Advisor",
-    "organizador": "EL SÓTANO",
-    "email": "https://ra.co/events/2502069",
-    "url": "https://ra.co/events/2502069",
-    "link": "https://ra.co/events/2502069",
-    "descripcion": "<artist id=\"154541\">Djen</artist>\n<artist id=\"169178\">Macarena (CL)</artist>\n<artist id=\"119544\">Misla</artist>\n<artist id=\"166014\">Guidomik</artist>; House; Kambalache es una promotora de eventos con presencia en Madrid y Lisboa dedicada a crear experiencias musicales y culturales auténticas, donde la música electrónica, la comunidad y la libertad de expresión se unen. Más que fiestas, los eventos de Kambalache son puntos de encuentro donde diferentes c",
-    "generos": "House"
-  },
-  {
     "nombre": "Laster presents Ben Sims & Oscar Mulero",
     "fecha": "2026-09-18",
     "lugar": "The Bassement",
@@ -3568,6 +3523,21 @@
     "link": "https://ra.co/events/2494290",
     "descripcion": "<artist id=\"426\">Ben Sims</artist> \n<artist id=\"2043\">Oscar Mulero</artist> \nSPECIAL EXTENDED SETS; Techno; Friday 18.09.2026 - LASTER x BASSEMENT MADRID\n\nThe Spanish techno movement kick Madrid once again.\nDoors open at 00h till 6h AM.\n\nSee you under the red light\n\nNO HATE / NO HOMOPHOBIA / NO GENDER / NO DISCRIMINATION / NO RACISM\nJUST RESPECT / JUST DANCE\n\nNO PHONES ON OUR DANCEFLOOR",
     "generos": "Techno"
+  },
+  {
+    "nombre": "KAMBALACHE: Djen, Maca Herrera, Misla, Guidomik",
+    "fecha": "2026-09-18",
+    "lugar": "EL SÓTANO",
+    "ciudad": "Madrid",
+    "pais": "España",
+    "tipo_lugar": "festival",
+    "fuente": "Resident Advisor",
+    "organizador": "EL SÓTANO",
+    "email": "https://ra.co/events/2502069",
+    "url": "https://ra.co/events/2502069",
+    "link": "https://ra.co/events/2502069",
+    "descripcion": "<artist id=\"154541\">Djen</artist>\n<artist id=\"169178\">Macarena (CL)</artist>\n<artist id=\"119544\">Misla</artist>\n<artist id=\"166014\">Guidomik</artist>; House; Kambalache es una promotora de eventos con presencia en Madrid y Lisboa dedicada a crear experiencias musicales y culturales auténticas, donde la música electrónica, la comunidad y la libertad de expresión se unen. Más que fiestas, los eventos de Kambalache son puntos de encuentro donde diferentes c",
+    "generos": "House"
   },
   {
     "nombre": "ORGANIC COMMUNITY: OPENING SEASON",
@@ -4125,21 +4095,6 @@
     "generos": "House, Club"
   },
   {
-    "nombre": "Sunset Boat Party with Henry Saiz, Clay Van Dijk & Tom Pavicich b2b Gaspar Torres",
-    "fecha": "2026-08-22",
-    "lugar": "TBA - De Ruyterkade 14 Amsterdam Central",
-    "ciudad": "Ámsterdam",
-    "pais": "Países Bajos",
-    "tipo_lugar": "lake",
-    "fuente": "Resident Advisor",
-    "organizador": "TBA - De Ruyterkade 14 Amsterdam Central",
-    "email": "https://ra.co/events/2500787",
-    "url": "https://ra.co/events/2500787",
-    "link": "https://ra.co/events/2500787",
-    "descripcion": "@clay van dijk\n<artist id=\"2356\">Henry Saiz</artist> \n<artist id=\"131192\">Tom Pavicich</artist> \n<artist id=\"146479\">Gaspar Torres</artist>; Progressive House, House; Sunset Boat Party: Sailing to Lake Markermeer\n\nJoin us for a magical sunset voyage from Amsterdam to the peaceful waters of Lake Markermeer, where music, nature and celebration come together for an unforgettable experience.\n\nLeading the journey is Henry Saiz, one of Spain's most respected electronic",
-    "generos": "Progressive House, House"
-  },
-  {
     "nombre": "komm schon Alter - Das Mini Festival",
     "fecha": "2026-08-22",
     "lugar": "Thuishaven",
@@ -4168,6 +4123,21 @@
     "link": "https://ra.co/events/2437906",
     "descripcion": "<artist id=\"137079\">BLNK</artist> - BLURRED MOVEMENT - <artist id=\"125725\">D|K|OXY</artist> B2B <artist id=\"109371\">PARAPHER</artist>\n DROS B2B NØVAR - JO3Y3T - <artist id=\"144671\">KRUELTY</artist> - PSYCHØTIC\n THE SMILER - TITI - VINO; Techno, Industrial; Get ready for this next level festival! To go even harder, we will host an afterparty in the warehouse to keep you dancing all night\n\nEvent highlights:\n- ⁠2 stages: outdoor & indoor\n- BOILER ROOM in the warehouse \n- Unique LED STRIP show in th",
     "generos": "Techno, Industrial"
+  },
+  {
+    "nombre": "Sunset Boat Party with Henry Saiz, Clay Van Dijk & Tom Pavicich b2b Gaspar Torres",
+    "fecha": "2026-08-22",
+    "lugar": "TBA - De Ruyterkade 14 Amsterdam Central",
+    "ciudad": "Ámsterdam",
+    "pais": "Países Bajos",
+    "tipo_lugar": "lake",
+    "fuente": "Resident Advisor",
+    "organizador": "TBA - De Ruyterkade 14 Amsterdam Central",
+    "email": "https://ra.co/events/2500787",
+    "url": "https://ra.co/events/2500787",
+    "link": "https://ra.co/events/2500787",
+    "descripcion": "@clay van dijk\n<artist id=\"2356\">Henry Saiz</artist> \n<artist id=\"131192\">Tom Pavicich</artist> \n<artist id=\"146479\">Gaspar Torres</artist>; Progressive House, House; Sunset Boat Party: Sailing to Lake Markermeer\n\nJoin us for a magical sunset voyage from Amsterdam to the peaceful waters of Lake Markermeer, where music, nature and celebration come together for an unforgettable experience.\n\nLeading the journey is Henry Saiz, one of Spain's most respected electronic",
+    "generos": "Progressive House, House"
   },
   {
     "nombre": "Hunkering Indian Summer",
@@ -4785,6 +4755,21 @@
     "generos": "House, Deep House"
   },
   {
+    "nombre": "Sandunga Clubnight",
+    "fecha": "2026-08-28",
+    "lugar": "De Fik Garden",
+    "ciudad": "Ámsterdam",
+    "pais": "Países Bajos",
+    "tipo_lugar": "club, garden",
+    "fuente": "Resident Advisor",
+    "organizador": "De Fik Garden",
+    "email": "https://ra.co/events/2517024",
+    "url": "https://ra.co/events/2517024",
+    "link": "https://ra.co/events/2517024",
+    "descripcion": "<artist id=\"130768\">Lidia Lo</artist>, <artist id=\"160784\">Niklas Becher</artist>, <artist id=\"174771\">UriBlanch</artist>, Lita; House, Minimal; IMPORTANT: Tickets via Instagram Bio (@sandunga.events)\n\nHolidays are over and its time to enjoy the last moments of summer in Amsterdam. Nothing better than a SANDUNGA Clubnight at the legendary De Fik Garden. Get lost in the gardens or on the dancefloor of this beautiful venue. \n\nEnjoy our Groovy ",
+    "generos": "House, Minimal"
+  },
+  {
     "nombre": "Vrijdag is NYX",
     "fecha": "2026-08-28",
     "lugar": "Club NYX",
@@ -5325,21 +5310,6 @@
     "generos": "Techno"
   },
   {
-    "nombre": "Fvtvr INVITES: Slam, David Asko, Hyper Sam",
-    "fecha": "2026-08-21",
-    "lugar": "Fvtvr",
-    "ciudad": "París",
-    "pais": "Francia",
-    "tipo_lugar": "N/A",
-    "fuente": "Resident Advisor",
-    "organizador": "Fvtvr",
-    "email": "https://ra.co/events/2500635",
-    "url": "https://ra.co/events/2500635",
-    "link": "https://ra.co/events/2500635",
-    "descripcion": "<artist id=\"233\">Slam</artist> \n<artist id=\"75696\">David Asko</artist> \n<artist id=\"169641\">Hyper Sam</artist>; Techno; __\nRules:\nA place for harmony, inclusivity, diversity, unity.\nNo tolerance towards ableism, ageism, body shaming, harassment, homophobia, lesbophobia, misogyny, racism, sexism, transphobia.\n\nTickets purchase does not guarantee admission. Le lieu se réserve le droit d’entrée.",
-    "generos": "Techno"
-  },
-  {
     "nombre": "Amnexia 10 ANS: TOXIC MACHINERY b2b USH, RAGETRAIN & MORE",
     "fecha": "2026-08-21",
     "lugar": "Mia Mao",
@@ -5352,6 +5322,21 @@
     "url": "https://ra.co/events/2487596",
     "link": "https://ra.co/events/2487596",
     "descripcion": "TOXIC MACHINERY \nUSH\nRAGETRAIN\nASLØ\nYÙ\n<artist id=\"68543\">Nightowl</artist>\nASIL; Techno; 10 ans d’événement. 10 ans à faire vibrer les cœurs.\n\nPour célébrer cette décennie comme il se doit, on vous donne rendez-vous pour une édition exceptionnelle le 21 Août au Mia Mao. Une line-up à la hauteur de l’événement et une seule mission : faire de cette nuit une date inoubliable.\n\nTOXIC MACHIN",
+    "generos": "Techno"
+  },
+  {
+    "nombre": "Fvtvr INVITES: Slam, David Asko, Hyper Sam",
+    "fecha": "2026-08-21",
+    "lugar": "Fvtvr",
+    "ciudad": "París",
+    "pais": "Francia",
+    "tipo_lugar": "N/A",
+    "fuente": "Resident Advisor",
+    "organizador": "Fvtvr",
+    "email": "https://ra.co/events/2500635",
+    "url": "https://ra.co/events/2500635",
+    "link": "https://ra.co/events/2500635",
+    "descripcion": "<artist id=\"233\">Slam</artist> \n<artist id=\"75696\">David Asko</artist> \n<artist id=\"169641\">Hyper Sam</artist>; Techno; __\nRules:\nA place for harmony, inclusivity, diversity, unity.\nNo tolerance towards ableism, ageism, body shaming, harassment, homophobia, lesbophobia, misogyny, racism, sexism, transphobia.\n\nTickets purchase does not guarantee admission. Le lieu se réserve le droit d’entrée.",
     "generos": "Techno"
   },
   {
@@ -5490,21 +5475,6 @@
     "generos": "Techno"
   },
   {
-    "nombre": "GALOP GALOP: Afem Syko, Cara Elizabeth, SATYS FYRE",
-    "fecha": "2026-08-22",
-    "lugar": "Virage",
-    "ciudad": "París",
-    "pais": "Francia",
-    "tipo_lugar": "camping",
-    "fuente": "Resident Advisor",
-    "organizador": "Virage",
-    "email": "https://ra.co/events/2500605",
-    "url": "https://ra.co/events/2500605",
-    "link": "https://ra.co/events/2500605",
-    "descripcion": "<artist id=\"102814\">Afem Syko</artist>\n<artist id=\"110687\">Cara Elizabeth</artist>\n<artist id=\"130037\">SATYS FYRE</artist> \n<artist id=\"97780\">Aureb</artist>; Trance; Samedi 22 Août / 23h30-07h00\nGALOP GALOP : AFEM SYKO, CARA ELIZABETH, SATYS FYRE, AUREB\n\nRetour à Virage le 22 août.\n\nOn est trop content·es de reprendre les rênes de ce lieu qu'on aime tant pour une nouvelle course sous le périph'.\n\nAFEM SYKO · CARA ELIZABETH · SATYS FYRE · AUREB se partageront les",
-    "generos": "Trance"
-  },
-  {
     "nombre": "CHECK THIS OUT X GUDU : Ewan McVicar, Lu.Re, Matrefakt & Camille Doe",
     "fecha": "2026-08-22",
     "lugar": "Mia Mao",
@@ -5533,6 +5503,21 @@
     "link": "https://ra.co/events/2499037",
     "descripcion": "<artist id=\"170323\">Iman Janes</artist> \n<artist id=\"149393\">Yasmin Regisford</artist> b2B <artist id=\"93149\">DJ Hyperdrive</artist> \n<artist id=\"174600\">Two Dots (FR)</artist> \n<artist id=\"103495\">Sicion</artist>; Techno; __\nRules:\nA place for harmony, inclusivity, diversity, unity.\nNo tolerance towards ableism, ageism, body shaming, harassment, homophobia, lesbophobia, misogyny, racism, sexism, transphobia.\n\nTickets purchase does not guarantee admission. Le lieu se réserve le droit d’entrée.",
     "generos": "Techno"
+  },
+  {
+    "nombre": "GALOP GALOP: Afem Syko, Cara Elizabeth, SATYS FYRE",
+    "fecha": "2026-08-22",
+    "lugar": "Virage",
+    "ciudad": "París",
+    "pais": "Francia",
+    "tipo_lugar": "camping",
+    "fuente": "Resident Advisor",
+    "organizador": "Virage",
+    "email": "https://ra.co/events/2500605",
+    "url": "https://ra.co/events/2500605",
+    "link": "https://ra.co/events/2500605",
+    "descripcion": "<artist id=\"102814\">Afem Syko</artist>\n<artist id=\"110687\">Cara Elizabeth</artist>\n<artist id=\"130037\">SATYS FYRE</artist> \n<artist id=\"97780\">Aureb</artist>; Trance; Samedi 22 Août / 23h30-07h00\nGALOP GALOP : AFEM SYKO, CARA ELIZABETH, SATYS FYRE, AUREB\n\nRetour à Virage le 22 août.\n\nOn est trop content·es de reprendre les rênes de ce lieu qu'on aime tant pour une nouvelle course sous le périph'.\n\nAFEM SYKO · CARA ELIZABETH · SATYS FYRE · AUREB se partageront les",
+    "generos": "Trance"
   },
   {
     "nombre": "ANUBIS: Sevenum Six, Ophidian, BOTL, Heavora",
@@ -7498,5 +7483,20 @@
     "link": "https://ra.co/events/2508111",
     "descripcion": "TESFA WILLIAMS\n<artist id=\"151997\">Tsunamy</artist>\n<artist id=\"109520\">Teddy Kitano</artist>\n<artist id=\"158946\">Sho Gabi</artist>\n<artist id=\"166772\">Petit Problème</artist>\nCHARISMA\nSAMO; Hardcore, Grime; AWOO La Rave is taking over Planet Wax for a special daytime fundraiser in support of Focus Congo!\n\nAWOO La Rave is an online platform and inclusive event series centered on People of Color (POC) artists, founded by artist Teddy Kitano. Blending rave and electronic culture with heavy bass, c",
     "generos": "Hardcore, Grime"
+  },
+  {
+    "nombre": "murmur on the Terrace / Summer pop-up series",
+    "fecha": "2026-08-22",
+    "lugar": "Cu",
+    "ciudad": "Londres",
+    "pais": "Reino Unido",
+    "tipo_lugar": "N/A",
+    "fuente": "Resident Advisor",
+    "organizador": "Cu",
+    "email": "https://ra.co/events/2501740",
+    "url": "https://ra.co/events/2501740",
+    "link": "https://ra.co/events/2501740",
+    "descripcion": "<artist id=\"114525\">MAHAR</artist> \n<artist id=\"160070\">Sincerely Simon</artist>; House; Our final edition of the Summer pop-up series - murmur on the Terrace. This is a free party but please RSVP as it supports our party planning",
+    "generos": "House"
   }
 ]

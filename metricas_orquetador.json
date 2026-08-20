@@ -452,5 +452,189 @@
     "eventos_nuevos_añadidos": 0,
     "total_consolidado": 601,
     "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-20T03:05:26.659913+00:00",
+    "duracion_total_s": 138.15,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 30,
+        "exito": true,
+        "eventos": 20,
+        "tiempo": 15.33,
+        "error": null,
+        "timestamp": "2026-08-20T03:03:08.533335+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:03:23.861860+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 500,
+        "tiempo": 115.51,
+        "error": null,
+        "timestamp": "2026-08-20T03:03:23.862002+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:05:19.369285+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:05:19.369338+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:05:19.369402+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:05:19.369434+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:05:19.369482+00:00"
+      }
+    },
+    "eventos_brutos": 531,
+    "eventos_nuevos_añadidos": 0,
+    "total_consolidado": 601,
+    "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-20T03:18:19.703754+00:00",
+    "duracion_total_s": 138.45,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 30,
+        "exito": true,
+        "eventos": 20,
+        "tiempo": 15.5,
+        "error": null,
+        "timestamp": "2026-08-20T03:16:01.283052+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:16:16.785169+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 500,
+        "tiempo": 115.5,
+        "error": null,
+        "timestamp": "2026-08-20T03:16:16.785240+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:18:12.285632+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:18:12.285680+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:18:12.285740+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:18:12.285770+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T03:18:12.285802+00:00"
+      }
+    },
+    "eventos_brutos": 531,
+    "eventos_nuevos_añadidos": 12,
+    "total_consolidado": 626,
+    "modo_dry_run": false
   }
 ]

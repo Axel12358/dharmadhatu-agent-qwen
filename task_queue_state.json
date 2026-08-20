@@ -188,12 +188,12 @@
       "estado": "completada",
       "timeout": 120,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503781+00:00",
+      "encolada": "2026-08-20T03:18:24.438919+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516462+00:00",
+      "completada": "2026-08-20T03:20:44.963939+00:00",
       "resultado": {
-        "eventos": 23,
-        "tiempo": 128.01
+        "eventos": 25,
+        "tiempo": 140.52
       }
     },
     "reddit": {
@@ -202,12 +202,12 @@
       "estado": "completada",
       "timeout": 4,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503791+00:00",
+      "encolada": "2026-08-20T03:18:24.438926+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516503+00:00",
+      "completada": "2026-08-20T03:20:44.964007+00:00",
       "resultado": {
-        "eventos": 0,
-        "tiempo": 128.01
+        "eventos": 1,
+        "tiempo": 140.52
       }
     },
     "psytrance_pl": {
@@ -216,12 +216,12 @@
       "estado": "completada",
       "timeout": 6,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503798+00:00",
+      "encolada": "2026-08-20T03:18:24.438932+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516558+00:00",
+      "completada": "2026-08-20T03:20:44.964578+00:00",
       "resultado": {
         "eventos": 6,
-        "tiempo": 128.01
+        "tiempo": 140.52
       }
     },
     "isratrance": {
@@ -230,12 +230,12 @@
       "estado": "completada",
       "timeout": 4,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503804+00:00",
+      "encolada": "2026-08-20T03:18:24.438937+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516584+00:00",
+      "completada": "2026-08-20T03:20:44.964625+00:00",
       "resultado": {
         "eventos": 0,
-        "tiempo": 128.01
+        "tiempo": 140.52
       }
     },
     "ektoplazm": {
@@ -244,12 +244,12 @@
       "estado": "completada",
       "timeout": 4,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503809+00:00",
+      "encolada": "2026-08-20T03:18:24.438942+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516614+00:00",
+      "completada": "2026-08-20T03:20:44.964676+00:00",
       "resultado": {
         "eventos": 3,
-        "tiempo": 128.01
+        "tiempo": 140.52
       }
     },
     "meetup": {
@@ -258,12 +258,12 @@
       "estado": "completada",
       "timeout": 4,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503815+00:00",
+      "encolada": "2026-08-20T03:18:24.438947+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516640+00:00",
+      "completada": "2026-08-20T03:20:44.964708+00:00",
       "resultado": {
         "eventos": 1,
-        "tiempo": 128.01
+        "tiempo": 140.52
       }
     },
     "mcp_organizador": {
@@ -286,12 +286,12 @@
       "estado": "completada",
       "timeout": 90,
       "prioridad": 5,
-      "encolada": "2026-08-20T01:59:06.503752+00:00",
+      "encolada": "2026-08-20T03:18:24.438900+00:00",
       "usa_tor": true,
-      "completada": "2026-08-20T02:01:14.516231+00:00",
+      "completada": "2026-08-20T03:20:37.015689+00:00",
       "resultado": {
         "eventos": 500,
-        "tiempo": 128.01
+        "tiempo": 132.58
       }
     }
   },

@@ -1,8 +1,57 @@
 {
-  "timestamp": "2026-08-19T20:01:24.074244",
+  "timestamp": "2026-08-19T21:20:51.997183",
   "csv": "/Users/angelgarcia/dharmadhatu_agent_qwen/eventos_encontrados.csv",
   "aplicar_cambios": true,
-  "duplicados_semanticos": [],
+  "duplicados_semanticos": [
+    {
+      "conservado": "House of Noa House Party",
+      "eliminado": "House of Noa House Party",
+      "similitud": 1.0,
+      "fecha": "2026-08-22"
+    },
+    {
+      "conservado": "LA RIPOSTE: DON TURI inv. SECRET GUESTS",
+      "eliminado": "LA RIPOSTE: DON TURI inv. SECRET GUESTS",
+      "similitud": 1.0,
+      "fecha": "2026-08-22"
+    },
+    {
+      "conservado": "Orbital Vibes - Cycle of Sound at Retro Mountain",
+      "eliminado": "Orbital Vibes - Cycle of Sound at Retro Mountain",
+      "similitud": 1.0,
+      "fecha": "2026-08-20"
+    },
+    {
+      "conservado": "Shidapu at Waterfall Festival",
+      "eliminado": "Shidapu at Waterfall Festival",
+      "similitud": 1.0,
+      "fecha": "2026-08-19"
+    },
+    {
+      "conservado": "Shidapu at Waterfall Festival",
+      "eliminado": "Shidapu at Waterfall Festival",
+      "similitud": 1.0,
+      "fecha": "2026-08-19"
+    },
+    {
+      "conservado": "UTOPIA FESTIVAL 26 August",
+      "eliminado": "UTOPIA FESTIVAL 26 August",
+      "similitud": 1.0,
+      "fecha": "2026-08-26"
+    },
+    {
+      "conservado": "Jungle Experience Festival",
+      "eliminado": "Jungle Experience Festival",
+      "similitud": 1.0,
+      "fecha": "2026-08-27"
+    },
+    {
+      "conservado": "Ancient Trance Festival 2025",
+      "eliminado": "Ancient Trance Festival 2025",
+      "similitud": 1.0,
+      "fecha": "2026-12-08"
+    }
+  ],
   "subgeneros_rellenados": [],
   "tipos_lugar_rellenados": []
 }

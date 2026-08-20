@@ -396,7 +396,9 @@ class AntiBlock:
             locale="es-ES",
             timezone_id="Europe/Madrid",
         )
-        if use_tor and self.get_socks_proxy():
+        # SIEMPRE enrutar por Tor cuando esté disponible: nunca usar conexión
+        # directa (la IP real del equipo no debe exponerse bajo ningún concepto).
+        if self.get_socks_proxy():
             kwargs["proxy"] = {"server": self.get_socks_proxy()}
         context = await browser.new_context(**kwargs)
         return context

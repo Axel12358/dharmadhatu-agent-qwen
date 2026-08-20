@@ -20,8 +20,10 @@ from typing import Any, Dict, List
 LIMITE_ENTRADAS = 5000
 
 # Campos usados para construir el hash de deduplicación (clave global).
-# Mismo criterio que utils.helpers.deduplicar_eventos: nombre+fecha+lugar.
-CLAVES_HASH = ("nombre", "fecha", "lugar")
+# Incluye "fuente" para respetar la regla "sumar nunca restar": un mismo
+# evento listado por fuentes distintas (p. ej. RA y Facebook) se conserva en
+# ambas, y solo se evita re-sumar el MISMO evento de la MISMA fuente.
+CLAVES_HASH = ("nombre", "fecha", "lugar", "fuente")
 
 
 def _normalizar(valor: Any) -> str:

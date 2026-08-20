@@ -211,7 +211,7 @@ def _scrape_group_events_tab(group_id: str, group_name: str,
 
     global _LOGIN_WALL_DETECTADO
     try:
-        s = _session_movil()
+        from core.http_client import get_html
         mbasic_url = group_url.replace(
             "https://facebook.com", "https://mbasic.facebook.com"
         ).replace("http://facebook.com", "https://mbasic.facebook.com")
@@ -219,11 +219,10 @@ def _scrape_group_events_tab(group_id: str, group_name: str,
             mbasic_url = mbasic_url.replace("//facebook.com", "//mbasic.facebook.com", 1)
         mbasic_url = mbasic_url.rstrip("/") + "/events"
 
-        r = s.get(mbasic_url, timeout=HTTP_TIMEOUT, allow_redirects=True)
-        if r.status_code != 200:
+        html = get_html(mbasic_url, timeout=8)
+        if not html:
             return []
-        html = r.text
-        if _es_pagina_login(r.url, _html_a_texto(html)[:1500]):
+        if _es_pagina_login(mbasic_url, _html_a_texto(html)[:1500]):
             _LOGIN_WALL_DETECTADO = True
             return []
         if len(html) < 500:
@@ -257,17 +256,16 @@ def _scrape_group_http_full(group_id: str, group_name: str,
     if evs:
         return evs
     try:
-        s = _session_movil()
+        from core.http_client import get_html
         mbasic_url = group_url.replace(
             "https://facebook.com", "https://mbasic.facebook.com"
         ).replace("http://facebook.com", "https://mbasic.facebook.com")
         if "/mbasic.facebook.com" not in mbasic_url and "facebook.com" in mbasic_url:
             mbasic_url = mbasic_url.replace("//facebook.com", "//mbasic.facebook.com", 1)
-        r = s.get(mbasic_url, timeout=HTTP_TIMEOUT, allow_redirects=True)
-        if r.status_code != 200:
+        html = get_html(mbasic_url, timeout=8)
+        if not html:
             return []
-        html = r.text
-        if _es_pagina_login(r.url, _html_a_texto(html)[:1500]):
+        if _es_pagina_login(mbasic_url, _html_a_texto(html)[:1500]):
             return []
         text = _html_a_texto(html)
         if len(text) < 300:

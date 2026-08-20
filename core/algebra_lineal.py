@@ -616,8 +616,12 @@ def _dedup_semantico_interno(eventos: List[Dict], resultado: Dict[str, Any],
                     "similitud": round(sim, 3),
                     "fecha": eventos[j].get("fecha"),
                 })
-    if marcar:
-        eventos[:] = [ev for idx, ev in enumerate(eventos) if idx not in marcar]
+    # NOTA: no se eliminan filas del CSV. Regla innegociable del proyecto:
+    # "sumar nunca restar" — la supervisión solo RELLENA campos N/A, no borra
+    # eventos (ni siquiera duplicados semánticos, para no perder cobertura de
+    # fuentes). Se registran en el reporte pero NO se quitan del listado.
+    # if marcar:
+    #     eventos[:] = [ev for idx, ev in enumerate(eventos) if idx not in marcar]
 
 
 def _similitud_dos(a: str, b: str) -> float:

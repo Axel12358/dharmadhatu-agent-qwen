@@ -1,33 +1,12 @@
 {
-  "timestamp": "2026-08-19T00:43:19.853523+00:00",
+  "timestamp": "2026-08-20T04:13:37.683243+00:00",
   "csv": "/Users/angelgarcia/dharmadhatu_agent_qwen/eventos_encontrados.csv",
-  "total_filas": 447,
-  "total_candidatos": 8,
-  "procesados": 8,
-  "actualizados": 5,
-  "eliminados_basura": 28,
+  "total_filas": 626,
+  "total_candidatos": 1,
+  "procesados": 1,
+  "actualizados": 1,
+  "eliminados_basura": 0,
   "siguientes_incompletos": [
-    {
-      "nombre": "The DarkPsy",
-      "link": "https://facebook.com/events/alte-kaserne-zürich/the-darkpsy/1632223770730121",
-      "faltan": [
-        "lugar"
-      ]
-    },
-    {
-      "nombre": "STEP TO PSY - Psytrance / Progressive / Goa @FLEX",
-      "link": "https://facebook.com/events/flex/step-to-psy-psytrance-progressive-goa-flex/720877374051631",
-      "faltan": [
-        "lugar"
-      ]
-    },
-    {
-      "nombre": "Planète Sauvage Festival 3026",
-      "link": "https://facebook.com/events/arcomps/planète-sauvage-festival-3026/830975866109817",
-      "faltan": [
-        "lugar"
-      ]
-    },
     {
       "nombre": "Moquette vol.1",
       "link": "https://ra.co/events/2466985",
@@ -53,6 +32,72 @@
       "nombre": "SYNTH presents CORE: AD003 with KØLPØS / CARMELO PONENTE / K",
       "link": "https://ra.co/events/2508105",
       "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "HONK",
+      "link": "https://ra.co/events/2481979",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "SevenEight78",
+      "link": "https://ra.co/events/2493594",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Naked KNIT",
+      "link": "https://ra.co/events/2490009",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "ÆSTHESIS 'Sonic Places'",
+      "link": "https://ra.co/events/2513878",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "AUDIBLE MANIA: OUTDOOR FOREST RAVE",
+      "link": "https://ra.co/events/2507417",
+      "faltan": [
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Events",
+      "link": "https://www.facebook.com/psytrancePL/events/",
+      "faltan": [
+        "fecha"
+      ]
+    },
+    {
+      "nombre": "Ektoplazm 10 Year Anniversary",
+      "link": "https://ektoplazm.com/blog/ektoplazm-10-year-anniversary",
+      "faltan": [
+        "fecha",
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "The Beginner’s Guide to Ektoplazm",
+      "link": "https://ektoplazm.com/blog/a-beginners-guide-to-ektoplazm",
+      "faltan": [
+        "fecha",
+        "lugar"
+      ]
+    },
+    {
+      "nombre": "Avatar",
+      "link": "https://ektoplazm.com/more-music/avatar",
+      "faltan": [
+        "fecha",
         "lugar"
       ]
     }

@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-08-20T03:20:51.994361+00:00",
-  "duracion_total_s": 147.57,
+  "timestamp": "2026-08-20T04:16:04.524504+00:00",
+  "duracion_total_s": 146.83,
   "subagentes": [
     "resident_advisor",
     "telegram",
@@ -16,73 +16,73 @@
       "timeout": 300,
       "exito": true,
       "eventos": 500,
-      "tiempo": 132.58,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:18:24.442400+00:00"
+      "timestamp": "2026-08-20T04:13:37.713121+00:00"
     },
     "telegram": {
       "subagente": "telegram",
       "timeout": 120,
       "exito": true,
       "eventos": 25,
-      "tiempo": 140.52,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:20:37.015738+00:00"
+      "timestamp": "2026-08-20T04:15:54.812967+00:00"
     },
     "reddit": {
       "subagente": "reddit",
       "timeout": 3,
       "exito": true,
-      "eventos": 1,
-      "tiempo": 140.52,
+      "eventos": 0,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:20:44.963952+00:00"
+      "timestamp": "2026-08-20T04:15:54.813188+00:00"
     },
     "psytrance_pl": {
       "subagente": "psytrance_pl",
       "timeout": 3,
       "exito": true,
       "eventos": 6,
-      "tiempo": 140.52,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:20:44.964013+00:00"
+      "timestamp": "2026-08-20T04:15:54.813222+00:00"
     },
     "isratrance": {
       "subagente": "isratrance",
       "timeout": 3,
       "exito": true,
       "eventos": 0,
-      "tiempo": 140.52,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:20:44.964587+00:00"
+      "timestamp": "2026-08-20T04:15:54.813259+00:00"
     },
     "ektoplazm": {
       "subagente": "ektoplazm",
       "timeout": 3,
       "exito": true,
       "eventos": 3,
-      "tiempo": 140.52,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:20:44.964630+00:00"
+      "timestamp": "2026-08-20T04:15:54.813284+00:00"
     },
     "meetup": {
       "subagente": "meetup",
       "timeout": 3,
       "exito": true,
       "eventos": 1,
-      "tiempo": 140.52,
+      "tiempo": 137.1,
       "error": null,
       "detalle": {},
-      "timestamp": "2026-08-20T03:20:44.964681+00:00"
+      "timestamp": "2026-08-20T04:15:54.813313+00:00"
     }
   },
-  "eventos_brutos": 536,
+  "eventos_brutos": 535,
   "eventos_nuevos_añadidos": 26,
   "total_consolidado": 652,
   "modo_dry_run": false

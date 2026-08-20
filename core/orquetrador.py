@@ -282,27 +282,13 @@ def orquestar_scrapers(activos: Optional[list] = None,
     print(f"\n\\u26a0 Total bruto recolectado: {len(todos_nuevos)} eventos")
 
     # ---- Telegram (canales públicos, sin API) --opcional y aditiva ----
-    # Si scrapers/telegram existe, descubre canales via DuckDuckGo + t.me/s/,
-    # scrapea mensajes y extrae eventos. Nunca rompe el flujo: ante cualquier
-    # problema simplemente no añade nada. Solo si está activo en config.
-    try:
-        if CONFIG_MOD.get("telegram", False) or "telegram" in scraper_dict:
-            from scrapers.telegram import scrape_telegram_events
-            eventos_telegram = scrape_telegram_events()
-            if eventos_telegram:
-                eventos_telegram = [
-                    _normalizar_evento(e) for e in eventos_telegram
-                ]
-                todos_nuevos.extend(eventos_telegram)
-                print(f"  \\u2705 Telegram: {len(eventos_telegram)} eventos añadidos")
-            else:
-                print("  \\u25a0 Telegram: 0 eventos")
-        else:
-            print("  \\u25a0 Telegram desactivado en config_modulos.json -- omitido")
-    except ImportError:
-        pass  # M\\u00f3dulo no instalado, se sigue sin él
-    except Exception as e:
-        print(f"  \\u274c Telegram: {type(e).__name__}: {e}")
+    # Telegram se ejecuta UNA sola vez vía el Agente Coordinador (ver abajo),
+    # que ya incluye el scraper con timeout de 120s y deduplicación global.
+    # Se omite aquí para no duplicar la cosecha ni pisar el CSV.
+    if CONFIG_MOD.get("telegram", False):
+        print("  ⚠ Telegram: delegado al Agente Coordinador (ejecución única)")
+    else:
+        print("  ⚠ Telegram desactivado en config_modulos.json -- omitido")
 
     # ---- Facebook Dorks (Groups/Pages/Emails) --opcional y aditiva ----
     # NO devuelve eventos; guarda grupos/páginas/correos en JSON files
@@ -354,23 +340,10 @@ def orquestar_scrapers(activos: Optional[list] = None,
         print("  \\u25a0 MCP Organizador desactivado en config_modulos.json -- omitido")
 
     # ---- Agente Coordinador (Sistema Multiagente Ligero) --opcional y aditiva ----
-    # Si core/agente_coordinador.py existe, ejecuta los subagentes en paralelo
-    # (m\\u00e1x 3 simult\\u00e1neos, sem\\u00e1foro Tor m\\u00e1x 2) y suma eventos nuevos al CSV.
-    # Nunca rompe el flujo: si no está disponible, se sigue igual que antes.
-    # Solo si está activo en config_modulos.json o si el agente_coordinador.py existe
-    # y no está desactivado en config.
-    try:
-        from pathlib import Path as _P
-        agent_exists = _P(__file__).resolve().parent.joinpath("agente_coordinador.py").exists()
-        agent_activo = CONFIG_MOD.get("mcp_organizador", False) or not any(
-            k for k in CONFIG_MOD if k in ('facebook_mcp', 'facebook_events_from_groups', 
-                'facebook_dorks', 'instagram_dorks', 'dorks_resultados', 'mcp_organizador'))
-        if agent_exists:
-            from core.agente_coordinador import ejecutar_agentes
-            _nuevos_coord = ejecutar_agentes(dry_run=dry_run)
-            print(f"  \\u2705 Agente Coordinador: {_nuevos_coord} eventos nuevos añadidos")
-    except Exception as e:
-        print(f"  \\u26a0 Agente Coordinador: {type(e).__name__}: {e}")
+    # Se ejecuta una sola vez al final desde main.py (que invoca este orquestrador
+    # y luego al coordinador como ULTIMO escritor del CSV). Asi Telegram y el
+    # resto de subagentes corren una vez y no se pisa el CSV con doble escritura.
+    print("  \\u26a0 Agente Coordinador: se ejecuta una vez al final desde main.py")
 
     # Deduplicaci\\u00f3n global: solo eventos no vistos (ni en \\u00e1cet ni en CSV)
     nuevos = dedup.filtrar_nuevos(todos_nuevos)

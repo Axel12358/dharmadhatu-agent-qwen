@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-08-19T23:58:07.920548+00:00",
-  "duracion_total_s": 126.43,
+  "timestamp": "2026-08-20T02:01:24.068201+00:00",
+  "duracion_total_s": 137.58,
   "subagentes": [
     "resident_advisor",
     "telegram",
@@ -10,8 +10,8 @@
     "ektoplazm",
     "meetup"
   ],
-  "eventos_brutos": 510,
-  "eventos_nuevos_añadidos": 0,
-  "total_consolidado": 600,
+  "eventos_brutos": 533,
+  "eventos_nuevos_añadidos": 23,
+  "total_consolidado": 622,
   "modo_dry_run": false
 }

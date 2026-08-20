@@ -63,7 +63,7 @@ TIMEOUTS_POR_AGENTE = {
     "resident_advisor": 300,
     "facebook_mcp": 30,
     "facebook_events_from_groups": 30,
-    "telegram": 3,
+    "telegram": 120,
     "reddit": 3,
     "psytrance_pl": 3,
     "isratrance": 3,
@@ -131,7 +131,7 @@ def _leer_subagentes_activos(activos: Optional[List[str]] = None) -> List[Dict]:
     """Carga la lista de subagentes, filtrando por los activos en config_modulos.json."""
     _SUBAGENTES_DEFECTO = [
         {"nombre": "resident_advisor", "funcion": "scrape_resident_advisor", "usa_tor": True, "timeout": 90},
-        {"nombre": "telegram", "funcion": "scrape_telegram", "usa_tor": True, "timeout": 4},
+        {"nombre": "telegram", "funcion": "scrape_telegram", "usa_tor": True, "timeout": 120},
         {"nombre": "reddit", "funcion": "scrape_reddit", "usa_tor": True, "timeout": 4},
         {"nombre": "psytrance_pl", "funcion": "scrape_psytrance_pl", "usa_tor": True, "timeout": 6},
         {"nombre": "isratrance", "funcion": "scrape_isratrance", "usa_tor": True, "timeout": 4},

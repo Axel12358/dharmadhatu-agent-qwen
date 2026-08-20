@@ -1,26 +1,226 @@
 {
   "TheMysticRose": {
     "canal": "TheMysticRose",
-    "runs": 21,
-    "eventos": 10,
-    "mensajes": 165,
-    "tiempo_s": 352.75,
-    "ultimo_run": "2026-08-19T02:13:19.371005+00:00"
+    "runs": 36,
+    "eventos": 25,
+    "mensajes": 315,
+    "tiempo_s": 439.26,
+    "ultimo_run": "2026-08-20T02:00:01.289131+00:00"
   },
   "shorthanduniverseofficial": {
     "canal": "shorthanduniverseofficial",
-    "runs": 19,
+    "runs": 21,
     "eventos": 0,
-    "mensajes": 800,
-    "tiempo_s": 248.65,
-    "ultimo_run": "2026-08-19T02:13:30.131908+00:00"
+    "mensajes": 900,
+    "tiempo_s": 259.68,
+    "ultimo_run": "2026-08-20T00:31:41.339482+00:00"
   },
   "progressivetakeover": {
     "canal": "progressivetakeover",
-    "runs": 19,
+    "runs": 21,
     "eventos": 0,
-    "mensajes": 800,
-    "tiempo_s": 258.73,
-    "ultimo_run": "2026-08-19T02:14:05.427495+00:00"
+    "mensajes": 900,
+    "tiempo_s": 270.61,
+    "ultimo_run": "2026-08-20T00:31:47.038192+00:00"
+  },
+  "Darkpsychology2024": {
+    "canal": "Darkpsychology2024",
+    "runs": 8,
+    "eventos": 0,
+    "mensajes": 400,
+    "tiempo_s": 41.17,
+    "ultimo_run": "2026-08-20T01:15:44.783600+00:00"
+  },
+  "joinchat": {
+    "canal": "joinchat",
+    "runs": 8,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 19.78,
+    "ultimo_run": "2026-08-20T01:11:32.947888+00:00"
+  },
+  "psychologyDarkMari": {
+    "canal": "psychologyDarkMari",
+    "runs": 4,
+    "eventos": 0,
+    "mensajes": 200,
+    "tiempo_s": 24.43,
+    "ultimo_run": "2026-08-20T00:50:06.728725+00:00"
+  },
+  "psytrancebase": {
+    "canal": "psytrancebase",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 8.68,
+    "ultimo_run": "2026-08-20T01:15:39.960461+00:00"
+  },
+  "dark_season_1_2_3_eng": {
+    "canal": "dark_season_1_2_3_eng",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 9.24,
+    "ultimo_run": "2026-08-20T02:01:07.966676+00:00"
+  },
+  "goatrancechannel": {
+    "canal": "goatrancechannel",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 300,
+    "tiempo_s": 31.55,
+    "ultimo_run": "2026-08-20T01:11:49.213929+00:00"
+  },
+  "goatranceforever": {
+    "canal": "goatranceforever",
+    "runs": 5,
+    "eventos": 0,
+    "mensajes": 250,
+    "tiempo_s": 28.43,
+    "ultimo_run": "2026-08-20T02:01:01.646753+00:00"
+  },
+  "psychedelic_m": {
+    "canal": "psychedelic_m",
+    "runs": 7,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 9.82,
+    "ultimo_run": "2026-08-20T01:13:47.417840+00:00"
+  },
+  "psytrancefree": {
+    "canal": "psytrancefree",
+    "runs": 4,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 6.07,
+    "ultimo_run": "2026-08-20T02:00:54.326257+00:00"
+  },
+  "psychedelic_trance": {
+    "canal": "psychedelic_trance",
+    "runs": 4,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 5.46,
+    "ultimo_run": "2026-08-20T01:15:17.684340+00:00"
+  },
+  "darkpsyhz": {
+    "canal": "darkpsyhz",
+    "runs": 7,
+    "eventos": 0,
+    "mensajes": 14,
+    "tiempo_s": 38.23,
+    "ultimo_run": "2026-08-20T02:00:44.872616+00:00"
+  },
+  "oldschoolgoatrance": {
+    "canal": "oldschoolgoatrance",
+    "runs": 10,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 14.68,
+    "ultimo_run": "2026-08-20T02:00:37.956589+00:00"
+  },
+  "PsychedelicSocietyBerlinOfficial": {
+    "canal": "PsychedelicSocietyBerlinOfficial",
+    "runs": 9,
+    "eventos": 20,
+    "mensajes": 450,
+    "tiempo_s": 52.07,
+    "ultimo_run": "2026-08-20T02:00:10.717883+00:00"
+  },
+  "goa_party": {
+    "canal": "goa_party",
+    "runs": 8,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 12.26,
+    "ultimo_run": "2026-08-20T02:01:03.534414+00:00"
+  },
+  "bestgoaparty": {
+    "canal": "bestgoaparty",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 7.91,
+    "ultimo_run": "2026-08-20T01:13:48.567558+00:00"
+  },
+  "psychedelic_germany": {
+    "canal": "psychedelic_germany",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 8.23,
+    "ultimo_run": "2026-08-20T01:15:18.997417+00:00"
+  },
+  "ogovergroundmusic": {
+    "canal": "ogovergroundmusic",
+    "runs": 3,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 4.01,
+    "ultimo_run": "2026-08-20T01:13:24.230048+00:00"
+  },
+  "psy_goa_trance": {
+    "canal": "psy_goa_trance",
+    "runs": 5,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 7.09,
+    "ultimo_run": "2026-08-20T01:13:25.723692+00:00"
+  },
+  "apsychedelictranceandalife": {
+    "canal": "apsychedelictranceandalife",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 0,
+    "tiempo_s": 9.26,
+    "ultimo_run": "2026-08-20T02:01:06.034918+00:00"
+  },
+  "hitech_keeda": {
+    "canal": "hitech_keeda",
+    "runs": 6,
+    "eventos": 0,
+    "mensajes": 300,
+    "tiempo_s": 34.41,
+    "ultimo_run": "2026-08-20T02:00:35.940973+00:00"
+  },
+  "partyhousechannel": {
+    "canal": "partyhousechannel",
+    "runs": 5,
+    "eventos": 0,
+    "mensajes": 100,
+    "tiempo_s": 29.01,
+    "ultimo_run": "2026-08-20T02:00:52.581053+00:00"
+  },
+  "ancient_trance_festival": {
+    "canal": "ancient_trance_festival",
+    "runs": 5,
+    "eventos": 9,
+    "mensajes": 250,
+    "tiempo_s": 33.0,
+    "ultimo_run": "2026-08-20T02:00:19.890668+00:00"
+  },
+  "afishagoa": {
+    "canal": "afishagoa",
+    "runs": 5,
+    "eventos": 4,
+    "mensajes": 250,
+    "tiempo_s": 28.66,
+    "ultimo_run": "2026-08-20T02:00:28.543564+00:00"
+  },
+  "Teletrance": {
+    "canal": "Teletrance",
+    "runs": 3,
+    "eventos": 0,
+    "mensajes": 150,
+    "tiempo_s": 15.52,
+    "ultimo_run": "2026-08-20T01:13:33.686245+00:00"
+  },
+  "phanganparty": {
+    "canal": "phanganparty",
+    "runs": 4,
+    "eventos": 76,
+    "mensajes": 184,
+    "tiempo_s": 30.42,
+    "ultimo_run": "2026-08-20T01:59:53.158156+00:00"
   }
 }

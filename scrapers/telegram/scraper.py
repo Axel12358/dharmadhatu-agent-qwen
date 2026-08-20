@@ -4,11 +4,11 @@
 Scraper de canales públicos de Telegram (Dharmadhatu Bot v5) — SIN API token.
 
 Estrategia validada con herramientas open-source:
-- Búsqueda de canales: DuckDuckGo (endpoint HTML) con `site:t.me/s/` +
-  combinaciones de subgénero+ciudad de `config_grupos.json`.
+- Búsqueda de canales: DuckDuckGo (endpoint LITE HTML) vía Tor,
+  consultas naturales sin `site:` agresivo: "psytrance t.me/s", "darkpsy t.me/s", etc.
   Fuentes de referencia:
     • ulinycoin/shadow-tg  (https://github.com/ulinycoin/shadow-tg) — MIT,
-      usa el mismo patrón: t.me/s/{channel} + búsqueda DDG site:t.me/s/.
+      usa el mismo patrón: t.me/s/{channel} + búsqueda DDG.
     • Kisspeace/accless-tg-scraper (https://github.com/kisspeace/accless-tg-scraper)
     • PythonicCafe/tchan (https://github.com/PythonicCafe/tchan)
 - Scraping de mensajes: `requests` + `BeautifulSoup` sobre la vista web
@@ -19,10 +19,10 @@ Estrategia validada con herramientas open-source:
 - Extracción de eventos: `EventExtractor.extract_all` (fechas, lugares,
   organizadores, emails, subgénero). URL del evento: t.me/s/<canal>/<id>.
 
-Todo gratuito/open-source, solo dependencias ya presentes (requests, bs4,
-lxml). Archivos de estado dentro de `scrapers/telegram/`.
+Todo gratuito/open-source, solo dependencias ya presentes (requests, bs4).
+Archivos de estado dentro de `scrapers/telegram/`.
 
-Timeout global: 180 segundos (3 min). Rate limiting con `AntiBlock`.
+Timeout global: 120 segundos. Rate limiting con Tor NEWNYM cada 3 canales.
 Siempre aditivo: si algo falla, devuelve [] sin romper el bot.
 """
 
@@ -33,8 +33,8 @@ import os
 import random
 import re
 import sys
-import threading
 import time
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -54,16 +54,19 @@ _STATE_DIR.mkdir(parents=True, exist_ok=True)
 
 CANALES_ESTADO = _STATE_DIR / "telegram_canales_estado.json"
 CANALES_PRODUCTIVOS = _STATE_DIR / "telegram_canales_productivos.json"
+CANALES_DESCUBIERTOS = _STATE_DIR / "canales_descubiertos.json"
 RENDIMIENTO = _STATE_DIR / "telegram_rendimiento.json"
 
 # Límites y control de tiempo
-TIMEOUT_FASE = 15  # 15 segundos máximo para toda la fase Telegram
-TIMEOUT_REQUEST = 25
-MAX_MENSAJES_POR_CANAL = 50      # objetivo
-PAGINAS_POR_CANAL = 3            # 20 msgs/página → hasta 60 (cap 50)
-MAX_CANALES_POR_RUN = 8
-MAX_BUSQUEDAS_POR_RUN = 6
-MIN_MENSAJES_CANAL = 5           # canal con <5 mensajes → no productivo
+TIMEOUT_FASE = 120          # 120 segundos máximo para toda la fase Telegram
+TIMEOUT_REQUEST = 10        # 10 segundos por petición individual
+MAX_MENSAJES_POR_CANAL = 50
+PAGINAS_POR_CANAL = 3
+MAX_CANALES_POR_RUN = 15
+MAX_BUSQUEDAS_POR_RUN = 8
+MIN_MENSAJES_CANAL = 5
+TOR_ROTACION_CADA = 3       # Rotar identidad Tor cada 3 canales
+TOR_PAUSA_ROTACION = 10     # Pausa 10s tras rotar Tor
 
 HEADERS = {
     "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -72,29 +75,81 @@ HEADERS = {
     "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
 }
 
-# Subgéneros a combinar con ciudades (coincide con config_grupos.json)
-SUBGENEROS = [
+# Configuración Tor
+TOR_PROXY = {
+    "http": "socks5h://127.0.0.1:9050",
+    "https": "socks5h://127.0.0.1:9050",
+}
+TOR_CONTROL_PORT = 9051
+TOR_CONTROL_PASSWORD = None  # Sin contraseña por defecto
+
+# Subgéneros a combinar para búsquedas naturales
+SUBGENEROS_BUSQUEDA = [
     "psytrance", "darkpsy", "forest psy", "goa trance", "hitech",
     "psychedelic trance", "fullon", "psychill", "progressive psy",
+    "psybient", "psydub", "suomisaundi", "zenon", "twilight",
 ]
 
-# Canales semilla validados manualmente (funcionan siempre, incluso si DDG
-# rate-limita con 202). TheMysticRose: festival/parties psytrance real.
-CANALES_SEMILLA = ["TheMysticRose"]
+# Términos específicos de eventos para búsquedas más precisas
+EVENT_TERMS = [
+    "events", "eventos", "festival", "party", "rave", "open air",
+    "timetable", "lineup", "festival", "gathering", "meetup",
+]
 
-# Keywords específicas de psytrance (reducción de ruido; mismas que Eventbrite).
+# Canales semilla validados manualmente
+CANALES_SEMILLA = [
+    "TheMysticRose",
+    "shorthanduniverseofficial",
+    "progressivetakeover",
+    "PsychedelicSocietyBerlinOfficial",
+    "goa_party",
+    "bestgoaparty",
+    "psychedelic_germany",
+    "ogovergroundmusic",
+    "ancient_trance_festival",
+    "afishagoa",
+    "Teletrance",
+    "phanganparty",
+]
+
+# Keywords específicas de psytrance (filtrado de mensajes)
 PSYTRANCE_KEYWORDS = [
     "psytrance", "psy trance", "goa trance", "goa", "darkpsy", "dark psy",
     "forest psy", "hitech", "hi-tech", "full on", "psychedelic trance",
     "psydub", "psychill", "psybient", "progressive psy", "progressive trance",
     "psycore", "suomisaundi", "zenon", "twilight", "mystic rose",
+    "evento", "fiesta", "festival", "rave", "open air", "openair",
+    "timetable", "lineup", "festival", "gathering", "meetup",
+    "entradas", "tickets", "ticket", "compra", "vip", "early bird",
+    "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre",
+    "noviembre", "diciembre", "enero", "febrero", "marzo",
+    # Keywords para eventos psicodélicos/comunitarios adyacentes
+    "psychedelic session", "psychedelic sessions", "psychonaut", "psychonauts",
+    "entheogenic", "entheogen", "ceremony", "ceremonia", "ritual",
+    "workshop", "taller", "retreat", "retiro", "gathering", "encuentro",
+    "dance", "baila", "bailar", "ecstatic", "ecstático", "movement", "movimiento",
+    "community", "comunidad", "tribe", "tribu", "circle", "circulo", "círculo",
+    "shamanic", "chamanico", "chamánico", "medicine", "medicina", "plant medicine",
 ]
 
-# Señales claras de que el canal NO es de psytrance (evitan ruido en el CSV)
+# Blacklist: señales claras de que el canal NO es de psytrance/eventos
 NO_PSY_SENALES = [
     "tv", "pelicula", "film", "movie", "series", "netflix", "kodi",
     "iptv", "telegram channel for", "crypto", "forex", "bitcoin",
     "programas de tv", "fútbol", "futbol", "f1", "partido",
+    "news", "noticias", "daily", "diario", "update", "updates",
+    "music", "música", "releases", "lanzamientos", "album", "álbum",
+    "track", "single", "ep", "lp", "mixtape", "mix", "podcast",
+    "radio", "station", "stream", "streaming", "youtube", "soundcloud",
+    "lossless", "flac", "mp3", "download", "descarga", "free music",
+    "promo", "promoción", "label", "records", "recordings",
+    "porn", "xxx", "adult", "sex", "erotic", "nsfw",
+    "gambling", "apuestas", "casino", "poker", "slots",
+    "shop", "tienda", "store", "merch", "merchandise", "comprar",
+    "job", "empleo", "trabajo", "hiring", "contratando",
+    "dating", "citas", "singles", "pareja",
+    "politics", "política", "politico", "elecciones", "gobierno",
+    "religion", "religión", "church", "iglesia", "bible", "biblia",
 ]
 
 # Señales de que un mensaje es un RECAP (galería de fotos/vídeo) y NO un
@@ -105,76 +160,36 @@ RECAP_SENALES = [
     "teil 1", "teil 2", "teil 3", "part 1", "part 2", "part 3",
     "galería de fotos", "galeria de fotos", "photo gallery",
     "impressions", "recap", "recap video", "thank you for the",
-    "gracias a todos", "danksagung",
+    "gracias a todos", "danksagung", "thanks to all", "thank you all",
+    "fotograf", "fotógrafo", "photographer", "visuals", "artes",
 ]
 
-# Señales de que un mensaje es la DESCRIPCIÓN/BIO del canal (historia del
-# canal, fechas de fundación, bienvenida) → no es un evento.
+# Señales de que un mensaje es la DESCRIPCIÓN/BIO del canal
 BIO_SENALES = [
     "willkommen zum offiziellen", "welcome to the official",
     "bienvenido al canal", "bienvenid@ al canal", "este es el canal",
     "this is the channel", "official telegram channel",
     "offizieller kanal", "descripción del canal", "descripcion del canal",
     "channel description", "pinned «", "pinned <<",
-    "herzlich willkommen", "offiziellen",
+    "herzlich willkommen", "offiziellen", "bienvenidos al",
+    "reglas del canal", "rules of the channel", "normas del canal",
 ]
 
-# ---- Parámetros de mejora semántica (álgebra lineal) ----
-# Umbral de similitud coseno para aceptar un canal candidato comparado con
-# canales productivos conocidos. Bajo este valor, el canal se descarta.
+# Parámetros semánticos (álgebra lineal opcional)
 THRESH_CANAL = 0.4
-# Umbral de similitud para filtrar mensajes: si un mensaje es muy distinto a
-# los "mensajes semilla" (que anuncian eventos) se descarta sin extraer.
 THRESH_MENSAJE = 0.3
-# Mensajes a inspeccionar como preview al validar un canal candidato.
 MAX_MSGS_PREVIEW = 8
-# Cada cuántas ejecuciones se reentrena el modelo de canales.
 RERENTRENAR_CADA = 5
-# Confianza mínima para aceptar la predicción de subgénero/tipo_lugar. Baja
-# porque los mensajes ya pasaron el filtro keyword+semilla de psytrance, por
-# lo que un subgénero plausible (aunque poco confiable) es útil rellenar.
 CONF_MIN_PREDICCION = 0.15
 
-# Archivos de estado semántica (dentro de scrapers/telegram/)
 MODELO_CANALES = _STATE_DIR / "modelo_canales.pkl"
 SEMILLA_MENSAJES = _STATE_DIR / "semilla_mensajes.json"
 
-_algebra = None  # core.algebra_lineal (None si no disponible)
-_modelo_canales = None  # {"vectorizador": V, "canales": {ch: vector_np}}
-
-# Señales claras de que el canal NO es de psytrance (evitan ruido en el CSV)
-NO_PSY_SENALES = [
-    "tv", "pelicula", "film", "movie", "series", "netflix", "kodi",
-    "iptv", "telegram channel for", "crypto", "forex", "bitcoin",
-    "programas de tv", "fútbol", "futbol", "f1", "partido",
-]
-
-# Señales de que un mensaje es un RECAP (galería de fotos/vídeo) y NO un
-# anuncio de evento → nunca debe generar evento.
-RECAP_SENALES = [
-    "bilder der letzten", "fotos vom", "fotos del", "photos from",
-    "video vom", "aftermovie", "after movie", "aftermovie",
-    "teil 1", "teil 2", "teil 3", "part 1", "part 2", "part 3",
-    "galería de fotos", "galeria de fotos", "photo gallery",
-    "impressions", "recap", "recap video", "thank you for the",
-    "gracias a todos", "danksagung",
-]
-
-# Señales de que un mensaje es la DESCRIPCIÓN/BIO del canal (historia del
-# canal, fechas de fundación, bienvenida) → no es un evento.
-BIO_SENALES = [
-    "willkommen zum offiziellen", "welcome to the official",
-    "bienvenido al canal", "bienvenid@ al canal", "este es el canal",
-    "this is the channel", "official telegram channel",
-    "offizieller kanal", "descripción del canal", "descripcion del canal",
-    "channel description", "pinned «", "pinned <<",
-    "herzlich willkommen", "offiziellen",
-]
-
 _extractor = None
-_anti = None
-_algebra = None  # core.algebra_lineal (None si no disponible)
-_modelo_canales = None  # {"vectorizador": V, "canales": {ch: vector_np}}
+_algebra = None
+_modelo_canales = None
+_tor_rotaciones = 0
+_tor_lock = threading.Lock()
 
 
 def _get_extractor():
@@ -188,17 +203,6 @@ def _get_extractor():
     return _extractor
 
 
-def _get_anti():
-    global _anti
-    if _anti is None:
-        try:
-            from scrapers.anti_block import get_anti_block
-            _anti = get_anti_block()
-        except Exception:
-            _anti = None
-    return _anti
-
-
 def _get_algebra():
     """Carga core.algebra_lineal de forma opcional (None si no está)."""
     global _algebra
@@ -207,20 +211,8 @@ def _get_algebra():
             import core.algebra_lineal as alg
             _algebra = alg
         except Exception:
-            _algebra = False  # cache negativo: no volver a intentar
+            _algebra = False
     return _algebra if _algebra is not False else None
-
-
-def _vec_texto_a_vector(vec, textos):
-    """Transforma textos a vectores usando un vectorizador (numpy L2-normalizado)."""
-    try:
-        import numpy as np
-        X = vec.transform(textos)
-        if X is None:
-            return None
-        return X
-    except Exception:
-        return None
 
 
 def _cargar_modelo_canales():
@@ -252,12 +244,7 @@ def _guardar_modelo_canales():
 
 
 def _entrenar_vectorizador_canales(textos_canales: Dict[str, List[str]]):
-    """Ajusta un VectorizadorTFIDF sobre todos los textos de los canales
-    productivos y calcula el vector promedio por canal.
-
-    `textos_canales`: {canal: [texto_msg, ...]}.
-    Devuelve dict {vectorizador, canales: {canal: vector_np}} o None.
-    """
+    """Ajusta un VectorizadorTFIDF sobre todos los textos de los canales productivos."""
     alg = _get_algebra()
     if not alg or not textos_canales:
         return None
@@ -290,8 +277,7 @@ def _entrenar_vectorizador_canales(textos_canales: Dict[str, List[str]]):
 
 
 def _similitud_canal(mensajes_preview: List[str]) -> float:
-    """Similitud coseno máxima entre el preview de un canal candidato y los
-    canales productivos indexados. Devuelve 0.0 si está caótico."""
+    """Similitud coseno máxima entre el preview de un canal candidato y los canales productivos."""
     model = _cargar_modelo_canales()
     vec = model.get("vectorizador")
     canales_vec = model.get("canales", {})
@@ -338,114 +324,120 @@ def _escribir_json(ruta: Path, datos: Any) -> None:
         pass
 
 
-# ---------------------------------------------------------------------------
-# 1) Búsqueda de canales con DuckDuckGo (site:t.me/s/)
-# ---------------------------------------------------------------------------
-def _combinaciones_busqueda() -> List[str]:
-    """Genera combinaciones subgénero+ciudad desde config_grupos.json."""
-    combos: List[str] = []
+def _rotar_tor():
+    """Envía señal NEWNYM a Tor para rotar identidad (IP de salida)."""
+    global _tor_rotaciones
     try:
-        cfg = _leer_json(Path(_PROJECT_ROOT) / "config_grupos.json", {})
-        subgen = cfg.get("subgeneros") or SUBGENEROS
-        paises = cfg.get("paises") or []
-        # Recoger ciudades (rotación limitada a las primeras de cada país)
-        ciudades: List[str] = []
-        for p in paises[:12]:
-            c = (p.get("ciudades") or [])[:4]
-            ciudades.extend(c)
-        # subgenero + ciudad
-        for sg in subgen[:8]:
-            for city in random.sample(ciudades, min(3, len(ciudades))):
-                combos.append(f'site:t.me/s "{sg}" "{city}"')
-        # solo subgenero (global)
-        for sg in subgen[:6]:
-            combos.append(f'site:t.me/s "{sg}"')
+        import socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(5)
+        sock.connect(("127.0.0.1", TOR_CONTROL_PORT))
+        if TOR_CONTROL_PASSWORD:
+            sock.send(f'AUTHENTICATE "{TOR_CONTROL_PASSWORD}"\r\n'.encode())
+        else:
+            sock.send(b'AUTHENTICATE ""\r\n')
+        resp = sock.recv(1024)
+        if b'250' not in resp:
+            sock.close()
+            return False
+        sock.send(b'SIGNAL NEWNYM\r\n')
+        resp = sock.recv(1024)
+        sock.close()
+        if b'250' in resp:
+            _tor_rotaciones += 1
+            time.sleep(2)  # Esperar a que Tor establezca nuevo circuito
+            return True
     except Exception:
         pass
-    random.shuffle(combos)
-    return combos[:MAX_BUSQUEDAS_POR_RUN]
+    return False
+
+
+def _hacer_peticion(url: str, params: dict = None, timeout: int = TIMEOUT_REQUEST,
+                    use_tor: bool = True, headers: dict = None) -> Optional[requests.Response]:
+    """Petición HTTP robusta con Tor opcional."""
+    h = HEADERS.copy()
+    if headers:
+        h.update(headers)
+    p = TOR_PROXY if use_tor else None
+    try:
+        r = requests.get(url, params=params, headers=h, proxies=p, timeout=timeout)
+        return r
+    except Exception:
+        return None
+
+
+# ---------------------------------------------------------------------------
+# 1) Búsqueda de canales con DuckDuckGo LITE (vía Tor, consultas naturales)
+# ---------------------------------------------------------------------------
+def _generar_queries_busqueda() -> List[str]:
+    """Genera consultas naturales para búsqueda de canales."""
+    queries = []
+    # Búsquedas combinadas: subgénero + términos de eventos
+    for sg in SUBGENEROS_BUSQUEDA[:6]:
+        for et in EVENT_TERMS[:4]:
+            queries.append(f"{sg} {et} telegram")
+            queries.append(f"{sg} {et} t.me")
+    # Búsquedas solo subgénero (fallback)
+    for sg in SUBGENEROS_BUSQUEDA[:6]:
+        queries.append(f"{sg} telegram channel")
+    random.shuffle(queries)
+    return queries[:MAX_BUSQUEDAS_POR_RUN]
 
 
 def _es_canal_irrelevante(canal: str) -> bool:
-    """Descartar canales claramente no-psytrance (TV, pelis, crypto, deportes)."""
+    """Descartar canales claramente no-psytrance (TV, crypto, música genérica, etc.)."""
     c = canal.lower()
     return any(s in c for s in NO_PSY_SENALES)
 
 
 def _es_canal_relevante(canal: str) -> bool:
-    """True si el canal candidato es temáticamente similar a los productivos.
-
-    Usa similitud coseno contra el modelo de canales. Si no hay modelo
-    todavía, acepta el canal (el modelado se entrena en ejecuciones
-    posteriores). Siempre se combina con el filtro keyword de respaldo.
-    """
+    """True si el canal candidato es temáticamente similar a los productivos."""
     if _es_canal_irrelevante(canal):
         return False
     model = _cargar_modelo_canales()
-    if model.get("vectorizador") is None or not model.get("canales"):
-        # Sin modelo: aceptar salvo señal explícita de no-psy.
+    # Si no hay modelo o hay pocos canales productivos (<3), ser permisivo
+    canales_prod = model.get("canales", {})
+    if model.get("vectorizador") is None or len(canales_prod) < 3:
         return True
     try:
-        preview = _scrape_mensajes(canal, max_msgs=MAX_MSGS_PREVIEW)
+        preview = _scrape_mensajes(canal, max_msgs=MAX_MSGS_PREVIEW, use_tor=True)
         textos = [m["texto"] for m in preview if (m.get("texto") or "").strip()]
         sim = _similitud_canal(textos)
-        if sim >= THRESH_CANAL:
-            return True
-        return False
+        return sim >= THRESH_CANAL
     except Exception:
-        return True  # ante duda, no bloquear descubrimiento
+        return True
 
 
-def _buscar_canales_ddg(combo: str) -> List[str]:
-    """Busca canales en DuckDuckGo (endpoint HTML, sin cookies).
-
-    Devuelve usernames de t.me/s/ encontrados en los resultados. Si DDG
-    responde 202 (rate-limit), lo marca como bloqueado y devuelve [] sin
-    perder tiempo reintentando (el fail-fast lo decide el llamador).
-    """
-    anti = _get_anti()
-    if anti is not None:
-        anti.wait_if_needed("duckduckgo.com")
-        if anti.is_blocked("duckduckgo.com"):
-            return []
-    try:
-        r = requests.get(
-            "https://html.duckduckgo.com/html/",
-            params={"q": combo},
-            headers=HEADERS,
-            timeout=TIMEOUT_REQUEST,
-        )
-        if anti is not None:
-            if r.status_code >= 400:
-                anti.mark_blocked("duckduckgo.com")
-            else:
-                anti.mark_success("duckduckgo.com")
-        if r.status_code == 202 or r.status_code >= 400:
-            return []
-        if r.status_code != 200:
-            return []
-        soup = BeautifulSoup(r.text, "lxml")
-        canales: List[str] = []
-        for a in soup.select("a.result__a"):
-            href = a.get("href", "")
-            url = href
-            if "uddg=" in href:
-                try:
-                    url = unquote(re.search(r"uddg=([^&]+)", href).group(1))
-                except Exception:
-                    url = href
-            m = re.search(r"t\.me/s/([A-Za-z0-9_]+)", url)
-            if m:
-                canal = m.group(1)
-                if canal.lower() not in {c.lower() for c in canales}:
-                    canales.append(canal)
-        return canales
-    except Exception:
+def _buscar_canales_ddg(query: str) -> List[str]:
+    """Busca canales en DuckDuckGo LITE vía Tor. Devuelve usernames de t.me/s/."""
+    r = _hacer_peticion(
+        "https://lite.duckduckgo.com/lite/",
+        params={"q": query},
+        use_tor=True,
+    )
+    if not r or r.status_code != 200:
         return []
+    soup = BeautifulSoup(r.text, "html.parser")
+    canales: List[str] = []
+    for link in soup.select("table a"):
+        href = link.get("href", "")
+        real_url = href
+        if "uddg=" in href:
+            try:
+                real_url = unquote(re.search(r"uddg=([^&]+)", href).group(1))
+            except Exception:
+                real_url = href
+        # Extraer username de t.me/ o t.me/s/
+        m = re.search(r"t\.me/(?:s/)?([A-Za-z0-9_]+)", real_url)
+        if m:
+            canal = m.group(1)
+            if canal.lower() not in {c.lower() for c in canales}:
+                canales.append(canal)
+    return canales
 
 
 def _descubrir_canales() -> List[str]:
-    """Busca canales con DDG y los combina con los ya conocidos/productivos."""
+    """Busca canales con DDG LITE y los combina con los ya conocidos/productivos."""
     conocidos: List[str] = []
     estado = _leer_json(CANALES_ESTADO, {})
     if isinstance(estado, dict):
@@ -458,34 +450,33 @@ def _descubrir_canales() -> List[str]:
             if c and c not in conocidos:
                 conocidos.append(c)
 
+    # Cargar canales ya descubiertos previamente
+    descubiertos = _leer_json(CANALES_DESCUBIERTOS, [])
+    if isinstance(descubiertos, list):
+        for c in descubiertos:
+            if isinstance(c, str) and c not in conocidos:
+                conocidos.append(c)
+
     nuevos: List[str] = []
-    combos = _combinaciones_busqueda()
-    for combo in combos:
+    queries = _generar_queries_busqueda()
+    for query in queries:
         try:
-            hit = _buscar_canales_ddg(combo)
+            hit = _buscar_canales_ddg(query)
             for c in hit:
                 if _es_canal_irrelevante(c):
                     continue
-                # Filtrado semántico: solo canales con temática similar a
-                # los productivos (evita TV / crypto / techno). Si no hay
-                # modelo, se aceptan todos los que pasan el filtro keyword.
                 if _es_canal_relevante(c) and c not in conocidos and c not in nuevos:
                     nuevos.append(c)
-            time.sleep(0.8)
-            # Fail-fast: si DDG está rate-limitado (202), no perder tiempo
-            # con el resto de búsquedas de esta ejecución.
-            anti = _get_anti()
-            if anti is not None and anti.is_blocked("duckduckgo.com"):
-                break
+            time.sleep(1.5)  # Rate limit amable
         except Exception:
             continue
 
-    # Semilla manual: siempre presente (fallback ante rate-limit de DDG)
+    # Semilla manual: siempre presente (fallback)
     for c in CANALES_SEMILLA:
         if c not in conocidos and c not in nuevos:
             nuevos.append(c)
 
-    # Orden: productivos primero, luego nuevos, luego conocidos restantes
+    # Orden: productivos primero, luego nuevos, luego descubiertos, luego conocidos
     orden = []
     for p in productivos:
         c = (p.get("canal") or "") if isinstance(p, dict) else ""
@@ -494,15 +485,23 @@ def _descubrir_canales() -> List[str]:
     for c in nuevos:
         if c not in orden:
             orden.append(c)
+    for c in descubiertos:
+        if c not in orden:
+            orden.append(c)
     for c in conocidos:
         if c not in orden:
             orden.append(c)
 
-    # Persistir estado (aditivo: conserva los ya conocidos)
+    # Persistir estado (aditivo)
     estado["canales"] = orden
     estado["ultima_busqueda"] = datetime.now(timezone.utc).isoformat()
     estado["nuevos"] = nuevos
     _escribir_json(CANALES_ESTADO, estado)
+
+    # Guardar descubiertos (acumulativo)
+    todos_descubiertos = list(set(descubiertos + nuevos))
+    _escribir_json(CANALES_DESCUBIERTOS, todos_descubiertos)
+
     return orden
 
 
@@ -516,12 +515,9 @@ def _es_canal_valido(html: str) -> bool:
     return "Contact @" not in t
 
 
-def _scrape_mensajes(canal: str, max_msgs: int = MAX_MENSAJES_POR_CANAL) -> List[Dict]:
-    """Extrae hasta max_msgs mensajes de t.me/s/<canal> (paginado con ?before=).
-
-    Cada mensaje: {texto, fecha_iso, url, post_id, canal}.
-    """
-    anti = _get_anti()
+def _scrape_mensajes(canal: str, max_msgs: int = MAX_MENSAJES_POR_CANAL,
+                     use_tor: bool = True) -> List[Dict]:
+    """Extrae hasta max_msgs mensajes de t.me/s/<canal> (paginado con ?before=)."""
     base = f"https://t.me/s/{canal}"
     vistos: Set[str] = set()
     mensajes: List[Dict] = []
@@ -529,64 +525,54 @@ def _scrape_mensajes(canal: str, max_msgs: int = MAX_MENSAJES_POR_CANAL) -> List
 
     for _pagina in range(PAGINAS_POR_CANAL):
         url = base + (f"?before={before}" if before else "")
-        if anti is not None:
-            anti.wait_if_needed("t.me")
-        try:
-            r = requests.get(url, headers=HEADERS, timeout=TIMEOUT_REQUEST)
-            if anti is not None:
-                if r.status_code >= 400:
-                    anti.mark_blocked("t.me")
-                else:
-                    anti.mark_success("t.me")
-            if r.status_code != 200:
-                break
-            if not _es_canal_valido(r.text):
-                break
-            soup = BeautifulSoup(r.text, "lxml")
-            pagina = 0
-            for msg in soup.select(".tgme_widget_message"):
-                post_id = msg.get("data-post", "")
-                if not post_id or post_id in vistos:
-                    continue
-                vistos.add(post_id)
-                txt = msg.select_one(".tgme_widget_message_text")
-                texto = txt.get_text("\n", strip=True) if txt else ""
-                fecha_el = msg.select_one(".tgme_widget_message_date time")
-                fecha = fecha_el.get("datetime", "") if fecha_el else ""
-                canal_nombre = post_id.split("/")[0] if "/" in post_id else canal
-                mensajes.append({
-                    "canal": canal_nombre,
-                    "post_id": post_id,
-                    "texto": texto,
-                    "fecha": fecha,
-                    "url": f"https://t.me/s/{canal_nombre}/{post_id.split('/')[-1]}",
-                })
-                pagina += 1
-                if len(mensajes) >= max_msgs:
-                    break
+        r = _hacer_peticion(url, use_tor=use_tor)
+        if not r or r.status_code != 200:
+            break
+        if not _es_canal_valido(r.text):
+            break
+        soup = BeautifulSoup(r.text, "html.parser")
+        pagina = 0
+        for msg in soup.select(".tgme_widget_message"):
+            post_id = msg.get("data-post", "")
+            if not post_id or post_id in vistos:
+                continue
+            vistos.add(post_id)
+            txt = msg.select_one(".tgme_widget_message_text")
+            texto = txt.get_text("\n", strip=True) if txt else ""
+            fecha_el = msg.select_one(".tgme_widget_message_date time")
+            fecha = fecha_el.get("datetime", "") if fecha_el else ""
+            canal_nombre = post_id.split("/")[0] if "/" in post_id else canal
+            mensajes.append({
+                "canal": canal_nombre,
+                "post_id": post_id,
+                "texto": texto,
+                "fecha": fecha,
+                "url": f"https://t.me/s/{canal_nombre}/{post_id.split('/')[-1]}",
+            })
+            pagina += 1
             if len(mensajes) >= max_msgs:
                 break
-            if not mensajes:
-                break
-            # Siguiente página: ?before=<id del mensaje más antiguo recogido>
-            ids = [m["post_id"].split("/")[-1] for m in mensajes if "/" in m["post_id"]]
-            if not ids:
-                break
-            before = str(min(int(i) for i in ids if i.isdigit()))
-            if not before:
-                break
-            time.sleep(0.6)
-        except Exception:
+        if len(mensajes) >= max_msgs:
             break
+        if not mensajes:
+            break
+        # Siguiente página: ?before=<id del mensaje más antiguo>
+        ids = [m["post_id"].split("/")[-1] for m in mensajes if "/" in m["post_id"]]
+        if not ids:
+            break
+        before = str(min(int(i) for i in ids if i.isdigit()))
+        if not before:
+            break
+        time.sleep(0.6)
 
     return mensajes
 
 
 # ---------------------------------------------------------------------------
-# 3) Extracción de eventos desde los mensajes
+# 3) Filtrado de mensajes y extracción de eventos
 # ---------------------------------------------------------------------------
 def _es_psytrancero(texto: str) -> bool:
-    """Un mensaje solo produce evento si menciona señales psytrance."""
+    """Un mensaje solo produce evento si menciona señales psytrance/eventos."""
     t = texto.lower()
     return any(k in t for k in PSYTRANCE_KEYWORDS)
 
@@ -610,17 +596,12 @@ def _mensaje_a_evento(mensaje: Dict) -> Optional[Dict]:
     if len(texto) < 15 or not texto:
         return None
 
-    # Filtro de relevancia: evitar ruido (techno, TV, crypto, etc.)
     if not _es_psytrancero(texto):
         return None
-    # Filtro de recaps: fotos/vídeo de eventos pasados
     if _es_recap(texto):
         return None
-    # Filtro de bios: descripción del canal (historia/fundación)
     if _es_bio(texto):
         return None
-    # Filtro semántico: si el mensaje es muy distinto a los anuncios de
-    # eventos semilla, probablemente es ruido (saludo, encuesta, reenvío).
     if not _es_mensaje_util(texto):
         return None
 
@@ -636,8 +617,7 @@ def _mensaje_a_evento(mensaje: Dict) -> Optional[Dict]:
     canal = mensaje.get("canal") or ""
     base = eventos[0] if eventos else None
 
-    # Fallback: extractor no encontró evento (p.ej. anuncio corto en alemán),
-    # pero hay una fecha parseable → construir evento mínimo.
+    # Fallback: extractor no encontró evento pero hay fecha parseable
     if base is None and extractor is not None:
         try:
             fecha = extractor._extract_date(texto)
@@ -659,11 +639,17 @@ def _mensaje_a_evento(mensaje: Dict) -> Optional[Dict]:
     if base is None:
         return None
     if base.get("fecha") in (None, "", "N/A"):
-        # El mensaje no tiene fecha reconocible → no construimos evento
         return None
 
-    # El canal es el organizador natural cuando el extractor devuelve
-    # el valor genérico "Telegram" como fuente.
+    # Filtrar eventos pasados
+    try:
+        from datetime import date
+        ev_date = date.fromisoformat(base.get("fecha")[:10])
+        if ev_date < date.today():
+            return None
+    except Exception:
+        pass
+
     organizador = base.get("organizador") or ""
     if not organizador or organizador.lower() == "telegram":
         organizador = canal
@@ -680,10 +666,10 @@ def _mensaje_a_evento(mensaje: Dict) -> Optional[Dict]:
         "link": mensaje.get("url") or "N/A",
         "url": mensaje.get("url") or "N/A",
         "fuente": "Telegram",
+        "canal": canal or "N/A",
         "subgenero": base.get("subgenero") or "general",
         "descripcion": texto[:500],
     }
-    # Mejora opcional: rellenar subgénero/tipo_lugar con álgebra lineal.
     _predecir_campos(canal, texto, evento)
     return evento
 
@@ -698,13 +684,9 @@ def _titulo_anuncio(texto: str) -> str:
     return texto[:200]
 
 
-def _procesar_canal(canal: str) -> Tuple[List[Dict], List[Dict]]:
-    """Scrapea mensajes de un canal y extrae eventos.
-
-    Devuelve (eventos, mensajes) para que el llamador pueda actualizar la
-    semilla de mensajes productivos.
-    """
-    mensajes = _scrape_mensajes(canal)
+def _procesar_canal(canal: str, use_tor: bool = True) -> Tuple[List[Dict], List[Dict]]:
+    """Scrapea mensajes de un canal y extrae eventos."""
+    mensajes = _scrape_mensajes(canal, use_tor=use_tor)
     eventos = []
     for m in mensajes:
         ev = _mensaje_a_evento(m)
@@ -729,7 +711,6 @@ def _registrar_resultado(canal: str, eventos: int, mensajes: int, tiempo_s: floa
     rend[canal] = entry
     _escribir_json(RENDIMIENTO, rend)
 
-    # Productivos: canales con >= MIN_MENSAJES_CANAL y al menos 1 evento
     prod = _leer_json(CANALES_PRODUCTIVOS, [])
     prod_map = {p.get("canal"): p for p in prod if isinstance(p, dict)}
     if eventos >= 1 and mensajes >= MIN_MENSAJES_CANAL:
@@ -749,7 +730,6 @@ def _canales_a_procesar(orden: List[str]) -> List[str]:
         for p in prod:
             if isinstance(p, dict) and p.get("canal"):
                 prod_map[p["canal"]] = p
-    # Productivos primero (top por eventos acumulados)
     prods = sorted(prod_map.keys(),
                    key=lambda c: -int(prod_map[c].get("eventos", 0)))
     seleccion = [c for c in prods if c in orden][:2]
@@ -792,10 +772,25 @@ def _es_mensaje_util(texto: str) -> bool:
     """Filtra mensajes irrelevantes por similitud a los mensajes semilla.
 
     Si no hay semilla almacenada aún, acepta el mensaje (calienta la semilla).
+    Si el mensaje tiene keywords psytrance Y una fecha parseable, acepta aunque
+    la similitud semántica sea baja (diferentes formatos de eventos).
     """
     semilla = _cargar_semilla()
     if not semilla:
         return True
+    
+    # Si tiene keywords psytrance y fecha, ser permisivo
+    extractor = _get_extractor()
+    if extractor is not None:
+        try:
+            fecha = extractor._extract_date(texto)
+        except Exception:
+            fecha = None
+    else:
+        fecha = None
+    if fecha and _es_psytrancero(texto):
+        return True
+    
     alg = _get_algebra()
     if not alg:
         return True
@@ -806,8 +801,6 @@ def _es_mensaje_util(texto: str) -> bool:
         if X.shape[0] < 2 or X.shape[1] == 0:
             return True
         import numpy as np
-        sims = (X @ X.T)
-        # similitud del mensaje (último) con cada mensaje semilla
         msg_vec = X[-1]
         sims_msg = X[:-1] @ msg_vec
         best = float(sims_msg.max()) if sims_msg.size else 0.0
@@ -817,11 +810,7 @@ def _es_mensaje_util(texto: str) -> bool:
 
 
 def _reentrenar_si_toca():
-    """Reentrena el modelo de canales productivos cada RERENTRENAR_CADA runs.
-
-    Usa los mensajes acumulados de los canales productivos para recalcular
-    sus vectores TF-IDF promedio. Guarda modelo_canales.pkl.
-    """
+    """Reentrena el modelo de canales productivos cada RERENTRENAR_CADA runs."""
     alg = _get_algebra()
     if not alg:
         return
@@ -857,7 +846,7 @@ def _reentrenar_si_toca():
             if not canal:
                 continue
             try:
-                msgs = _scrape_mensajes(canal, max_msgs=MAX_MENSAJES_POR_CANAL)
+                msgs = _scrape_mensajes(canal, max_msgs=MAX_MENSAJES_POR_CANAL, use_tor=True)
             except Exception:
                 msgs = []
             textos_por_canal[canal] = [m["texto"] for m in msgs if m.get("texto")]
@@ -892,7 +881,6 @@ def _predecir_campos(canal: str, texto: str, evento: Dict) -> None:
     alg = _get_algebra()
     if not alg:
         return
-    # Sólo predecir si vienen vacíos/N/A.
     if evento.get("subgenero") in (None, "", "N/A", "general"):
         try:
             sub, conf = alg.predecir_subgenero(texto)
@@ -910,17 +898,19 @@ def _predecir_campos(canal: str, texto: str, evento: Dict) -> None:
 
 
 # ---------------------------------------------------------------------------
-# 5) Entrada principal
+# 6) Entrada principal
 # ---------------------------------------------------------------------------
 def scrape_telegram_events(timeout: int = TIMEOUT_FASE) -> List[Dict]:
     """Búsqueda de canales + scraping de mensajes + extracción de eventos.
 
-    Respeta un timeout global de `timeout` segundos (default 180). Si se
-    supera, devuelve lo que tenga. Aditivo: nunca lanza excepciones al caller.
+    Usa Tor para todas las peticiones. Rota identidad cada TOR_ROTACION_CADA canales.
+    Respeta timeout global de `timeout` segundos (default 120). Aditivo.
     """
+    global _tor_rotaciones
     fin = time.time() + timeout
-    print("📣 Scraping Telegram (canales públicos, sin API)...")
+    print("📣 Scraping Telegram (canales públicos, sin API, vía Tor)...")
     eventos: List[Dict] = []
+    canales_procesados = 0
 
     try:
         canales = _descubrir_canales()
@@ -933,9 +923,19 @@ def scrape_telegram_events(timeout: int = TIMEOUT_FASE) -> List[Dict]:
             if time.time() > fin:
                 print("  ⏰ Telegram: timeout global alcanzado")
                 break
+
+            # Rotar Tor cada TOR_ROTACION_CADA canales
+            if canales_procesados > 0 and canales_procesados % TOR_ROTACION_CADA == 0:
+                print(f"  🔄 Rotando identidad Tor (cada {TOR_ROTACION_CADA} canales)...")
+                if _rotar_tor():
+                    print(f"  ✅ Tor rotado (total rotaciones: {_tor_rotaciones})")
+                    time.sleep(TOR_PAUSA_ROTACION)
+                else:
+                    print(f"  ⚠️ No se pudo rotar Tor, continuando con IP actual")
+
             try:
                 t0 = time.time()
-                evs_canal, mensajes = _procesar_canal(canal)
+                evs_canal, mensajes = _procesar_canal(canal, use_tor=True)
                 if evs_canal:
                     eventos.extend(evs_canal)
                     print(f"  ✅ @{canal}: {len(evs_canal)} eventos de {len(mensajes)} mensajes")
@@ -943,8 +943,8 @@ def scrape_telegram_events(timeout: int = TIMEOUT_FASE) -> List[Dict]:
                     print(f"  ⚠️ @{canal}: {len(mensajes)} mensajes, 0 eventos")
                 _registrar_resultado(canal, len(evs_canal), len(mensajes),
                                      round(time.time() - t0, 2))
-                # Actualizar semilla de mensajes productivos
                 _actualizar_semilla(canal, mensajes, evs_canal)
+                canales_procesados += 1
             except Exception as e:
                 print(f"  ❌ @{canal}: {type(e).__name__}: {e}")
                 continue
@@ -959,7 +959,6 @@ def scrape_telegram_events(timeout: int = TIMEOUT_FASE) -> List[Dict]:
                 unicos.append(ev)
         eventos = unicos
 
-        # Reentrenar modelo de canales periódicamente (aditivo, async-safe)
         try:
             _reentrenar_si_toca()
         except Exception:
@@ -969,7 +968,7 @@ def scrape_telegram_events(timeout: int = TIMEOUT_FASE) -> List[Dict]:
         print(f"  ⚠️ Telegram scraper: {type(e).__name__}: {e}")
         return []
 
-    print(f"  📊 Telegram: {len(eventos)} eventos totales")
+    print(f"  📊 Telegram: {len(eventos)} eventos totales (canales procesados: {canales_procesados})")
     return eventos
 
 

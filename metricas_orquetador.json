@@ -360,5 +360,97 @@
     "eventos_nuevos_añadidos": 2,
     "total_consolidado": 603,
     "modo_dry_run": false
+  },
+  {
+    "timestamp": "2026-08-20T01:59:06.409768+00:00",
+    "duracion_total_s": 144.71,
+    "scrapers": [
+      "goabase",
+      "songkick",
+      "resident_advisor",
+      "reddit",
+      "psytrance_pl",
+      "isratrance",
+      "ektoplazm",
+      "meetup"
+    ],
+    "detalle": {
+      "goabase": {
+        "scraper": "goabase",
+        "timeout": 30,
+        "exito": true,
+        "eventos": 20,
+        "tiempo": 15.8,
+        "error": null,
+        "timestamp": "2026-08-20T01:56:41.870987+00:00"
+      },
+      "songkick": {
+        "scraper": "songkick",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T01:56:57.668846+00:00"
+      },
+      "resident_advisor": {
+        "scraper": "resident_advisor",
+        "timeout": 300,
+        "exito": true,
+        "eventos": 500,
+        "tiempo": 118.62,
+        "error": null,
+        "timestamp": "2026-08-20T01:56:57.668902+00:00"
+      },
+      "reddit": {
+        "scraper": "reddit",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T01:58:56.290883+00:00"
+      },
+      "psytrance_pl": {
+        "scraper": "psytrance_pl",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 6,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T01:58:56.290920+00:00"
+      },
+      "isratrance": {
+        "scraper": "isratrance",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 0,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T01:58:56.290948+00:00"
+      },
+      "ektoplazm": {
+        "scraper": "ektoplazm",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 3,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T01:58:56.290964+00:00"
+      },
+      "meetup": {
+        "scraper": "meetup",
+        "timeout": 60,
+        "exito": true,
+        "eventos": 1,
+        "tiempo": 0.0,
+        "error": null,
+        "timestamp": "2026-08-20T01:58:56.290983+00:00"
+      }
+    },
+    "eventos_brutos": 531,
+    "eventos_nuevos_añadidos": 0,
+    "total_consolidado": 601,
+    "modo_dry_run": false
   }
 ]

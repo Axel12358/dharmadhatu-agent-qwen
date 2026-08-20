@@ -26,7 +26,23 @@ MONTHS_EN = {
     "december": 12,
 }
 
-ALL_MONTHS = {**MONTHS_ES, **MONTHS_EN}
+MONTHS_RU = {
+    "янв": 1, "фев": 2, "мар": 3, "апр": 4, "май": 5, "июн": 6,
+    "июл": 7, "авг": 8, "сен": 9, "окт": 10, "ноя": 11, "дек": 12,
+    "январ": 1, "феврал": 2, "март": 3, "апрел": 4, "май": 5,
+    "июн": 6, "июл": 7, "август": 8, "сентябр": 9, "октябр": 10,
+    "ноябр": 11, "декабр": 12,
+}
+
+MONTHS_DE = {
+    "jan": 1, "feb": 2, "mär": 3, "apr": 4, "mai": 5, "jun": 6,
+    "jul": 7, "aug": 8, "sep": 9, "okt": 10, "nov": 11, "dez": 12,
+    "januar": 1, "februar": 2, "märz": 3, "april": 4, "mai": 5,
+    "juni": 6, "juli": 7, "august": 8, "september": 9, "oktober": 10,
+    "november": 11, "dezember": 12,
+}
+
+ALL_MONTHS = {**MONTHS_ES, **MONTHS_EN, **MONTHS_RU, **MONTHS_DE}
 MONTH_PATTERN = "|".join(sorted(ALL_MONTHS.keys(), key=len, reverse=True))
 
 EVENT_TRIGGERS = [
@@ -381,7 +397,17 @@ class EventExtractor:
             (rf"(\d{{1,2}})[./-]({MONTH_PATTERN})[./-](\d{{4}})", 6),
             (rf"(\d{{1,2}})[-](\d{{1,2}}){self.SP}+({MONTH_PATTERN}){self.SP}+(\d{{4}})", 8),
             (rf"(\d{{4}})[-/]({MONTH_PATTERN})[/-](\d{{1,2}})", 11),
+            # Formatos con "of" y ordinales sin año (usar año actual)
+            (rf"(\d{{1,2}})(?:st|nd|rd|th)?{self.SP}+of{self.SP}+({MONTH_PATTERN})", 12),
+            (rf"({MONTH_PATTERN}){self.SP}+(\d{{1,2}})(?:st|nd|rd|th)", 13),
+            # Formatos con ordinales sin "of" ni año (usar año actual)
+            (rf"(\d{{1,2}})(?:st|nd|rd|th){self.SP}+({MONTH_PATTERN})", 14),
+            (rf"({MONTH_PATTERN}){self.SP}+(\d{{1,2}})(?![,\d])", 15),
             (rf"(?<!\d)(\d{{1,2}}){self.SP}+({MONTH_PATTERN})", 7),
+            # Formatos alemanes: "6. August 2026", "vom 6. bis 9. August 2026"
+            (rf"(\d{{1,2}})\.\s*bis\s+(\d{{1,2}})\.\s+({MONTH_PATTERN})\s+(\d{{4}})", 16),
+            (rf"(?:vom\s+)?(\d{{1,2}})\.\s+({MONTH_PATTERN})\s+(\d{{4}})", 17),
+            (rf"(\d{{1,2}})\.\s+({MONTH_PATTERN})", 18),
         ]
 
         for pat, fmt in patterns:
@@ -441,6 +467,46 @@ class EventExtractor:
         elif fmt == 11:
             y, mo_text, d = m.group(1), m.group(2).lower()[:3], m.group(3)
             mo = ALL_MONTHS.get(mo_text, 1)
+            return f"{y}-{mo:02d}-{int(d):02d}"
+        elif fmt == 12:
+            # "9th of May" -> d, mo_text (no year, use current)
+            d, mo_text = m.group(1), m.group(2).lower()[:3]
+            mo = ALL_MONTHS.get(mo_text, 1)
+            y = now.year
+            return f"{y}-{mo:02d}-{int(d):02d}"
+        elif fmt == 13:
+            # "May 9th" -> mo_text, d (no year, use current)
+            mo_text, d = m.group(1).lower()[:3], m.group(2)
+            mo = ALL_MONTHS.get(mo_text, 1)
+            y = now.year
+            return f"{y}-{mo:02d}-{int(d):02d}"
+        elif fmt == 14:
+            # "9th May" -> d, mo_text (no year, use current)
+            d, mo_text = m.group(1), m.group(2).lower()[:3]
+            mo = ALL_MONTHS.get(mo_text, 1)
+            y = now.year
+            return f"{y}-{mo:02d}-{int(d):02d}"
+        elif fmt == 15:
+            # "May 9" -> mo_text, d (no year, use current)
+            mo_text, d = m.group(1).lower()[:3], m.group(2)
+            mo = ALL_MONTHS.get(mo_text, 1)
+            y = now.year
+            return f"{y}-{mo:02d}-{int(d):02d}"
+        elif fmt == 16:
+            # "6. bis 9. August 2026" -> d1, d2, mo_text, y
+            d1, d2, mo_text, y = m.group(1), m.group(2), m.group(3).lower()[:3], m.group(4)
+            mo = ALL_MONTHS.get(mo_text, 1)
+            return f"{y}-{mo:02d}-{int(d1):02d}"
+        elif fmt == 17:
+            # "vom 6. August 2026" or "6. August 2026" -> d, mo_text, y
+            d, mo_text, y = m.group(1), m.group(2).lower()[:3], m.group(3)
+            mo = ALL_MONTHS.get(mo_text, 1)
+            return f"{y}-{mo:02d}-{int(d):02d}"
+        elif fmt == 18:
+            # "6. August" -> d, mo_text (no year, use current)
+            d, mo_text = m.group(1), m.group(2).lower()[:3]
+            mo = ALL_MONTHS.get(mo_text, 1)
+            y = now.year
             return f"{y}-{mo:02d}-{int(d):02d}"
         return None
 

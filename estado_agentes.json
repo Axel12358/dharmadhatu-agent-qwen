@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-08-19T22:12:42.992293+00:00",
-  "duracion_total_s": 140.71,
+  "timestamp": "2026-08-19T23:58:07.920548+00:00",
+  "duracion_total_s": 126.43,
   "subagentes": [
     "resident_advisor",
     "telegram",
@@ -11,7 +11,7 @@
     "meetup"
   ],
   "eventos_brutos": 510,
-  "eventos_nuevos_añadidos": 10,
-  "total_consolidado": 611,
+  "eventos_nuevos_añadidos": 0,
+  "total_consolidado": 600,
   "modo_dry_run": false
 }

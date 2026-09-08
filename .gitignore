@@ -1,51 +1,44 @@
+# Data (too large, local only)
+eventos_encontrados.csv
+eventos_encontrados.csv.bak_*
+eventos_encontrados.csv.lock
+eventos_encontrados.backup.*
+eventos_encontrados_*DEDUP*.csv
+
+# JSON state/cache (runtime, not code)
+*.json
+!config_modulos.json
+
+# Logs
+*.log
+*.err
+*.out
+logs/
+
+# Tor data (runtime)
+tor_data/
+
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-venv_*/
+*.pyc
 .venv/
-ENV/
-env.bak/
-venv.bak/
 
-# Entorno virtual
-venv/
+# Models (large binaries)
+models/*.pkl
+models/*.txt
 
-# Archivos de logs
-logs/*.log
-*.log
+# Backups
+backups/
+backups_enrich/
+*.bak*
+*.backup*
 
-# Archivos temporales
+# LaunchAgents (local only)
+~/Library/LaunchAgents/com.dharma.*
+
+# Misc
+diag_*
+_beta_*
+validation_*
+*.pkl
 *.tmp
-*.bak
-*.swp
-*~
-*.csv
-*.png
-*.json_*
-
-# Archivos de prueba
-test_*.py
-respuesta_*.json
-respuesta_*.md
-debug_*.png
-
-# Configuraciones locales
-.env
-config_local.json
-
-# IDE
-.vscode/
-.idea/
-*.sublime-workspace
-
-# OS
-.DS_Store
-Thumbs.db
-
-# MCP
-mcp_*.json

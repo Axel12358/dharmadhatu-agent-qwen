@@ -135,14 +135,17 @@ def tor_disponible() -> bool:
 
 
 def obtener_proxy_tor() -> Optional[Dict[str, str]]:
-    """Devuelve dict de proxy SOCKS5 para requests, o None si Tor no disponible.
+    """Devuelve dict de proxy para requests.
 
-    Returns:
-        {"http": "socks5h://127.0.0.1:9050", "https": "socks5h://127.0.0.1:9050"} o None
+    Si hay proxy residencial de terceros configurado (nunca IP del usuario),
+    lo devuelve. Si no, devuelve el proxy Tor (o None si Tor no disponible).
 
-    Note: usa socks5h:// (no socks5://) para que DNS se resuelva vía Tor,
-    previniendo DNS leaks.
+    Note: usa socks5h:// (no socks5://) para que DNS se resuelva vía túnel,
+    previniendo DNS leaks de la IP real.
     """
+    from core.http_client import get_active_proxies as _gap, _load_proxy_url as _lp
+    if _lp():
+        return _gap()
     if not tor_disponible():
         return None
     proxy_url = f"socks5h://{TOR_SOCKS_HOST}:{TOR_SOCKS_PORT}"

@@ -27,6 +27,14 @@ from typing import Any, Callable, Dict, List, Optional
 
 from core.deduplicador import Deduplicador
 
+# Intentar cargar plugin_loader (aditivo, fallback a dict hardcodeado)
+try:
+    from core.plugin_loader import descubrir_scrapers as _plugin_descubrir
+    from core.plugin_loader import inyectar_deduplicador as _plugin_inyectar_dedup
+    _PLUGIN_LOADER_DISPONIBLE = True
+except ImportError:
+    _PLUGIN_LOADER_DISPONIBLE = False
+
 # Directorio raíz del proyecto
 PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
 
@@ -49,14 +57,41 @@ def _importar(nombre_modulo: str, atributo: str) -> Callable:
 
 
 def _construir_SCRAPERS() -> Dict[str, Dict[str, Any]]:
-    """Construye el diccionario de scrapers activos con su timeout."""
+    """Construye el diccionario de scrapers activos con su timeout.
+    
+    Si plugin_loader está disponible, lo usa (auto-descubrimiento).
+    Si no, usa el dict hardcodeado como fallback.
+    """
+    if _PLUGIN_LOADER_DISPONIBLE:
+        try:
+            todos = _plugin_descubrir()  # Incluye activos e inactivos
+            # Normalizar al formato que espera orquestador
+            resultado = {}
+            for nombre, cfg in todos.items():
+                if not cfg.get("activo", True):
+                    continue  # Solo los activos
+                resultado[nombre] = {
+                    "funcion": cfg["funcion"],
+                    "timeout": cfg.get("timeout", TIMEOUT_DEFECTO),
+                }
+            print(f"🔌 Plugin loader: {len(resultado)} scrapers activos "
+                  f"(de {len(todos)} totales)")
+            return resultado
+        except Exception as e:
+            print(f"⚠️ Plugin loader falló ({e}), usando dict hardcodeado")
+    # Fallback: dict hardcodeado (código original)
+    return _construir_SCRAPERS_HARDCODED()
+
+
+def _construir_SCRAPERS_HARDCODED() -> Dict[str, Dict[str, Any]]:
+    """Dict hardcodeado de scrapers — fallback si plugin_loader no está disponible."""
     return {
         "goabase": {
-            "funcion": lambda: _importar("scrapers.goabase", "scrape_goabase")(limit=100),
+            "funcion": lambda: _importar("scrapers.goabase", "scrape_goabase")(limit=500),
             "timeout": 120,
         },
         "songkick": {
-            "funcion": lambda: _importar("scrapers.songkick", "scrape_songkick")(limit=100),
+            "funcion": lambda: _importar("scrapers.songkick", "scrape_songkick")(limit=200),
             "timeout": 120,
         },
         "resident_advisor": {
@@ -67,7 +102,7 @@ def _construir_SCRAPERS() -> Dict[str, Dict[str, Any]]:
             "funcion": lambda: _importar("scrapers.facebook_mcp", "scrape_facebook_events")(
                 max_keywords=12, max_visitas=20
             ),
-            "timeout": 900,  # Facebook es pesado (SERP + visitas)
+            "timeout": 900,
         },
         "instagram": {
             "funcion": lambda: _importar("scrapers.instagram_scraper", "scrape_instagram_events")(
@@ -94,6 +129,26 @@ def _construir_SCRAPERS() -> Dict[str, Dict[str, Any]]:
         },
         "meetup": {
             "funcion": lambda: _importar("scrapers.meetup_psy", "scrape_meetup_psy")(),
+            "timeout": 60,
+        },
+        "edmdancedirectory": {
+            "funcion": lambda: _importar("scrapers.edmdancedirectory", "scrape_edmdancedirectory")(),
+            "timeout": 60,
+        },
+        "psytrancefestivals_tv": {
+            "funcion": lambda: _importar("scrapers.psytrancefestivals_tv", "scrape_psytrancefestivals_tv")(),
+            "timeout": 60,
+        },
+        "psymedia": {
+            "funcion": lambda: _importar("scrapers.psymedia", "scrape_psymedia")(),
+            "timeout": 60,
+        },
+        "setline": {
+            "funcion": lambda: _importar("scrapers.setline", "scrape_setline")(),
+            "timeout": 60,
+        },
+        "psychill_space": {
+            "funcion": lambda: _importar("scrapers.psychill_space", "scrape_psychill_space")(),
             "timeout": 60,
         },
     }
@@ -176,6 +231,8 @@ def orquestar_scrapers(activos: Optional[List[str]] = None,
     - recolecta, dedup global y actualiza eventos_encontrados.csv aditivamente.
     - registra metricas_orquestador.json.
     """
+    from core.http_client import activar_tor_en_requests
+    activar_tor_en_requests()
     scraper_dict = dict(SCRAPERS)
     if activos:
         scraper_dict = {k: v for k, v in scraper_dict.items() if k in activos}
@@ -190,6 +247,12 @@ def orquestar_scrapers(activos: Optional[List[str]] = None,
     dedup = Deduplicador()
     global _dedup_actual
     _dedup_actual = dedup
+    # Inyectar deduplicador a plugin_loader para scrapers que lo necesiten
+    if _PLUGIN_LOADER_DISPONIBLE:
+        try:
+            _plugin_inyectar_dedup(dedup)
+        except Exception:
+            pass
 
     # Asegurar que los eventos ya consolidados en el CSV no se re-suman.
     # Registramos sus hashes en la caché (aditivo, no borra lo que ya está).
@@ -322,16 +385,31 @@ def orquestar_scrapers(activos: Optional[List[str]] = None,
     nuevos = dedup.filtrar_nuevos(todos_nuevos)
     print(f"🔄 Nuevos tras dedup global: {len(nuevos)}")
 
-    # Consolidación aditiva: CSV existente + nuevos
-    consolidados = existentes + nuevos
-    print(f"📈 Total consolidado: {len(existentes)} + {len(nuevos)} = {len(consolidados)}")
+    # Consolidación aditiva ATÓMICA bajo lock (core/csv_lock): re-lee fresco
+    # y añade solo eventos realmente nuevos dentro del mismo lock exclusivo.
+    # Sin esto, el snapshot leído al inicio del ciclo SOBRESCRIBE el
+    # enriquecimiento concurrente (emails/organizadores) de otros procesos.
+    from core.csv_lock import csv_locked_rows
+    with csv_locked_rows(OUTPUT_TODOS) as (frescas, _fn):
+        vistos = {(r.get('link', '') or f"{r.get('nombre','')}|{r.get('fecha','')}") for r in frescas}
+        add = []
+        for e in nuevos:
+            k = (e.get('link', '') or f"{e.get('nombre','')}|{e.get('fecha','')}")
+            if k and k not in vistos:
+                vistos.add(k)
+                add.append(e)
+        if not dry_run:
+            frescas.extend(add)
+            consolidados = list(frescas)
+        else:
+            consolidados = list(frescas) + add
+    print(f"📈 Total consolidado: {len(consolidados) - len(add)} + {len(add)} = {len(consolidados)}")
 
     if not dry_run:
         # Registrar nuevos como vistos antes de escribir
         dedup.registrar_vistos(nuevos)
         dedup.guardar()
-        _escribir_csv(OUTPUT_TODOS, consolidados)
-        print("💾 Caché dedup guardada.")
+        print("💾 CSV escrito bajo lock + caché dedup guardada.")
     else:
         print("🔍 Modo dry-run — sin exportar ni guardar caché.")
 

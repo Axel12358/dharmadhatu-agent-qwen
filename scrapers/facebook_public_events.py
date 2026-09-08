@@ -54,7 +54,7 @@ TIMEOUT_POR_EVENTO = 10
 MAX_INTENTOS = 3
 MAX_CONSULTAS = 20
 MAX_EVENTOS = 40
-AÑO = "2026"
+AÑO = "2027"
 _anti_block = get_anti_block()
 _extractor = EventExtractor()
 

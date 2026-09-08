@@ -75,11 +75,10 @@ HEADERS = {
     "Accept-Language": "es-ES,es;q=0.9,en;q=0.8",
 }
 
-# Configuración Tor
-TOR_PROXY = {
-    "http": "socks5h://127.0.0.1:9050",
-    "https": "socks5h://127.0.0.1:9050",
-}
+# Configuración proxy activo (residencial de terceros si está configurado, si no Tor).
+# Nunca se usa la IP real del usuario.
+from core.http_client import get_active_proxies
+TOR_PROXY = get_active_proxies()
 TOR_CONTROL_PORT = 9051
 TOR_CONTROL_PASSWORD = None  # Sin contraseña por defecto
 

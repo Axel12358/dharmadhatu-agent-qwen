@@ -16,8 +16,11 @@ Requisitos (en el venv):
 
 from __future__ import annotations
 
+import json
+import os
 import random
 import time
+from pathlib import Path
 from typing import Optional
 
 # curl_cffi aporta TLS fingerprint de navegador real + proxies SOCKS5.
@@ -31,11 +34,48 @@ try:
 except Exception:  # pragma: no cover
     UserAgent = None
 
-# Proxy SOCKS5 de Tor. socks5h:// resuelve DNS dentro del túnel (sin leak de IP).
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+# Proxy SOCKS5 de Tor (por defecto). socks5h:// resuelve DNS dentro del túnel.
 TOR_PROXIES = {
     "http": "socks5h://127.0.0.1:9050",
     "https": "socks5h://127.0.0.1:9050",
 }
+
+
+def _load_proxy_url() -> Optional[str]:
+    """Proxy residencial de TERCEROS (NUNCA la IP del usuario).
+
+    Orden: 1) env DHARMA_PROXY_URL (más seguro, fuera del repo),
+           2) config_modulos.json -> proxy.url.
+    Devuelve la URL del proxy o None (-> se usa Tor).
+    """
+    env = os.environ.get("DHARMA_PROXY_URL")
+    if env and env.strip():
+        return env.strip()
+    try:
+        cfg = json.loads((_PROJECT_ROOT / "config_modulos.json").read_text(encoding="utf-8"))
+        p = cfg.get("proxy") or {}
+        if p.get("enabled") and p.get("url"):
+            return str(p["url"]).strip()
+    except Exception:
+        pass
+    return None
+
+
+def get_active_proxies() -> dict:
+    """Devuelve el dict de proxies a usar.
+
+    Si hay proxy residencial de terceros configurado, lo usa (nunca la IP del
+    usuario). Si es socks5, lo fuerza a socks5h:// para que el DNS también vaya
+    por el proxy y no filtre la IP real del usuario.
+    """
+    url = _load_proxy_url()
+    if url:
+        if url.startswith("socks5://"):
+            url = "socks5h://" + url[len("socks5://"):]
+        return {"http": url, "https": url}
+    return TOR_PROXIES
 
 # Perfil de TLS a impersonar. Se elige chrome110 (funciona bien contra FB).
 # Si fb lo rechaza, se puede cambiar a "safari15_3" o "safari16_0".
@@ -66,26 +106,26 @@ def _random_user_agent() -> str:
 
 
 def crear_sesion_tor(impersonate: Optional[str] = None) -> Optional["Session"]:
-    """Devuelve una sesión curl_cffi con TLS de navegador + proxy Tor.
+    """Devuelve una sesión curl_cffi con TLS de navegador + proxy activo.
 
-    Retorna None si curl_cffi no está disponible (para que el llamador pueda
-    omitir la estrategia en vez de romper el flujo).
+    El proxy activo es: residencial de terceros si está configurado, si no Tor.
+    En cualquier caso NUNCA se usa la IP del usuario.
+    Retorna None si curl_cffi no está disponible.
     """
     if Session is None:
         return None
+    proxies = get_active_proxies()
     profile = impersonate or IMPERSONATE_DEFAULT
     try:
         session = Session(
             impersonate=profile,
-            proxies=TOR_PROXIES,
+            proxies=proxies,
             headers={"User-Agent": _random_user_agent()},
         )
     except Exception:
-        # Algún perfil de impersonación puede no existir en esta versión.
-        # Reintentar sin impersonate (igual bloquea Tor, pero no rompe).
         try:
             session = Session(
-                proxies=TOR_PROXIES,
+                proxies=proxies,
                 headers={"User-Agent": _random_user_agent()},
             )
         except Exception:
@@ -94,11 +134,11 @@ def crear_sesion_tor(impersonate: Optional[str] = None) -> Optional["Session"]:
 
 
 def get_html(url: str, timeout: int = 15, impersonate: Optional[str] = None) -> Optional[str]:
-    """Descarga el HTML de `url` vía Tor + curl_cffi.
+    """Descarga el HTML de `url` vía el proxy activo (residencial o Tor) + curl_cffi.
 
-    - Usa una sesión con TLS de navegador y proxy SOCKS5 (sin IP real).
+    - TLS de navegador + proxy (nunca IP del usuario).
     - Rota el User-Agent en cada llamada.
-    - Devuelve el HTML (str) o None si falla (timeout, bloqueo, excepción).
+    - Devuelve el HTML (str) o None si falla.
 
     El llamador debe tratar None como "omitir estrategia".
     """
@@ -131,3 +171,64 @@ def get_html(url: str, timeout: int = 15, impersonate: Optional[str] = None) -> 
             session.close()
         except Exception:
             pass
+
+
+def activar_tor_en_requests() -> bool:
+    """Monkeypatch global: hace que `requests.get/post` pasen por Tor (curl_cffi).
+
+    Parchea el módulo `requests` para que los scrapers que usan requests
+    directamente NUNCA expongan la IP del usuario. Idempotente.
+    """
+    import requests as _requests
+
+    if getattr(_requests, "_dharma_tor_patched", False):
+        return True
+    if Session is None:
+        return False
+
+    _TOR = {}
+
+    _ORIG = {
+        "get": _requests.get,
+        "post": _requests.post,
+        "request": _requests.request,
+        "Session": _requests.Session,
+    }
+    # Guardamos los originales como atributo por si algún scraper los necesita.
+    _requests._dharma_tor_orig = _ORIG
+
+    def _tor_get(url, *a, **k):
+        # Nueva sesión por llamada: rota UA y es thread-safe entre scrapers.
+        try:
+            sesion = crear_sesion_tor()
+            if sesion is None:
+                return _ORIG["get"](url, *a, **k)
+            try:
+                return sesion.get(url, *a, **k)
+            finally:
+                try:
+                    sesion.close()
+                except Exception:
+                    pass
+        except Exception:
+            return _requests.Response()
+
+    def _tor_post(url, *a, **k):
+        try:
+            sesion = crear_sesion_tor()
+            if sesion is None:
+                return _ORIG["post"](url, *a, **k)
+            try:
+                return sesion.post(url, *a, **k)
+            finally:
+                try:
+                    sesion.close()
+                except Exception:
+                    pass
+        except Exception:
+            return _requests.Response()
+
+    _requests.get = _tor_get
+    _requests.post = _tor_post
+    _requests._dharma_tor_patched = True
+    return True

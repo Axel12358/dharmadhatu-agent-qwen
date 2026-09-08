@@ -186,11 +186,309 @@ def normalize_location_llm(loc: str) -> str:
     return loc
 
 
+# ---------------------------------------------------------------------------
+# Batch processing: reclasificar no_psy + rellenar N/A
+# ---------------------------------------------------------------------------
+_PROMPT_RECLASIFICAR = """Eres un experto en música electrónica y psytrance.
+Analiza este evento y clasifícalo en UN subgénero psytrance específico.
+
+Evento: {nombre}
+Fuente: {fuente}
+Lugar: {lugar}
+Organizador: {organizador}
+
+Subgéneros VÁLIDOS (elige SOLO uno):
+- psytrance (default si es psytrance genérico)
+- darkpsy (oscuro, agresivo, tempos rápidos)
+- forest (organic, nature sounds, deep)
+- hitech (muy rápido, 150+ BPM)
+- progressive (lento, melódico, 135-145 BPM)
+- fullon (energético, melódico, mainstream psy)
+- goa (clásico, espiritual, indio)
+- psychill / psybient (relajado, downtempo)
+- suomisaundi (finlandés, experimental)
+- twilight (oscuro-melódico, 145-155 BPM)
+- psychedelic (psicodélico general)
+
+Si NO es un evento psytrance real (techno, house, drum&bass, hip-hop, etc), responde: NO_PSY
+
+Responde SOLO el nombre del subgénero, nada más."""
+
+
+_PROMPT_EMAIL = """Analiza este evento de música y extrae el email de contacto si aparece en el texto.
+Evento: {nombre}
+Organizador: {organizador}
+Link: {link}
+Responde SOLO el email (ej: info@foo.com) o N/A si no hay."""
+
+
+_PROMPT_ORGANIZADOR = """Extrae el nombre del organizador/colectivo que presenta este evento.
+Evento: {nombre}
+Fuente: {fuente}
+Responde SOLO el nombre del organizador, o N/A si no se puede determinar."""
+
+
+def reclasificar_no_psy(events: List[Dict], batch_size: int = 3) -> List[Dict]:
+    """
+    Reclasifica eventos marcados como 'no_psy' usando LLM.
+    Batch de 3 eventos por prompt para ser eficiente.
+    Devuelve la lista actualizada (solo modifica subgenero='no_psy').
+    Fallback híbrido (opencode/freellmpool + regex) si Ollama no está.
+    """
+    client = get_client()
+    if not client.is_available():
+        print("  ⚠️ Ollama no disponible — usando LLM híbrido (opencode/freellmpool + regex)")
+        try:
+            from core.llm_hibrido import reclasificar_no_psy_hibrido
+            return reclasificar_no_psy_hibrido(events, batch_size=batch_size)
+        except Exception as e:
+            print(f"  ⚠️ Híbrido no disponible: {e}")
+            return events
+
+    no_psy = [e for e in events if e.get("subgenero", "").strip() == "no_psy"]
+    if not no_psy:
+        print("  ✅ Sin eventos no_psy para reclasificar")
+        return events
+
+    print(f"  🤖 Reclasificando {len(no_psy)} eventos no_psy con LLM...")
+    reclasificados = 0
+    errores = 0
+
+    SG_VALIDOS = {"psytrance", "darkpsy", "forest", "hitech", "progressive",
+                  "fullon", "goa", "psychill", "psybient", "suomisaundi",
+                  "twilight", "psychedelic"}
+
+    for i in range(0, len(no_psy), batch_size):
+        batch = no_psy[i:i + batch_size]
+        # Prompt corto y directo
+        lineas = []
+        for j, ev in enumerate(batch):
+            nombre = ev.get("nombre", "")[:80]
+            lugar = ev.get("lugar", "")[:40]
+            lineas.append(f"{j}: {nombre} @ {lugar}")
+        eventos_str = "\n".join(lineas)
+
+        batch_prompt = (
+            f"Eventos musicales. Clasifica cada uno:\n"
+            f"{eventos_str}\n"
+            f"Subgeneros: psytrance,darkpsy,forest,hitech,progressive,"
+            f"fullon,goa,psychill,psybient,suomisaundi,twilight,psychedelic,NO_PSY\n"
+            f"JSON array: [\"sg0\",\"sg1\",...]"
+        )
+
+        resp = client.generate(
+            batch_prompt,
+            system="Clasificador. Solo JSON array de strings.",
+            temperature=0.05,
+        )
+
+        if not resp:
+            errores += len(batch)
+            continue
+
+        try:
+            resp_clean = resp.strip()
+            # Limpiar code blocks markdown
+            if "```" in resp_clean:
+                resp_clean = resp_clean.replace("```json", "").replace("```", "")
+                resp_clean = resp_clean.strip()
+            # Buscar array JSON en la respuesta
+            import re as _re
+            arr_match = _re.search(r'\[.*\]', resp_clean, _re.DOTALL)
+            if arr_match:
+                resp_clean = arr_match.group(0)
+            clasificaciones = json.loads(resp_clean)
+            if isinstance(clasificaciones, list):
+                for j, ev in enumerate(batch):
+                    if j < len(clasificaciones):
+                        sg = clasificaciones[j].strip().lower()
+                        if sg and sg != "no_psy" and sg in SG_VALIDOS:
+                            ev["subgenero"] = sg
+                            reclasificados += 1
+        except (json.JSONDecodeError, TypeError):
+            errores += len(batch)
+
+    print(f"  📊 Reclasificados: {reclasificados}/{len(no_psy)} "
+          f"(errores: {errores})")
+    return events
+
+
+def rellenar_email_n_a(events: List[Dict], max_procesar: int = 50) -> List[Dict]:
+    """
+    Rellena email N/A analizando nombre+organizador con LLM.
+    Procesa solo los primeros max_procesar (para no sobrecargar).
+    Fallback híbrido si Ollama no está.
+    """
+    client = get_client()
+    use_hybrid = False
+    hybrid = None
+    if not client.is_available():
+        try:
+            from core.llm_hibrido import get_hybrid_client
+            hybrid = get_hybrid_client()
+            use_hybrid = True
+            print("  ⚠️ Ollama no disponible — usando híbrido para emails")
+        except Exception:
+            return events
+
+    sin_email = [
+        e for e in events
+        if e.get("email", "").strip().lower() in ("n/a", "", "na")
+    ]
+    if not sin_email:
+        return events
+
+    procesar = sin_email[:max_procesar]
+    print(f"  🤖 Buscando emails en {len(procesar)} eventos (de {len(sin_email)} sin email)...")
+    encontrados = 0
+
+    for ev in procesar:
+        prompt = _PROMPT_EMAIL.format(
+            nombre=ev.get("nombre", "")[:100],
+            organizador=ev.get("organizador", "")[:60],
+            link=ev.get("link", "")[:100],
+        )
+        if use_hybrid:
+            resp = hybrid.generate(prompt, system="Extractor de emails. Solo email o N/A.", temperature=0.05)
+        else:
+            resp = client.generate(prompt, system="Extractor de emails. Solo email o N/A.", temperature=0.05)
+        if resp and "@" in resp and "." in resp and "N/A" not in resp:
+            email = resp.strip().strip('"').strip("'").lower()
+            if re.match(r"^[\w.\-+]+@[\w.\-]+\.\w+$", email):
+                ev["email"] = email
+                encontrados += 1
+
+    print(f"  📊 Emails encontrados: {encontrados}/{len(procesar)}")
+    return events
+
+
+def rellenar_organizador_n_a(events: List[Dict], max_procesar: int = 30) -> List[Dict]:
+    """
+    Rellena organizador N/A analizando nombre del evento con LLM.
+    Fallback híbrido si Ollama no está.
+    """
+    client = get_client()
+    use_hybrid = False
+    hybrid = None
+    if not client.is_available():
+        try:
+            from core.llm_hibrido import get_hybrid_client
+            hybrid = get_hybrid_client()
+            use_hybrid = True
+            print("  ⚠️ Ollama no disponible — usando híbrido para organizadores")
+        except Exception:
+            return events
+
+    sin_org = [
+        e for e in events
+        if e.get("organizador", "").strip().lower() in ("n/a", "", "na")
+    ]
+    if not sin_org:
+        return events
+
+    procesar = sin_org[:max_procesar]
+    print(f"  🤖 Buscando organizadores en {len(procesar)} eventos...")
+    encontrados = 0
+
+    for ev in procesar:
+        prompt = _PROMPT_ORGANIZADOR.format(
+            nombre=ev.get("nombre", "")[:150],
+            fuente=ev.get("fuente", ""),
+        )
+        if use_hybrid:
+            resp = hybrid.generate(prompt, system="Extractor de organizadores. Solo nombre o N/A.", temperature=0.05)
+        else:
+            resp = client.generate(prompt, system="Extractor de organizadores. Solo nombre o N/A.", temperature=0.05)
+        if resp and "N/A" not in resp and len(resp.strip()) >= 3:
+            ev["organizador"] = resp.strip()[:100]
+            encontrados += 1
+
+    print(f"  📊 Organizadores encontrados: {encontrados}/{len(procesar)}")
+    return events
+
+
+def procesar_csv_llm(csv_path: str = "eventos_encontrados.csv") -> Dict[str, int]:
+    """
+    Pipeline completo: carga CSV, reclasifica no_psy, rellena N/A, guarda.
+    Devuelve estadísticas.
+    """
+    import csv as _csv
+    import os
+
+    if not Path(csv_path).exists():
+        print(f"  ❌ CSV no encontrado: {csv_path}")
+        return {}
+
+    # Cargar
+    with open(csv_path, "r", encoding="utf-8") as f:
+        events = [dict(r) for r in _csv.DictReader(f)]
+
+    total_antes = len(events)
+    no_psy_antes = sum(1 for e in events if e.get("subgenero", "").strip() == "no_psy")
+    email_na_antes = sum(1 for e in events if e.get("email", "").strip().lower() in ("n/a", "", "na"))
+    org_na_antes = sum(1 for e in events if e.get("organizador", "").strip().lower() in ("n/a", "", "na"))
+
+    print(f"  📂 CSV: {total_antes} eventos")
+    print(f"     no_psy: {no_psy_antes} | email N/A: {email_na_antes} | org N/A: {org_na_antes}")
+
+    # Procesar
+    events = reclasificar_no_psy(events)
+    events = rellenar_email_n_a(events)
+    events = rellenar_organizador_n_a(events)
+
+    # Contar después
+    no_psy_despues = sum(1 for e in events if e.get("subgenero", "").strip() == "no_psy")
+    email_na_despues = sum(1 for e in events if e.get("email", "").strip().lower() in ("n/a", "", "na"))
+    org_na_despues = sum(1 for e in events if e.get("organizador", "").strip().lower() in ("n/a", "", "na"))
+
+    # Guardar
+    keys = ["nombre", "fecha", "lugar", "pais", "continente", "subcontinente",
+            "fuente", "organizador", "email", "link", "subgenero", "tipo_lugar"]
+    tmp = csv_path + ".tmp"
+    with open(tmp, "w", newline="", encoding="utf-8") as f:
+        writer = _csv.DictWriter(f, fieldnames=keys, extrasaction="ignore")
+        writer.writeheader()
+        for ev in events:
+            writer.writerow(ev)
+    os.replace(tmp, csv_path)
+
+    stats = {
+        "total": total_antes,
+        "no_psy_antes": no_psy_antes,
+        "no_psy_despues": no_psy_despues,
+        "reclasificados": no_psy_antes - no_psy_despues,
+        "email_antes": email_na_antes,
+        "email_despues": email_na_despues,
+        "email_encontrados": email_na_antes - email_na_despues,
+        "org_antes": org_na_antes,
+        "org_despues": org_na_despues,
+        "org_encontrados": org_na_antes - org_na_despues,
+    }
+
+    print(f"\n  📊 Resultados LLM:")
+    print(f"     no_psy: {no_psy_antes} → {no_psy_despues} ({stats['reclasificados']} reclasificados)")
+    print(f"     email N/A: {email_na_antes} → {email_na_despues} ({stats['email_encontrados']} encontrados)")
+    print(f"     org N/A: {org_na_antes} → {org_na_despues} ({stats['org_encontrados']} encontrados)")
+    print(f"  💾 CSV actualizado: {csv_path}")
+
+    return stats
+
+
 if __name__ == "__main__":
     c = get_client()
     print("Ollama disponible:", c.is_available())
     if c.is_available():
-        test = "🌲 Forest Psytrance Festival 15-17 Agosto @ Bosque Mágico, Barcelona. Darkpsy, hitech, forest vibes. Org: @darkforestcrew"
+        # Test individual functions
+        test = "Forest Psytrance Festival 15-17 Agosto @ Bosque Magico, Barcelona. Darkpsy, hitech, forest vibes. Org: darkforestcrew"
         print("Extract:", extract_events_llm(test))
         print("Spam:", classify_spam_llm(test))
         print("Norm loc:", normalize_location_llm("BCN"))
+        print()
+        # Test batch reclasificación
+        test_events = [
+            {"nombre": "TECHNO NIGHT BERLIN", "fuente": "Resident Advisor", "lugar": "Berlin", "organizador": "Tresor", "subgenero": "no_psy"},
+            {"nombre": "Dark Forest Ritual", "fuente": "Resident Advisor", "lugar": "Amsterdam", "organizador": "Forest Crew", "subgenero": "no_psy"},
+        ]
+        result = reclasificar_no_psy(test_events)
+        for e in result:
+            print(f"  {e['nombre'][:40]} → {e['subgenero']}")

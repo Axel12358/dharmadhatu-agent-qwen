@@ -138,6 +138,26 @@ def _construir_SCRAPERS() -> dict:
             "funcion": lambda: _importar("scrapers.meetup_psy", "scrape_meetup_psy")(),
             "timeout": 60,
         },
+        "edmdancedirectory": {
+            "funcion": lambda: _importar("scrapers.edmdancedirectory", "scrape_edmdancedirectory")(),
+            "timeout": 60,
+        },
+        "psytrancefestivals_tv": {
+            "funcion": lambda: _importar("scrapers.psytrancefestivals_tv", "scrape_psytrancefestivals_tv")(),
+            "timeout": 60,
+        },
+        "psymedia": {
+            "funcion": lambda: _importar("scrapers.psymedia", "scrape_psymedia")(),
+            "timeout": 60,
+        },
+        "setline": {
+            "funcion": lambda: _importar("scrapers.setline", "scrape_setline")(),
+            "timeout": 60,
+        },
+        "psychill_space": {
+            "funcion": lambda: _importar("scrapers.psychill_space", "scrape_psychill_space")(),
+            "timeout": 60,
+        },
     }
 
 
@@ -290,18 +310,24 @@ def orquestar_scrapers(activos: Optional[list] = None,
     else:
         print("  ⚠ Telegram desactivado en config_modulos.json -- omitido")
 
-    # ---- Facebook Dorks (Groups/Pages/Emails) --opcional y aditiva ----
-    # NO devuelve eventos; guarda grupos/páginas/correos en JSON files
-    # Solo si está activo en config_modulos.json
+    # ---- Facebook Dorks (eventos vía snippet + descubrimiento de fuentes) ----
+    # Extrae eventos del snippet del SERP (curl_cffi+Tor) y descubre grupos/
+    # páginas (JSON). Los eventos se añaden al CSV de forma aditiva.
+    # Solo si está activo en config_modulos.json.
     if CONFIG_MOD.get("facebook_dorks", False):
         try:
-            from scrapers.facebook_dorks import scrape_facebook_dorks
-            fb_result = scrape_facebook_dorks()
-            total_hallazgos = fb_result.get("total_hallazgos", 0)
-            print(f"  \\u2705 Facebook Dorks: {total_hallazgos} hallazgos "
-                  f"({fb_result.get('grupos', 0)} grupos, "
-                  f"{fb_result.get('paginas', 0)} páginas, "
-                  f"{fb_result.get('correos', 0)} correos)")
+            from scrapers.facebook_dorks import scrape_facebook_dorks_loop
+            fb_result = scrape_facebook_dorks_loop()
+            evs = fb_result.get("eventos", []) or []
+            if evs:
+                evs = [_normalizar_evento(e) for e in evs]
+                todos_nuevos.extend(evs)
+                print(f"  \\u2705 Facebook Dorks: {len(evs)} eventos añadidos "
+                      f"({len(fb_result.get('grupos', []))} grupos, "
+                      f"{len(fb_result.get('organizadores', []))} organizadores)")
+            else:
+                print(f"  \\u25a0 Facebook Dorks: 0 eventos "
+                      f"({len(fb_result.get('grupos', []))} grupos descubiertos)")
         except Exception as e:
             print(f"  \\u274c Facebook Dorks: {type(e).__name__}: {e}")
     else:

@@ -154,6 +154,13 @@ eventos FB con campos N/A en `fecha`/`lugar`/`organizador` y los completa.
 
 ## ARCHIVOS RELEVANTES
 
+### Nuevos (Fase 5 — agosto 2026)
+- `core/plugin_loader.py`: Auto-descubre scrapers en `scrapers/*.py`. Lee `config_modulos.json` para activos. Sin tocar `orquestador.py` para añadir scrapers.
+- `core/serp_tor.py`: Motor SERP centralizado. DDG+SearxNG vía Tor. `buscar_serp(query)`, `buscar_serp_fb(subgenero, localidad)`.
+- `scrapers/fb_playwright_tor.py`: Playwright+Tor para páginas FB. Desactivado (login wall FB).
+- `config_modulos.json`: 27 scrapers (26 activos). Control centralizado de qué módulos corren.
+
+### Existentes
 - `main_fuentes.py`: orquestador. `clasificar_eventos()` (4 pasadas),
   `limpiar_calidad()`, `ejecutar_fuentes_nuevas()` (incluye Facebook 12/20/900).
 - `run_facebook_only.py`: script standalone Facebook (3 pasadas, 30 keywords,
@@ -161,10 +168,15 @@ eventos FB con campos N/A en `fecha`/`lugar`/`organizador` y los completa.
 - `recuperar_fb_cacheados.py`: recupera eventos FB cacheados perdidos (Playwright).
 - `scrapers/facebook_mcp.py`: `scrape_facebook_events()`, SERP en 5 fases,
   `_normalizar_fecha_publica()`, `_enriquecer_fechas_publicas()`.
+- `scrapers/facebook_dorks.py`: Motor principal de Facebook. DDG+Tor. 135 eventos.
 - `scrapers/event_extractor.py`: `clasificar_subgenero()`, `SINONIMOS`.
+- `core/google_stealth.py`: Playwright+Tor+stealth anti-bloqueo Google.
+- `core/busqueda_fusionada.py`: Multi-motor SERP (DDG/Bing/Startpage/Mojeek/SearxNG).
+- `core/tor_pool.py`: Pool de 3 identidades Tor. Rotación automática.
 - `utils/helpers.py`: `deduplicar_eventos()`, `limpiar_eventos()`.
 - `config_grupos.json`: 66 países con ciudades.
 - `docs/fuentes_psytrance.md`: arquitectura y resultados.
+- `docs/reglas_tor.md`: Estado real de SERP vía Tor (DDG único funcional).
 - `README.md`: resumen del proyecto.
 
 ## COMMITS RECIENTES

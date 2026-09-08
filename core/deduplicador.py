@@ -51,7 +51,11 @@ class Deduplicador:
         self.archivo = archivo
         self.limite = limite
         self._hashes: Dict[str, str] = {}  # hash -> fecha de primera vista (ISO)
-        self.cargar()
+        # No se carga la caché persistente (cache_dedup.json): el orquestrador
+        # registra los eventos existentes del CSV en registrar_vistos(), así la
+        # deduplicación usa el CSV como única fuente de verdad. Esto evita
+        # desincronía y pérdida permanente de datos (regla "sumar nunca restar").
+        # self.cargar()  # desactivado intencionalmente
 
     def cargar(self) -> None:
         """Carga la caché desde disco (tolerante a fallos)."""

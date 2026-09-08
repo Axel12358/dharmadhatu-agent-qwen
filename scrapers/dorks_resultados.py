@@ -758,9 +758,12 @@ def _generar_dorks() -> List[str]:
     # 40% eventos (4)
     event_specs = [
         'site:facebook.com/events "psytrance" "Berlin" "2026"',
+        'site:facebook.com/events "psytrance" "Berlin" "2027"',
         'site:facebook.com/events "darkpsy" "rave" "2026"',
+        'site:facebook.com/events "darkpsy" "rave" "2027"',
         'site:facebook.com/events "goa trance" "festival"',
         'site:facebook.com/events "forest psy" "comunidad" "2026"',
+        'site:facebook.com/events "forest psy" "comunidad" "2027"',
     ]
     dorks.extend(event_specs)
     return dorks[:MAX_DORKS_PER_RUN]

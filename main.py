@@ -172,24 +172,38 @@ async def main():
         print("\n⚠️ No se encontraron eventos en ninguna fuente")
 
 # ---- Loop Central de Optimización (aditivo, no intrusivo) ----
-    # Si core/orquetrador.py existe, ejecuta la orquestación paralela con
-    # dedup global y suma eventos nuevos al CSV. Nunca borra datos.
-    # Se salta si Facebook o Instagram están desactivados en config_modulos.json
-    # para evitar timeouts por Playwright.
-    facebook_desactivado = not CONFIG_MOD.get("facebook_mcp", True) and not CONFIG_MOD.get("facebook_events_from_groups", True)
-    instagram_desactivado = not CONFIG_MOD.get("instagram_dorks", True)
-    if not facebook_desactivado or not instagram_desactivado:
+    # El orquestrador ejecuta los módulos de dorks (facebook_dorks, etc.) y
+    # otros scrapers adicionales con dedup global, sumando eventos nuevos al
+    # CSV de forma aditiva (nunca borra datos). Se ejecuta si CUALQUIERA de
+    # sus módulos está activo en config_modulos.json. Antes se omitía cuando
+    # facebook_mcp/facebook_events_from_groups/instagram_dorks estaban en
+    # False, lo que dejaba los dorks DESACTIVADOS aunque facebook_dorks=True.
+    _mods_orquestrador = (
+        "facebook_mcp", "facebook_events_from_groups", "facebook_dorks",
+        "instagram_dorks", "dorks_resultados", "mcp_organizador",
+    )
+    _debe_orquestar = any(CONFIG_MOD.get(m, False) for m in _mods_orquestrador)
+    if _debe_orquestar:
         try:
             from pathlib import Path
-            if Path(__file__).resolve().parent.joinpath("core", "orquetrador.py").exists():
+            if Path(__file__).resolve().parent.joinpath("core", "orquestador.py").exists():
                 print("\n🧠 Orquestando scrapers adicionales (dedup global)...")
-                from core.orquetrador import orquestar_scrapers
-                nuevos = orquestar_scrapers()
+                from core.orquestador import orquestar_scrapers
+                # Timeout de seguridad: el orquestrador NUNCA puede colgar la
+                # terminal. Si supera 900s se aborta sin romper el pipeline.
+                from concurrent.futures import ThreadPoolExecutor as _TPE, TimeoutError as _TOE
+                with _TPE(max_workers=1) as _ex:
+                    _fut = _ex.submit(orquestar_scrapers)
+                    try:
+                        nuevos = _fut.result(timeout=900)
+                    except _TOE:
+                        print("   ⚠️ Orquestador timeout (900s) — omitido para no colgar el proceso")
+                        nuevos = []
                 print(f"   ➕ {len(nuevos)} eventos nuevos añadidos por el orquestador")
         except Exception as e:
             print(f"   ⚠️ Orquestador no disponible: {type(e).__name__}: {e}")
     else:
-        print("\n🧠 Orquestador omitido (Facebook/Instagram desactivados en config_modulos.json)")
+        print("\n🧠 Orquestador omitido (todos sus módulos desactivados en config_modulos.json)")
 
     # ---- Completar N/A de Facebook (aditivo, no intrusivo) ----
     # Visita las URLs de eventos FB con campos N/A (fecha/lugar/organizador)
@@ -221,19 +235,35 @@ async def main():
     except Exception as e:
         print(f"   ⚠️ Completar FB externo no disponible: {type(e).__name__}: {e}")
 
-    # ---- Facebook Dorks (Google Dorks vía DuckDuckGo) — opcional y aditiva ----
-    if CONFIG_MOD.get("facebook_dorks", False):
-        try:
-            from pathlib import Path as _P
-            if _P(__file__).resolve().parent.joinpath(
-                    "scrapers", "facebook_dorks.py").exists():
-                print("\n🔍 Facebook Dorks (búsqueda OSINT)...")
-                from scrapers.facebook_dorks import scrape_facebook_dorks
-                _evs_dorks = scrape_facebook_dorks()
-                print(f"   ➕ {len(_evs_dorks)} eventos de Facebook Dorks")
-        except Exception as e:
-            print(f"   ⚠️ Facebook Dorks no disponible: {type(e).__name__}: {e}")
-    else:
+    # ---- Enriquecer eventos Facebook vía OpenGraph (sin login, vía Tor) ----
+    # Técnica validada en GitHub: las páginas de evento FB públicas renderizan
+    # og:title/og:description con fecha·lugar·host incrustados. Completa los
+    # parámetros que faltan tras las búsquedas y extrae contactos (email/telegram/
+    # instagram/soundcloud) sin usar IP real.
+    try:
+        from pathlib import Path as _P
+        if (CONFIG_MOD.get("enriquecer_fb_og", False)
+                and _P(__file__).resolve().parent.joinpath(
+                    "core", "enriquecer_fb_og.py").exists()):
+            print("\n🔗 Enriqueciendo eventos Facebook vía OpenGraph (Tor, máx 200s)...")
+            import concurrent.futures as _cf
+            from core.enriquecer_fb_og import enriquecer
+            with _cf.ThreadPoolExecutor(max_workers=1) as _ex:
+                _fut = _ex.submit(enriquecer)
+                try:
+                    _st = _fut.result(timeout=200)
+                except Exception as _e:
+                    _st = {"timeout": 1, "error": str(_e)[:80]}
+            print(f"   ➕ {_st.get('actualizadas',0)} eventos FB enriquecidos "
+                  f"({_st.get('con_contacto',0)} con contactos, {_st.get('fallos',0)} fallos)")
+    except Exception as e:
+        print(f"   ⚠️ Enriquecimiento FB OG no disponible: {type(e).__name__}: {e}")
+
+    # ---- Facebook Dorks ----
+    # Ya se ejecuta dentro del orquestrador (scrape_facebook_dorks) y escribe
+    # los eventos al CSV; no se re-ejecuta aquí para no duplicar consultas a
+    # DuckDuckGo y evitar el rate-limiting.
+    if not CONFIG_MOD.get("facebook_dorks", False):
         print("\n🔍 Facebook Dorks desactivado en config_modulos.json — omitido")
 
     # ---- Instagram Dorks (Google Dorks vía DuckDuckGo) — opcional y aditiva ----

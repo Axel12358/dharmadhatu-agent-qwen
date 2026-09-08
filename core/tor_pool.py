@@ -174,6 +174,17 @@ def obtener_siguiente_identidad() -> int:
 
 def obtener_sesion_tor(indice: Optional[int] = None) -> Optional["requests.Session"]:
     import requests
+    # Proxy residencial de terceros (NUNCA la IP del usuario): si está
+    # configurado, se usa y no requiere Tor.
+    from core.http_client import get_active_proxies as _gap, _load_proxy_url as _lp
+    if _lp():
+        s = requests.Session()
+        s.proxies.update(_gap())
+        s.headers.update({"User-Agent": random.choice([
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Safari/605.1.15",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+        ])})
+        return s
     if not _tor_semaphore:
         iniciar_pool()
         if not _tor_semaphore:

@@ -85,23 +85,54 @@ def limpiar_eventos(eventos):
 
 
 def save_csv(data, filename="eventos_encontrados.csv"):
-    """Guarda datos en un archivo CSV con columna link."""
+    """Guarda datos en un archivo CSV de forma ADITIVA (nunca sobrescribe).
+
+    Fusiona `data` con las filas ya existentes en el CSV (dedup por
+    link+fuente), respetando la regla del proyecto "sumar nunca restar":
+    los eventos previos nunca se pierden aunque un scrapeador falle.
+    """
     if not data:
-        print("⚠️ No hay datos para guardar")
+        print("⚠️ No hay datos nuevos para guardar (se conserva el CSV existente)")
         return
     try:
         keys_estandar = [
             "nombre", "fecha", "lugar", "pais", "continente", "subcontinente",
-            "fuente", "organizador", "email", "link", "subgenero",
+            "fuente", "organizador", "email", "link", "subgenero", "tipo_lugar",
+            "contactos",
         ]
+
+        # Leer existentes para fusión aditiva (no destruir lo ya consolidado).
+        existentes = []
+        try:
+            with open(filename, "r", encoding="utf-8") as f:
+                existentes = list(csv.DictReader(f))
+        except (IOError, FileNotFoundError, csv.Error):
+            existentes = []
+
+        def _clave(ev):
+            return (
+                (ev.get("link") or ev.get("url") or ev.get("source_url") or "").strip().lower(),
+                (ev.get("fuente") or "").strip().lower(),
+            )
+
+        vistos = {_clave(e) for e in existentes}
+        merged = list(existentes)
+        nuevos = 0
+        for ev in data:
+            ev = dict(ev)
+            link = (ev.get("link") or ev.get("url") or ev.get("source_url") or "N/A")
+            ev["link"] = link
+            k = _clave(ev)
+            if k not in vistos:
+                vistos.add(k)
+                merged.append(ev)
+                nuevos += 1
+
         with open(filename, "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=keys_estandar, extrasaction="ignore")
             writer.writeheader()
-            for ev in data:
-                link = (ev.get("link") or ev.get("url") or ev.get("source_url") or "N/A")
-                ev = dict(ev)
-                ev["link"] = link
+            for ev in merged:
                 writer.writerow(ev)
-        print(f"✅ CSV guardado: {filename} ({len(data)} filas)")
+        print(f"✅ CSV guardado (aditivo): {filename} ({len(merged)} filas, +{nuevos} nuevos)")
     except Exception as e:
         print(f"❌ Error guardando CSV: {e}")

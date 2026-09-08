@@ -252,7 +252,7 @@ def _normalizar_evento(ev: dict, area_nombre: str) -> Optional[Dict]:
         "tipo_lugar": tipo_lugar,
         "fuente": "Resident Advisor",
         "organizador": organizador,
-        "email": evento_url,
+        "email": "",  # RA no proporciona emails en su API pública
         "url": evento_url,
         "link": evento_url,
         "descripcion": descripcion[:500],

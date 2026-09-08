@@ -132,12 +132,19 @@ def rotar_tor() -> bool:
 
 
 def obtener_sesion_tor() -> "requests.Session":
-    """Devuelve una requests.Session con proxy Tor (socks5h://127.0.0.1:9050).
+    """Devuelve una requests.Session con proxy activo (residencial o Tor).
 
-    Usa la IP real? NUNCA. Si Tor no está disponible, levanta una excepción
-    clara para forzar el fallo controlado en lugar de exponer la IP real.
+    Usa la IP real? NUNCA. Si hay proxy residencial de terceros configurado,
+    lo usa; si no, usa Tor. Si ni Tor ni proxy, levanta excepción clara.
     """
     import requests
+
+    from core.http_client import get_active_proxies as _gap, _load_proxy_url as _lp
+    if _lp():
+        s = requests.Session()
+        s.proxies.update(_gap())
+        s.headers.update({"User-Agent": random.choice(_user_agents)})
+        return s
 
     if not verificar_tor():
         raise RuntimeError("Tor no disponible en 127.0.0.1:9050. "

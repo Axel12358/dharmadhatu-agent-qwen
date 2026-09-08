@@ -101,11 +101,39 @@ try:
 except Exception:
     STEALTH_AVAILABLE = False
 
+# --- Motores alternativos (pool Tor) para romper rate-limits de DDG ---
+try:
+    from core.busqueda_fusionada import (
+        buscar_en_bing as _be_bing,
+        buscar_en_startpage as _be_startpage,
+        buscar_en_mojeek as _be_mojeek,
+        buscar_en_searxng as _be_searxng,
+    )
+    _MOTOR_FNS = {k: v for k, v in {
+        "bing": _be_bing, "startpage": _be_startpage,
+        "mojeek": _be_mojeek, "searxng": _be_searxng,
+    }.items() if v is not None}
+except Exception:
+    _MOTOR_FNS = {}
+
 try:
     from playwright.async_api import async_playwright
     PLAYWRIGHT_AVAILABLE = True
 except Exception:
     PLAYWRIGHT_AVAILABLE = False
+
+# --- Extracción de eventos desde el snippet del SERP (Tor, sin Playwright) ---
+try:
+    from scrapers.event_extractor import EventExtractor
+    _EXTRACTOR = EventExtractor()
+except Exception:
+    _EXTRACTOR = None
+
+# --- Cliente HTTP con curl_cffi + Tor (mismo patrón que facebook_mcp) ---
+try:
+    from core.http_client import get_html as _get_html_tor
+except Exception:
+    _get_html_tor = None
 
 import logging
 logger = logging.getLogger(__name__)
@@ -121,6 +149,11 @@ MAX_REINTENTOS_POR_DORK = 3
 
 # Motor único: GOOGLE vía Playwright+Tor. Otros motores desactivados.
 FACEBOOK_ENGINES = ["google"]
+
+# Fase 3: fallback multi-motor (Bing/Startpage/Mojeek/SearxNG) vía pool Tor
+# para romper rate-limits de DDG-lite y sumar cobertura de resultados.
+USAR_MULTI_MOTOR = True
+_MOTORES_FALLBACK = ["bing", "startpage", "mojeek", "searxng"]
 
 # --- Tor semaphore ---
 TOR_SEMAPHORE = Semaphore(1)
@@ -171,6 +204,7 @@ def _http_get(url: str, params: Optional[dict] = None,
 # State files
 GRUPOS_FB_FILE = Path(_PROJECT_ROOT) / "grupos_encontrados.json"
 ORG_FB_FILE = Path(_PROJECT_ROOT) / "organizadores_facebook.json"
+DORKS_EVENTOS_FILE = Path(_PROJECT_ROOT) / "facebook_dorks_eventos.json"
 
 
 # ---------------------------------------------------------------------------
@@ -300,7 +334,74 @@ def _google_search_playwright(dork: str, indice_tor: Optional[int] = None,
         return None
 
 
+# ---------------------------------------------------------------------------
+# Búsqueda de dorks vía Tor (curl_cffi) — rápida y sin IP real.
+# Parsea los snippets de DDG-lite; NO visita las páginas de Facebook
+# (login-wall por Tor). Extrae el evento directamente del snippet.
+# ---------------------------------------------------------------------------
+def _buscar_dork_tor(dork: str, timeout: int = 15) -> List[Dict]:
+    """Busca un dork en DDG-lite usando curl_cffi + Tor (socks5h).
 
+    Devuelve lista de {url, titulo, snippet} filtrada a enlaces
+    facebook.com. Si Tor/get_html no está disponible, devuelve [].
+    """
+    if _get_html_tor is None:
+        return []
+    from bs4 import BeautifulSoup
+    import urllib.parse as _up
+    html = _get_html_tor(
+        "https://lite.duckduckgo.com/lite/?q=" + _up.quote(dork), timeout)
+    if not html:
+        return []
+    soup = BeautifulSoup(html, "html.parser")
+    salida = []
+    for a, sn in zip(soup.select("a.result-link"),
+                      soup.select(".result-snippet")):
+        href = a.get("href", "")
+        m = re.search(r"uddg=([^&]+)", href)
+        url = _up.unquote(m.group(1)) if m else ""
+        if "facebook.com" not in url:
+            continue
+        titulo = a.get_text(" ", strip=True)
+        snippet = sn.get_text(" ", strip=True) if sn else ""
+        salida.append({"url": url, "titulo": titulo, "snippet": snippet})
+    return salida
+
+
+
+
+
+def _buscar_dork_multimotor_tor(dork: str, timeout: int = 15) -> List[Dict]:
+    """Busca un dork por Tor usando varios motores para romper rate-limits.
+
+    DDG-lite (curl_cffi, rápido) primero; si viene vacío (bloqueo), cae en
+    Bing -> Startpage -> Mojeek -> SearxNG, cada uno por un exit distinto del
+    pool Tor. Devuelve solo resultados facebook.com.
+    """
+    res = _buscar_dork_tor(dork, timeout)
+    if res:
+        return [x for x in res if "facebook.com" in (x.get("url", "").lower())]
+    if not USAR_MULTI_MOTOR or not _MOTOR_FNS:
+        return []
+    # DDG bloqueó: rotamos exit y probamos los otros motores.
+    if _rotar_identidad_tor is not None:
+        try:
+            _rotar_identidad_tor()
+        except Exception:
+            pass
+    for nombre in _MOTORES_FALLBACK:
+        fn = _MOTOR_FNS.get(nombre)
+        if fn is None:
+            continue
+        try:
+            r = fn(dork, timeout)
+        except Exception:
+            r = []
+        if isinstance(r, list):
+            fb = [x for x in r if "facebook.com" in (x.get("url", "").lower())]
+            if fb:
+                return fb
+    return []
 
 
 # ---------------------------------------------------------------------------
@@ -540,32 +641,54 @@ def _extraer_fb_username(url: str) -> Optional[str]:
 # Dork generation: 60% grupos, 40% eventos
 # ---------------------------------------------------------------------------
 _SUBGENEROS = ["psytrance", "darkpsy", "forest", "goa", "hitech",
-              "psychill", "fullon", "twilight", "psycore", "suomisaundi"]
+               "psychill", "fullon", "twilight", "psycore", "suomisaundi",
+               "zenon", "progressive", "psybient", "goa trance"]
 _CIUDADES = ["Berlin", "Barcelona", "Mexico", "Amsterdam", "Paris",
-            "Lisbon", "Madrid", "London", "Rome", "Vienna"]
+            "Lisbon", "Madrid", "London", "Rome", "Vienna", "Buenos Aires",
+            "Sao Paulo", "Tel Aviv", "Mumbai", "Bangkok", "Sydney", "Prague",
+            "Ibiza", "Moscow", "Hamburg", "Athens", "Copenhagen"]
+_PAISES = ["Germany", "Spain", "Mexico", "Brazil", "France", "Portugal",
+          "United Kingdom", "Italy", "Argentina", "Israel", "India",
+          "Thailand", "Australia", "Japan", "Russia", "Netherlands"]
+_AÑOS = ["2025", "2026", "2027"]
+_TIPOS_EVENTO = ["festival", "party", "rave", "event", "open air",
+                "fiesta", "night", "gathering"]
+_TIPOS_GRUPO = ["comunidad", "crew", "familia", "tribe", "group"]
 
 
-def _generar_dorks_facebook() -> List[str]:
-    dorks: List[str] = []
-    # 60% grupos (6)
-    specs_grupos = [
-        'site:facebook.com/groups "psytrance" "Berlin"',
-        'site:facebook.com/groups "darkpsy" "Mexico"',
-        'site:facebook.com/groups "forest psy" "comunidad"',
-        'site:facebook.com/groups "goa trance" "festival"',
-        'site:facebook.com/groups "hitech" "rave"',
-        'site:facebook.com/groups "twilight" "party"',
-    ]
-    dorks.extend(specs_grupos)
-    # 40% eventos (4)
-    specs_eventos = [
-        'site:facebook.com/events "psytrance" "Berlin" "2026"',
-        'site:facebook.com/events "darkpsy" "rave" "2026"',
-        'site:facebook.com/events "goa trance" "festival"',
-        'site:facebook.com/events "forest psy" "comunidad" "2026"',
-    ]
-    dorks.extend(specs_eventos)
-    return dorks[:MAX_DORKS_POR_EJECUCION]
+def _generar_dorks_facebook(n: int = None, semilla: int = None) -> List[str]:
+    """Genera dorks combinando subgéneros × localidades × años × tipos,
+    con un generador aleatorio (barajado) para que cada corrida explore
+    combinaciones distintas de la escena psytrance.
+
+    El espacio completo de combinaciones se construye y luego se muestrean
+    ``n`` dorks al azar. Los dorks de evento usan formato libre (sin
+    comillas) porque DDG-lite solo devuelve resultados así.
+    """
+    if semilla is not None:
+        random.seed(semilla)
+    if n is None:
+        n = MAX_DORKS_POR_EJECUCION
+
+    localidades = _CIUDADES + _PAISES
+    base: List[str] = []
+    # --- Dorks de EVENTOS (aportan filas al CSV) ---
+    for sub in _SUBGENEROS:
+        for lug in localidades:
+            base.append(f"site:facebook.com/events {sub} {lug}")
+            for tipo in _TIPOS_EVENTO:
+                base.append(f"site:facebook.com/events {sub} {tipo} {lug}")
+                for anio in _AÑOS:
+                    base.append(f"site:facebook.com/events {sub} {tipo} {lug} {anio}")
+    # --- Dorks de GRUPOS (descubrimiento de fuentes) ---
+    for sub in _SUBGENEROS:
+        for lug in localidades:
+            base.append(f"site:facebook.com/groups {sub} {lug}")
+            for tg in _TIPOS_GRUPO:
+                base.append(f"site:facebook.com/groups {sub} {tg} {lug}")
+
+    random.shuffle(base)
+    return base[:n]
 
 
 # ---------------------------------------------------------------------------
@@ -585,7 +708,8 @@ def _escribir_json(ruta: Path, datos: Any) -> None:
     try:
         tmp = str(ruta) + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(datos, f, ensure_ascii=False, indent=2)
+            # default=str: nunca corrompe el JSON si algún valor no serializa.
+            json.dump(datos, f, ensure_ascii=False, indent=2, default=str)
         os.replace(tmp, str(ruta))
     except (IOError, OSError):
         pass
@@ -655,48 +779,42 @@ def scrape_facebook_dorks(
     """
     global _bloqueo_detectado_en_dork
 
-    # Load dynamic configuration
-    _cfg = load_loop_config() if STEALTH_AVAILABLE else {}
-    _timeout = _cfg.get("timeout_total", TIMEOUT_TOTAL)
-    _max_dorks = _cfg.get("max_dorks", MAX_DORKS_POR_EJECUCION)
-
+    # --- Configuración ligera y acotada (rápido, sin congelarse) ---
+    start_time = time.time()
+    _timeout = 180  # tope de seguridad global
     if dorks is None:
         dorks = _generar_dorks_facebook()
-    _limite = limite if limite and limite > 0 else _max_dorks
-    if dorks:
-        dorks = dorks[:_limite]
+    if limite and limite > 0:
+        dorks = dorks[:limite]
+    else:
+        dorks = dorks[:MAX_DORKS_POR_EJECUCION]
 
     if not dorks:
         return {"eventos": [], "grupos": [], "organizadores": set()}
 
-    start_time = time.time()
-    fin = start_time + _timeout
+    tor_status = "Tor ✓" if _verificar_tor() else "directo"
+    print(f"  🔍 Facebook Dorks: {len(dorks)} dorks [curl_cffi+Tor, {tor_status}]")
+
     eventos: List[Dict] = []
     grupos: List[Dict] = []
     organizadores: Set[str] = set()
-
-    tor_status = "Tor ✓" if _verificar_tor() else "directo"
-    print(f"  🔍 Facebook Dorks: {len(dorks)} dorks [Google-only, {tor_status}, budget {_timeout}s]")
-
     urls_procesadas: Set[str] = set()
-    dorks_procesados = 0
-    motores_bloqueados: Set[str] = set()
 
     for idx, dork in enumerate(dorks):
-        if time.time() > fin:
+        if time.time() - start_time > _timeout:
             print("  ⏰ Facebook Dorks: timeout global alcanzado")
             break
 
-        if dorks_procesados > 0 and dorks_procesados % TOR_ROTATE_EVERY == 0:
-            print(f"  🔄 Tor: rotando cada {TOR_ROTATE_EVERY} dorks...")
-            _rotar_identidad_tor()
+        # Subgénero inferido del dork (para etiquetar el evento)
+        sub = "general"
+        for sg in ("darkpsy", "forest", "psychill", "psybient", "fullon",
+                   "progressive", "goa", "hitech", "twilight", "psycore",
+                   "suomisaundi", "zenon", "psychedelic", "psytrance"):
+            if sg in dork.lower():
+                sub = sg
+                break
 
-        if _bloqueo_detectado_en_dork:
-            print("  🔄 Tor: bloqueo detectado, rotando...")
-            _rotar_identidad_tor()
-            _bloqueo_detectado_en_dork = False
-
-        resultados, motor = _buscar_cascada_fb(dork)
+        resultados = _buscar_dork_multimotor_tor(dork, timeout=15)
         if not resultados:
             continue
 
@@ -704,9 +822,7 @@ def scrape_facebook_dorks(
             url = hit.get("url", "")
             titulo = hit.get("titulo", "")
             snippet = hit.get("snippet", "")
-            if not url or not titulo:
-                continue
-            if url in urls_procesadas:
+            if not url or not titulo or url in urls_procesadas:
                 continue
             urls_procesadas.add(url)
 
@@ -720,34 +836,26 @@ def scrape_facebook_dorks(
                 continue
 
             if tipo == "evento":
-                fecha = _extraer_fecha_desde_snippet(f"{titulo} {snippet}")
-                if fecha and int(fecha[:4]) < 2024:
+                if _EXTRACTOR is None:
                     continue
-                if not _es_relevante_evento_simple(titulo, snippet):
-                    continue
-                organizador = _extraer_organizador_desde_snippet(titulo, snippet)
-                if organizador:
-                    organizadores.add(organizador)
-                eventos.append({
-                    "nombre": titulo[:200],
-                    "fecha": fecha or "N/A",
-                    "lugar": "N/A", "ciudad": "N/A", "pais": "N/A",
-                    "continente": "N/A", "subcontinente": "N/A",
-                    "tipo_lugar": "N/A",
-                    "fuente": f"Facebook Dorks ({motor})",
-                    "organizador": organizador or "N/A",
-                    "email": "N/A", "link": url,
-                    "subgenero": "general",
-                    "descripcion": snippet[:500] or titulo[:500],
-                    "_tipo_dork": "google_dork", "_motor": motor,
-                })
+                blob = f"{titulo} {snippet}"
+                evs = _EXTRACTOR.extract_all(blob[:1500], "Facebook (dorks)", url)
+                for ev in evs:
+                    if ev.get("fecha") in (None, "", "N/A"):
+                        continue
+                    ev["subgenero"] = sub if sub != "general" else (
+                        ev.get("subgenero") or "general")
+                    ev["fuente"] = "Facebook (dorks)"
+                    ev["organizador"] = ev.get("organizador") or "N/A"
+                    ev["descripcion"] = snippet[:500] or titulo[:500]
+                    eventos.append(ev)
 
             elif tipo == "grupo":
                 _guardar_grupo_fb(url, titulo)
                 grupos.append({
                     "nombre": titulo[:200],
                     "url": url, "tipo": "grupo_facebook",
-                    "_motor": motor or "unknown",
+                    "_motor": "ddg_tor",
                 })
 
             elif tipo == "perfil":
@@ -756,23 +864,14 @@ def scrape_facebook_dorks(
                     _guardar_organizador_fb(username, url, titulo)
                     organizadores.add(username)
 
-        dorks_procesados += 1
-        _busquedas_exitosas += 1
-        if _busquedas_exitosas >= TOR_ROTATE_EVERY:
-            print(f"  🔄 Tor: {TOR_ROTATE_EVERY} búsquedas, rotando identidad...")
-            _rotar_identidad_tor()
-            _busquedas_exitosas = 0
-
-        # Between dorks: 30-60s pause (human behavior)
-        _random_sleep()
-        if len(eventos) + len(grupos) >= _limite:
-            break
+        # Pausa breve y humana entre dorks (sin los 30-60s del diseño previo)
+        time.sleep(random.uniform(1.5, 3.0))
 
     # Dedup eventos por URL
     vistos: Set[str] = set()
     eventos_unicos: List[Dict] = []
     for ev in eventos:
-        k = ev.get("link", "")
+        k = ev.get("link") or ev.get("url") or ""
         if k and k not in vistos:
             vistos.add(k)
             eventos_unicos.append(ev)
@@ -794,6 +893,128 @@ def scrape_facebook_dorks(
         "grupos": grupos_unicos,
         "organizadores": organizadores,
         "tiempo_ejecucion": round(time.time() - start_time, 1),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Bucle iterativo (aplicación efectiva de los dorks)
+# ---------------------------------------------------------------------------
+def _cargar_eventos_dorks() -> List[Dict]:
+    data = _leer_json(DORKS_EVENTOS_FILE, {"eventos": []})
+    if isinstance(data, dict):
+        evs = data.get("eventos", [])
+        return evs if isinstance(evs, list) else []
+    return []
+
+
+def _guardar_eventos_dorks(eventos: List[Dict]) -> List[Dict]:
+    """Mezcla con lo ya persistido (dedup por URL) — aditivo y sobrevive a
+    caídas del pipeline."""
+    exist = _cargar_eventos_dorks()
+    vistos = {e.get("link") or e.get("url") for e in exist}
+    for e in eventos:
+        k = e.get("link") or e.get("url")
+        if k and k not in vistos:
+            vistos.add(k)
+            exist.append(e)
+    _escribir_json(DORKS_EVENTOS_FILE, {"eventos": exist, "total": len(exist)})
+    return exist
+
+
+def scrape_facebook_dorks_loop(
+    max_rondas: int = 3,
+    limite: int = 6,
+    objetivo_eventos: int = 12,
+    pausa_base: float = 4.0,
+    verbose: bool = True,
+) -> Dict[str, Any]:
+    """Aplica Facebook Dorks de forma iterativa y efectiva.
+
+    Cada ronda genera combinaciones NUEVAS y aleatorias
+    (subgénero × localidad × año × tipo) vía ``_generar_dorks_facebook``,
+    acumula eventos únicos y aplica *backoff* si DDG empieza a rate-limitear
+    (rondas vacías). Persiste incrementalmente en
+    ``facebook_dorks_eventos.json`` (aditivo). Se detiene al alcanzar el
+    objetivo, agotar rondas, o tras un backoff excesivo.
+    """
+    # Semilla con lo ya persistido para recuperación entre corridas
+    eventos = _cargar_eventos_dorks()
+    vistos_ev: Set[str] = {e.get("link") or e.get("url") for e in eventos}
+    grupos: List[Dict] = []
+    vistos_g: Set[str] = set()
+    orgs: Set[str] = set()
+    perfiles: List[str] = []
+
+    ronda = 0
+    vacias = 0
+    pausa = pausa_base
+
+    while ronda < max_rondas:
+        ronda += 1
+        semilla = (int(time.time() * 1000) % 100000) + ronda * 104729
+        dorks = _generar_dorks_facebook(n=limite, semilla=semilla)
+        # Timeout de seguridad por ronda: si DDG/Tor se traba, abortamos la
+        # ronda y seguimos (nunca colgar la terminal).
+        try:
+            from concurrent.futures import ThreadPoolExecutor as _TPE, TimeoutError as _TOE
+            with _TPE(max_workers=1) as _ex:
+                _f = _ex.submit(scrape_facebook_dorks, dorks=dorks, limite=limite)
+                res = _f.result(timeout=200)
+        except Exception as _e:
+            if verbose:
+                print(f"  ⏱️ Dorks ronda {ronda}: timeout/error ({type(_e).__name__}) — "
+                      f"se aborta el loop para no colgar")
+            break
+        evs = res.get("eventos", []) or []
+        for e in evs:
+            k = e.get("link") or e.get("url") or ""
+            if k and k not in vistos_ev:
+                vistos_ev.add(k)
+                eventos.append(e)
+        for g in res.get("grupos", []) or []:
+            k = g.get("url", "")
+            if k and k not in vistos_g:
+                vistos_g.add(k)
+                grupos.append(g)
+        for o in res.get("organizadores", set()) or set():
+            orgs.add(o)
+        for p in res.get("perfiles", []) or []:
+            perfiles.append(p)
+
+        if verbose:
+            print(f"  🔁 Dorks ronda {ronda}/{max_rondas}: +{len(evs)} "
+                  f"eventos (acumulado {len(eventos)})")
+
+        if len(eventos) >= objetivo_eventos:
+            if verbose:
+                print(f"  🎯 Objetivo alcanzado ({len(eventos)} eventos)")
+            break
+
+        if len(evs) == 0:
+            vacias += 1
+            if vacias >= 2:
+                pausa = min(pausa * 2, 120)
+                if verbose:
+                    print(f"  ⏳ Posible rate-limit de DDG, backoff {pausa:.0f}s")
+                if pausa >= 120:
+                    break
+        else:
+            vacias = 0
+            pausa = pausa_base
+
+        if ronda < max_rondas:
+            time.sleep(pausa)
+
+    # Persistencia aditiva (recuperable en futuras corridas)
+    eventos = _guardar_eventos_dorks(eventos)
+    if verbose:
+        print(f"  💾 Dorks persistidos: {len(eventos)} eventos únicos en "
+              f"{DORKS_EVENTOS_FILE.name}")
+    return {
+        "eventos": eventos,
+        "grupos": grupos,
+        "organizadores": orgs,
+        "perfiles": perfiles,
     }
 
 

@@ -31,8 +31,8 @@ PAISES_EUROPA = [
     "Hungary", "Poland", "Czech Republic", "Greece"
 ]
 
-YEAR_START = 2024
-YEAR_END = 2026
+YEAR_START = 2025
+YEAR_END = 2027
 
 # ============================================================
 # OLLAMA

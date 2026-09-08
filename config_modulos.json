@@ -9,11 +9,23 @@
     "isratrance": true,
     "ektoplazm": true,
     "meetup": true,
-    "facebook_mcp": true,
-    "facebook_events_from_groups": true,
-    "facebook_dorks": false,
+    "facebook_mcp": false,
+    "facebook_events_from_groups": false,
+    "facebook_dorks": true,
     "instagram_dorks": false,
     "dorks_resultados": false,
-    "mcp_organizador": false
+    "mcp_organizador": true,
+    "enriquecer_fb_og": true,
+    "edmdancedirectory": true,
+    "psytrancefestivals_tv": true,
+    "psymedia": true,
+    "setline": true,
+    "psychill_space": true,
+    "ra_promoter_dorks": true
+  },
+  "proxy": {
+    "enabled": false,
+    "url": "",
+    "_nota": "Proxy residencial/movil de TERCEROS (NUNCA la IP del usuario). Pon 'enabled':true y 'url' con el proxy del proveedor, ej. 'http://usuario:pass@host:puerto' o 'socks5://host:puerto'. Toma prioridad sobre Tor. Tambien puedes usar la env DHARMA_PROXY_URL."
   }
 }

@@ -85,8 +85,10 @@ def generar_queries(config):
     random.shuffle(queries)
     return queries[:max_queries]
 
-def scrape_facebook_groups(config):
+def scrape_facebook_groups(config=None):
     """Función principal sync (ejecutada con asyncio.to_thread)."""
+    if config is None:
+        config = {}
     queries = generar_queries(config)
     print(f"🔍 Generadas {len(queries)} queries (sync)")
     

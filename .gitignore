@@ -42,3 +42,58 @@ _beta_*
 validation_*
 *.pkl
 *.tmp
+
+# Test/experiment CSVs (all csv files except the main one)
+*.csv
+!README.md
+
+# Data directories
+data/
+
+# Python virtual env
+venv/
+.venv/
+
+# Diagnostic files
+_diag*
+PROMPT_*.md
+
+# Untracked scrapers (modified content)
+scrapers/fb_scraper_baberibrar
+scrapers/fb_scraper_mrkkr
+
+# Root MD files (not docs/)
+*.md
+!README.md
+!AGENTS.md
+!CONTRIBUTING.md
+docs/*.md
+
+# Event CSVs in root
+eventos_*.csv
+eventos_encontrados_*.csv
+eventos_test*.csv
+eventos_final*.csv
+eventos_enriquecidos.csv
+eventos_psytrance.csv
+eventos_predichos*.csv
+eventos_dedup.csv
+eventos_confirmados*.csv
+eventos_goabase*.csv
+eventos_encontrados_4900*.csv
+eventos_encontrados_backup*.csv
+eventos_enriquecidos*.csv
+eventos_test*.csv
+eventos_*.csv
+contactos_empresas.csv
+grupos_encontrados.csv
+
+# Configs
+config/
+config_fase1.json
+config_temp.json
+
+# Logs (in root)
+*.err
+*.out
+*.log

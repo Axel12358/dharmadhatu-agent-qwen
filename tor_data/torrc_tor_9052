@@ -1,4 +1,0 @@
-SocksPort 9052
-ControlPort 9053
-DataDirectory /Users/angelgarcia/dharmadhatu_agent_qwen/tor_data/tor_9052
-RunAsDaemon 0

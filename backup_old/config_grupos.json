@@ -1,8 +1,0 @@
-{
-  "subgeneros": ["darkpsy", "forest", "psychill", "fullon", "goa", "psytrance"],
-  "paises": [
-    {"nombre": "España", "ciudades": ["Madrid", "Barcelona", "Valencia", "Sevilla"]},
-    {"nombre": "Alemania", "ciudades": ["Berlín", "Múnich", "Hamburgo"]},
-    {"nombre": "Bélgica", "ciudades": ["Bruselas", "Amberes"]}
-  ]
-}

@@ -1,3 +1,0 @@
-SocksPort 9050
-DataDirectory /Users/angelgarcia/dharmadhatu_agent_qwen/tor_data
-RunAsDaemon 0

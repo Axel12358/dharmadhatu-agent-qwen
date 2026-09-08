@@ -398,6 +398,7 @@ def _aplicar_mapa_org(mapa, solo_vacios=True):
             org = mapa.get(_normalizar_link_fb(r.get('link', '') or ''))
             if org and org.lower() != org_act.lower():
                 r['organizador'] = org
+                r['tipo_organizador'] = tipo_organizador(org)
                 ganado += 1
     return ganado
 
@@ -861,12 +862,13 @@ def main():
                         if org_act and org_act.lower() != 'n/a' and not es_org_slugderivado(org_act):
                             continue
                         org = mapa.get(_normalizar_link_fb(r.get('link', '') or ''))
-                        if org and org.lower() != org_act.lower():
-                            if org_act and org_act.lower() != 'n/a':
-                                mejorado += 1
-                            else:
-                                ganado += 1
-                            r['organizador'] = org
+if org and org.lower() != org_act.lower():
+                if org_act and org_act.lower() != 'n/a':
+                    mejorado += 1
+                else:
+                    ganado += 1
+                r['organizador'] = org
+                r['tipo_organizador'] = tipo_organizador(org)
                 log(f"  🌆 Barrido SERP: {ganado} nuevos + {mejorado} mejorados (de {len(mapa)} soles)")
 
         # 2c. Telegram: canales públicos por ciudad (vector del asesor). Un canal

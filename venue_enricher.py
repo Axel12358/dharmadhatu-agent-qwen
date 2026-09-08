@@ -128,6 +128,19 @@ def log(msg):
         pass
 
 
+def tipo_organizador(org):
+    """Clasifica: 'promoter' o 'venue' o '' (vacío)."""
+    o = (org or '').strip()
+    if not o or o.lower() == 'n/a':
+        return ''
+    # Simplified slug detection: short names that look like URL slugs
+    if len(o) < 3 or len(o.split()) > 5:
+        return ''
+    if re.search(r'[A-Z][a-z]+[A-Z]', o):  # CamelCase = likely slug
+        return 'venue'
+    return 'promoter'
+
+
 def es_venue_util(venue):
     """True si el venue es enriquecible (nombre real, no genérico)."""
     if not venue:
@@ -1014,6 +1027,7 @@ def main():
                     n_merge += 1
                 if og and og.lower() != 'n/a' and (not r.get('organizador', '').strip() or r.get('organizador', '').strip().lower() == 'n/a'):
                     r['organizador'] = og
+                    r['tipo_organizador'] = tipo_organizador(og)
                     n_merge += 1
     log(f"=== Merge CSV bajo lock: {n_merge} campos aplicados ===")
 

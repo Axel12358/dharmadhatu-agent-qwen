@@ -115,3 +115,25 @@ AGENCY/PLATFORM).
 - Sin comentarios explicativos innecesarios en el código nuevo.
 - Escritores SIEMPRE vía `csv_locked_rows`; jamás reescribir el archivo entero
   con snapshot stale (causa histórica de pérdidas de datos).
+- Cuando se establece `organizador`, SIEMPRE también `tipo_organizador`:
+  - `'promoter'`: extraído vía SERP/metrics/RA/Telegram (calidad alta)
+  - `'venue'`: derivado de slug URL (facebook.com/events/<venue-slug>)
+  - `''`: vacío / desconocido
+
+## Campos del CSV
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| nombre | str | Nombre del evento |
+| fecha | str | Fecha (YYYY-MM-DD) |
+| lugar | str | Ciudad/lugar |
+| pais | str | País |
+| continente | str | Continente |
+| subcontinente | str | Subcontinente |
+| fuente | str | Fuente de datos |
+| organizador | str | Nombre del organizador |
+| tipo_organizador | str | 'promoter' / 'venue' / '' |
+| email | str | Email de contacto |
+| link | str | URL del evento |
+| subgenero | str | Subgénero musical |
+| tipo_lugar | str | Tipo de venue |

@@ -1,12 +1,23 @@
-playwright>=1.40.0
-pandas>=2.0.0
-ollama>=0.1.0
-aiohttp
-beautifulsoup4
-lxml
-requests
-python-dotenv
-instaloader>=4.10
-yagooglesearch
-fake-useragent
-PySocks
+# Core
+requests[socks]>=2.28.0
+beautifulsoup4>=4.11.0
+lxml>=4.9.0
+PySocks>=1.7.1
+
+# SERP
+duckduckgo-search>=4.0
+
+# CSV/Data
+pandas>=1.5.0
+
+# ML/Classification
+scikit-learn>=1.2.0
+joblib>=1.2.0
+
+# HTTP
+urllib3>=1.26.0
+certifi>=2022.12.0
+
+# Utilities
+python-dateutil>=2.8.0
+pytz>=2022.7

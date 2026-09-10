@@ -5,10 +5,10 @@ install:
 	playwright install
 
 run:
-	python main_v5.py
+	python main.py
 
 loop:
-	python agente_qwen.py
+	./run_loop_completar.sh
 
 test:
 	python -m pytest tests/ || echo "No tests defined"

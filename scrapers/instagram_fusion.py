@@ -34,11 +34,6 @@ try:
 except Exception:
     get_anti_block = None
 
-try:
-    from scrapers.llm_local import extract_events_llm
-except Exception:
-    extract_events_llm = None
-
 # ============================================================
 # UTILIDADES COMUNES
 # ============================================================
@@ -63,27 +58,16 @@ def _dedup_eventos(eventos: List[Dict]) -> List[Dict]:
     return out
 
 def _extraer_eventos_caption(caption: str, url: str, hashtag: str) -> List[Dict]:
-    """Extrae eventos de un caption usando LLM local + regex fallback."""
+    """Extrae eventos de un caption usando regex."""
     eventos = []
-    if extract_events_llm:
-        try:
-            llm_evs = extract_events_llm(caption[:3000], url)
-            for ev in llm_evs:
-                ev.setdefault("hashtag_origen", hashtag)
-                ev.setdefault("fuente", "instagram_fusion")
-            eventos.extend(llm_evs)
-        except Exception:
-            pass
-    # Fallback regex simple
-    if not eventos:
-        from scrapers.event_extractor import EventExtractor
-        if EventExtractor:
-            ext = EventExtractor()
-            evs = ext.extract_all(caption, "Instagram", url) or []
-            for ev in evs:
-                ev.setdefault("hashtag_origen", hashtag)
-                ev.setdefault("fuente", "instagram_fusion")
-            eventos.extend(evs)
+    from scrapers.event_extractor import EventExtractor
+    if EventExtractor:
+        ext = EventExtractor()
+        evs = ext.extract_all(caption, "Instagram", url) or []
+        for ev in evs:
+            ev.setdefault("hashtag_origen", hashtag)
+            ev.setdefault("fuente", "instagram_fusion")
+        eventos.extend(evs)
     return eventos
 
 # ============================================================

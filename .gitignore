@@ -97,3 +97,19 @@ config_temp.json
 *.err
 *.out
 *.log
+
+# Runtime metrics / estado (se regeneran, no versionar)
+metricas_*.json
+historial_improvement_loop.json
+clasificador_checkpoint.json
+hibrido_bloqueos.json
+estado_*.json
+rotation_state.json
+task_queue_state.json
+estrategias_scores.json
+eventos_completados*.json
+eventos_resident_advisor.json
+grupos_encontrados.json
+instagram_hashtags_estado.json
+mejoras_algebra.json
+mejor_config.json

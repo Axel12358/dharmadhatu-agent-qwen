@@ -32,13 +32,13 @@ def fetch_hard(url, timeout=12):
         import subprocess
         import os
         code = (
-            "import sys; sys.path.insert(0,'/Users/angelgarcia/dharmadhatu_agent_qwen'); "
+            f"import sys; sys.path.insert(0,{_PROJECT_ROOT!r}); "
             "from core.http_client import get_html; "
             f"html=get_html({url!r}, timeout={timeout}); "
             "print(html if html else '')"
         )
         r = subprocess.run(
-            ['/Users/angelgarcia/dharmadhatu_agent_qwen/.venv/bin/python', '-c', code],
+            [str(Path(_PROJECT_ROOT) / '.venv/bin/python'), '-c', code],
             capture_output=True, text=True, timeout=timeout + 3
         )
         if r.returncode == 0 and r.stdout.strip():
@@ -738,17 +738,27 @@ def main():
             pass
     
     iteration = checkpoint.get('iteration', 0)
-    BATCH = checkpoint.get('batch', 20)
+    BATCH = checkpoint.get('batch', 40)
     PAUSA = checkpoint.get('pausa', 5)
     
     while True:
         iteration += 1
         log(f"=== Iteración {iteration} ===")
         
-        # 1. Procesar eventos sin email (prioridad: RA — alto ROI)
+        # 1. Procesar por bloques de fuente (no cargar) — RA / FB matriz / resto
         sin_email = cargar_eventos_sin_email()
         sin_email_ra = [e for e in sin_email if 'Resident Advisor' in e.get('fuente','')]
-        log(f"Sin email: {len(sin_email)} total, {len(sin_email_ra)} de RA")
+        # bloque rotativo: 0=RA, 1=FB matriz, 2=resto (Goabase etc.)
+        bloque = iteration % 3
+        if bloque == 1:
+            sin_email_bloque = [e for e in sin_email if 'Facebook (matriz)' in e.get('fuente','')]
+            log(f"Sin email: {len(sin_email)} total, {len(sin_email_ra)} RA — BLOQUE FB matriz ({len(sin_email_bloque)} sin email)")
+        elif bloque == 2:
+            sin_email_bloque = [e for e in sin_email if e not in sin_email_ra and 'Facebook (matriz)' not in e.get('fuente','')]
+            log(f"Sin email: {len(sin_email)} total, {len(sin_email_ra)} RA — BLOQUE resto ({len(sin_email_bloque)} sin email)")
+        else:
+            sin_email_bloque = sin_email_ra
+            log(f"Sin email: {len(sin_email)} total, {len(sin_email_ra)} RA — BLOQUE RA")
         
         # 1b. Cada 5 iteraciones: pase venue-first (buscar email del venue UNA vez
         #     y aplicarlo a todos sus eventos RA sin email).
@@ -781,9 +791,14 @@ def main():
             except Exception as e:
                 log(f"  ⚠️ Venue-first error: {str(e)[:80]}")
         
-        if sin_email_ra:
-            log(f"Procesando {min(BATCH, len(sin_email_ra))} eventos RA sin email...")
-            cambios = procesar_batch(sin_email_ra, 'email', BATCH, offset=iteration*BATCH)
+        # bloque por fuente para no cargar
+        objetivo = sin_email_bloque if bloque != 0 else sin_email_ra
+        if not objetivo and sin_email_ra:
+            objetivo = sin_email_ra  # fallback si bloque vacío
+        if objetivo:
+            nombre_bloque = {0:"RA",1:"FB matriz",2:"resto"}[bloque]
+            log(f"Procesando {min(BATCH, len(objetivo))} eventos {nombre_bloque} sin email...")
+            cambios = procesar_batch(objetivo, 'email', BATCH, offset=iteration*BATCH)
             updated = aplicar_cambios(cambios, 'email')
             log(f"  ✅ {updated} eventos actualizados con email")
         elif sin_email:
@@ -862,13 +877,13 @@ def main():
                         if org_act and org_act.lower() != 'n/a' and not es_org_slugderivado(org_act):
                             continue
                         org = mapa.get(_normalizar_link_fb(r.get('link', '') or ''))
-if org and org.lower() != org_act.lower():
-                if org_act and org_act.lower() != 'n/a':
-                    mejorado += 1
-                else:
-                    ganado += 1
-                r['organizador'] = org
-                r['tipo_organizador'] = tipo_organizador(org)
+                        if org and org.lower() != org_act.lower():
+                            if org_act and org_act.lower() != 'n/a':
+                                mejorado += 1
+                            else:
+                                ganado += 1
+                            r['organizador'] = org
+                            r['tipo_organizador'] = tipo_organizador(org)
                 log(f"  🌆 Barrido SERP: {ganado} nuevos + {mejorado} mejorados (de {len(mapa)} soles)")
 
         # 2c. Telegram: canales públicos por ciudad (vector del asesor). Un canal

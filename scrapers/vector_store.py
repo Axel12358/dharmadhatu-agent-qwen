@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Vector Store Local — Patrones de scraping con embeddings semánticos.
-Usa FAISS (CPU) + embeddings Ollama (nomic-embed-text, 768-dim).
+Usa FAISS (CPU) + embeddings hash locales (sin API externa).
 Persistencia en JSONL + índice FAISS binario.
 """
 
@@ -28,18 +28,13 @@ except ImportError:
     _HAS_FAISS = False
     faiss = None
 
-try:
-    from scrapers.llm_local import get_client as get_ollama_client
-except Exception:
-    get_ollama_client = None
-
 
 VECTOR_STORE_DIR = str(Path(_PROJECT_ROOT) / "vector_store")
 PATTERNS_FILE = str(Path(VECTOR_STORE_DIR) / "patterns.jsonl")
 INDEX_FILE = str(Path(VECTOR_STORE_DIR) / "patterns.faiss")
 META_FILE = str(Path(VECTOR_STORE_DIR) / "patterns_meta.pkl")
 
-EMBEDDING_MODEL = "nomic-embed-text"
+EMBEDDING_MODEL = "hash/local-768"
 EMBEDDING_DIM = 768
 SIMILARITY_THRESHOLD = 0.70  # Umbral base (se ajusta dinámicamente)
 FITNESS_WEIGHT = 0.4
@@ -265,25 +260,18 @@ class VectorStore:
         return pattern.id
 
     def get_embedding(self, text: str) -> Optional[List[float]]:
-        """Genera embedding via Ollama (nomic-embed-text)."""
-        if get_ollama_client is None:
-            return None
-        client = get_ollama_client()
-        if not client.is_available():
-            return None
-        try:
-            # Usar endpoint embeddings de Ollama
-            import httpx
-            with httpx.Client(timeout=30) as http:
-                resp = http.post(
-                    f"{client.host}/api/embeddings",
-                    json={"model": EMBEDDING_MODEL, "prompt": text},
-                )
-                if resp.status_code == 200:
-                    return resp.json().get("embedding")
-        except Exception as e:
-            print(f"⚠️ Error generando embedding: {e}")
-        return None
+        """Genera embedding determinístico hash-based (sin LLM externo)."""
+        import hashlib
+        dim = EMBEDDING_DIM
+        vec = [0.0] * dim
+        tokens = (text or "").lower().split()
+        for tok in tokens:
+            digest = hashlib.md5(tok.encode("utf-8")).digest()
+            idx = int.from_bytes(digest[:4], "big") % dim
+            sign = 1.0 if digest[4] % 2 == 0 else -1.0
+            vec[idx] += sign
+        norm = sum(v * v for v in vec) ** 0.5 or 1.0
+        return [v / norm for v in vec]
 
     def search(
         self,

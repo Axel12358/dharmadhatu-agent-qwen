@@ -37,7 +37,7 @@ Google bloquea los IPs de salida de Tor (exit nodes) casi inmediatamente. La com
   - Randomización de fingerprint/dispositivo/locale.
 - **Instalación local:**
   ```bash
-  cd /Users/angelgarcia/dharmadhatu_agent_qwen/tools
+  cd "$(dirname "$0")"/tools
   git clone https://github.com/iwanghc/mcp_web_search.git
   cd mcp_web_search
   source ../../venv/bin/activate
@@ -94,7 +94,7 @@ Google bloquea los IPs de salida de Tor (exit nodes) casi inmediatamente. La com
 - **URL:** https://github.com/shenhao-stu/ohmycaptcha
 - **Licencia:** MIT · **Lenguaje:** Python, FastAPI + Playwright · 822 stars
 - **Qué hace:** Solver de CAPTCHA self-hosted con API estilo YesCaptcha (`createTask`/`getTaskResult`). 19 tipos: reCAPTCHA v2/v3, hCaptcha, Turnstile, clasificación de imágenes.
-- **Requiere:** modelo multimodal local (Qwen3.5-2B vía SGLang) o cloud. Pesado para una máquina Mac sin GPU.
+- **Requiere:** modelo multimodal local 2B vía SGLang o cloud. Pesado para una máquina Mac sin GPU.
 - **Nota:** Más orientado a servidores. El modelo local de 2B parámetros es demasiado pesado para nuestro entorno; se menciona como referencia.
 
 ### 8. waguriagentic/captcha-solver — sidecar HTTP local (CloakBrowser)
@@ -145,7 +145,7 @@ Google bloquea los IPs de salida de Tor (exit nodes) casi inmediatamente. La com
 ## Cómo verificar rápidamente una técnica
 
 ```bash
-cd /Users/angelgarcia/dharmadhatu_agent_qwen
+cd "$(dirname "$0")"
 source venv/bin/activate
 python3 -u -c "
 from scrapers.dorks_resultados import scrape_dorks_resultados

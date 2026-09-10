@@ -24,7 +24,7 @@ from pathlib import Path
 
 
 @contextmanager
-def csv_locked_rows(csv_path, timeout=180, encoding="utf-8"):
+def csv_locked_rows(csv_path, timeout=180, encoding="utf-8", extrasaction="ignore"):
     """Lee el CSV bajo lock exclusivo, cede (rows, fieldnames), escribe al salir."""
     csv_path = str(csv_path)
     lock_path = csv_path + ".lock"
@@ -47,7 +47,7 @@ def csv_locked_rows(csv_path, timeout=180, encoding="utf-8"):
                 rows = list(reader)
             yield rows, fieldnames
             with open(csv_path, "w", encoding=encoding, newline="") as f:
-                w = csv.DictWriter(f, fieldnames=fieldnames)
+                w = csv.DictWriter(f, fieldnames=fieldnames, extrasaction=extrasaction)
                 w.writeheader()
                 w.writerows(rows)
         finally:

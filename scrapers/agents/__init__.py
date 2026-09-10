@@ -23,11 +23,6 @@ except Exception:
     get_anti_block = None
 
 try:
-    from scrapers.llm_local import extract_events_llm, classify_spam_llm, normalize_location_llm, dedup_semantic_llm
-except Exception:
-    extract_events_llm = classify_spam_llm = normalize_location_llm = dedup_semantic_llm = None
-
-try:
     from scrapers.vector_store import get_vector_store, Pattern
 except Exception:
     get_vector_store = None
@@ -124,13 +119,13 @@ class IngestAgent:
 
 
 class ParseAgent:
-    """Extracción: LLM local (Qwen) + fallback regex. Devuelve lista de dicts crudos."""
+    """Extracción: selectores vectoriales + fallback regex. Devuelve lista de dicts crudos."""
 
     def __init__(self):
         self.vs = get_vector_store() if get_vector_store else None
 
     def extract(self, html: str, url: str, source: str, target_desc: str) -> List[Dict]:
-        """Intenta: 1) cached pattern, 2) LLM local, 3) regex fallback."""
+        """Intenta: 1) cached pattern, 2) regex fallback."""
         trace = Trace("parse", url[:50])
         results = []
 
@@ -142,33 +137,11 @@ class ParseAgent:
                 pattern, score = matches[0]
                 trace.add("pattern_hit", pattern_id=pattern.id[:8], score=score)
 
-        # 2. LLM local (Qwen Coder)
-        if extract_events_llm and (not pattern or pattern.fitness < 0.7):
-            trace.add("llm_extract")
-            llm_results = extract_events_llm(html[:8000], url)  # límite tokens
-            if llm_results:
-                for r in llm_results:
-                    r["source_strategy"] = "llm_local"
-                    r["url"] = url
-                    r["fuente"] = source
-                results.extend(llm_results)
-                trace.add("llm_success", count=len(llm_results))
-                # Guardar pattern si funcionó
-                if self.vs and llm_results:
-                    self._save_pattern(url, target_desc, "llm_local", "meta[property='og:description'] + DOM", source, llm_results)
-                return results
-
-        # 3. Pattern cached → ejecutar selector logic (simplificado: regex sobre HTML)
+        # 2. Pattern cached → ejecutar selector logic (simplificado: regex sobre HTML)
         if pattern and pattern.selector_logic:
             trace.add("pattern_execute", pattern_id=pattern.id[:8])
-            # Aquí iría la ejecución real del selector; por ahora delegamos a LLM
-            # como fallback simple
-            if extract_events_llm:
-                llm_results = extract_events_llm(html[:8000], url)
-                if llm_results:
-                    results.extend(llm_results)
 
-        # 4. Fallback regex básico (event_extractor existente)
+        # 3. Fallback regex básico (event_extractor existente)
         if not results:
             trace.add("regex_fallback")
             try:
@@ -275,7 +248,6 @@ class RetryAgent:
     """Recovery strategies ordenadas por fitness histórico por dominio."""
 
     STRATEGIES = [
-        ("llm_agent", "Qwen analiza DOM + genera selector nuevo"),
         ("act_interact", "Dismiss modales, scroll, click 'ver más'"),
         ("extract_refined", "Re-extract con instrucciones enriquecidas"),
         ("vision_fallback", "Screenshot + análisis visual (futuro)"),
@@ -331,10 +303,6 @@ class RetryAgent:
         elif strategy == "extract_refined":
             # Re-extract con prompt enriquecido (delegado a ParseAgent)
             return html  # señal para re-intentar parse
-
-        elif strategy == "llm_agent":
-            # Qwen genera selector nuevo (futuro: implementar)
-            return html
 
         return None
 

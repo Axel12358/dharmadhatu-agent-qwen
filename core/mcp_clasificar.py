@@ -4,7 +4,7 @@
 MCP clasificador — Server MCP estándar (JSON-RPC sobre stdio, sin SDK).
 
 Expone tools de CLASIFICACIÓN acelerada para el Dharmadhatu Bot usando el
-LLM rápido (freellmpool directo ~2s → fallback llm_hibrido → regex).
+LLM rápido (freellmpool directo ~2s → fallback hibrido → regex).
 
 Tools:
   - clasificar_subgeneros(batch)  : subgénero por evento (LLM rápido)
@@ -39,7 +39,7 @@ if _ROOT not in sys.path:
 SERVER_NAME = "dharmadhatu-clasificador"
 SERVER_VERSION = "1.0.0"
 CSV_PATH = os.path.join(_ROOT, "eventos_encontrados.csv")
-CHECKPOINT_PATH = os.path.join(_ROOT, "llm_checkpoint.json")
+CHECKPOINT_PATH = os.path.join(_ROOT, "clasificador_checkpoint.json")
 
 SG_VALIDOS = {
     "psytrance", "darkpsy", "forest", "hitech", "progressive",
@@ -86,7 +86,7 @@ def _llm_generate(prompt: str, system: str = "", temperature: float = 0.05) -> O
     if resp:
         return resp
     try:
-        from core.llm_hibrido import get_hybrid_client
+        from core.hibrido import get_hybrid_client
         return get_hybrid_client().generate(prompt, system=system, temperature=temperature)
     except Exception:
         return None
@@ -118,7 +118,7 @@ def tool_clasificar_subgeneros(eventos: List[Dict]) -> Dict:
     batch_size = 5
     resultados: List[Dict] = []
     client_tmp = None
-    from core.llm_hibrido import get_hybrid_client
+    from core.hibrido import get_hybrid_client
     client_tmp = get_hybrid_client()
     for i in range(0, len(eventos), batch_size):
         batch = eventos[i:i + batch_size]

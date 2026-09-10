@@ -12,7 +12,7 @@ Sistema de scraping que **aprende de cada ejecución**, generaliza patrones sem�
 |-----------|----------------|
 | **Deterministic Outcomes, Non-Deterministic Paths** | Múltiples estrategias (requests, Playwright, SERP, LLM), fallback ordenado por éxito histórico |
 | **Every Execution Teaches** | Cada run escribe: éxitos, fallos, recuperaciones → vector store + métricas |
-| **Semantic Pattern Reuse** | Embeddings locales (Ollama/nomic-embed-text) → KNN search para generalizar across páginas similares |
+| **Semantic Pattern Reuse** | Embeddings hash locales → KNN search para generalizar across páginas similares |
 | **Contract-First Extraction** | Pydantic schemas = data contracts → validación estricta antes de publicar |
 | **Adaptive Recovery** | 4 estrategias ordenadas por éxito por dominio: LLM-agent → Act → Extract-refined → Vision |
 | **Observability via Traces** | Finite state machine por record: queued→fetched→parsed→validated→corrected→published/quarantined |
@@ -67,7 +67,7 @@ Cada transición emite **trace estructurado** (no solo logs): agent, duration, i
 
 ## Vector Store Local (Pattern Learning)
 
-**Embeddings:** `nomic-embed-text` via Ollama (768-dim) — 100% local, sin API keys.
+**Embeddings:** hash local determinístico (768-dim) — sin API keys, sin dependencias externas.
 
 **Índice:** HNSW en archivo local (FAISS o ChromaDB embebido) — persistencia JSONL.
 
@@ -99,7 +99,7 @@ Cada transición emite **trace estructurado** (no solo logs): agent, duration, i
 
 | Orden | Estrategia | Qué hace | Cuándo usar |
 |-------|------------|----------|-------------|
-| 1 | **LLM Agent** | Qwen Coder analiza DOM + screenshot → genera selector/XPath nuevo | Cambio estructural mayor, SPA compleja |
+| 1 | **LLM Agent** | LLM asiste en generar selector/XPath nuevo | Cambio estructural mayor, SPA compleja |
 | 2 | **Act/Interact** | Dismissa modales, cookies, scroll, click "ver más" → re-extract | Bloqueos UI (GDPR, paywalls, overlays) |
 | 3 | **Extract Refined** | Re-extraction con instrucciones enriquecidas (target main content) | Selectores muy amplios, ruido lateral |
 | 4 | **Vision/LLM Multimodal** | Screenshot + prompt visual → localiza elementos por apariencia | Canvas, ofuscación extrema, sin DOM accesible |
@@ -129,7 +129,7 @@ class InstagramEvent(BaseModel):
 **Validación en capas:**
 1. **Schema validation** — Pydantic (tipos, formatos, enums)
 2. **Cross-check determinista** — Compara contra JSON-LD / microdata de la página
-3. **Grounding LLM** — Qwen verifica que valores extraídos existan en caption original
+3. **Grounding LLM** — LLM verifica que valores extraídos existan en el texto original
 4. **Identity/locale check** — Ciudad/pais coherentes, subgénero válido
 5. **Confidence scoring** — 1.0 si match exacto JSON-LD, sino acumula bonuses por checks pasados
 
@@ -207,13 +207,13 @@ class InstagramEvent(BaseModel):
 
 | Componente | Tecnología | Instalación |
 |------------|------------|-------------|
-| **LLM Extraction/Recovery** | Ollama + `qwen2.5-coder:7b` | `ollama pull qwen2.5-coder:7b` |
-| **Embeddings** | Ollama + `nomic-embed-text` | `ollama pull nomic-embed-text` |
+| **LLM Extraction/Recovery** | LLM hibrido via `core/hibrido.py` (opencode/freellmpool) + fallback regex | `pip install -r requirements.txt` |
+| **Embeddings** | Hash local determinístico (sin API) | Ninguna |
 | **Vector Index** | FAISS (CPU) o ChromaDB embebido | `pip install faiss-cpu chromadb` |
 | **Browser** | Playwright (Chromium) | `playwright install chromium` |
 | **Proxy/Anonymity** | Tor (proceso hijo gestionado) | `brew install tor` / `apt install tor` |
 | **Schemas/Validation** | Pydantic v2 | `pip install pydantic` |
-| **Orchestration** | `loop_optimizer.py` (existente) + nuevo `improvement_loop.py` | Código propio |
+| **Orchestration** | `loop_optimizer.py` + `core/orquestador.py` | Código propio |
 
 ---
 
@@ -221,19 +221,17 @@ class InstagramEvent(BaseModel):
 
 ```
 scrapers/
-├── improvement_loop.py        # NUEVO: Orquestador principal
-├── vector_store.py            # NUEVO: FAISS/Chroma local + embeddings Ollama
+├── vector_store.py            # NUEVO: FAISS/Chroma local + embeddings hash
 ├── agents/
 │   ├── __init__.py
 │   ├── ingest_agent.py        # NUEVO: Fetch con anti_block + Tor
-│   ├── parse_agent.py         # NUEVO: Extracción LLM + regex fallback
+│   ├── parse_agent.py         # NUEVO: Extracción regex + fallback
 │   ├── qa_agent.py            # NUEVO: Validación Pydantic + confidence
 │   ├── retry_agent.py         # NUEVO: Recovery strategies adaptativas
 │   └── integrator_agent.py    # NUEVO: Dedup semántico + write idempotente
 ├── schemas/
 │   ├── __init__.py
 │   └── event_schemas.py       # NUEVO: Pydantic models por fuente
-├── llm_local.py               # YA EXISTE: Cliente Ollama
 ├── anti_block.py              # YA EXISTE: Tor + proxies + stealth
 ├── loop_optimizer.py          # YA EXISTE: Multi-strategy scoring
 ├── instagram_scraper.py       # MODIFICAR: Integrar ImprovementLoop

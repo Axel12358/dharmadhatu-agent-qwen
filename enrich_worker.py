@@ -8,7 +8,7 @@ import json
 import os
 from pathlib import Path
 
-_ROOT = Path("/Users/angelgarcia/dharmadhatu_agent_qwen")
+_ROOT = Path(__file__).resolve().parent
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 

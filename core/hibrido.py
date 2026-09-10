@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-LLM Híbrido — Fusión 2+3: modelos del asistente (opencode) + cloud free (freellmpool)
+Clasificador Híbrido — Modelos del asistente (opencode) + cloud free (freellmpool)
 con fallback a regex. Evita bloqueo por uso frecuente rotando proveedores.
 
 Estrategia:
-  Tier 0: Ollama local (si está instalado, ~2s, sin rate limit)
   Tier 1: Modelos opencode/* gratuitos (assistant) — 6 modelos sin API key
   Tier 2: Modelos freellmpool/* gratuitos (cloud) — Groq/Mistral/etc vía pool
   Tier 3: Regex fallback (event_extractor.py) — siempre funciona, sin LLM
@@ -14,12 +13,12 @@ y se prueba el siguiente. Así el bot nunca se bloquea aunque un proveedor
 se sature por uso frecuente.
 
 Uso:
-  from core.llm_hibrido import HybridLLMClient
+  from core.hibrido import HybridLLMClient
   client = HybridLLMClient()
   resp = client.generate("clasifica: ...", system="solo JSON")
 
   # Para reclasificación batch:
-  from core.llm_hibrido import reclasificar_no_psy_hibrido
+  from core.hibrido import reclasificar_no_psy_hibrido
   reclasificar_no_psy_hibrido(events)
 
 Requiere: opencode CLI en PATH (ya instalado). No requiere API keys.
@@ -36,7 +35,7 @@ from typing import Dict, List, Optional, Tuple
 logger = logging.getLogger(__name__)
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
-_BLOQUEO_FILE = _PROJECT_ROOT / "llm_hibrido_bloqueos.json"
+_BLOQUEO_FILE = _PROJECT_ROOT / "hibrido_bloqueos.json"
 _BLOQUEO_TTL = 300  # 5 min
 
 # Tier 1: modelos opencode gratuitos (assistant) — sin API key
@@ -137,39 +136,6 @@ def _llamar_opencode(modelo: str, prompt: str, system: str = "") -> Optional[str
         return None
 
 
-def _ollama_disponible() -> bool:
-    """Chequea si Ollama local responde (Tier 0)."""
-    try:
-        import httpx
-        host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-        model = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:7b")
-        r = httpx.Client(timeout=5).get(f"{host.rstrip('/')}/api/tags")
-        return r.status_code == 200 and any(model.split(":")[0] in m.get("name", "") for m in r.json().get("models", []))
-    except Exception:
-        return False
-
-
-def _ollama_generate(prompt: str, system: str = "", temperature: float = 0.1) -> Optional[str]:
-    try:
-        import httpx
-        host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-        model = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:7b")
-        payload = {
-            "model": model,
-            "prompt": prompt,
-            "system": system,
-            "temperature": temperature,
-            "stream": False,
-            "options": {"num_predict": 512, "top_p": 0.9},
-        }
-        r = httpx.Client(timeout=30).post(f"{host.rstrip('/')}/api/generate", json=payload)
-        if r.status_code == 200:
-            return r.json().get("response", "").strip() or None
-    except Exception:
-        pass
-    return None
-
-
 class HybridLLMClient:
     """Cliente híbrido con rotación y fallback anti-bloqueo."""
 
@@ -177,12 +143,6 @@ class HybridLLMClient:
         self.bloqueos = _cargar_bloqueos()
 
     def generate(self, prompt: str, system: str = "", temperature: float = 0.1) -> Optional[str]:
-        # Tier 0: Ollama
-        if _ollama_disponible():
-            resp = _ollama_generate(prompt, system, temperature)
-            if resp:
-                return resp
-
         # Tier 1+2: rotar modelos opencode/freellmpool evitando bloqueados
         self.bloqueos = _cargar_bloqueos()
         for modelo in TODOS_MODELOS:
@@ -197,10 +157,6 @@ class HybridLLMClient:
         return None
 
     def is_available(self) -> bool:
-        # Siempre disponible por fallback regex, pero para compatibilidad
-        # retorna True si algún LLM responde (Ollama u opencode)
-        if _ollama_disponible():
-            return True
         # Probar un modelo ligero rápido
         self.bloqueos = _cargar_bloqueos()
         for modelo in MODELOS_ASSISTANT[:2]:

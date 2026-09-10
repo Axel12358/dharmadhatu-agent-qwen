@@ -1,19 +1,12 @@
 import asyncio
 import re
 import logging
-import ollama
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def generar_descripcion_evento(nombre_evento):
-    prompt = f"Genera una descripción atractiva para el evento '{nombre_evento}' de música psytrance. Incluye estilo musical, ambiente y recomendaciones. Máximo 150 palabras. En español."
-    try:
-        response = ollama.chat(model='qwen2.5-coder:7b', messages=[{'role': 'user', 'content': prompt}])
-        return response['message']['content'].strip()
-    except Exception as e:
-        logger.error(f"Error en descripción: {e}")
-        return "Evento de música psytrance"
+    return f"Evento de música psytrance con {nombre_evento}, ambiente cósmico y buenas vibras."
 
 def extraer_organizador_email(texto):
     organizador = "No disponible"
@@ -62,12 +55,12 @@ async def enriquecer_un_evento(evento):
 
     return evento
 
-async def enriquecer_eventos_con_qwen(eventos):
+async def enriquecer_eventos(eventos):
     if not eventos:
         return eventos
 
     semaphore = asyncio.Semaphore(5)
-    logger.info(f"🤖 Enriqueciendo {len(eventos)} eventos con Qwen...")
+    logger.info(f"🤖 Enriqueciendo {len(eventos)} eventos...")
 
     async def trabajar_con_sem(evento, idx):
         async with semaphore:

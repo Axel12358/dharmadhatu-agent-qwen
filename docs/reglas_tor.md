@@ -130,3 +130,24 @@
 - Rotación Tor entre intentos (`tor_utils.rotar_tor`).
 - Display de estado (Tor ✓/✗, tiempo, resultados).
 - Resumen final (scrapers_ok, total_eventos, total_grupos, total_organizadores, tiempo_total).
+
+## Estado real de SERP vía Tor (agosto 2026)
+
+Tests directos con Tor SOCKS5:
+
+| Motor | Status vía Tor | Resultado |
+|-------|---------------|-----------|
+| **DDG (html.duckduckgo.com)** | ✅ 200 | **Funciona perfecto** — 10 resultados FB por query. Parser `result__a` + `uddg=`. Motor principal. |
+| **Google** | 429 | Rate-limited. Playwright+stealth puede funcionar intermitentemente. No confiable. |
+| **Bing** | 200 | Retorna basura (sitios no relacionados). Útil para Tor. |
+| **Startpage** | 200 | Challenge anti-bot (JavaScript). No funcional vía requests. |
+| **SearxNG** | 429/HTML | Instancias públicas bloquean Tor o devuelven HTML en vez de JSON. |
+| **Facebook directo** | 200 | Página genérica carga, pero páginas específicas → login wall. Playwright+Tor no puede extraer datos de páginas FB individuales. |
+
+**Conclusión**: DDG es el único SERP confiable vía Tor. `facebook_dorks.py` ya lo usa correctamente. No hay forma gratis de obtener más SERP vía Tor sin IP del usuario.
+
+## Módulos nuevos (agosto 2026)
+
+- `core/serp_tor.py`: Interfaz centralizada para SERP. Usa DDG+SearxNG vía Tor. `buscar_serp(query)` y `buscar_serp_fb(subgenero, localidad)`.
+- `core/plugin_loader.py`: Auto-descubre scrapers en `scrapers/*.py`. Sin tocar `orquestador.py` para añadir nuevos.
+- `scrapers/fb_playwright_tor.py`: Playwright+Tor para páginas FB. Registrar pero desactivado (login wall).

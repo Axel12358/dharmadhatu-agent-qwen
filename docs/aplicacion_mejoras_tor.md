@@ -417,7 +417,7 @@ _BLOQUEOS_GLOBALES = 0
 ## Script de prueba estándar
 
 ```bash
-cd /Users/angelgarcia/dharmadhatu_agent_qwen
+cd "$(dirname "$0")"
 source venv/bin/activate
 python3 -u -c "
 from scrapers.dorks_resultados import scrape_dorks_resultados

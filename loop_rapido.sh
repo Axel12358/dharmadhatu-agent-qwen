@@ -9,8 +9,8 @@ for i in {1..5}; do
     echo "------------------------------"
     
     # Ejecutar el bot
-    cd ~/dharmadhatu_agent_qwen
-    python3 main_v5.py >> loop_rapido.log 2>&1
+    cd "$(dirname "$0")"
+    python3 main.py >> loop_rapido.log 2>&1
     
     # Esperar 5 minutos antes de la siguiente iteración
     if [ $i -lt 5 ]; then

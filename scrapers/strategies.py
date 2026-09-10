@@ -114,67 +114,12 @@ async def estrategia_texto(query, config):
         logger.warning(f"⚠️ Error en estrategia_texto: {e}")
     return eventos
 
-# ----- ESTRATEGIA 4: Qwen (interpreta HTML y extrae eventos) -----
-async def estrategia_qwen(query, config):
-    """Usa Qwen (Ollama) para interpretar el HTML y extraer eventos."""
-    eventos = []
-    try:
-        import ollama
-        async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True, args=['--no-sandbox'])
-            page = await browser.new_page()
-            url = f"https://www.facebook.com/search/events/?q={query.replace(' ', '+')}"
-            await page.goto(url, timeout=config.get('timeout', 30) * 1000)
-            await page.wait_for_timeout(3000)
-            html = await page.content()
-            await browser.close()
-            
-            prompt = f"""
-            Eres un experto en extracción de datos de Facebook. Analiza este HTML y extrae TODOS los eventos.
-            Para cada evento, extrae:
-            - nombre: título del evento
-            - fecha: fecha del evento
-            - lugar: ubicación del evento
-            - organizador: quien organiza (Hosted by)
-            - enlace: URL del evento (si existe)
-            
-            Devuelve SOLO un JSON con la lista de eventos.
-            
-            HTML (primeros 15000 caracteres):
-            {html[:15000]}
-            """
-            
-            response = ollama.chat(
-                model='qwen2.5-coder:7b',
-                messages=[{'role': 'user', 'content': prompt}],
-                options={'temperature': 0.1}
-            )
-            try:
-                data = json.loads(response['message']['content'])
-                if isinstance(data, list):
-                    for item in data:
-                        eventos.append({
-                            'nombre': item.get('nombre', 'Sin nombre'),
-                            'fecha': item.get('fecha', 'Fecha no disponible'),
-                            'lugar': item.get('lugar', 'Lugar no disponible'),
-                            'organizador': item.get('organizador', 'No disponible'),
-                            'enlace': item.get('enlace', ''),
-                            'fuente': 'Facebook (Qwen)'
-                        })
-                    logger.info(f"✅ Estrategia Qwen: {len(eventos)} eventos")
-            except:
-                logger.warning("⚠️ Qwen no devolvió JSON válido")
-    except Exception as e:
-        logger.warning(f"⚠️ Error en estrategia_qwen: {e}")
-    return eventos
-
 # ----- ORQUESTACIÓN DE ESTRATEGIAS -----
 async def get_events(query, config):
     estrategias = [
         estrategia_baberibrar,
         estrategia_mrkkr,
-        estrategia_texto,
-        estrategia_qwen
+        estrategia_texto
     ]
     
     for estrategia in estrategias:

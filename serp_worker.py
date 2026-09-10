@@ -8,9 +8,9 @@ import json
 import re
 import urllib.parse
 
-_ROOT = "/Users/angelgarcia/dharmadhatu_agent_qwen"
-if _ROOT not in sys.path:
-    sys.path.insert(0, _ROOT)
+_PROJECT_ROOT = str(Path(__file__).resolve().parent)
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
 
 from core.http_client import get_html
 

@@ -771,19 +771,19 @@ async def _fase_playwright(pendientes: List[str], t0: float,
 
 
 # ============================================================
-# NUEVA ENTRADA PRINCIPAL: Improvement Loop (patrón AgenteQwen)
+# ENTRADA PRINCIPAL: Improvement Loop
 # ============================================================
 
 def scrape_instagram_events_v2(config: Optional[dict] = None) -> List[Dict]:
     """
     Entry point principal usando ImprovementAgent (arquitectura comparativa + loop mejora).
     
-    Ventajas sobre versión anterior:
+    Pipeline de scraping con arquitecturas comparativas y mejora iterativa:
     - Testea 6 arquitecturas en paralelo en iteración 1
     - Selecciona la mejor automáticamente (score-based)
-    - Qwen propone mejoras cada iteración (config + arquitectura)
-    - Sub-agente enriquecimiento paralelo (Qwen local)
-    - Vector store local (FAISS + embeddings nomic-embed-text) para pattern learning
+    - Rotación de arquitecturas + selección score-based
+    - Enriquecimiento paralelo de eventos
+    - Vector store local (FAISS + embeddings hash) para pattern learning
     - Tor integrado via anti_block
     - Historial persistente + mejor config
     
@@ -811,7 +811,7 @@ def scrape_instagram_events_v2(config: Optional[dict] = None) -> List[Dict]:
     max_iteraciones = config.get("max_iteraciones", 5) if config else 5
     hashtags = config.get("hashtags") if config else None
 
-    print("🚀 Iniciando Improvement Loop (AgenteQwen pattern)...", flush=True)
+    print("🚀 Iniciando Improvement Loop...", flush=True)
     
     try:
         eventos = run_improvement_loop(

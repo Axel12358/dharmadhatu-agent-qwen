@@ -218,13 +218,13 @@ def fetch_hard(url, timeout=12, rotar_si_falla=True):
         try:
             import subprocess
             code = (
-                "import sys; sys.path.insert(0,'/Users/angelgarcia/dharmadhatu_agent_qwen'); "
+                f"import sys; sys.path.insert(0,{_PROJECT_ROOT!r}); "
                 "from core.http_client import get_html; "
                 f"html=get_html({u!r}, timeout={t}); "
                 "print(html if html else '')"
             )
             r = subprocess.run(
-                ['/Users/angelgarcia/dharmadhatu_agent_qwen/.venv/bin/python', '-c', code],
+                [str(Path(_PROJECT_ROOT) / '.venv/bin/python'), '-c', code],
                 capture_output=True, text=True, timeout=t + 3
             )
             if r.returncode == 0 and r.stdout.strip():

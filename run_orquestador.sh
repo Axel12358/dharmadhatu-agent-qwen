@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /Users/angelgarcia/dharmadhatu_agent_qwen
+cd "$(dirname "$0")"
 .venv/bin/python run_orquestador.py >> orquestador_run.log 2>&1

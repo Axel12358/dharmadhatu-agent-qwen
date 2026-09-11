@@ -204,18 +204,23 @@ def ejecutar_combinaciones(combinaciones: List[Dict], dry_run: bool = False) -> 
                 pass
 
     if nuevos_total:
-        # Consolidar aditivo al CSV
-        cols = list(csv.DictReader(open(CSV_FILE, encoding="utf-8"))).__class__  # hack
-        with open(CSV_FILE, encoding="utf-8") as f:
-            rows = list(csv.DictReader(f))
+        # Consolidar aditivo al CSV bajo lock (no pisar escritores concurrentes)
+        try:
+            from core.csv_lock import csv_locked_rows
+        except Exception:
+            from csv_lock import csv_locked_rows
+        with csv_locked_rows(CSV_FILE, timeout=180) as (rows, _fn):
             cols = list(rows[0].keys()) if rows else list(nuevos_total[0].keys())
-        rows.extend(nuevos_total)
-        with open(CSV_FILE, "w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
-            w.writeheader()
-            w.writerows(rows)
+            seen = {r.get("link") for r in rows if r.get("link")}
+            agregados = 0
+            for ev in nuevos_total:
+                if ev.get("link") and ev["link"] in seen:
+                    continue
+                rows.append(ev)
+                seen.add(ev.get("link"))
+                agregados += 1
         dedup.guardar()
-        print(f"\n💾 {len(nuevos_total)} nuevos añadidos → CSV total {len(rows)}")
+        print(f"\n💾 {agregados} nuevos añadidos → CSV total {len(rows)}")
 
     return len(nuevos_total)
 

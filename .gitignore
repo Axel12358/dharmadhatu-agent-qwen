@@ -113,3 +113,4 @@ grupos_encontrados.json
 instagram_hashtags_estado.json
 mejoras_algebra.json
 mejor_config.json
+scrapers/instagram_dorks/*.json

@@ -2,189 +2,99 @@
 
 > Documento de continuidad: cualquier modelo que retome el trabajo DEBE leer esto
 > antes de tocar nada. Describe protocolo, estado actual, cambios pendientes sin
-> commitear y siguientes pasos.
+> commitear y siguientes pasos. Última actualización: Sep 11 2026.
 
 ## PROTOCOLO (obligatorio, no negociable)
 
-- **NO tocar** `goabase.py`, `songkick.py`, `main.py`.
 - **Siempre sumar, nunca restar** (aditivo, no destructivo).
 - **Todo local, gratuito, sin login** (nada de APIs de pago, nada de credenciales).
-- **Documentar todos los cambios en markdowns** (`docs/*.md`).
-- Los cambios deben ser reversibles.
-- Solo commitear cuando el usuario lo pida explícitamente.
+- **Cualquier escritura al CSV `eventos_encontrados.csv` DEBE ir bajo
+  `core/csv_lock.csv_locked_rows(path)`** (fcntl cooperativo). Cualquier `open("w")`
+  directo rompe el dedup concurrente y trunca el CSV. No usar escritores directos.
+- Los JSON de estado runtime (root) y `config/` están en `.gitignore` (no públicos).
+- Commitear/pushear solo con control explícito de qué se staggea: des-stagear siempr
+  los `*.json` de estado runtime antes de `git commit`. Los `*.md` en raíz se fuerzan
+  con `git add -f` si es necesario.
+- Solo commitear cuando el usuario lo pida / confirme el flujo (workflow activo).
 - Al terminar cada tarea: `python3 -m py_compile <archivos>` para verificar sintaxis.
 
 ## OBJETIVO GENERAL
 
 Bot que consolida un CSV limpio de eventos psytrance reales desde múltiples fuentes.
-Meta Fase 3: **400+ eventos totales** y **80-100 eventos de Facebook** con fecha,
-lugar y organizador reales. ✅ CUMPLIDA.
+El CSV crece de forma orgánica (el objetivo "5000" se alcanza con descubrimiento
+continuo, NO con los backups, que son mayormente duplicados).
 
-## ESTADO ACTUAL (último CSV generado)
+## ESTADO ACTUAL (CSV)
 
-`eventos_encontrados.csv` / `eventos_psytrance.csv` = **420 eventos**:
+`eventos_encontrados.csv`:
+- ~2,856 filas únicas (por nombre+fecha); 2,872 líneas incl. header/multilínea.
+- Organizador: ~95% (2,721). Email: ~59% (1,708). Subgénero: 100%.
+- Los backups (`bak_jeandupont` 5,700 / `bak_filtro_falsos` 5,272) son >90% duplicados:
+  `merge_5000.py` merge 13,287 brutos → 2,586 únicos reales.
+- 80 links duplicados (variantes mínimas; el dedup semántico los usa, no borrar).
 
-- Goabase: 301
-- Resident Advisor: 17
-- Facebook (público SERP): 101
-- Facebook (Darkpsy Family): 1
-- Total Facebook: **102**
+## SISTEMA DE ESCRITURA CSV (lock cooperativo)
 
-Subgéneros: psytrance 343, goa 19, forest 18, darkpsy 17, psychedelic 12,
-progressive 8, twilight 1, hitech 1, psychill 1.
+Todos los escritores usan `csv_locked_rows`:
+`core/orquestador.py`, `core/agente_coordinador.py`, `core/algebra_lineal.py`,
+`core/matriz_busqueda.py`, `core/goabase_2027.py`, `core/fuentes_extra.py`,
+`core/rellenar_na.py`, `core/mcp_clasificar.py`, `loop_completar.py`,
+`venue_enricher.py`, `scrapers/instagram_dorks.py`, `merge_5000.py`.
 
-Los CSV están en `.gitignore` (no se commitean).
+## SCRAPERS ACTIVOS (plugin_loader)
 
-## CAMBIOS REALIZADOS EN LA FASE 3 (pendientes de commitear)
+Auto-descubrimiento en `scrapers/*.py` con `config_modulos.json`:
+- **29 ON / 30**: agente_coordinador, dorks_resultados, edmdancedirectory,
+  ektoplazm, enriquecer_fb_og, facebook_dorks, facebook_groups_sync,
+  facebook_mejorado, fb_playwright_tor, goabase, instagram, instagram_dorks,
+  instagram_fusion, instagram_public, instagram_scraper, isratrance,
+  mcp_organizador, meetup_psy, psychill_space, psymedia, psynews, psytrance_pl,
+  psytrancefestivals_tv, ra_promoter_dorks, reddit_psy, resident_advisor,
+  setline, songkick, telegram.
+- **OFF**: facebook_mcp (requiere login externo).
 
-Ejecutados y validados (el CSV actual ya refleja los resultados).
+## FAQ FUENTES / DORKS
 
-### 1. `run_facebook_only.py`
-- 3 pasadas por ejecución (`PASADAS = 3`).
-- `max_keywords=30`, `max_visitas=60`, `timeout=1200` por pasada.
-- Importa `clasificar_eventos` y `limpiar_calidad` de `main_fuentes`.
-- **Nunca resta**: los eventos ya existentes del CSV se conservan tal cual;
-  solo los NUEVOS se clasifican y filtran (`limpiar_calidad`), y luego dedup.
-- Al final imprime desglose por fuente y subgénero + total.
+- `core/fuentes_extra.py`: 20 dorks (fase 4) — fue ampliado de 8 → 20 con
+  facebook events, isratrance, ektoplazm, psymedia, años 2027-2028. `_merge` con lock.
+- `core/goabase_2027.py`: goabase JSON/JSON-LD (fuente de oro) — años [2028,2027,2026],
+  eventtypes indoor/club, 15 búsquedas por subgénero + `?status=new/update`, CAMPOS 13
+  columnas, `escanear()` merge directo al CSV principal bajo lock.
+- `core/matriz_busqueda.py`: combo subgénero×ciudad×año `site:facebook.com/events`.
+  39 sinónimos × 130 ciudades (incl. 9 latin USA añadidas Sep 11). Consolida al final
+  bajo lock. CLI: `--presupuesto N --ejecutar`.
+- `scrapers/instagram_dorks.py`: dorks IG via DDG+Mojeek+Google stealth, función
+  pública `scrape_instagram_dorks()` (200s presupuesto). Estado en
+  `scrapers/instagram_dorks/*.json` (gitignored).
+- `core/plugin_loader.py`: leer el `.py` COMPLETO (antes 8KB → `ra_promoter_dorks`
+  nunca se detectaba). Ahora descubre 30.
 
-### 2. `scrapers/facebook_mcp.py`
-- `MAX_EVENTOS_POR_RUN = 80`: techo de eventos nuevos por pasada (antes 50).
-- `_enriquecer_fechas_publicas()`: si la visita anterior en caché no logró
-  **organizador**, reintenta la visita (antes saltaba por caché). Esto permite
-  que eventos FB sin fecha pasen `limpiar_calidad` (exige link+organizador).
-- `_via_grupos_conocidos()`: 60 grupos por ejecución (antes 30), con 90s de
-  timeout interno en lugar de `TIMEOUT_PER_STRATEGY` (20s).
-- `_normalizar_fecha_publica()`: ahora hay UNA sola definición (se eliminó un
-  duplicado que pisaba la mejorada); acepta "15 Aug 2026", "Aug 15, 2026",
-  "Aug 15", "Friday, August 15 at 10:00 PM", etc. (meses abreviados en
-  `meses_es`/`meses_en`).
+## PROCESOS ACTIVOS (Sep 11 12:52, cluster del usuario)
 
-### 3. `config_grupos.json`
-- 66 países sin duplicados; ciudades ampliadas en no-europeos (Brasil 12,
-  México 11, Argentina 10, Chile 8, Colombia 9, Japón 8, Australia 9,
-  Sudáfrica 7, Israel 7, Turquía 8, India 9, etc.).
+- `main.py` (bot principal, ciclo orquestador) — corriendo.
+- `loop_completar.py` — mina organizadores/emails de FB/IG/RA bajo lock.
+- `matriz_busqueda --presupuesto 400 --ejecutar` — corriendo en /tmp/matriz_run.log.
+- Tor pool: 3 identidades (9050/9051, 9052/9053, 9054/9055).
 
-### 4. `recuperar_fb_cacheados.py` (NUEVO)
-- Recupera eventos que quedaron en `eventos_visitados.json` con organizador
-  pero fuera del CSV (se perdieron antes del fix de re-visita).
-- Re-visita cada URL vía Playwright (FB bloquea requests simples), extrae
-  nombre/fecha/lugar/organizador y consolida. Aditivo. Recuperó 53 eventos.
+## COMMITS RECIENTES (feature/mcp-refactor)
 
-## PRÓXIMOS PASOS (en orden)
+- `e44d0c7` fix: matrix_search escribe CSV bajo csv_lock (concurrent-safe)
+- `acae7ea` feat: scrape_instagram_dorks pública + fix nested func, google stealth
+  import, Path state
+- `f69a2e5` feat: ampliar fuentes (fuentes_extra 20 dorks, goabase 2027-28, plugin
+  full read) + merge_5000.py + prompts/claude_instagram_dorks.md
+- `eb445cc` fix: import Path en serp_worker.py
+- `0491134` fix: algebra_lineal escribe CSV bajo csv_lock
+- `0933038` chore: limpieza qwen/ollama + rename llm_hibrido→hibrido + CSV locking
 
-1. ~~Actualizar `docs/fuentes_psytrance.md` con los resultados de Fase 3~~ ✅ hecho.
-2. Commitear los cambios de Fase 3 (cuando el usuario lo pida):
-   `main_fuentes.py`, `run_facebook_only.py`, `scrapers/facebook_mcp.py`,
-   `recuperar_fb_cacheados.py`, `config_grupos.json`, `AGENTS.md`, docs.
-3. Opcional: seguir lanzando `run_facebook_only.py` para acumular más volumen.
+## PENDIENTES
 
-## FASE 4 — LOOP CENTRAL DE OPTIMIZACIÓN (en progreso)
-
-Nueva capa de orquestación **aditiva** con dedup GLOBAL (no depende solo del CSV).
-
-- `core/orquestador.py`: `orquestar_scrapers()` — paralelo (ThreadPool), timeouts
-  por scraper, recolección + dedup global, escritura aditiva de
-  `eventos_encontrados.csv`, métricas en `metricas_orquestador.json`.
-  Acepta `activos=[...]` y `dry_run=True`.
-- `core/deduplicador.py`: `Deduplicador` (hash SHA-256 nombre+fecha+desc),
-  `cache_dedup.json`, `filtrar_nuevos()`, `registrar_vistos()`, auto-limpiar >5000.
-- `core/recursos.py`: rotación UA + proxies via `obtener_user_agent()`/
-  `obtener_proxy()`/`obtener_proxies_dict()` (proxies.txt + anti_block).
-- `main.py` (solo aditivo al final): llamada condicional a `core.orquestador`.
-
-**ADVERTENCIA/MÓDULOS SOMBRA**: `scrapers/instagram` es un PAQUETE que reexporta
-`scrape_instagram_events` desde `scrapers/instagram_scraper.py`. Existe también
-un módulo `scrapers/instagram.py` (y `instagram_fusion.py`) que el paquete SOMBRA.
-Cuando se importe `from scrapers.instagram import ...`, gana el paquete → usa
-`instagram_scraper.py`. Por eso la adaptación Fase 4 se hizo en
-`instagram_scraper.py` (firma ahora `(config, timeout=None, deduplicador=None)`).
-`scrapers/instagram.py` recibió edits PARALELOS pero es código muerto; no gatear
-su uso al llamar `scrapers.instagram_scraper` directamente para evitar ambigüedad.
-
-### Estado Fase 4 (validado)
-✅ Deduplicador funciona; primera corrida real añadió 6 eventos (psytrance.pl)
-   420 → 426 CSV; `cache_dedup.json`=426; 2ª corrida = 0 nuevos (dedup activo).
-✅ `core/recursos.py` compila y rota (59 UAs / 300 proxies).
-✅ Orquestador: dry-run y corrida real de una fuente funcionan; run completo
-   tarda >120s (Facebook hasta 900s) — requiere timeout de shell mayor.
-✅ `main.py` recompila con la llamada condicional.
-⚠️ Documentación Fase 4 añadida a `docs/fuentes_psytrance.md` (fecha actual).
-⚠️ Pendiente: commitear (solo si el usuario lo pide) y un run completo.
-
-## FASE 4b — COMPLETAR N/A DE FACEBOOK (hecho)
-
-`scrapers/completar_fb_na.py` (NUEVO, aditivo) — `completar_eventos_fb()`.
-Visita con Playwright sync + stealth (user-agent móvil, sin cookies) las URLs de
-eventos FB con campos N/A en `fecha`/`lugar`/`organizador` y los completa.
-- 5 workers paralelos, 2 intentos/URL, 20s/página.
-- Solo completa campos N/A; nunca pisa datos; campo irresoluble → se deja.
-- Normaliza fechas a ISO. Un año suelto en un título NO cuenta como fecha
-  (evita inventar "2026-01-01").
-- m.facebook.com NO expone `data-testid` → el parseo usa el texto visible por
-  líneas (h1 real saltando "Este navegador no es compatible", fecha por línea
-  candidata, lugar de "fecha | hora | lugar" o dirección, organizador ES/EN).
-- Salidas: CSV (mismo orden de columnas) + `eventos_completados.json`.
-- Integrado al final de `main.py` (llamada opcional, comentario
-  "Completar N/A de Facebook").
-
-### Resultado Fase 4b (validado)
-✅ 45 candidatos → 30 completados; 16 siguen incompletos (11 solo por `lugar`).
-✅ 37 filas FB mejoradas; 0 datos perdidos (457 filas intactas).
-✅ Idempotente: 2ª corrida no degrada nada.
-✅ Prueba del spec OK:
-   `source venv/bin/activate && python3 -c "from scrapers.completar_fb_na import completar_eventos_fb; completar_eventos_fb()"`.
-⚠️ `playwright_stealth` en este venv NO tiene `stealth_sync`; se usa
-   `Stealth().use_sync(sync_playwright())` o `apply_stealth_sync(page)`.
-
-## PROBLEMAS CONOCIDOS
-
-- **Reddit**: 429 rate-limit tras ~2 peticiones; con timeout 60s se omite.
-- **Meetup**: 0 eventos psytrance reales (timeout 60s).
-- **Eventbrite**: timeout 90s sin eventos psytrance.
-- **IsraTrance**: sitio caído.
-- **Tor**: en algunos runs `net::ERR_SOCKS_CONNECTION_FAILED`, cae a conexión
-  directa (funciona, solo añade ~20s).
-- **Facebook sin cookies**: los grupos privados no rinden; la estrategia
-  productiva es SERP público + grupos públicos.
-- Fecha en español abreviada ("15 Ago 2026") → None: "ago" no está en la
-  alternancia de nombres de mes (solo español completo e inglés abreviado).
-- Tras muchos runs la SERP satura (reencuentra los mismos eventos); el dedup
-  contra el CSV apenas añade +1-4 por run. `recuperar_fb_cacheados.py` fue la
-  palanca que llevó FB de 50 a 102.
-
-## ARCHIVOS RELEVANTES
-
-### Nuevos (Fase 5 — agosto 2026)
-- `core/plugin_loader.py`: Auto-descubre scrapers en `scrapers/*.py`. Lee `config_modulos.json` para activos. Sin tocar `orquestador.py` para añadir scrapers.
-- `core/serp_tor.py`: Motor SERP centralizado. DDG+SearxNG vía Tor. `buscar_serp(query)`, `buscar_serp_fb(subgenero, localidad)`.
-- `scrapers/fb_playwright_tor.py`: Playwright+Tor para páginas FB. Desactivado (login wall FB).
-- `config_modulos.json`: 27 scrapers (26 activos). Control centralizado de qué módulos corren.
-
-### Existentes
-- `main_fuentes.py`: orquestador. `clasificar_eventos()` (4 pasadas),
-  `limpiar_calidad()`, `ejecutar_fuentes_nuevas()` (incluye Facebook 12/20/900).
-- `run_facebook_only.py`: script standalone Facebook (3 pasadas, 30 keywords,
-  60 visitas) + consolidación aditiva con CSV.
-- `recuperar_fb_cacheados.py`: recupera eventos FB cacheados perdidos (Playwright).
-- `scrapers/facebook_mcp.py`: `scrape_facebook_events()`, SERP en 5 fases,
-  `_normalizar_fecha_publica()`, `_enriquecer_fechas_publicas()`.
-- `scrapers/facebook_dorks.py`: Motor principal de Facebook. DDG+Tor. 135 eventos.
-- `scrapers/event_extractor.py`: `clasificar_subgenero()`, `SINONIMOS`.
-- `core/google_stealth.py`: Playwright+Tor+stealth anti-bloqueo Google.
-- `core/busqueda_fusionada.py`: Multi-motor SERP (DDG/Bing/Startpage/Mojeek/SearxNG).
-- `core/tor_pool.py`: Pool de 3 identidades Tor. Rotación automática.
-- `utils/helpers.py`: `deduplicar_eventos()`, `limpiar_eventos()`.
-- `config_grupos.json`: 66 países con ciudades.
-- `docs/fuentes_psytrance.md`: arquitectura y resultados.
-- `docs/reglas_tor.md`: Estado real de SERP vía Tor (DDG único funcional).
-- `README.md`: resumen del proyecto.
-
-## COMMITS RECIENTES
-
-- `c85f05c` feat: script Facebook standalone + 15 eventos FB (de 8 a 15)
-- `ad480db` docs: actualizar resultados - 326 eventos
-- `2e6ac0c` fix: Facebook timeout 300s → 600s (10 min) para 15 keywords
-- `9a79c61` feat: Facebook expandido (15 keywords, 50 visitas, 300s timeout)
-- `6fa3df9` fix: integración Facebook + descripción Goabase
-
-Los cambios de Fase 3 NO están commiteados.
+1. Recargar el MCP `dharmadhatu-clasificador` en OpenCode (renombramos el módulo qwen).
+2. Decidir rename del repo GitHub `dharmadhatu-agent-qwen` → `dharmadhatu-agent`
+   (`gh repo rename ...` + `git remote set-url origin ...`).
+3. Cuando la matriz termine: verificar CSV creció (consolidación final bajo lock).
+4. `enriquecer_contactos_dorks` dio 0 emails bajo saturación Tor; relanzar con
+   timeout mayor cuando la matriz termine.
+5. El arquétipo de parche IG de Claude (`/Users/angelgarcia/Downloads/instagram_dorks_patch.py`)
+   usaba firmas INEXISTENTES — NO aplicar tal cual. La versión adaptada está en
+   `instagram_dorks_patch.py` (raíz) y ya integrada en `scrapers/instagram_dorks.py`.

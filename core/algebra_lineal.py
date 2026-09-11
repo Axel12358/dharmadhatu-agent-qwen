@@ -562,13 +562,11 @@ def supervisar_y_mejorar(csv_path: str = "eventos_encontrados.csv",
         if "tipo_lugar" not in claves:
             claves.append("tipo_lugar")
         try:
-            tmp = str(filename) + ".tmp"
-            with open(tmp, "w", newline="", encoding="utf-8") as f:
-                writer = _csv.DictWriter(f, fieldnames=claves, extrasaction="ignore")
-                writer.writeheader()
-                for ev in eventos:
-                    writer.writerow(ev)
-            os.replace(tmp, str(filename))
+            # Escribe el conjunto ya procesado bajo el lock cooperativo para no
+            # pisar agregados concurrentes de otros procesos.
+            from core.csv_lock import csv_locked_rows
+            with csv_locked_rows(filename, timeout=180, extrasaction="ignore") as (estado_filas, _fn):
+                estado_filas[:] = eventos
         except Exception as e:
             resultado["error"] = f"No se puede escribir el CSV: {e}"
         try:

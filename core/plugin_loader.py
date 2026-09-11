@@ -140,7 +140,7 @@ def _extraer_funciones_scrape(filepath: Path) -> List[str]:
     """Devuelve nombres de funciones `def scrape_*(...)` en un archivo .py."""
     try:
         with open(filepath, "r", encoding="utf-8") as f:
-            contenido = f.read(8000)  # Primeras líneas suficiente
+            contenido = f.read()  # Completo: scrape_* puede estar más allá de 8KB
     except IOError:
         return []
     return re.findall(r"^def (scrape_\w+)\s*\(", contenido, re.MULTILINE)

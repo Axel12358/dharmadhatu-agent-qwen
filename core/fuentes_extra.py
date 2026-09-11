@@ -24,16 +24,28 @@ COLS = ["nombre", "fecha", "lugar", "pais", "continente", "subcontinente",
         "contactos"]
 
 # (fuente, dork). Sin comillas: DDG-lite solo devuelve así; los otros motores
-# refinan con site:.
+# refinan con site:. Años 2026-2028 para no quedarse en 2027.
 FUENTES_DORKS = [
     ("instagram", "site:instagram.com/p psytrance festival 2027"),
-    ("instagram", "site:instagram.com/p goatrance open air 2027"),
-    ("telegram", "site:t.me psytrance festival 2027"),
+    ("instagram", "site:instagram.com/p psytrance festival 2028"),
+    ("instagram", "site:instagram.com/p goatrance open air 2028"),
+    ("instagram", "site:instagram.com/p psytrance gathering 2027"),
+    ("telegram", "site:t.me psytrance festival 2028"),
+    ("telegram", "site:t.me/goatrance 2028"),
     ("telegram", "site:t.me/s psytrance 2027"),
-    ("soundcloud", "site:soundcloud.com psytrance live 2027"),
-    ("soundcloud", "site:soundcloud.com/goa trance set 2027"),
-    ("rss", "site:psynews.org psytrance event 2027"),
-    ("rss", "site:psytrance.com festival 2027"),
+    ("soundcloud", "site:soundcloud.com psytrance live set 2027"),
+    ("soundcloud", "site:soundcloud.com/goa trance festival 2028"),
+    ("facebook", "site:facebook.com/events psytrance 2028"),
+    ("facebook", "site:facebook.com/events/goa trance party 2028"),
+    ("facebook", "site:facebook.com/events/darkpsy festival 2028"),
+    ("facebook", "site:m.facebook.com events psytrance 2027"),
+    ("rss", "site:psynews.org psytrance event 2028"),
+    ("rss", "site:psytrance.com festival 2028"),
+    ("isratrance", "site:isratrance.com/forum psytrance 2028"),
+    ("isratrance", "site:isratrance.com events gathering 2027"),
+    ("ektoplazm", "site:ektoplazm.com psytrance party 2028"),
+    ("ektoplazm", "site:ektoplazm.com/festival list 2027"),
+    ("psymedia", "site:psymedia.com/festival 2028"),
 ]
 
 
@@ -58,27 +70,32 @@ def _buscar_segura(dork: str, timeout: int, tope: int = 40):
 
 def _link_util(url: str) -> bool:
     u = (url or "").lower()
-    return any(s in u for s in ("facebook.com/events", "instagram.com",
-                                "t.me", "soundcloud.com", "psynews.org",
-                                "psytrance.com"))
+    return any(s in u for s in ("facebook.com/events", "facebook.com/groups",
+                                "instagram.com", "t.me", "soundcloud.com",
+                                "psynews.org", "psytrance.com", "isratrance.com",
+                                "ektoplazm.com", "psymedia.com"))
 
 
 def _merge(rows_new: list[dict]) -> int:
     if not rows_new:
         return 0
-    exist = list(csv.DictReader(open(CSV, encoding="utf-8"))) if CSV.exists() else []
-    vistos = {r.get("link") for r in exist}
-    cols = list(exist[0].keys()) if exist else COLS
+    try:
+        from core.csv_lock import csv_locked_rows
+    except Exception:
+        from csv_lock import csv_locked_rows
+    seen = {f.upper() for f in ["nombre", "fecha", "lugar", "pais", "continente",
+                                "subcontinente", "fuente", "organizador", "email",
+                                "link", "subgenero", "tipo_lugar", "contactos"]}
     added = 0
-    for r in rows_new:
-        if r["link"] and r["link"] not in vistos:
-            exist.append(r)
-            vistos.add(r["link"])
-            added += 1
-    with open(CSV, "w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=cols)
-        w.writeheader()
-        w.writerows(exist)
+    with csv_locked_rows(CSV, timeout=120) as (exist, _fn):
+        cols = list(exist[0].keys()) if exist else list(seen)
+        fieldnames = [c for c in cols if c.upper() in seen]
+        vistos = {r.get("link") for r in exist}
+        for r in rows_new:
+            if r.get("link") and r["link"] not in vistos:
+                exist.append(r)
+                vistos.add(r["link"])
+                added += 1
     return added
 
 

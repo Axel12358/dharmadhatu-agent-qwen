@@ -69,6 +69,9 @@ CIUDADES_RA = [
     "Warsaw", "Krakow", "Bucharest", "Belo Horizonte", "Lima",
     "Bogota", "Santiago", "Montevideo", "Tbilisi", "Yerevan",
     "Tunis", "Marrakech", "Taipei", "Kuala Lumpur", "Ho Chi Minh City",
+    # Ampliación 4 (LatAm/Caribe, 10 ciudades)
+    "Medellín", "Quito", "Asunción", "Caracas", "La Paz",
+    "Panama City", "San José", "Guatemala City", "Havana", "Santo Domingo",
 ]
 
 # Géneros que interesan para el proyecto (psytrance/techno/scene)
@@ -86,10 +89,10 @@ KEYWORDS_TITULO = [
     "techno", "trance", "rave", "acid",
 ]
 
-MAX_PAGINAS_POR_CIUDAD = 3
+MAX_PAGINAS_POR_CIUDAD = 6
 PAGE_SIZE = 50
 # Tope final de eventos (ampliado para 46 ciudades y >300 eventos consolidados).
-MAX_EVENTOS = 500
+MAX_EVENTOS = 900
 
 # Horizonte de búsqueda en meses. None = sin límite superior (comportamiento
 # original, todos los eventos futuros). loop_mejora.py puede probar 6/9/12 meses.

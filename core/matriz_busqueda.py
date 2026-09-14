@@ -157,7 +157,15 @@ def ejecutar_combinaciones(combinaciones: List[Dict], dry_run: bool = False) -> 
         existentes = []
 
     nuevos_total = []
+    t_inicio = time.time()
     for i, combo in enumerate(combinaciones, 1):
+        # Throttling mínimo en searxng_local (~0.4s/query) para no saturar
+        # motores (Google CSE limita ~100 queries/min). El Tor tiene su
+        # propio delay natural (~15s/query).
+        elapsed = time.time() - t_inicio
+        sleep_min = 0.4 if elapsed / max(i, 1) < 2 else 0
+        if sleep_min and i > 1:
+            time.sleep(sleep_min)
         print(f"[{i}/{len(combinaciones)}] {combo['dork'][:70]}...", end=" ", flush=True)
         try:
            # Prioridad 1: SearxNG local (Docker, multi-motor, respeta site:fb)

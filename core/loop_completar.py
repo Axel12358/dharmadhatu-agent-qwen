@@ -124,9 +124,8 @@ def loop_completar(max_iter: int = 5, verbose: bool = True) -> dict:
                     if _norm(raw)==n:
                         r["continente"]=c; r["subcontinente"]=s; cambiados+=1; break
         if cambiados:
-            with open(CSV, "w", encoding="utf-8", newline="") as f:
-                w=_csv.DictWriter(f, fieldnames=cols)
-                w.writeheader(); w.writerows(rows)
+            from core.csv_lock import escribir_fusionando
+            escribir_fusionando(CSV, rows, timeout=120)
         return cambiados
 
     counts_antes,_ = _contar_na()
@@ -158,10 +157,8 @@ def loop_completar(max_iter: int = 5, verbose: bool = True) -> dict:
             if norm:
                 r["pais"] = norm
     if rows:
-        cols = list(rows[0].keys())
-        with open(CSV, "w", encoding="utf-8", newline="") as f:
-            w=_csv.DictWriter(f, fieldnames=cols)
-            w.writeheader(); w.writerows(rows)
+        from core.csv_lock import escribir_fusionando
+        escribir_fusionando(CSV, rows, timeout=120)
 
     counts_final, total = _contar_na()
     return {"iteraciones": it, "total_cambiados": total_cambiados, "antes": counts_antes, "despues": counts_final, "total_filas": total}

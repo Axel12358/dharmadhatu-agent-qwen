@@ -244,10 +244,8 @@ def completar_na() -> dict:
         if _na(r["subgenero"]):
             r["subgenero"] = _inferir_subgenero(r.get("nombre", ""), r["subgenero"])
 
-    with open(CSV, "w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=cols)
-        w.writeheader()
-        w.writerows(rows)
+    from core.csv_lock import escribir_fusionando
+    escribir_fusionando(CSV, rows, timeout=120)
 
     despues = {c: sum(1 for r in rows if _na(r.get(c, ""))) for c in cols}
     return {"antes": antes, "despues": despues, "cambiados": cambiados}

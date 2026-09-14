@@ -159,11 +159,8 @@ def _get_html_safe(url: str, timeout: int):
 
 
 def _guardar(rows, campos):
-    with open(CSV_PATH, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=campos, extrasaction="ignore")
-        w.writeheader()
-        for r in rows:
-            w.writerow(r)
+    from core.csv_lock import escribir_fusionando
+    escribir_fusionando(CSV_PATH, rows, timeout=180)
 
 
 def enriquecer(

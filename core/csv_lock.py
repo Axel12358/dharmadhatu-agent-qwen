@@ -55,3 +55,47 @@ def csv_locked_rows(csv_path, timeout=180, encoding="utf-8", extrasaction="ignor
                 fcntl.flock(lockfh.fileno(), fcntl.LOCK_UN)
             except Exception:
                 pass
+
+
+def _clave_fila(r: dict) -> tuple:
+    """Clave estable para merge: link, o nombre|fecha si no hay link."""
+    lk = (r.get("link") or "").strip().lower()
+    if lk and lk not in ("n/a", "na", "none", "-", "?"):
+        return ("L", lk)
+    nombre = (r.get("nombre") or "").strip().lower()
+    fecha = (r.get("fecha") or "").strip().lower()
+    return ("N", nombre, fecha)
+
+
+def _na_valor(v) -> bool:
+    return (not str(v or "").strip()
+            or str(v or "").strip().lower() in ("n/a", "na", "none", "null", "-", "?"))
+
+
+def escribir_fusionando(csv_path, filas_calculadas, timeout=180):
+    """Consolida CAMBIOS de N/A sin pisar filas añadidas por otros procesos.
+
+    Re-lee el CSV fresco bajo lock, rellena campos vacíos/N/A con los
+    valores de `filas_calculadas` (clave: link o nombre|fecha) y añade las
+    filas de `filas_calculadas` que no existan. NUNCA borra filas ajenas.
+    Correcto para writer-mutadores (loop_completar, completar_na, fb_og).
+    """
+    from core.csv_lock import csv_locked_rows
+    with csv_locked_rows(csv_path, timeout=timeout) as (frescas, _fn):
+        idx = {_clave_fila(r): r for r in filas_calculadas}
+        exist = set()
+        for fr in frescas:
+            exist.add(_clave_fila(fr))
+            src = idx.get(_clave_fila(fr))
+            if src is None:
+                continue
+            for kk, vv in src.items():
+                if _na_valor(fr.get(kk)) and str(vv or "").strip():
+                    fr[kk] = vv
+        agregadas = 0
+        for r in filas_calculadas:
+            if _clave_fila(r) not in exist:
+                frescas.append(r)
+                exist.add(_clave_fila(r))
+                agregadas += 1
+    return {"fusionadas": len(frescas), "agregadas": agregadas}

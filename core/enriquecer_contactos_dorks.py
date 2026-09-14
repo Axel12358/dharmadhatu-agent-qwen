@@ -35,6 +35,15 @@ def _buscar():
 
 
 def _buscar_segura(dork, timeout, tope=45):
+    # Fast path: SearxNG local (Docker) — sin Tor, ~2s, respeta comillas
+    try:
+        from core.serp_tor import buscar_serp, _buscar_searxng_local
+        res = _buscar_searxng_local(dork, timeout=timeout)
+        if res:
+            return res
+    except Exception:
+        pass
+    # Fallback: multi-motor Tor (lento)
     box = {}
 
     def _w():
@@ -52,9 +61,84 @@ def _na(v: str) -> bool:
     return (v or "").strip().lower() in ("", "n/a", "na", "none", "null", "-", "?")
 
 
+def _fetch_contenido(url: str, timeout: int = 12) -> str:
+    """Obtiene el texto de una página resultado (curl_cffi directo, sin Tor)."""
+    try:
+        from curl_cffi import requests as rr
+        resp = rr.get(url, impersonate="chrome120", timeout=timeout, allow_redirects=True)
+        if resp.status_code != 200:
+            return ""
+        # Página principal: emails/datos suelen estar en el HTML crudo
+        return resp.text[:400_000]
+    except Exception:
+        return ""
+
+
+def _extraer_emails_paginas(res: list, top=2, timeout=12) -> dict:
+    """Fetchea las top N páginas resultado y extrae emails/redes de su HTML."""
+    contactos = {"email": [], "telegram": [], "instagram": [], "soundcloud": []}
+    vistos = set()
+    for hit in res[:top]:
+        url = hit.get("url", "") or hit.get("link", "")
+        if not url or url in vistos:
+            continue
+        vistos.add(url)
+        try:
+            html = _fetch_contenido(url, timeout)
+        except Exception:
+            html = ""
+        if not html or len(html) < 50:
+            continue
+        c = _extraer_contactos(html)
+        for k in contactos:
+            vals = c.get(k) or []
+            for v in vals:
+                if v and str(v) not in vistos:
+                    try:
+                        vistos.add(str(v))
+                    except TypeError:
+                        pass
+                    contactos[k].append(v)
+        if contactos["email"]:
+            break
+    return contactos
+
+
+def _aplicar_actualizacion(link: str, clave_aux: tuple, email: str,
+                           contactos_json: str, timeout=180) -> bool:
+    """Actualiza SOLO email/contactos de la fila matcheada, bajo lock y con
+    lectura fresca. NUNCA pisa el CSV con snapshots viejos."""
+    try:
+        from core.csv_lock import csv_locked_rows
+    except Exception:
+        from csv_lock import csv_locked_rows
+    if not email and not contactos_json:
+        return False
+    with csv_locked_rows(CSV, timeout=timeout) as (frescas, _fn):
+        for r in frescas:
+            k = (r.get("link") or "").strip().lower()
+            if link and k and k == link:
+                pass
+            elif link:
+                continue
+            else:
+                if (r.get("nombre") or "").lower() != clave_aux[0]:
+                    continue
+                if (r.get("fecha") or "").lower() != clave_aux[1]:
+                    continue
+            changed = False
+            if _na(r.get("email", "")) and email:
+                r["email"] = email
+                changed = True
+            if _na(r.get("contactos", "")) and contactos_json:
+                r["contactos"] = contactos_json
+                changed = True
+            return changed
+    return False
+
+
 def enriquecer_contactos_dorks(max_n: int = 10, timeout_dork: int = 20) -> dict:
     rows = list(csv.DictReader(open(CSV, encoding="utf-8")))
-    campos = list(rows[0].keys())
     objetivos = [
         r for r in rows
         if _na(r.get("email", "")) or _na(r.get("contactos", ""))
@@ -71,19 +155,24 @@ def enriquecer_contactos_dorks(max_n: int = 10, timeout_dork: int = 20) -> dict:
             (hit.get("titulo", "") + " " + hit.get("snippet", "")) for hit in res
         )
         contactos = _extraer_contactos(texto)
+        if not contactos.get("email"):
+            # emails casi nunca están en snippets: fetchea la página del result
+            contactos_pag = _extraer_emails_paginas(res, top=2, timeout=timeout_dork)
+            for k in ("email", "telegram", "instagram", "soundcloud"):
+                if not contactos.get(k):
+                    contactos[k] = contactos_pag.get(k, [])
         emails = contactos.get("email", [])
-        if _na(r.get("email", "")) and emails:
-            r["email"] = emails[0]
-            stats["con_email"] += 1
         hay_otro = any(contactos.get(k) for k in ("telegram", "instagram", "soundcloud"))
-        if _na(r.get("contactos", "")) and (emails or hay_otro):
-            r["contactos"] = json.dumps(contactos, ensure_ascii=False)
-            stats["con_contacto"] += 1
-        # guardado incremental
-        with open(CSV, "w", encoding="utf-8", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=campos)
-            w.writeheader()
-            w.writerows(rows)
+        cont_json = ""
+        if (emails or hay_otro) and not _na(r.get("contactos", "")):
+            cont_json = json.dumps(contactos, ensure_ascii=False)
+        email_nuevo = emails[0] if emails else ""
+        # guardado aditivo bajo lock: re-lee fresco y actualiza solo la fila
+        link = (r.get("link") or "").strip().lower()
+        clave_aux = ((r.get("nombre") or "").lower(), (r.get("fecha") or "").lower())
+        if _aplicar_actualizacion(link, clave_aux, email_nuevo, cont_json):
+            stats["con_email"] += 1 if (email_nuevo and _na(r.get("email", ""))) else 0
+            stats["con_contacto"] += 1 if cont_json else 0
     return stats
 
 

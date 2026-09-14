@@ -55,7 +55,15 @@ while true; do
       log "Lanzando matriz round $round (semilla $seed, 2000 dorks)"
       nohup .venv/bin/python -u -m core.matriz_busqueda --presupuesto 2000 --semilla "$seed" --ejecutar > "/tmp/matriz_round${round}.log" 2>&1 &
     else
-      log "Rounds agotados ($ROUNDS_TOTAL). Matriz no relanzada."
+      # Fase 2: rounds agotados → enriquecer emails (google libre de la matriz)
+      if ! pgrep -f "enriquecer_contactos" >/dev/null 2>&1; then
+        log "Rounds agotados → lanzando enriquecimiento de emails (batch 40)"
+        (cd /Users/angelgarcia/dharmadhatu_agent_qwen && nohup .venv/bin/python -u -c "
+import sys; sys.path.insert(0,'.')
+from core.enriquecer_contactos_dorks import enriquecer_contactos_dorks
+print('STATS:', enriquecer_contactos_dorks(max_n=40, timeout_dork=20))
+" >> /tmp/enriquecer_fase2.log 2>&1 &)
+      fi
     fi
   fi
 

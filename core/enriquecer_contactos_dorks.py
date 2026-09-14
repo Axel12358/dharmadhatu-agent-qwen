@@ -36,25 +36,14 @@ def _buscar():
 
 def _buscar_segura(dork, timeout, tope=45):
     # Fast path: SearxNG local (Docker) — sin Tor, ~2s, respeta comillas
+    # Si searxng está caído/suspendido → devolver [] de inmediato (no
+    # quemar 45s en fallback Tor que apenas rinde para dorks de organizador).
     try:
-        from core.serp_tor import buscar_serp, _buscar_searxng_local
+        from core.serp_tor import _buscar_searxng_local
         res = _buscar_searxng_local(dork, timeout=timeout)
-        if res:
-            return res
+        return res if res else []
     except Exception:
-        pass
-    # Fallback: multi-motor Tor (lento)
-    box = {}
-
-    def _w():
-        try:
-            box["r"] = _buscar()(dork, timeout)
-        except Exception:
-            box["r"] = []
-    t = threading.Thread(target=_w, daemon=True)
-    t.start()
-    t.join(tope)
-    return box.get("r", [])
+        return []
 
 
 def _na(v: str) -> bool:

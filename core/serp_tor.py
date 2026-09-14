@@ -324,7 +324,7 @@ def _buscar_searxng_local(query: str, sesion=None,
         try:
             r = requests.get(
                 base + "/search",
-                params={"q": query, "format": "json"},
+                params={"q": query, "format": "json", "engines": "google"},
                 timeout=timeout,
             )
             if r.status_code != 200:
@@ -439,10 +439,10 @@ MOTORES = {
 # Bing/Startpage dan basura o challenge vía Tor — desactivados por defecto
 ORDEN_MOTORES = ["ddg", "searxng"]
 
-# Motores directos (curl_cffi/requests, sin Tor): SearxNG local (multi-motor,
-# respeta site:fb, ~28 res) es la vía principal; Bing directo quedó como
-# reserva experimental (Bing server-side ignora la query).
-ORDEN_MOTORES_DIRECTO = ["searxng_local", "bing_directo_pag"]
+# Motores directos (sin Tor): solo SearxNG local (multi-motor, respeta
+# site:fb, ~28 res). bing_directo* quedó fuera: Bing server-side ignora la
+# query y devuelve basura que bloquea el fallback Tor del callers.
+ORDEN_MOTORES_DIRECTO = ["searxng_local"]
 
 
 def buscar_serp(

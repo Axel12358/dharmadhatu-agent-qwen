@@ -170,7 +170,8 @@ def ejecutar_combinaciones(combinaciones: List[Dict], dry_run: bool = False) -> 
         try:
            # Prioridad 1: SearxNG local (Docker, multi-motor, respeta site:fb)
             resultados = buscar_serp(combo["dork"], directo=True)
-            if not resultados:
+            hay_fb = any("facebook.com/events" in (r.get("url") or "") for r in resultados)
+            if not hay_fb:
                 # Prioridad 2: Tor (DDG → SearxNG pública), radio lento
                 resultados = buscar_serp(combo["dork"], motores=["ddg", "searxng"])
         except Exception as e:

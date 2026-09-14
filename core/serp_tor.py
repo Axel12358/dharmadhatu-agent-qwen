@@ -313,6 +313,43 @@ def _buscar_bing_directo_pag(query: str, sesion=None,
     return out[:_MAX_RESULTADOS]
 
 
+def _buscar_searxng_local(query: str, sesion=None,
+                          timeout: int = _TIMEOUT_DEFAULT) -> List[Dict]:
+    """SearxNG local (self-hosted Docker :8888) — multi-motor, sin Tor.
+
+    Devuelve resultados reales de google/bing/brave/ddg (28+ por query) y
+    respeta site:facebook.com/events. Es LA vía rápida para dorks.
+    """
+    for base in ("http://localhost:8888", "http://127.0.0.1:8888"):
+        try:
+            r = requests.get(
+                base + "/search",
+                params={"q": query, "format": "json"},
+                timeout=timeout,
+            )
+            if r.status_code != 200:
+                continue
+            data = r.json()
+            resultados = []
+            vistos = set()
+            for item in data.get("results", []):
+                url = item.get("url", "")
+                if not url or url in vistos:
+                    continue
+                vistos.add(url)
+                resultados.append({
+                    "url": url,
+                    "titulo": item.get("title", ""),
+                    "snippet": item.get("content", "")[:300],
+                    "motor": "searxng_local",
+                })
+            if resultados:
+                return resultados[:_MAX_RESULTADOS]
+        except Exception:
+            continue
+    return []
+
+
 def _buscar_startpage(query: str, sesion: requests.Session,
                       timeout: int = _TIMEOUT_DEFAULT) -> List[Dict]:
     """Startpage."""
@@ -393,6 +430,7 @@ MOTORES = {
     "startpage": _buscar_startpage,
     "google": _buscar_google,
     "searxng": _buscar_searxng,
+    "searxng_local": _buscar_searxng_local,
     "bing_directo": _buscar_bing_directo,
     "bing_directo_pag": _buscar_bing_directo_pag,
 }
@@ -401,8 +439,10 @@ MOTORES = {
 # Bing/Startpage dan basura o challenge vía Tor — desactivados por defecto
 ORDEN_MOTORES = ["ddg", "searxng"]
 
-# Motores directos (curl_cffi, sin Tor): Bing rinde sin bloqueo y es rápido.
-ORDEN_MOTORES_DIRECTO = ["bing_directo_pag"]
+# Motores directos (curl_cffi/requests, sin Tor): SearxNG local (multi-motor,
+# respeta site:fb, ~28 res) es la vía principal; Bing directo quedó como
+# reserva experimental (Bing server-side ignora la query).
+ORDEN_MOTORES_DIRECTO = ["searxng_local", "bing_directo_pag"]
 
 
 def buscar_serp(

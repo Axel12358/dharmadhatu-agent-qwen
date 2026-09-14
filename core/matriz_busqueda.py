@@ -160,7 +160,11 @@ def ejecutar_combinaciones(combinaciones: List[Dict], dry_run: bool = False) -> 
     for i, combo in enumerate(combinaciones, 1):
         print(f"[{i}/{len(combinaciones)}] {combo['dork'][:70]}...", end=" ", flush=True)
         try:
-            resultados = buscar_serp(combo["dork"], motores=["ddg", "searxng"])
+           # Prioridad 1: SearxNG local (Docker, multi-motor, respeta site:fb)
+            resultados = buscar_serp(combo["dork"], directo=True)
+            if not resultados:
+                # Prioridad 2: Tor (DDG → SearxNG pública), radio lento
+                resultados = buscar_serp(combo["dork"], motores=["ddg", "searxng"])
         except Exception as e:
             print(f"❌ {e}")
             resultados = []

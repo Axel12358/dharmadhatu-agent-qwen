@@ -12,6 +12,7 @@ Uso:
 """
 from __future__ import annotations
 
+import base64
 import random
 import re
 import time
@@ -227,6 +228,91 @@ def _buscar_bing(query: str, sesion: requests.Session,
     return []
 
 
+# --- Motores DIRECTOS (curl_cffi, sin Tor) ---
+# Bing responde bien por curl_cffi con impersonate sin bloqueo; multiplica el
+# throughput de dorks porque no depende de Tor. Parsea redirects ck/a con la URL
+# real en base64 (u=a1<base64url>).
+def _parse_bing_directo(html: str) -> List[Dict]:
+    """Parsea resultados de Bing (HTML directo, redirects ck/a en base64)."""
+    resultados = []
+    patron = (
+        r'<h2[^>]*>\s*<a[^>]+href="(https://www\.bing\.com/ck/a\?[^"]+)"'
+        r'[^>]*>(.*?)</a>'
+    )
+    for m in re.finditer(patron, html, re.DOTALL):
+        href, titulo = m.group(1), re.sub(r"<[^>]+>", "", m.group(2)).strip()
+        qs = dict(re.findall(r"[?&]([^=&]+)=([^&]+)", href.replace("&amp;", "&")))
+        u = qs.get("u", "")
+        url = ""
+        if u.startswith("a1"):
+            b = u[2:]
+            b += "=" * ((4 - len(b) % 4) % 4)
+            try:
+                url = base64.urlsafe_b64decode(b).decode("utf-8", "ignore")
+            except Exception:
+                url = ""
+        if not url.startswith("http"):
+            continue
+        resultados.append({
+            "url": url, "titulo": titulo,
+            "snippet": "", "motor": "bing_directo",
+        })
+    return resultados[:_MAX_RESULTADOS]
+
+
+def _buscar_bing_directo(query: str, sesion=None,
+                         timeout: int = _TIMEOUT_DEFAULT) -> List[Dict]:
+    """Bing vía curl_cffi (sin Tor), impersonando Chrome."""
+    try:
+        from curl_cffi import requests as _cffi
+    except Exception:
+        return []
+    try:
+        r = _cffi.get(
+            "https://www.bing.com/search",
+            params={"q": query, "count": 20},
+            impersonate="chrome120",
+            timeout=timeout,
+        )
+        if r.status_code == 200:
+            low = r.text.lower()
+            if any(x in low for x in ["unusual traffic", "captcha",
+                                       "verify you are human"]):
+                return []
+            return _parse_bing_directo(r.text)
+    except Exception:
+        pass
+    return []
+
+
+def _buscar_bing_directo_pag(query: str, sesion=None,
+                             timeout: int = _TIMEOUT_DEFAULT) -> List[Dict]:
+    """Bing directo con paginación (first=1,11) para más cobertura."""
+    try:
+        from curl_cffi import requests as _cffi
+    except Exception:
+        return []
+    vistos, out = set(), []
+    for first in (1, 11):
+        try:
+            r = _cffi.get(
+                "https://www.bing.com/search",
+                params={"q": query, "count": 20, "first": first},
+                impersonate="chrome120",
+                timeout=timeout,
+            )
+            if r.status_code != 200:
+                continue
+            for x in _parse_bing_directo(r.text):
+                if x["url"] in vistos:
+                    continue
+                vistos.add(x["url"])
+                out.append(x)
+        except Exception:
+            continue
+    return out[:_MAX_RESULTADOS]
+
+
 def _buscar_startpage(query: str, sesion: requests.Session,
                       timeout: int = _TIMEOUT_DEFAULT) -> List[Dict]:
     """Startpage."""
@@ -307,11 +393,16 @@ MOTORES = {
     "startpage": _buscar_startpage,
     "google": _buscar_google,
     "searxng": _buscar_searxng,
+    "bing_directo": _buscar_bing_directo,
+    "bing_directo_pag": _buscar_bing_directo_pag,
 }
 
 # Orden de prioridad: DDG (único que funciona vía Tor) → SearxNG (pública)
 # Bing/Startpage dan basura o challenge vía Tor — desactivados por defecto
 ORDEN_MOTORES = ["ddg", "searxng"]
+
+# Motores directos (curl_cffi, sin Tor): Bing rinde sin bloqueo y es rápido.
+ORDEN_MOTORES_DIRECTO = ["bing_directo_pag"]
 
 
 def buscar_serp(
@@ -320,9 +411,13 @@ def buscar_serp(
     solo_facebook: bool = False,
     timeout: int = _TIMEOUT_DEFAULT,
     rotar_circuito: bool = False,
+    directo: bool = False,
 ) -> List[Dict]:
     """
-    Busca en múltiples motores vía Tor.
+    Busca en múltiples motores.
+
+    `directo=True` usa motores curl_cffi sin Tor (Bing), mucho más rápido y
+    con mayor throughput; `directo=False` usa la sesión Tor (DDG/SearxNG).
 
     Usa la MISMA sesión para todos los motores (rápido).
     La rotación de circuito es entre queries, no entre motores.
@@ -338,12 +433,12 @@ def buscar_serp(
         Lista de {url, titulo, snippet, motor}
     """
     if motores is None:
-        motores = ORDEN_MOTORES
+        motores = ORDEN_MOTORES_DIRECTO if directo else ORDEN_MOTORES
 
-    if rotar_circuito:
+    if rotar_circuito and not directo:
         _rotar_circuito()
 
-    sesion = _get_sesion()
+    sesion = None if directo else _get_sesion()
     todos: List[Dict] = []
     urls_vistas: set = set()
 

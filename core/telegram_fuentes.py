@@ -28,6 +28,8 @@ CANALES = [
     "visionquestfest", "glastonburypsy", "tribalmix", "suntriprecords",
     "nanobeat", "digestivepsy", "psychedeliccircus", "lostinpsy",
     "ayahuascaexperience", "sensoriumfestival", "gatheringfest",
+    # Descubiertos por dorks DDG/Tor (Sep 2026): canales reales activos
+    "goatrancechannel", "goatranceforever", "tranceportalSOL",
 ]
 
 _KEYWORDS = re.compile(
